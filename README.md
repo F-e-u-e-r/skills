@@ -626,6 +626,13 @@ This pack distills and adapts ideas from:
 - **kannaiah** —
   [Reddit comment](https://www.reddit.com/r/ClaudeAI/comments/1ukynrw/comment/ovnh8zu/)
   on operational rigor, adapted into `operational-rigor`.
+- **Boris Cherny** (Anthropic, Claude Code) — interview clips on
+  per-release system-prompt ablation, as embedded with commentary in the
+  YouTube video "Claude Code 之父建議，每六個月刪光你的 CLAUDE.md？"
+  (<https://www.youtube.com/watch?v=Z-4AsgTYv2c>). The three-bucket
+  triage adopted into the rule is the commentary channel's own proposal
+  (channel named at the link), ideas only; tier-change re-probe rule in
+  `skill-authoring` §7.
 - **firaen22** (credited as "Friend A" before going public) — private
   Discord notes shared with the maintainer (a checks/-harness design note
   and a measured Claude Code harness export), adapted into

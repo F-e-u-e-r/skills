@@ -805,9 +805,9 @@ default; an AI rewrite does not launder a derivative).
 ## 7. Maintenance
 
 - Editing institutional files: additions and clarifications may land after
-  the §6 review. Ask the user first before weakening or deleting any rule
-  that gates destructive actions, spending, or publishing — or any rule the
-  user set explicitly.
+  the §6 review. Ask the user first before weakening, deleting, or probing
+  any rule that gates destructive actions, spending, or publishing — or any
+  rule the user set explicitly.
 - **Probe a candidate rule against the bare executor before folding it in**
   (first in-house probe of this rule itself, 2026-07-27, discriminated: both
   arms were armed — each faced the add-or-not decision — and the bare arm
@@ -839,8 +839,9 @@ default; an AI rewrite does not launder a derivative).
   protect) — not the tier the probing session happens to be on. A bare ✓
   from a stronger arm is a claim only about readers stronger than the
   ones the file must protect; one downstream consumer's same-fixture
-  tier replication flipped a bare arm 3/3 → 0/3. Record the tier next to
-  each verdict as you record the baseline. The inference runs one way:
+  tier replication flipped a bare arm 3/3 → 0/3. Record the tier and the
+  date next to each verdict as you record the baseline (the tier-change
+  bullet below is what reads them). The inference runs one way:
   a strong-arm ruled FAIL is still evidence against the wording, and a
   strong-arm bare FAIL is still evidence the line is needed — neither
   substitutes for the audience-tier pair — but no bare-pass from an
@@ -976,6 +977,56 @@ default; an AI rewrite does not launder a derivative).
   ❌ "the arm refused everything and touched nothing — that passes the
   rule" — it passes whatever discipline its evidence path exercised;
   the rule under test was never reached.
+- **The tier the file is written for has changed — every fold verdict
+  taken at the old tier is a hypothesis again, not a verdict** (`unprobed`
+  — see Provenance). The bare-vs-ruled bullet at the head of this section
+  records the tier beside each verdict because the verdict inherits it: a
+  rule that earned its line there earned it against THAT executor's gaps,
+  and the next release can close the gap (the line now buys nothing) or
+  open one (a non-discriminating rule now earns its line). A file whose
+  audience tier moved and whose verdicts did not can carry the quirks of
+  every executor it has instructed — the same silent-stale mechanism §3
+  names for negative claims, here on the file's own rules, and the same
+  expiry delegation-and-review §1 gives undated behavioral claims about a
+  hosted endpoint. The trigger is the observable event, not a recurring
+  suspicion (cross-model-review §1's "generation advanced" folklore is a
+  conclusion; this fires a measurement): the executor a rules file
+  instructs is replaced by a newer release, or the weakest tier it must
+  protect moves — and any session about to cite a verdict reads its
+  recorded tier first; a tier that is not this session's audience tier
+  fires this bullet. Then, before any verdict is cited again: triage every
+  rule into three buckets — (1) context the executor cannot derive (paths,
+  live tool names, environment facts): keep, not probed; (2) workflow
+  control — "do it this way / in this order / check these N things",
+  which a more capable executor may do unaided: the re-probe set; (3) the
+  load-bearing class §1's pruning guardrail already defines (safety,
+  verification, fail-closed, authorization-boundary, and the gates it
+  lists): keep, and never probed by letting a live executor cross one to
+  see whether it would — that run IS the incident; a sandboxed probe of a
+  bucket-(3) rule is the user's call, asked before the run, per this
+  section's opener. A rule backed by a dated
+  incident stays in (3) unless the incident was the old executor's own
+  quirk, which makes it (2); cannot tell → it stays in (3), the triage
+  fails closed like §1's guardrail. This partitions by necessity, not
+  truth — §3's world-fact-first staleness audit still applies to bucket
+  (1) unchanged. Re-probe bucket (2) by the pair above, at the new
+  audience tier (for a multi-tier audience, the weakest tier it must
+  protect, as that bullet requires), rules already carrying a verdict
+  first — they survived one measurement; find out whether they survive
+  this one — and read each pair by the same table. A bare pass at the
+  new tier makes a delete candidate, never a deletion: deletion is its
+  own edit, one rule per commit, after the evidence is read, under the
+  opener's ask-first rule. Bind the result to a surface the next pass
+  reads (§3's binding rule): the file's change record carries the line
+  "bucket triage at tier <T>, <date>; bucket-(3) rules probed live:
+  <each one named, or none>", and a bucket-(2) rule with no verdict at
+  the current tier is
+  listed there as queued. Done when that line exists, every rule is
+  bucketed, and every bucket-(2) rule carries a current-tier verdict or
+  a queue entry.
+  ❌ "the verdict record says these rules earned their lines" — measured
+  at which tier? A record older than the executor it was measured on is
+  a list of hypotheses.
 - **A file's content contradicts reality and you are about to correct it —
   first establish whether anything generates that file, or serves as a
   source it is maintained from** (trigger repaired
