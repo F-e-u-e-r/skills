@@ -176,8 +176,8 @@ NUM = r"(?:0|[1-9][0-9]*)"
 SEMVER = rf"({NUM}\.{NUM}\.{NUM})"
 versions = []
 for rel, pats in [
-    ("README.md", [rf"version-alpha--{SEMVER}-orange", rf"Early alpha \(`alpha-{SEMVER}`\)"]),
-    ("README.zh-Hant.md", [rf"version-alpha--{SEMVER}-orange", rf"早期 alpha\(`alpha-{SEMVER}`\)"]),
+    ("README.md", [rf"version-v{SEMVER}-orange", rf"Early alpha \(`v{SEMVER}`\)"]),
+    ("README.zh-Hant.md", [rf"version-v{SEMVER}-orange", rf"早期 alpha\(`v{SEMVER}`\)"]),
 ]:
     body = read(rel)
     for pat in pats:

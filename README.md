@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
-  <img alt="Version alpha-0.1.16" src="https://img.shields.io/badge/version-alpha--0.1.16-orange.svg">
+  <img alt="Version v0.1.16" src="https://img.shields.io/badge/version-v0.1.16-orange.svg">
   <img alt="For Claude Code" src="https://img.shields.io/badge/for-Claude%20Code-8A2BE2.svg">
   <a href="https://github.com/F-e-u-e-r/skills/issues"><img alt="PRs welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"></a>
   <a href="https://github.com/F-e-u-e-r/skills/actions/workflows/checks.yml"><img alt="checks" src="https://github.com/F-e-u-e-r/skills/actions/workflows/checks.yml/badge.svg"></a>
@@ -35,7 +35,7 @@ opus-pack simply resolve when opus-pack is present; see
 [`design-pack`](#design-pack-the-design-skills)).
 
 > [!NOTE]
-> **Early alpha (`alpha-0.1.16`).** Rules change as real sessions expose misses,
+> **Early alpha (`v0.1.16`).** Rules change as real sessions expose misses,
 > and the pack is [measured against its own doctrine](#evals-testing-the-pack-itself)
 > — honest null result included. Issues and PRs with concrete failure cases are welcome.
 
@@ -594,6 +594,11 @@ loop only checks dirs still present in `skills/` (and `cp -R` never deletes), so
 when you remove or rename a published skill, delete its old dir from
 `.claude/skills/` by hand in the same change. Edit
 either README → mirror the change in the other language.
+
+Release naming: every `plugin.json` version bump gets a matching `vX.Y.Z` git tag
+and a GitHub Release (marked pre-release while the pack is alpha), and the README
+version badge reads `vX.Y.Z`. Tags before `v0.1.16` used the legacy `alpha-X.Y.Z`
+form and stop at `alpha-0.1.2`; intermediate versions were never tagged.
 
 ## Rule conflicts resolved during distillation
 
