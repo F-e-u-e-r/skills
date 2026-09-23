@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
-  <img alt="Version alpha-0.1.16" src="https://img.shields.io/badge/version-alpha--0.1.16-orange.svg">
+  <img alt="Version v0.1.16" src="https://img.shields.io/badge/version-v0.1.16-orange.svg">
   <img alt="For Claude Code" src="https://img.shields.io/badge/for-Claude%20Code-8A2BE2.svg">
   <a href="https://github.com/F-e-u-e-r/skills/issues"><img alt="PRs welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"></a>
   <a href="https://github.com/F-e-u-e-r/skills/actions/workflows/checks.yml"><img alt="checks" src="https://github.com/F-e-u-e-r/skills/actions/workflows/checks.yml/badge.svg"></a>
@@ -33,7 +33,7 @@ marketplace,而非硬相依(它的審查 skill 對 opus-pack 的 cross-reference
 opus-pack 在場時解析得到;見 [`design-pack`](#design-pack設計-skill))。
 
 > [!NOTE]
-> **早期 alpha(`alpha-0.1.16`)。** 規則會隨真實 session 暴露的缺口調整,而且本包
+> **早期 alpha(`v0.1.16`)。** 規則會隨真實 session 暴露的缺口調整,而且本包
 > 用它自己的教條[檢驗自己](#evals測試這個-pack-本身)——包含一個誠實的 null result。
 > 歡迎用具體失敗案例開 issue 或 PR。
 
@@ -404,6 +404,10 @@ hooks(不得有 `hooks/hooks.json`、`plugin.json` 不得有 hooks 欄位)——
 改名一個已發佈 skill 時,要在同一次修改裡手動刪掉 `.claude/skills/` 裡
 對應的舊目錄;改任一語言的 README →
 同步鏡像另一份。
+
+發版命名:每次 `plugin.json` 版本號提升,都要打對應的 `vX.Y.Z` git tag 並建立 GitHub
+Release(仍在 alpha 期間標為 pre-release),README 的版本 badge 也寫 `vX.Y.Z`。`v0.1.16`
+之前的 tag 用舊的 `alpha-X.Y.Z` 形式、停在 `alpha-0.1.2`;中間的版本從未打過 tag。
 
 ## 已解決的規則衝突
 
