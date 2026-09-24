@@ -366,12 +366,15 @@ slot 後判為 NOT-DISCRIMINATED、或不可計分。請把它讀成
 | 明示 routing | 整體強,但因 surface 而異 |
 | 任務側 T2 介入 | `0/6 → 4/6` |
 | description 側 T2 介入 | `0/6 → 0/6` |
+| 明確可路由性 對 自主 activation（AE1） | reference gate `11/12`，一般 activation `0/12` |
 
 * **明示 routing 明顯強於一般 activation。** 在 canonical routing 評測中,本包正確處理了大多數預期的 routing 判斷;但一般行為 run 幾乎不會自動叫用可用的 skill。
 * **通用的 activation 提示並不足夠。** 兩次 Activation Bridge 實驗只讓可觀測的 skill 叫用略為增加,大多數合格任務仍沒有自主的 skill activation。
 * **失效是 surface 特定的,不是全 pack 的。** Localization 實驗發現:有些 task surface 能穩定 route,另一些則漏掉、選到鄰近的 skill、或根本沒 activate。
 * **任務用詞能因果地影響 routing。** 對較弱的 `ground-truth-gates` surface,加入明示的 trust / verification 框架後,正確 routing 從 **0/6 提升到 4/6**(小型受控實驗);其中一個 surface 從 **0/3 變 3/3**。
 * **改 skill description 無法重現該效果。** 一個對照實驗維持自然任務用詞不變,只窄幅擴充 `ground-truth-gates` 的 description。目標 surface 的正確 routing 仍維持 **0/6 → 0/6**,而既有的強 surface 得以保留。因此該候選 description **未出貨**。
+
+**Activation Execution Probe v1（AE1）。** AE1 測試：對於已證明能在明確路由條件下正確導向 pack skill 的任務表面，一般執行是否也會自主呼叫該 skill。在預先註冊的 `T4a`/`T4b` 表面上，同期的明確路由 reference gate 通過（**11/12**），但一般執行的 expected-skill activation 為 **0/12**，any-Skill activation 亦為 **0/12**——這表示在本次 AE1 測試配置下，明確可路由性與自主 activation 之間存在可觀察到的 dissociation。AE1 **並未**證明：routing 指令的因果效應、tool allowlist 的因果效應、skill description 與此無關、母體層級的 activation 比率，或任何 skill 的行為價值或增益。設計、計數與詮釋邊界：[reviews/2026-09-24-ae1-v1-scored-reconciliation.md](reviews/2026-09-24-ae1-v1-scored-reconciliation.md)。
 
 這些實驗是方向性的,且目前每個條件的樣本數很小(small n),所以我們把它們當作工程決策的證據,而非母體層級的效能估計。
 
