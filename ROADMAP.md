@@ -18,18 +18,19 @@ routing (Surface-Cue **G2/G5**) while the tested description-side expansion does
 (Description-Boundary **D2**) — so the open question is activation execution and
 task-surface discrimination, and **no pack-wide description rewrite** follows.
 
-## Now — Instrument Hardening v1
+## Closed — Instrument Hardening v1
 
-**Purpose:** produce a reliable routing / activation observation instrument before
-running additional activation experiments.
+**Instrument Hardening v1 (IH1) = COMPLETE / CLOSED.** IH1-R2 =
+**QUALIFIED / CANONICAL** (freeze `98a0fee7e91a`), owner-accepted.
 
-The existing research already exposed **stop-compliance** weakness and
-**T1b-style runaway** task execution in the current probing setup (localization:
-stop-after-routing 9/21; T1b ×3 timed out at the wall). The goal is **not** to
-change skill content — it is to make future activation measurement cheaper and
-cleaner.
+IH1 produced the hardened routing / activation observation instrument and then
+supplied the hardened measurement baseline that **AE1-v1 (below) reused**
+(`98a0fee7e91a`). Earlier probing had exposed **stop-compliance** weakness and
+**T1b-style runaway** task execution (localization: stop-after-routing 9/21;
+T1b ×3 timed out at the wall); the qualified IH1-R2 instrument resolved these
+without changing skill content.
 
-Acceptance criteria (at least):
+Qualification criteria met:
 
 - reliable decision → observation → stop lifecycle
 - no T1b-style runaway task execution
@@ -39,8 +40,6 @@ Acceptance criteria (at least):
 - no silent rerun / replacement / backfill
 - raw provenance retained
 - no skill-content change
-
-This documentation task does **not** design or execute the instrument.
 
 ## Parallel Now — Stable Evaluation / Governance Playbook
 
@@ -58,33 +57,47 @@ Document only the methodology that is **already stable**:
 - PARK ≠ NEXT
 - PARK ≠ latent authorization
 
-Do **not** canonicalize the current routing / activation probe implementation.
-Mark that implementation **v-next / pending instrument qualification** — it is
-exactly what Instrument Hardening v1 above is meant to replace.
+Do **not** canonicalize any pre-IH1 routing / activation probe implementation.
+The hardened, qualified instrument is **IH1-R2** (`98a0fee7e91a`, closed above);
+the earlier unqualified probe setup it replaced is not canonical.
 
-## Next — Activation Execution / Instrument Re-test on Proven-Routeable Surfaces
+## Closed — Activation Execution Probe v1 (AE1)
 
-(Not "activation-runtime localization" — localization has already been performed.)
+**Activation Execution Probe v1 (AE1) = COMPLETE / CLOSED.** Scored, owner-accepted
+as canonical (2026-09-24).
 
-**Research question:** given surfaces already shown to route correctly under
-explicit routing, does a *hardened* ordinary-execution instrument convert that
-routing competence into autonomous skill activation?
+Research question: given surfaces already shown to route correctly under explicit
+routing, does a *hardened* ordinary-execution instrument convert that routing
+competence into autonomous skill activation? AE1 ran the hardened instrument
+(IH1-R2 measurement baseline `98a0fee7e91a`) on the preregistered `T4a`/`T4b`
+surfaces in a two-arm design (N = 24), governed by the R5 freeze `c6ef853af391`.
 
-Prior evidence — already scored; this is **not** a fresh attempt to rediscover
-whether a generic cue helps:
+Canonical result:
 
-- **Activation Bridge v1** (generic cue) scored → appropriate activation **6/41**
-  (Pattern D: activation rose but stays low; no behavioral increment where it fires).
-- **Activation Bridge v2** (mandatory routing checkpoint) scored → **6/41**. v2 shows
-  **no observed activation improvement over v1**, but that comparison is **not** a
-  clean contemporaneous causal contrast (v1 and v2 are separate cross-campaign
-  experiments).
-- Generic routing cues were **insufficient** at this tier.
-- **Localization** scored → **L3 / MIXED** (skill-and-surface-specific).
+- explicit-routing reference gate **PASS (11/12)**
+- ordinary expected-skill activation **0/12**
+- any-Skill activation **0/12**
+- progression rule **NOT MET**
+- behavioral follow-up **NOT ELIGIBLE**
 
-Restrict any future experiment to surfaces already demonstrated routeable under
-explicit routing, so that routing ambiguity and activation-execution failure are
-not conflated. **PARKED.**
+This is an explicit-routeability / autonomous-activation dissociation under the
+tested AE1 configuration. It does **not** establish a causal effect of the routing
+instruction or the tool allowlist, that skill descriptions are uninvolved, a
+population-wide activation rate, or any behavioral skill usefulness or uplift. Full
+design, counts, and interpretation boundary:
+[reviews/2026-09-24-ae1-v1-scored-reconciliation.md](reviews/2026-09-24-ae1-v1-scored-reconciliation.md).
+
+Prior supporting evidence (already scored, not reopened): Activation Bridge v1/v2
+each scored appropriate activation 6/41 (generic cues insufficient at this tier;
+the v1-v2 comparison is not a clean contemporaneous causal contrast); Localization
+**L3 / MIXED** (skill-and-surface-specific). The earlier natural-activation 0/48
+autonomous-invocation endpoint is consistent supporting prior evidence, not an
+identical replication.
+
+**No new activation treatment is promoted and no next experiment is inferred from
+this result.** Any new activation hypothesis requires independent motivation, new
+preregistration, and a fresh owner gate. `AGENTS.md` remains **HOLD** unless
+separately authorized.
 
 ## Later / Conditional — Broader Holdout Effectiveness
 

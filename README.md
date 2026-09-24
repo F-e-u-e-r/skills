@@ -555,12 +555,15 @@ Current results suggest that **skill availability and routing quality are not th
 | Explicit routing | strong overall, surface-specific |
 | Task-side T2 intervention | `0/6 → 4/6` |
 | Description-side T2 intervention | `0/6 → 0/6` |
+| Routeability vs autonomous activation (AE1) | ref gate `11/12`, ordinary activation `0/12` |
 
 * **Explicit routing is substantially stronger than ordinary activation.** In the canonical routing evaluation, the pack correctly handled most expected routing decisions, while ordinary behavioral runs rarely invoked an available skill automatically.
 * **Generic activation prompts were not enough.** Two Activation Bridge experiments increased observable skill invocation only modestly, leaving most eligible tasks without an autonomous skill activation.
 * **The failure is surface-specific, not pack-wide.** Localization experiments found some task surfaces route reliably while others miss, select neighboring skills, or remain unactivated.
 * **Task wording can causally affect routing.** For weak `ground-truth-gates` surfaces, adding explicit trust / verification framing increased correct routing from **0/6 to 4/6** in a small controlled experiment; one surface moved from **0/3 to 3/3**.
 * **Changing the skill description did not reproduce that effect.** A reciprocal experiment kept the natural task wording fixed and narrowly expanded the `ground-truth-gates` description. Correct routing on the target surfaces remained **0/6 → 0/6**, while existing strong surfaces were retained. The candidate description was therefore **not shipped**.
+
+**Activation Execution Probe v1 (AE1).** AE1 tested whether tasks that are explicitly routeable to a pack skill also invoke that skill autonomously during ordinary execution. On the preregistered `T4a`/`T4b` surfaces, the contemporaneous explicit-routing reference gate passed (**11/12**), while ordinary execution produced **0/12** expected-skill activations and **0/12** any-Skill activations — an explicit-routeability / autonomous-activation dissociation under the tested AE1 configuration. AE1 does **not** establish a causal effect of the routing instruction or the tool allowlist, that skill descriptions are uninvolved, a population-wide activation rate, or any behavioral skill usefulness or uplift. Design, counts, and interpretation boundary: [reviews/2026-09-24-ae1-v1-scored-reconciliation.md](reviews/2026-09-24-ae1-v1-scored-reconciliation.md).
 
 These experiments are directional and currently use small per-condition samples, so we treat them as evidence for engineering decisions rather than population-level performance estimates.
 
