@@ -97,6 +97,14 @@ def main():
     R.append(("unmapped-prose (real gate)", g.check_unmapped_prose(ROOT)==[], True))
     rec("distribution-attribution", g.check_distribution_attribution(ROOT), g.check_distribution_attribution(mini_root(notice_ok=False)))
 
+    # --- D6-C closure-repair gates ---
+    badr=clone(reach)
+    for s in badr:
+        if "A11Y-2001" in badr[s] and "DIAL-2002" in badr[s]: badr[s].remove("A11Y-2001")
+    rec("full-control-target-closure", g.check_full_control_target_closure(runtime,reach), g.check_full_control_target_closure(runtime,badr))
+    badr2=clone(reach); badr2["motion-craft"]=badr2["motion-craft"]+["ZZZ-9999"]
+    rec("skill-local-dependency-resolution", g.check_skill_local_dependency_resolution(ROOT,runtime,reach), g.check_skill_local_dependency_resolution(ROOT,runtime,badr2))
+
     # --- D6-B2.2-CLOSE gates ---
     rec("normative-bijection", g.check_normative_bijection(ROOT), _neg_bijection())
     rec("per-extension-conflict-review", g.check_per_extension_conflict_review(ROOT), _neg_conflict_review())

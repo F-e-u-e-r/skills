@@ -159,9 +159,17 @@ def check_per_skill_control_closure(runtime, reach):
     return f
 
 def check_generated_reference_fidelity(root, runtime):
-    """Every on-disk skill-local shard must be byte-identical to the deterministic re-render."""
+    """Every on-disk skill-local shard is byte-identical to its deterministic re-render.
+    Domain shards + controls.md come from render_shards; per-skill control-dependencies.md
+    from render_control_dependencies over that skill's cross-domain records."""
     f = []
     expected = pc.render_shards(runtime)
+    all_rt = list(pc._all_runtime(runtime)); rt_byid = {r["id"]: r for r in all_rt}
+    try:
+        reach = _load(root, os.path.join(GEN, "skill-reachability.json"))
+    except Exception as e:
+        return [f"fidelity: skill-reachability unreadable ({e})"]
+    cross = pc.skill_cross_domain(reach, all_rt)
     base = os.path.join(root, SKILL_DIR)
     for skill in sorted(os.listdir(base)):
         gd = os.path.join(base, skill, "references", "generated")
@@ -170,16 +178,60 @@ def check_generated_reference_fidelity(root, runtime):
         for fn in sorted(os.listdir(gd)):
             if not fn.endswith(".md"):
                 continue
-            if fn not in expected:
+            if fn == "control-dependencies.md":
+                want = pc.render_control_dependencies([rt_byid[i] for i in cross.get(skill, [])])
+            elif fn in expected:
+                want = expected[fn]
+            else:
                 f.append(f"fidelity: {skill}/{fn} is not a known generated shard"); continue
-            if open(os.path.join(gd, fn), encoding="utf-8").read() != expected[fn]:
+            if open(os.path.join(gd, fn), encoding="utf-8").read() != want:
                 f.append(f"fidelity: {skill}/{fn} differs from deterministic re-render")
-    # per-record scalar field verbatim presence in its domain shard
     for r in runtime["rules"] + runtime["synthesized_rules"]:
         dom = pc.domain_of(r["id"]).lower(); shard = expected.get(f"{dom}.md", "")
         for k, v in (r.get("effective_semantics") or {}).items():
             if isinstance(v, str) and v and v not in shard:
                 f.append(f"fidelity: {r['id']} field {k} not verbatim in {dom}.md")
+    return f
+
+
+def check_full_control_target_closure(runtime, reach):
+    """BIDIRECTIONAL closure: for every skill, every control it reaches has ALL its target rules
+    (rows[].rule_ids, gated_branches[].rule_ids) reachable in the same skill set."""
+    f = []
+    byid = {r["id"]: r for r in runtime_records(runtime)}
+    def targets(c):
+        es = c.get("effective_semantics") or {}; out = set()
+        for row in es.get("rows") or []: out |= set(row.get("rule_ids") or [])
+        for br in es.get("gated_branches") or []: out |= set(br.get("rule_ids") or [])
+        return out
+    for skill, ids in reach.items():
+        s = set(ids)
+        for cid in ids:
+            r = byid.get(cid)
+            if r and r["kind"] in ("decision_table", "dial"):
+                for t in targets(r):
+                    if t not in s:
+                        f.append(f"control-target-closure: {skill}: control {cid} target {t} not reachable")
+    return f
+
+
+def check_skill_local_dependency_resolution(root, runtime, reach):
+    """Every runtime record a skill reaches must be resolvable from that skill's OWN local shard files
+    (## <id> present), so correctness never depends on searching another skill's references."""
+    f = []
+    base = os.path.join(root, SKILL_DIR)
+    import re as _re
+    for skill, ids in reach.items():
+        gd = os.path.join(base, skill, "references", "generated")
+        blob = ""
+        if os.path.isdir(gd):
+            for fn in sorted(os.listdir(gd)):
+                if fn.endswith(".md"):
+                    blob += open(os.path.join(gd, fn), encoding="utf-8").read() + "\n"
+        present = set(_re.findall(r"^## ([A-Z][A-Z0-9]+-\d{3,4})", blob, flags=_re.M))
+        for rid in ids:
+            if rid not in present:
+                f.append(f"local-resolution: {skill}: reachable {rid} not present in any skill-local shard")
     return f
 
 
@@ -191,6 +243,7 @@ def _skillmd_refs(root, skill):
         return "", []
     text = open(sp, encoding="utf-8").read()
     return text, REF_LINK.findall(text)
+
 
 def check_reference_path_existence(root):
     """Every skill-local references/generated/*.md link in a SKILL.md resolves to an existing file."""
@@ -321,10 +374,16 @@ def check_clean_regeneration(root):
     runtime_txt = pc.dumps(runtime); support_txt = pc.dumps(support); reach_txt = pc.dumps(reach)
     ext = pc.build_local_extensions(root); ext_txt = pc.dumps(ext)
     shards = pc.render_shards(runtime); per_skill = pc.skill_shard_files(reach, runtime)
+    all_rt = list(pc._all_runtime(runtime)); rt_byid = {r["id"]: r for r in all_rt}
+    cross = pc.skill_cross_domain(reach, all_rt)
+    def _stext(skill, fn):
+        if fn == "control-dependencies.md":
+            return pc.render_control_dependencies([rt_byid[i] for i in cross.get(skill, [])])
+        return shards[fn]
     skill_shard_sha = {}
     for skill, files in per_skill.items():
         for fn in files:
-            skill_shard_sha[f"skills/{skill}/references/generated/{fn}"] = pc.sha256_bytes(shards[fn].encode())
+            skill_shard_sha[f"skills/{skill}/references/generated/{fn}"] = pc.sha256_bytes(_stext(skill, fn).encode())
     scoped = os.path.join(root, pc.SCOPED_NOTICE)
     notice_rel = {
         "reason": "design-pack ships as ./design-pack; the canonical repo-level notice is outside that boundary, so a byte-identical scoped copy is emitted inside it.",
@@ -338,7 +397,7 @@ def check_clean_regeneration(root):
             os.path.join(GEN, "manifest.json"): manifest_txt}
     for skill, files in per_skill.items():
         for fn in files:
-            want[os.path.join(SKILL_DIR, skill, "references", "generated", fn)] = shards[fn]
+            want[os.path.join(SKILL_DIR, skill, "references", "generated", fn)] = _stext(skill, fn)
     for rel, text in want.items():
         p = os.path.join(root, rel)
         if not os.path.exists(p):

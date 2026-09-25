@@ -181,12 +181,15 @@ def classify(recs):
 
 
 def reachability(recs):
-    """Return {skill: sorted([record ids])} plus fan-out. Rule reach by domain policy;
-    control reach DERIVED by closure: a control is reachable by a skill if any rule the
-    skill reaches selector-binds it, or it routes/gates a rule the skill reaches."""
+    """Per-skill reachable set under BIDIRECTIONAL runtime closure to a fixed point:
+      (a) rule -> control it selector-binds;
+      (b) control -> every rule it routes/gates (rows[].rule_ids, gated_branches[].rule_ids);
+      (c) control that routes into an already-reached rule becomes reachable.
+    Cross-domain target rules pulled in by (b) are included (minimally)."""
     byid = {r["id"]: r for r in recs}
-    rules = [r for r in recs if r["kind"] in RUNTIME_PAYLOAD_KINDS]
+    rule_ids = {r["id"] for r in recs if r["kind"] in RUNTIME_PAYLOAD_KINDS}
     controls = [r for r in recs if r["kind"] in RUNTIME_CONTROL_KINDS]
+    ctrl_ids = {c["id"] for c in controls}
 
     def control_targets(c):
         es = c.get("effective_semantics") or {}
@@ -197,33 +200,70 @@ def reachability(recs):
             out |= set(br.get("rule_ids") or [])
         return out
 
-    reach = {s: set() for s in SKILLS}
+    reach = {}
     for s in SKILLS:
         doms = SKILL_RULE_DOMAINS[s]
-        skill_rules = {r["id"] for r in rules if domain_of(r["id"]) in doms}
-        reach[s] |= skill_rules
-        # control closure
-        for c in controls:
-            bound_by = any(selector_ref(byid[rid]) == c["id"] for rid in skill_rules)
-            routes_into = bool(control_targets(c) & skill_rules)
-            if bound_by or routes_into:
-                reach[s].add(c["id"])
-    return {s: sorted(reach[s]) for s in SKILLS}
+        r = {rid for rid in rule_ids if domain_of(rid) in doms}
+        changed = True
+        while changed:
+            changed = False
+            for rid in [x for x in r if x in rule_ids]:
+                ref = selector_ref(byid[rid])
+                if ref and ref in ctrl_ids and ref not in r:
+                    r.add(ref); changed = True
+            for c in controls:
+                tgts = control_targets(c)
+                if c["id"] in r:
+                    for t in tgts:
+                        if t not in r:
+                            r.add(t); changed = True
+                elif tgts & r and c["id"] not in r:
+                    r.add(c["id"]); changed = True
+        reach[s] = sorted(r)
+    return reach
+
+
+def skill_cross_domain(reach, recs):
+    """Per skill: reachable PAYLOAD rules whose domain is outside the skill's own rule domains
+    (pulled in only by control-target closure). These become the skill-local control-dependencies shard."""
+    byid = {r["id"]: r for r in recs}
+    out = {}
+    for s, ids in reach.items():
+        doms = SKILL_RULE_DOMAINS.get(s, set())
+        out[s] = sorted(i for i in ids
+                        if byid[i]["kind"] in RUNTIME_PAYLOAD_KINDS and domain_of(i) not in doms)
+    return out
+
+def render_control_dependencies(records):
+    """Deterministic skill-local shard of CROSS-DOMAIN records required by control-target closure
+    (so a skill never depends on searching another skill's references). Fields verbatim."""
+    body = "\n\n".join(render_payload_block(r) for r in sorted(records, key=lambda x: x["id"]))
+    return (_shard_header("CONTROL DEPENDENCIES (cross-domain rules required by this skill's controls)", len(records))
+            + "\n" + body + "\n")
 
 
 def skill_shard_files(reach, runtime):
-    """Per skill: the shard filenames it consumes = domains of its reachable payload records + controls.md if it reaches any control."""
-    kind={r["id"]:r["kind"] for r in _all_runtime(runtime)}
-    out={}
+    """Per skill: shard filenames it consumes = domains of its reachable payload records + controls.md
+    (if it reaches a control) + control-dependencies.md (if control-closure pulled cross-domain rules)."""
+    kind = {r["id"]: r["kind"] for r in _all_runtime(runtime)}
+    recs = list(_all_runtime(runtime))
+    cross = skill_cross_domain(reach, recs)
+    out = {}
     for skill, ids in reach.items():
-        doms=set(); needs_controls=False
+        doms = set(); needs_controls = False
         for rid in ids:
-            k=kind.get(rid)
-            if k in RUNTIME_PAYLOAD_KINDS: doms.add(domain_of(rid))
-            elif k in RUNTIME_CONTROL_KINDS: needs_controls=True
-        files=sorted(f"{d.lower()}.md" for d in doms)
-        if needs_controls: files.append("controls.md")
-        out[skill]=files
+            k = kind.get(rid)
+            if k in RUNTIME_PAYLOAD_KINDS:
+                if domain_of(rid) in SKILL_RULE_DOMAINS.get(skill, set()):
+                    doms.add(domain_of(rid))
+            elif k in RUNTIME_CONTROL_KINDS:
+                needs_controls = True
+        files = sorted(f"{d.lower()}.md" for d in doms)
+        if needs_controls:
+            files.append("controls.md")
+        if cross.get(skill):
+            files.append("control-dependencies.md")
+        out[skill] = files
     return out
 
 
@@ -303,6 +343,13 @@ def main():
     # SKILL-LOCAL shards (documented supporting-file model): mirror each skill's shards under its own references/generated/
     all_shards = render_shards(runtime)
     per_skill = skill_shard_files(reach, runtime)
+    all_rt = list(_all_runtime(runtime))
+    rt_byid = {r["id"]: r for r in all_rt}
+    cross = skill_cross_domain(reach, all_rt)  # per-skill cross-domain payload records (ids)
+    def shard_text(skill, fn):
+        if fn == "control-dependencies.md":
+            return render_control_dependencies([rt_byid[i] for i in cross.get(skill, [])])
+        return all_shards[fn]
     shared = os.path.join(root, REF_DIR)  # remove the superseded shared consumption dir
     if os.path.isdir(shared):
         for fn in os.listdir(shared): os.remove(os.path.join(shared, fn))
@@ -315,7 +362,7 @@ def main():
         for fn in list(os.listdir(d)):
             if fn.endswith(".md"): os.remove(os.path.join(d, fn))
         for fn in files:
-            text = all_shards[fn]
+            text = shard_text(skill, fn)
             with open(os.path.join(d, fn), "w", encoding="utf-8") as fh: fh.write(text)
             skill_shard_sha[f"skills/{skill}/references/generated/{fn}"] = sha256_bytes(text.encode())
 
