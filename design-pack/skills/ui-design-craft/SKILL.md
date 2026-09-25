@@ -11,6 +11,37 @@ budgets with numbers, and a mechanical gate. One meta-rule governs the whole
 file, learned from production tests upstream: **"use sparingly" does not
 transfer to a generating model; binary phrasing and countable caps do.**
 
+## Corpus-derived semantic references (authoritative)
+
+This skill is bridged to the Phase-B design corpus — the pack's canonical design
+semantics. The machine-checked rules for the domains this skill produces are
+skill-local supporting files under `references/generated/`. **Where a rule below
+overlaps one of these shards, the generated shard is the authoritative semantic
+source**; this file's prose is task framing, review orchestration, and
+explicitly-labelled pack-local extensions, never a competing rule authority.
+
+Load a supporting file only when the task needs it — they stay out of context
+until then; do not load them all at once:
+
+- layout / structure / hero / sections → [struct rules](references/generated/struct.md)
+- type scale / hierarchy → [typography rules](references/generated/typo.md)
+- color / contrast / palette → [color rules](references/generated/color.md)
+- spacing / density → [space rules](references/generated/space.md)
+- AI-slop bans → [anti-slop rules](references/generated/antislop.md)
+- interaction / states / touch targets → [interaction rules](references/generated/interact.md)
+- accessibility → [accessibility rules](references/generated/a11y.md)
+- flows / UX routing → [ux rules](references/generated/ux.md)
+- when a rule is selector- or dial-gated → also load [controls](references/generated/controls.md)
+
+Authority order: **canonical corpus (these shards) > pack-local extensions (this
+file's numeric budgets, ban signatures, and preservation rules) > orchestration
+prose.** A pack-local extension may add or tighten, never weaken / reverse /
+broaden a corpus rule. The extension registry and per-statement classification are
+`design-pack/generated/local-extensions.json` and
+`design-pack/normative-classification.json`. Generated shards are never
+hand-edited — edit the canonical corpus and regenerate with
+`design-pack/tools/project_corpus.py`.
+
 ## 0. Classify the surface before generating anything
 
 First action, before any code or mockup:

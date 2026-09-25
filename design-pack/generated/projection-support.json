@@ -1,0 +1,905 @@
+{
+ "conflict": [
+  {
+   "effective_semantics": {
+    "conflict_type": "rule_evidence",
+    "participants": [
+     "STRUCT-2002",
+     "STRUCT-4012",
+     "EVID-5305",
+     "EVID-5105",
+     "EVID-5155",
+     "EVID-5405"
+    ],
+    "resolution": "Retain both rules; widen each rule's override from the brand evidence. No new rule minted."
+   },
+   "id": "CONFLICT-5900",
+   "kind": "conflict",
+   "public_expression": "Reconciliation record: the anti-centered-hero rules — STRUCT-2002 (gated by DESIGN_VARIANCE > 4) and STRUCT-4012 — set against four brand exemplars that use a centered or non-split hero (Notion, MongoDB, Miro, Vercel). Resolution: not a true contradiction — both rules target the unconsidered centered-everything default, and STRUCT-4012 already permits a centered-narrow or atmospheric hero; both are retained and their overrides widened from the evidence. No new rule is minted."
+  },
+  {
+   "effective_semantics": {
+    "conflict_type": "rule_evidence",
+    "participants": [
+     "STRUCT-2001",
+     "STRUCT-4040",
+     "EVID-5406",
+     "EVID-5106",
+     "EVID-5306",
+     "EVID-5255"
+    ],
+    "resolution": "Consolidate the three-equal-card ban into STRUCT-6001; retain and reconcile with brand three-up evidence."
+   },
+   "id": "CONFLICT-5901",
+   "kind": "conflict",
+   "public_expression": "Reconciliation record: the three-equal-card ban (STRUCT-2001) and the AI-template audit rule (STRUCT-4040) set against brand three-up grids (Vercel, MongoDB, Notion, Linear). Resolution: the three-equal-card ban is consolidated into the synthesized STRUCT-6001 and reconciled with the deliberate brand three-up evidence; the rules are retained. No standalone new rule beyond STRUCT-6001."
+  },
+  {
+   "effective_semantics": {
+    "conflict_type": "rule_evidence",
+    "participants": [
+     "COLOR-4003",
+     "COLOR-4007",
+     "EVID-5355",
+     "EVID-5407"
+    ],
+    "resolution": "Widen COLOR-4003/COLOR-4007 override with a deliberate brand-signature defeater scoped to background/non-text; text-gradient invariant unchanged; effective strength avoid."
+   },
+   "id": "CONFLICT-5902",
+   "kind": "conflict",
+   "public_expression": "Reconciliation record: the anti-mesh and anti-purple-gradient rules (COLOR-4003, COLOR-4007) set against deliberate brand-signature gradient systems (Stripe, Vercel). Resolution: the rules target the unconsidered default AI-gradient; a deliberate, coherent, evidenced brand-signature system is permitted through a widened override scoped to background/non-text, while the text-gradient invariant stays exceptionless; effective strength avoid. No new rule is minted."
+  }
+ ],
+ "evidence": [
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Figma marketing — color & surface system (identity)"
+   },
+   "id": "EVID-5000",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Figma marketing — color & surface system (identity)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Figma marketing — typography role assignment"
+   },
+   "id": "EVID-5001",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Figma marketing — typography role assignment."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Figma marketing — spacing & section-rhythm strategy"
+   },
+   "id": "EVID-5002",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Figma marketing — spacing & section-rhythm strategy."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Figma marketing — elevation / depth system"
+   },
+   "id": "EVID-5003",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Figma marketing — elevation / depth system."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Figma marketing — component-shape language (buttons/radius)"
+   },
+   "id": "EVID-5004",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Figma marketing — component-shape language (buttons/radius)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Figma marketing — navigation treatment"
+   },
+   "id": "EVID-5005",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Figma marketing — navigation treatment."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Figma marketing — responsive behavior"
+   },
+   "id": "EVID-5006",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Figma marketing — responsive behavior."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Figma marketing — page composition & grid rhythm"
+   },
+   "id": "EVID-5007",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Figma marketing — page composition & grid rhythm."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Figma marketing — font-substitute guidance (Inter/Geist)"
+   },
+   "id": "EVID-5008",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Figma marketing — font-substitute guidance (Inter/Geist)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "prescriptive_in_source",
+    "subject": "Figma marketing — brand Do/Don't prescriptions"
+   },
+   "id": "EVID-5009",
+   "kind": "evidence",
+   "public_expression": "Evidence (prescriptive_in_source): Figma marketing — brand Do/Don't prescriptions."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Wise — color & surface system (identity)"
+   },
+   "id": "EVID-5050",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Wise — color & surface system (identity)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Wise — typography role assignment (Wise Sans + Inter)"
+   },
+   "id": "EVID-5051",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Wise — typography role assignment (Wise Sans + Inter)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Wise — spacing & section-rhythm strategy"
+   },
+   "id": "EVID-5052",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Wise — spacing & section-rhythm strategy."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Wise — elevation via surface contrast"
+   },
+   "id": "EVID-5053",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Wise — elevation via surface contrast."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Wise — component-shape language (rounded.xl 24px)"
+   },
+   "id": "EVID-5054",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Wise — component-shape language (rounded.xl 24px)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Wise — hero composition (split layout)"
+   },
+   "id": "EVID-5055",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Wise — hero composition (split layout)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Wise — responsive behavior"
+   },
+   "id": "EVID-5056",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Wise — responsive behavior."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Wise — semantic palette depth"
+   },
+   "id": "EVID-5057",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Wise — semantic palette depth."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Wise — font-substitute guidance"
+   },
+   "id": "EVID-5058",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Wise — font-substitute guidance."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "prescriptive_in_source",
+    "subject": "Wise — brand Do/Don't prescriptions"
+   },
+   "id": "EVID-5059",
+   "kind": "evidence",
+   "public_expression": "Evidence (prescriptive_in_source): Wise — brand Do/Don't prescriptions."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "MongoDB — dual-mode color & surface system"
+   },
+   "id": "EVID-5100",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): MongoDB — dual-mode color & surface system."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "MongoDB — typography role assignment"
+   },
+   "id": "EVID-5101",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): MongoDB — typography role assignment."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "MongoDB — spacing & section-rhythm strategy"
+   },
+   "id": "EVID-5102",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): MongoDB — spacing & section-rhythm strategy."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "MongoDB — elevation / depth system"
+   },
+   "id": "EVID-5103",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): MongoDB — elevation / depth system."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "MongoDB — component-shape language (pill buttons, 12px cards)"
+   },
+   "id": "EVID-5104",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): MongoDB — component-shape language (pill buttons, 12px cards)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "MongoDB — hero composition (centered)"
+   },
+   "id": "EVID-5105",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): MongoDB — hero composition (centered)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "MongoDB — repeated equal-card grids (course tiles / pricing / service tiles)"
+   },
+   "id": "EVID-5106",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): MongoDB — repeated equal-card grids (course tiles / pricing / service tiles)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "MongoDB — responsive behavior"
+   },
+   "id": "EVID-5107",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): MongoDB — responsive behavior."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "prescriptive_in_source",
+    "subject": "MongoDB — brand Do/Don't prescriptions"
+   },
+   "id": "EVID-5108",
+   "kind": "evidence",
+   "public_expression": "Evidence (prescriptive_in_source): MongoDB — brand Do/Don't prescriptions."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Miro — color & surface system (identity)"
+   },
+   "id": "EVID-5150",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Miro — color & surface system (identity)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Miro — typography role assignment"
+   },
+   "id": "EVID-5151",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Miro — typography role assignment."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Miro — spacing & section-rhythm strategy"
+   },
+   "id": "EVID-5152",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Miro — spacing & section-rhythm strategy."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Miro — elevation / depth system"
+   },
+   "id": "EVID-5153",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Miro — elevation / depth system."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Miro — component-shape language"
+   },
+   "id": "EVID-5154",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Miro — component-shape language."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Miro — hero composition (centered)"
+   },
+   "id": "EVID-5155",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Miro — hero composition (centered)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Miro — pricing grid & dense comparison table"
+   },
+   "id": "EVID-5156",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Miro — pricing grid & dense comparison table."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Miro — responsive behavior"
+   },
+   "id": "EVID-5157",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Miro — responsive behavior."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "prescriptive_in_source",
+    "subject": "Miro — brand Do/Don't prescriptions"
+   },
+   "id": "EVID-5158",
+   "kind": "evidence",
+   "public_expression": "Evidence (prescriptive_in_source): Miro — brand Do/Don't prescriptions."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "opencode.ai — color & surface system (identity)"
+   },
+   "id": "EVID-5200",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): opencode.ai — color & surface system (identity)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "opencode.ai — 100% monospace typography (single-face system)"
+   },
+   "id": "EVID-5201",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): opencode.ai — 100% monospace typography (single-face system)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "opencode.ai — spacing & section-rhythm strategy"
+   },
+   "id": "EVID-5202",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): opencode.ai — spacing & section-rhythm strategy."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "opencode.ai — flat, shadowless elevation"
+   },
+   "id": "EVID-5203",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): opencode.ai — flat, shadowless elevation."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "opencode.ai — shape language & ASCII iconography"
+   },
+   "id": "EVID-5204",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): opencode.ai — shape language & ASCII iconography."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "opencode.ai — hero / page composition (single dark TUI mockup)"
+   },
+   "id": "EVID-5205",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): opencode.ai — hero / page composition (single dark TUI mockup)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "opencode.ai — responsive behavior"
+   },
+   "id": "EVID-5206",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): opencode.ai — responsive behavior."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "opencode.ai — font-substitute guidance"
+   },
+   "id": "EVID-5207",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): opencode.ai — font-substitute guidance."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "prescriptive_in_source",
+    "subject": "opencode.ai — brand Do/Don't prescriptions"
+   },
+   "id": "EVID-5208",
+   "kind": "evidence",
+   "public_expression": "Evidence (prescriptive_in_source): opencode.ai — brand Do/Don't prescriptions."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "linear.app — dark-canvas color & surface system (identity)"
+   },
+   "id": "EVID-5250",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): linear.app — dark-canvas color & surface system (identity)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "linear.app — typography role assignment"
+   },
+   "id": "EVID-5251",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): linear.app — typography role assignment."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "linear.app — spacing & whitespace strategy"
+   },
+   "id": "EVID-5252",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): linear.app — spacing & whitespace strategy."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "linear.app — elevation via surface ladder (shadow-resistant)"
+   },
+   "id": "EVID-5253",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): linear.app — elevation via surface ladder (shadow-resistant)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "linear.app — component-shape language (8px buttons, NOT pills)"
+   },
+   "id": "EVID-5254",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): linear.app — component-shape language (8px buttons, NOT pills)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "linear.app — screenshot-led composition & 3-up card grids"
+   },
+   "id": "EVID-5255",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): linear.app — screenshot-led composition & 3-up card grids."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "linear.app — responsive behavior"
+   },
+   "id": "EVID-5256",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): linear.app — responsive behavior."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "linear.app — font-substitute guidance (Inter)"
+   },
+   "id": "EVID-5257",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): linear.app — font-substitute guidance (Inter)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "prescriptive_in_source",
+    "subject": "linear.app — brand Do/Don't prescriptions"
+   },
+   "id": "EVID-5258",
+   "kind": "evidence",
+   "public_expression": "Evidence (prescriptive_in_source): linear.app — brand Do/Don't prescriptions."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Notion — color & surface system (identity)"
+   },
+   "id": "EVID-5300",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Notion — color & surface system (identity)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Notion — typography role assignment (Notion-Sans, Inter-based)"
+   },
+   "id": "EVID-5301",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Notion — typography role assignment (Notion-Sans, Inter-based)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Notion — spacing & section-rhythm strategy"
+   },
+   "id": "EVID-5302",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Notion — spacing & section-rhythm strategy."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Notion — elevation / depth system"
+   },
+   "id": "EVID-5303",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Notion — elevation / depth system."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Notion — component-shape language (8px RECTANGLES, explicitly not pills)"
+   },
+   "id": "EVID-5304",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Notion — component-shape language (8px RECTANGLES, explicitly not pills)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Notion — hero composition (centered)"
+   },
+   "id": "EVID-5305",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Notion — hero composition (centered)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Notion — feature grids & pricing composition"
+   },
+   "id": "EVID-5306",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Notion — feature grids & pricing composition."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Notion — responsive behavior"
+   },
+   "id": "EVID-5307",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Notion — responsive behavior."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "prescriptive_in_source",
+    "subject": "Notion — brand Do/Don't prescriptions"
+   },
+   "id": "EVID-5308",
+   "kind": "evidence",
+   "public_expression": "Evidence (prescriptive_in_source): Notion — brand Do/Don't prescriptions."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Stripe (inspired) — color & surface system (identity)"
+   },
+   "id": "EVID-5350",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Stripe (inspired) — color & surface system (identity)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Stripe (inspired) — typography role assignment (Sohne thin + tabular figures)"
+   },
+   "id": "EVID-5351",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Stripe (inspired) — typography role assignment (Sohne thin + tabular figures)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Stripe (inspired) — spacing & section-rhythm strategy"
+   },
+   "id": "EVID-5352",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Stripe (inspired) — spacing & section-rhythm strategy."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Stripe (inspired) — elevation (gradient mesh as the depth medium)"
+   },
+   "id": "EVID-5353",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Stripe (inspired) — elevation (gradient mesh as the depth medium)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Stripe (inspired) — component-shape language (tight pills)"
+   },
+   "id": "EVID-5354",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Stripe (inspired) — component-shape language (tight pills)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Stripe (inspired) — signature gradient-mesh backdrop"
+   },
+   "id": "EVID-5355",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Stripe (inspired) — signature gradient-mesh backdrop."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Stripe (inspired) — responsive behavior"
+   },
+   "id": "EVID-5356",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Stripe (inspired) — responsive behavior."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Stripe (inspired) — font-substitute guidance (Inter at 300)"
+   },
+   "id": "EVID-5357",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Stripe (inspired) — font-substitute guidance (Inter at 300)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "prescriptive_in_source",
+    "subject": "Stripe (inspired) — brand Do/Don't prescriptions"
+   },
+   "id": "EVID-5358",
+   "kind": "evidence",
+   "public_expression": "Evidence (prescriptive_in_source): Stripe (inspired) — brand Do/Don't prescriptions."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Vercel (inspired) — color & surface system (identity)"
+   },
+   "id": "EVID-5400",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Vercel (inspired) — color & surface system (identity)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Vercel (inspired) — typography role assignment (Geist sans + Geist Mono)"
+   },
+   "id": "EVID-5401",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Vercel (inspired) — typography role assignment (Geist sans + Geist Mono)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Vercel (inspired) — spacing & section-rhythm strategy"
+   },
+   "id": "EVID-5402",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Vercel (inspired) — spacing & section-rhythm strategy."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Vercel (inspired) — stacked-shadow elevation system"
+   },
+   "id": "EVID-5403",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Vercel (inspired) — stacked-shadow elevation system."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Vercel (inspired) — dual-scale shape language (100px marketing pill + 6px nav square)"
+   },
+   "id": "EVID-5404",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Vercel (inspired) — dual-scale shape language (100px marketing pill + 6px nav square)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Vercel (inspired) — hero composition (non-split, vertically stacked)"
+   },
+   "id": "EVID-5405",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Vercel (inspired) — hero composition (non-split, vertically stacked)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Vercel (inspired) — 3-up feature rows & pricing grid"
+   },
+   "id": "EVID-5406",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Vercel (inspired) — 3-up feature rows & pricing grid."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Vercel (inspired) — signature multi-stop mesh gradient"
+   },
+   "id": "EVID-5407",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Vercel (inspired) — signature multi-stop mesh gradient."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Vercel (inspired) — responsive behavior"
+   },
+   "id": "EVID-5408",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Vercel (inspired) — responsive behavior."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "descriptive",
+    "subject": "Vercel (inspired) — font-substitute guidance (Inter)"
+   },
+   "id": "EVID-5409",
+   "kind": "evidence",
+   "public_expression": "Evidence (descriptive): Vercel (inspired) — font-substitute guidance (Inter)."
+  },
+  {
+   "effective_semantics": {
+    "evidence_type": "corpus",
+    "source_character": "prescriptive_in_source",
+    "subject": "Vercel (inspired) — brand Do/Don't prescriptions"
+   },
+   "id": "EVID-5410",
+   "kind": "evidence",
+   "public_expression": "Evidence (prescriptive_in_source): Vercel (inspired) — brand Do/Don't prescriptions."
+  }
+ ]
+}

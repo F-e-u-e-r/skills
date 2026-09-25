@@ -1,0 +1,251 @@
+{
+ "_note": "Pack-local Design Pack production requirements NOT represented in the canonical Phase-B corpus. Authority is STRICTLY BELOW canonical corpus semantics; each entry is stricter/orthogonal/implementation-specific and may only add or tighten, never weaken/reverse/broaden/contradict a corpus rule. Carries NO Phase-B provenance; never merged into runtime.json.",
+ "authority": "pack-local-extension",
+ "count": 19,
+ "count_by_skill": {
+  "motion-craft": 6,
+  "ui-design-craft": 13
+ },
+ "extensions": [
+  {
+   "authority": "pack-local-extension",
+   "ext_id": "MOTION-LOCAL-001",
+   "nearest_corpus_ids": [
+    "MOTION-1011",
+    "MOTION-1020"
+   ],
+   "relation": "orthogonal",
+   "section": "§1 duration budgets",
+   "skill": "motion-craft",
+   "statement": "Per-surface ms budget table (hover 90-160 … route 240-500); standard <300ms, nothing >500ms; exit = 65-75% of entrance; distance scales duration; frequency scales duration down; never animate keyboard-initiated actions",
+   "stmt_id": "MOTION-001",
+   "why_no_conflict": "Kowalski-sourced numeric ms budgets; corpus MOTION rules are conceptual and carry no such numbers"
+  },
+  {
+   "authority": "pack-local-extension",
+   "ext_id": "MOTION-LOCAL-002",
+   "nearest_corpus_ids": [
+    "MOTION-1001"
+   ],
+   "relation": "orthogonal",
+   "section": "§2 easing",
+   "skill": "motion-craft",
+   "statement": "Enter ease-out / exit ease-in / move ease-in-out / mechanical linear; named bezier defaults (M3 standard/emphasized, CSS ease)",
+   "stmt_id": "MOTION-002",
+   "why_no_conflict": "specific easing curves/bezier values not modelled in corpus"
+  },
+  {
+   "authority": "pack-local-extension",
+   "ext_id": "MOTION-LOCAL-003",
+   "nearest_corpus_ids": [],
+   "relation": "implementation-specific",
+   "section": "§3 springs & gesture physics",
+   "skill": "motion-craft",
+   "statement": "Critical-damping formula damping=2*sqrt(stiffness); preset table; momentum projection (Apple exponential-decay d~=0.998); rubber-band (c=0.55); velocity handoff w/ zero-guard; momentum dismissal velocity OR distance (~0.11 px/ms)",
+   "stmt_id": "MOTION-004",
+   "why_no_conflict": "physics formulas/coefficients; implementation guidance not modelled in corpus"
+  },
+  {
+   "authority": "pack-local-extension",
+   "ext_id": "MOTION-LOCAL-004",
+   "nearest_corpus_ids": [],
+   "relation": "orthogonal",
+   "section": "§4 choreography",
+   "skill": "motion-craft",
+   "statement": "Stagger 30-80ms, sequence <500ms, non-blocking; one element leads; overshoot budgets (success 5-10%/celebration <=25%/errors 0%); asymmetric deliberate/response timing",
+   "stmt_id": "MOTION-005",
+   "why_no_conflict": "exact choreography budgets not modelled in corpus"
+  },
+  {
+   "authority": "pack-local-extension",
+   "ext_id": "MOTION-LOCAL-005",
+   "nearest_corpus_ids": [
+    "MOTION-1002",
+    "MOTION-1015"
+   ],
+   "relation": "implementation-specific",
+   "section": "§5 performance traps",
+   "skill": "motion-craft",
+   "statement": "transition:all banned; Framer x/y/scale main-thread caveat; inheriting CSS-var recalc; interruptible/retarget; never scale(0) (enter 0.9-0.97); transform-origin from trigger; gate hover behind (hover:hover)",
+   "stmt_id": "MOTION-007",
+   "why_no_conflict": "implementation performance constraints; not modelled in corpus"
+  },
+  {
+   "authority": "pack-local-extension",
+   "ext_id": "MOTION-LOCAL-006",
+   "nearest_corpus_ids": [
+    "MOTION-1009",
+    "A11Y-2001"
+   ],
+   "relation": "stricter",
+   "section": "§6 reduced-motion detail",
+   "skill": "motion-craft",
+   "statement": "'fewer and gentler, not zero' mapping (slide+fade->fade, spring->tween, parallax->removed)",
+   "stmt_id": "MOTION-009",
+   "why_no_conflict": "elaborates the corpus reduced-motion floor (MOTION-1009/A11Y-2001) with a specific reduction mapping; adds detail, never weakens"
+  },
+  {
+   "authority": "pack-local-extension",
+   "ext_id": "UI-LOCAL-001",
+   "nearest_corpus_ids": [
+    "ANTISLOP-2001"
+   ],
+   "relation": "orthogonal",
+   "section": "§1 color tells",
+   "skill": "ui-design-craft",
+   "statement": "Ban default indigo/violet accents (#6366f1 #4f46e5 #8b5cf6 #7c3aed) and the beige/brass/espresso + olive/clay/terracotta unresearched families; no even-distribution/decorative-semantic color",
+   "stmt_id": "UI-003",
+   "why_no_conflict": "adds specific banned hex families/palettes; ANTISLOP-2001's strength/override untouched"
+  },
+  {
+   "authority": "pack-local-extension",
+   "ext_id": "UI-LOCAL-002",
+   "nearest_corpus_ids": [
+    "ANTISLOP-2001"
+   ],
+   "relation": "orthogonal",
+   "section": "§1 typography tells",
+   "skill": "ui-design-craft",
+   "statement": "Ban Fraunces/Instrument Serif as unjustified display defaults, the decorative one-word swap, all-caps/small labels without letter-spacing, clipped italic descenders",
+   "stmt_id": "UI-005",
+   "why_no_conflict": "adds specific font/typographic ban signatures; no corpus rule altered"
+  },
+  {
+   "authority": "pack-local-extension",
+   "ext_id": "UI-LOCAL-003",
+   "nearest_corpus_ids": [
+    "ANTISLOP-2001",
+    "STRUCT-2006"
+   ],
+   "relation": "orthogonal",
+   "section": "§1 container tells",
+   "skill": "ui-design-craft",
+   "statement": "Ban card-as-default grouping, decorative left accent stripe, 3-col icon-in-circle grid, split-header default, double hairline table borders, emoji-as-iconography",
+   "stmt_id": "UI-006",
+   "why_no_conflict": "adds specific container ban signatures; no corpus rule altered"
+  },
+  {
+   "authority": "pack-local-extension",
+   "ext_id": "UI-LOCAL-004",
+   "nearest_corpus_ids": [
+    "ANTISLOP-2001",
+    "ANTISLOP-2004"
+   ],
+   "relation": "stricter",
+   "section": "§1 label/meta tells",
+   "skill": "ui-design-craft",
+   "statement": "Eyebrow cap = at most 1 per 3 sections (exact count); ban section numbering, version stamps, pagination on tiles, locale/weather strips, scroll cues, poetic/step labels, middle-dot chains (max one · per line)",
+   "stmt_id": "UI-008",
+   "why_no_conflict": "eyebrow cap (<=1 per 3 sections) is tighter than the ANTISLOP-2001/2004 eyebrow concept; other meta-tells are orthogonal additions; a tighter bound cannot weaken"
+  },
+  {
+   "authority": "pack-local-extension",
+   "ext_id": "UI-LOCAL-005",
+   "nearest_corpus_ids": [],
+   "relation": "orthogonal",
+   "section": "§1 fake-content tells",
+   "skill": "ui-design-craft",
+   "statement": "Ban div-built fake product UI, placeholder people/testimonials/logos/metrics, CSS-blob fake imagery; design the empty/honest slot instead",
+   "stmt_id": "UI-009",
+   "why_no_conflict": "adds fake-content bans not modelled in corpus"
+  },
+  {
+   "authority": "pack-local-extension",
+   "ext_id": "UI-LOCAL-006",
+   "nearest_corpus_ids": [],
+   "relation": "orthogonal",
+   "section": "§1 mode tells",
+   "skill": "ui-design-craft",
+   "statement": "Light is baseline (dark only if briefed); no calm-editorial autopilot without a written reason",
+   "stmt_id": "UI-010",
+   "why_no_conflict": "adds light-baseline / calm-editorial guardrails not modelled in corpus"
+  },
+  {
+   "authority": "pack-local-extension",
+   "ext_id": "UI-LOCAL-007",
+   "nearest_corpus_ids": [
+    "STRUCT-2006"
+   ],
+   "relation": "orthogonal",
+   "section": "§2 layout budgets",
+   "skill": "ui-design-craft",
+   "statement": "Hero <=2 lines / <=20 words / <=4 text elements / CTA above fold / top padding ~6rem; nav single-line <=80px; each layout family at most once/page; zigzag run <=2; bento cells == content with >=2-3 varied; per-section mobile collapse declared",
+   "stmt_id": "UI-011",
+   "why_no_conflict": "exact marketing layout budgets not modelled in corpus; adds constraints only"
+  },
+  {
+   "authority": "pack-local-extension",
+   "ext_id": "UI-LOCAL-008",
+   "nearest_corpus_ids": [],
+   "relation": "orthogonal",
+   "section": "§3 type discipline",
+   "skill": "ui-design-craft",
+   "statement": "Hierarchy 3-4 levels by weight/spacing not size; micro text (<=11px) whitelisted to an enumerated role list",
+   "stmt_id": "UI-012",
+   "why_no_conflict": "exact hierarchy/micro-text bounds not modelled in corpus"
+  },
+  {
+   "authority": "pack-local-extension",
+   "ext_id": "UI-LOCAL-009",
+   "nearest_corpus_ids": [],
+   "relation": "orthogonal",
+   "section": "§3 accent budget",
+   "skill": "ui-design-craft",
+   "statement": "At most 2 visible accent uses per screen; one theme/accent/radius lock per page",
+   "stmt_id": "UI-013",
+   "why_no_conflict": "exact accent-count budget not modelled in corpus"
+  },
+  {
+   "authority": "pack-local-extension",
+   "ext_id": "UI-LOCAL-010",
+   "nearest_corpus_ids": [
+    "COLOR-1010",
+    "A11Y-1020"
+   ],
+   "relation": "stricter",
+   "section": "§3 contrast (stricter)",
+   "skill": "ui-design-craft",
+   "statement": "Focus and state indicators treated as ALWAYS in scope for non-text contrast (a deliberately stricter pack floor); placeholder + over-image/scrim text included; dark-mode secondary text 4.5:1",
+   "stmt_id": "UI-015",
+   "why_no_conflict": "treats focus/state indicators as always in-scope, tighter than WCAG AA (COLOR-1010/A11Y-1020); a stricter contrast floor cannot weaken the corpus rule"
+  },
+  {
+   "authority": "pack-local-extension",
+   "ext_id": "UI-LOCAL-011",
+   "nearest_corpus_ids": [
+    "UX-1016",
+    "INTERACT-1058"
+   ],
+   "relation": "orthogonal",
+   "section": "§4 state coverage",
+   "skill": "ui-design-craft",
+   "statement": "Every data surface renders Loading/Empty/Error/Populated/Edge; explicit edge matrix (10k rows, 200-char strings, missing fields, 0-results, offline mid-submit)",
+   "stmt_id": "UI-016",
+   "why_no_conflict": "the five-state + edge matrix is a production requirement not modelled as corpus rules"
+  },
+  {
+   "authority": "pack-local-extension",
+   "ext_id": "UI-LOCAL-012",
+   "nearest_corpus_ids": [],
+   "relation": "orthogonal",
+   "section": "§5 platform floors",
+   "skill": "ui-design-craft",
+   "statement": "Modal scrim visibly isolates foreground (~32%-black default); press/hover states never shift layout; every supported color mode rendered",
+   "stmt_id": "UI-018",
+   "why_no_conflict": "scrim/press-state/color-mode floors not modelled in corpus (touch-target itself is corpus-backed elsewhere)"
+  },
+  {
+   "authority": "pack-local-extension",
+   "ext_id": "UI-LOCAL-013",
+   "nearest_corpus_ids": [],
+   "relation": "orthogonal",
+   "section": "§6 restyling preservation",
+   "skill": "ui-design-craft",
+   "statement": "On restyle, never silently change URL slugs/anchor IDs, nav labels, form field names/order, logo/wordmark, legal/consent copy; extract existing brand colors first; never regress existing a11y",
+   "stmt_id": "UI-019",
+   "why_no_conflict": "a restyle workflow preservation constraint; not a corpus semantic rule"
+  }
+ ],
+ "phase_b_provenance": false,
+ "source": "design-pack/normative-classification.json (bijective with normative-inventory.json)"
+}

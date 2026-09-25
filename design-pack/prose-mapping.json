@@ -1,0 +1,65 @@
+{
+ "_note": "Authored bridge mapping (D6-B2.1). NOT projector output. Records how each existing SKILL.md section relates to the corpus-derived generated references. This pass SUBORDINATES overlapping prose to the generated shards (declared authoritative on overlap) and DELETES NOTHING; 'unmapped-prose' items have no clear canonical corpus counterpart and are retained pending owner adjudication.",
+ "policy": "overlaps-corpus = generated shard authoritative on overlap, prose retained as framing (candidate for future reference-replacement); orchestration = task/method framing, no corpus competition; unmapped-prose = no canonical counterpart, retained, STOP for owner adjudication.",
+ "deletions_this_pass": [],
+ "skills": {
+  "ui-design-craft": {
+   "Classify the surface before generating anything": "orchestration",
+   "The ban list (AI tells, with signatures)": "overlaps-corpus:ANTISLOP (exact ban signatures are finer-grained than corpus rules -> those specifics unmapped, retained)",
+   "Layout budgets (MARKETING surfaces)": "overlaps-corpus:STRUCT,SPACE (numeric budgets may be finer-grained -> specifics retained)",
+   "Type and color discipline": "overlaps-corpus:TYPO,COLOR",
+   "State coverage - the most reliable generated-UI failure": "overlaps-corpus:INTERACT,UX",
+   "Platform floors (APP and touch surfaces)": "overlaps-corpus:A11Y,INTERACT (e.g. touch-target 44/48pt ~ INTERACT-6001)",
+   "Restyling an existing surface: preservation rules": "unmapped-prose",
+   "The pre-flight gate (mechanical)": "orchestration",
+   "When NOT to use this skill": "orchestration",
+   "Provenance": "metadata"
+  },
+  "motion-craft": {
+   "Duration budgets": "overlaps-corpus:MOTION (specific ms budgets finer-grained -> specifics retained)",
+   "Easing": "overlaps-corpus:MOTION (specific curves may be unmapped -> retained)",
+   "Springs and gesture physics": "overlaps-corpus:MOTION,INTERACT",
+   "Choreography": "overlaps-corpus:MOTION",
+   "Performance traps": "unmapped-prose",
+   "Reduced motion is a floor, not a feature": "overlaps-corpus:MOTION,A11Y",
+   "Misquoted research - do not cite these wrong": "unmapped-prose",
+   "Pre-ship gate": "orchestration",
+   "When NOT to use this skill": "orchestration",
+   "Provenance": "metadata"
+  },
+  "design-review-gate": {
+   "Measure before judging": "orchestration",
+   "The passes, in order": "orchestration",
+   "Findings and the bounded fix loop": "orchestration",
+   "The design contract": "unmapped-prose",
+   "Reviewing generated variants": "orchestration",
+   "When NOT to use this skill": "orchestration",
+   "Provenance": "metadata"
+  }
+ },
+ "unmapped_prose": [
+  {
+   "skill": "ui-design-craft",
+   "section": "Restyling an existing surface: preservation rules",
+   "why": "a meta-procedure for restyling; no canonical corpus rule models it"
+  },
+  {
+   "skill": "motion-craft",
+   "section": "Performance traps",
+   "why": "implementation performance guidance; not modelled as corpus rules"
+  },
+  {
+   "skill": "motion-craft",
+   "section": "Misquoted research - do not cite these wrong",
+   "why": "corrects mis-citation of external research; clearly no corpus counterpart"
+  },
+  {
+   "skill": "design-review-gate",
+   "section": "The design contract",
+   "why": "the review skill's own contract/evidence doctrine; not a 1:1 corpus rule set"
+  },
+  {
+   "note": "'overlaps-corpus' sections also retain skill-specific numeric/signature specifics finer-grained than corpus rules; those specifics are effectively unmapped and are retained pending owner adjudication."
+  }
+ ]
+}

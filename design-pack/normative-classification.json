@@ -1,0 +1,497 @@
+{
+ "_note": "Statement-level authority classification, bijective with normative-inventory.json (one row per stmt_id). disposition in {corpus-backed, pack-local-extension, orchestration-only}. corpus-backed rows carry canonical corpus_ids; pack-local-extension rows carry ext_id + relation + nearest_corpus_ids + why_no_conflict (authority strictly below corpus).",
+ "authority_hierarchy": [
+  "canonical corpus semantics",
+  ">",
+  "pack-local-extension",
+  ">",
+  "orchestration prose"
+ ],
+ "conflicts_found": [],
+ "counts": {
+  "total_statements": 39,
+  "by_disposition": {
+   "orchestration-only": 14,
+   "pack-local-extension": 19,
+   "corpus-backed": 6
+  },
+  "by_skill": {
+   "ui-design-craft": {
+    "orchestration-only": 4,
+    "pack-local-extension": 13,
+    "corpus-backed": 4
+   },
+   "motion-craft": {
+    "pack-local-extension": 6,
+    "orchestration-only": 4,
+    "corpus-backed": 2
+   },
+   "design-review-gate": {
+    "orchestration-only": 6
+   }
+  }
+ },
+ "rows": [
+  {
+   "stmt_id": "UI-001",
+   "skill": "ui-design-craft",
+   "section": "§0",
+   "statement": "§0 Classify the surface (MARKETING/APP/HYBRID/out-of-scope) before generating",
+   "disposition": "orchestration-only",
+   "fingerprint": "c06258ca7d23b2ee"
+  },
+  {
+   "stmt_id": "UI-002",
+   "skill": "ui-design-craft",
+   "section": "§0",
+   "statement": "§0 A governing design contract outranks these defaults; consume via design-review-gate",
+   "disposition": "orchestration-only",
+   "fingerprint": "fa9ba639b973c586"
+  },
+  {
+   "stmt_id": "UI-003",
+   "skill": "ui-design-craft",
+   "section": "§1 color tells",
+   "statement": "Ban default indigo/violet accents (#6366f1 #4f46e5 #8b5cf6 #7c3aed) and the beige/brass/espresso + olive/clay/terracotta unresearched families; no even-distribution/decorative-semantic color",
+   "disposition": "pack-local-extension",
+   "fingerprint": "edb8d6cde51d0d1e",
+   "ext_id": "UI-LOCAL-001",
+   "relation": "orthogonal",
+   "nearest_corpus_ids": [
+    "ANTISLOP-2001"
+   ],
+   "why_no_conflict": "adds specific banned hex families/palettes; ANTISLOP-2001's strength/override untouched",
+   "authority": "pack-local-extension"
+  },
+  {
+   "stmt_id": "UI-004",
+   "skill": "ui-design-craft",
+   "section": "§1",
+   "statement": "§1 em-dash: zero em-dashes in generated page copy",
+   "disposition": "corpus-backed",
+   "fingerprint": "ade6a054c6c7abce",
+   "corpus_ids": [
+    "ANTISLOP-2001"
+   ]
+  },
+  {
+   "stmt_id": "UI-005",
+   "skill": "ui-design-craft",
+   "section": "§1 typography tells",
+   "statement": "Ban Fraunces/Instrument Serif as unjustified display defaults, the decorative one-word swap, all-caps/small labels without letter-spacing, clipped italic descenders",
+   "disposition": "pack-local-extension",
+   "fingerprint": "8aa10e79b7b02258",
+   "ext_id": "UI-LOCAL-002",
+   "relation": "orthogonal",
+   "nearest_corpus_ids": [
+    "ANTISLOP-2001"
+   ],
+   "why_no_conflict": "adds specific font/typographic ban signatures; no corpus rule altered",
+   "authority": "pack-local-extension"
+  },
+  {
+   "stmt_id": "UI-006",
+   "skill": "ui-design-craft",
+   "section": "§1 container tells",
+   "statement": "Ban card-as-default grouping, decorative left accent stripe, 3-col icon-in-circle grid, split-header default, double hairline table borders, emoji-as-iconography",
+   "disposition": "pack-local-extension",
+   "fingerprint": "ca366dbcdf9e965f",
+   "ext_id": "UI-LOCAL-003",
+   "relation": "orthogonal",
+   "nearest_corpus_ids": [
+    "ANTISLOP-2001",
+    "STRUCT-2006"
+   ],
+   "why_no_conflict": "adds specific container ban signatures; no corpus rule altered",
+   "authority": "pack-local-extension"
+  },
+  {
+   "stmt_id": "UI-007",
+   "skill": "ui-design-craft",
+   "section": "§1",
+   "statement": "§1 eyebrow labels are capped (concept)",
+   "disposition": "corpus-backed",
+   "fingerprint": "ee620c338137c6da",
+   "corpus_ids": [
+    "ANTISLOP-2001",
+    "ANTISLOP-2004"
+   ]
+  },
+  {
+   "stmt_id": "UI-008",
+   "skill": "ui-design-craft",
+   "section": "§1 label/meta tells",
+   "statement": "Eyebrow cap = at most 1 per 3 sections (exact count); ban section numbering, version stamps, pagination on tiles, locale/weather strips, scroll cues, poetic/step labels, middle-dot chains (max one · per line)",
+   "disposition": "pack-local-extension",
+   "fingerprint": "ba914b19efc64284",
+   "ext_id": "UI-LOCAL-004",
+   "relation": "stricter",
+   "nearest_corpus_ids": [
+    "ANTISLOP-2001",
+    "ANTISLOP-2004"
+   ],
+   "why_no_conflict": "eyebrow cap (<=1 per 3 sections) is tighter than the ANTISLOP-2001/2004 eyebrow concept; other meta-tells are orthogonal additions; a tighter bound cannot weaken",
+   "authority": "pack-local-extension"
+  },
+  {
+   "stmt_id": "UI-009",
+   "skill": "ui-design-craft",
+   "section": "§1 fake-content tells",
+   "statement": "Ban div-built fake product UI, placeholder people/testimonials/logos/metrics, CSS-blob fake imagery; design the empty/honest slot instead",
+   "disposition": "pack-local-extension",
+   "fingerprint": "066ea77227d09b45",
+   "ext_id": "UI-LOCAL-005",
+   "relation": "orthogonal",
+   "nearest_corpus_ids": [],
+   "why_no_conflict": "adds fake-content bans not modelled in corpus",
+   "authority": "pack-local-extension"
+  },
+  {
+   "stmt_id": "UI-010",
+   "skill": "ui-design-craft",
+   "section": "§1 mode tells",
+   "statement": "Light is baseline (dark only if briefed); no calm-editorial autopilot without a written reason",
+   "disposition": "pack-local-extension",
+   "fingerprint": "22837040c1102d0d",
+   "ext_id": "UI-LOCAL-006",
+   "relation": "orthogonal",
+   "nearest_corpus_ids": [],
+   "why_no_conflict": "adds light-baseline / calm-editorial guardrails not modelled in corpus",
+   "authority": "pack-local-extension"
+  },
+  {
+   "stmt_id": "UI-011",
+   "skill": "ui-design-craft",
+   "section": "§2 layout budgets",
+   "statement": "Hero <=2 lines / <=20 words / <=4 text elements / CTA above fold / top padding ~6rem; nav single-line <=80px; each layout family at most once/page; zigzag run <=2; bento cells == content with >=2-3 varied; per-section mobile collapse declared",
+   "disposition": "pack-local-extension",
+   "fingerprint": "45605c08abebbc3c",
+   "ext_id": "UI-LOCAL-007",
+   "relation": "orthogonal",
+   "nearest_corpus_ids": [
+    "STRUCT-2006"
+   ],
+   "why_no_conflict": "exact marketing layout budgets not modelled in corpus; adds constraints only",
+   "authority": "pack-local-extension"
+  },
+  {
+   "stmt_id": "UI-012",
+   "skill": "ui-design-craft",
+   "section": "§3 type discipline",
+   "statement": "Hierarchy 3-4 levels by weight/spacing not size; micro text (<=11px) whitelisted to an enumerated role list",
+   "disposition": "pack-local-extension",
+   "fingerprint": "7817d913d4bc6fd0",
+   "ext_id": "UI-LOCAL-008",
+   "relation": "orthogonal",
+   "nearest_corpus_ids": [],
+   "why_no_conflict": "exact hierarchy/micro-text bounds not modelled in corpus",
+   "authority": "pack-local-extension"
+  },
+  {
+   "stmt_id": "UI-013",
+   "skill": "ui-design-craft",
+   "section": "§3 accent budget",
+   "statement": "At most 2 visible accent uses per screen; one theme/accent/radius lock per page",
+   "disposition": "pack-local-extension",
+   "fingerprint": "3c488d0205b6550c",
+   "ext_id": "UI-LOCAL-009",
+   "relation": "orthogonal",
+   "nearest_corpus_ids": [],
+   "why_no_conflict": "exact accent-count budget not modelled in corpus",
+   "authority": "pack-local-extension"
+  },
+  {
+   "stmt_id": "UI-014",
+   "skill": "ui-design-craft",
+   "section": "§3",
+   "statement": "§3 contrast floors WCAG AA (4.5:1 normal / 3:1 large; non-text 3:1)",
+   "disposition": "corpus-backed",
+   "fingerprint": "9ad9257c99f770ec",
+   "corpus_ids": [
+    "COLOR-1010",
+    "A11Y-1020",
+    "A11Y-1001",
+    "COLOR-1015"
+   ]
+  },
+  {
+   "stmt_id": "UI-015",
+   "skill": "ui-design-craft",
+   "section": "§3 contrast (stricter)",
+   "statement": "Focus and state indicators treated as ALWAYS in scope for non-text contrast (a deliberately stricter pack floor); placeholder + over-image/scrim text included; dark-mode secondary text 4.5:1",
+   "disposition": "pack-local-extension",
+   "fingerprint": "9ae3661268c34b21",
+   "ext_id": "UI-LOCAL-010",
+   "relation": "stricter",
+   "nearest_corpus_ids": [
+    "COLOR-1010",
+    "A11Y-1020"
+   ],
+   "why_no_conflict": "treats focus/state indicators as always in-scope, tighter than WCAG AA (COLOR-1010/A11Y-1020); a stricter contrast floor cannot weaken the corpus rule",
+   "authority": "pack-local-extension"
+  },
+  {
+   "stmt_id": "UI-016",
+   "skill": "ui-design-craft",
+   "section": "§4 state coverage",
+   "statement": "Every data surface renders Loading/Empty/Error/Populated/Edge; explicit edge matrix (10k rows, 200-char strings, missing fields, 0-results, offline mid-submit)",
+   "disposition": "pack-local-extension",
+   "fingerprint": "de487e4ecb39f8ff",
+   "ext_id": "UI-LOCAL-011",
+   "relation": "orthogonal",
+   "nearest_corpus_ids": [
+    "UX-1016",
+    "INTERACT-1058"
+   ],
+   "why_no_conflict": "the five-state + edge matrix is a production requirement not modelled as corpus rules",
+   "authority": "pack-local-extension"
+  },
+  {
+   "stmt_id": "UI-017",
+   "skill": "ui-design-craft",
+   "section": "§5",
+   "statement": "§5 touch targets 44x44pt iOS / 48x48dp Android minimum (pointer-only exception)",
+   "disposition": "corpus-backed",
+   "fingerprint": "141b016b344fe114",
+   "corpus_ids": [
+    "INTERACT-6001",
+    "A11Y-1022"
+   ]
+  },
+  {
+   "stmt_id": "UI-018",
+   "skill": "ui-design-craft",
+   "section": "§5 platform floors",
+   "statement": "Modal scrim visibly isolates foreground (~32%-black default); press/hover states never shift layout; every supported color mode rendered",
+   "disposition": "pack-local-extension",
+   "fingerprint": "303b9e5af76846ec",
+   "ext_id": "UI-LOCAL-012",
+   "relation": "orthogonal",
+   "nearest_corpus_ids": [],
+   "why_no_conflict": "scrim/press-state/color-mode floors not modelled in corpus (touch-target itself is corpus-backed elsewhere)",
+   "authority": "pack-local-extension"
+  },
+  {
+   "stmt_id": "UI-019",
+   "skill": "ui-design-craft",
+   "section": "§6 restyling preservation",
+   "statement": "On restyle, never silently change URL slugs/anchor IDs, nav labels, form field names/order, logo/wordmark, legal/consent copy; extract existing brand colors first; never regress existing a11y",
+   "disposition": "pack-local-extension",
+   "fingerprint": "62fbff84a1a088fc",
+   "ext_id": "UI-LOCAL-013",
+   "relation": "orthogonal",
+   "nearest_corpus_ids": [],
+   "why_no_conflict": "a restyle workflow preservation constraint; not a corpus semantic rule",
+   "authority": "pack-local-extension"
+  },
+  {
+   "stmt_id": "UI-020",
+   "skill": "ui-design-craft",
+   "section": "§7",
+   "statement": "§7 The pre-flight gate — a mechanical checklist that re-checks the statements above",
+   "disposition": "orchestration-only",
+   "fingerprint": "b3fa6a33ee422fb8"
+  },
+  {
+   "stmt_id": "UI-021",
+   "skill": "ui-design-craft",
+   "section": "(general)",
+   "statement": "When-NOT routing; Provenance",
+   "disposition": "orchestration-only",
+   "fingerprint": "145200f53a654b64"
+  },
+  {
+   "stmt_id": "MOTION-001",
+   "skill": "motion-craft",
+   "section": "§1 duration budgets",
+   "statement": "Per-surface ms budget table (hover 90-160 … route 240-500); standard <300ms, nothing >500ms; exit = 65-75% of entrance; distance scales duration; frequency scales duration down; never animate keyboard-initiated actions",
+   "disposition": "pack-local-extension",
+   "fingerprint": "18a37dc049ad34da",
+   "ext_id": "MOTION-LOCAL-001",
+   "relation": "orthogonal",
+   "nearest_corpus_ids": [
+    "MOTION-1011",
+    "MOTION-1020"
+   ],
+   "why_no_conflict": "Kowalski-sourced numeric ms budgets; corpus MOTION rules are conceptual and carry no such numbers",
+   "authority": "pack-local-extension"
+  },
+  {
+   "stmt_id": "MOTION-002",
+   "skill": "motion-craft",
+   "section": "§2 easing",
+   "statement": "Enter ease-out / exit ease-in / move ease-in-out / mechanical linear; named bezier defaults (M3 standard/emphasized, CSS ease)",
+   "disposition": "pack-local-extension",
+   "fingerprint": "27bfd12b15c3aed3",
+   "ext_id": "MOTION-LOCAL-002",
+   "relation": "orthogonal",
+   "nearest_corpus_ids": [
+    "MOTION-1001"
+   ],
+   "why_no_conflict": "specific easing curves/bezier values not modelled in corpus",
+   "authority": "pack-local-extension"
+  },
+  {
+   "stmt_id": "MOTION-003",
+   "skill": "motion-craft",
+   "section": "§2",
+   "statement": "§2 easing — refusing mislabelled bezier values (M2-as-M3, CSS-ease-as-Apple) is citation hygiene",
+   "disposition": "orchestration-only",
+   "fingerprint": "91945dfea9ba53f1"
+  },
+  {
+   "stmt_id": "MOTION-004",
+   "skill": "motion-craft",
+   "section": "§3 springs & gesture physics",
+   "statement": "Critical-damping formula damping=2*sqrt(stiffness); preset table; momentum projection (Apple exponential-decay d~=0.998); rubber-band (c=0.55); velocity handoff w/ zero-guard; momentum dismissal velocity OR distance (~0.11 px/ms)",
+   "disposition": "pack-local-extension",
+   "fingerprint": "fe70ee012cd8c5d3",
+   "ext_id": "MOTION-LOCAL-003",
+   "relation": "implementation-specific",
+   "nearest_corpus_ids": [],
+   "why_no_conflict": "physics formulas/coefficients; implementation guidance not modelled in corpus",
+   "authority": "pack-local-extension"
+  },
+  {
+   "stmt_id": "MOTION-005",
+   "skill": "motion-craft",
+   "section": "§4 choreography",
+   "statement": "Stagger 30-80ms, sequence <500ms, non-blocking; one element leads; overshoot budgets (success 5-10%/celebration <=25%/errors 0%); asymmetric deliberate/response timing",
+   "disposition": "pack-local-extension",
+   "fingerprint": "993ce5d4cd2373ed",
+   "ext_id": "MOTION-LOCAL-004",
+   "relation": "orthogonal",
+   "nearest_corpus_ids": [],
+   "why_no_conflict": "exact choreography budgets not modelled in corpus",
+   "authority": "pack-local-extension"
+  },
+  {
+   "stmt_id": "MOTION-006",
+   "skill": "motion-craft",
+   "section": "§5",
+   "statement": "§5 animate transform/opacity, not layout-triggering properties (concept)",
+   "disposition": "corpus-backed",
+   "fingerprint": "4d145abd1ffff0b3",
+   "corpus_ids": [
+    "MOTION-1002"
+   ]
+  },
+  {
+   "stmt_id": "MOTION-007",
+   "skill": "motion-craft",
+   "section": "§5 performance traps",
+   "statement": "transition:all banned; Framer x/y/scale main-thread caveat; inheriting CSS-var recalc; interruptible/retarget; never scale(0) (enter 0.9-0.97); transform-origin from trigger; gate hover behind (hover:hover)",
+   "disposition": "pack-local-extension",
+   "fingerprint": "7e0020731c9c1302",
+   "ext_id": "MOTION-LOCAL-005",
+   "relation": "implementation-specific",
+   "nearest_corpus_ids": [
+    "MOTION-1002",
+    "MOTION-1015"
+   ],
+   "why_no_conflict": "implementation performance constraints; not modelled in corpus",
+   "authority": "pack-local-extension"
+  },
+  {
+   "stmt_id": "MOTION-008",
+   "skill": "motion-craft",
+   "section": "§6",
+   "statement": "§6 reduced motion is a floor; every animation ships a prefers-reduced-motion variant; motion never the only signal",
+   "disposition": "corpus-backed",
+   "fingerprint": "8d2765a9778260aa",
+   "corpus_ids": [
+    "MOTION-1009",
+    "A11Y-2001",
+    "A11Y-1014"
+   ]
+  },
+  {
+   "stmt_id": "MOTION-009",
+   "skill": "motion-craft",
+   "section": "§6 reduced-motion detail",
+   "statement": "'fewer and gentler, not zero' mapping (slide+fade->fade, spring->tween, parallax->removed)",
+   "disposition": "pack-local-extension",
+   "fingerprint": "77eb96b375215245",
+   "ext_id": "MOTION-LOCAL-006",
+   "relation": "stricter",
+   "nearest_corpus_ids": [
+    "MOTION-1009",
+    "A11Y-2001"
+   ],
+   "why_no_conflict": "elaborates the corpus reduced-motion floor (MOTION-1009/A11Y-2001) with a specific reduction mapping; adds detail, never weakens",
+   "authority": "pack-local-extension"
+  },
+  {
+   "stmt_id": "MOTION-010",
+   "skill": "motion-craft",
+   "section": "§7",
+   "statement": "§7 Misquoted research — do-not-cite-wrong corrections (citation hygiene, no corpus counterpart)",
+   "disposition": "orchestration-only",
+   "fingerprint": "d44df45590ae75f0"
+  },
+  {
+   "stmt_id": "MOTION-011",
+   "skill": "motion-craft",
+   "section": "§8",
+   "statement": "§8 Pre-ship gate — severity-tiered mechanical checklist",
+   "disposition": "orchestration-only",
+   "fingerprint": "11197166f78304c3"
+  },
+  {
+   "stmt_id": "MOTION-012",
+   "skill": "motion-craft",
+   "section": "(general)",
+   "statement": "When-NOT routing; Provenance",
+   "disposition": "orchestration-only",
+   "fingerprint": "145200f53a654b64"
+  },
+  {
+   "stmt_id": "REVIEW-001",
+   "skill": "design-review-gate",
+   "section": "§1",
+   "statement": "§1 Measure before judging — font/touch/color census snippets (review method; referenced VALUES belong to ui-design-craft/corpus)",
+   "disposition": "orchestration-only",
+   "fingerprint": "2cf6ac1eee090de9"
+  },
+  {
+   "stmt_id": "REVIEW-002",
+   "skill": "design-review-gate",
+   "section": "§2",
+   "statement": "§2 The passes, in order (contract/static/states/motion/flow/consistency) — review procedure",
+   "disposition": "orchestration-only",
+   "fingerprint": "7db85837b8e3661e"
+  },
+  {
+   "stmt_id": "REVIEW-003",
+   "skill": "design-review-gate",
+   "section": "§3",
+   "statement": "§3 Findings + bounded fix loop + three-valued verdict (Block/Changes required/Approve) — review procedure",
+   "disposition": "orchestration-only",
+   "fingerprint": "5d2586fe199a8331"
+  },
+  {
+   "stmt_id": "REVIEW-004",
+   "skill": "design-review-gate",
+   "section": "§4",
+   "statement": "§4 The design contract — classification/verification/drift-direction/anti-impersonation/authoring (contract mechanics)",
+   "disposition": "orchestration-only",
+   "fingerprint": "0f568d2180eff6fd"
+  },
+  {
+   "stmt_id": "REVIEW-005",
+   "skill": "design-review-gate",
+   "section": "§5",
+   "statement": "§5 Reviewing generated variants — anti-convergence + preference hygiene (review procedure)",
+   "disposition": "orchestration-only",
+   "fingerprint": "63d7d1de082b096a"
+  },
+  {
+   "stmt_id": "REVIEW-006",
+   "skill": "design-review-gate",
+   "section": "(general)",
+   "statement": "When-NOT routing; Provenance",
+   "disposition": "orchestration-only",
+   "fingerprint": "145200f53a654b64"
+  }
+ ]
+}
