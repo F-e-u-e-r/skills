@@ -1,0 +1,93 @@
+{
+ "artifact": "design-pack production bridge manifest (generated; do not hand-edit)",
+ "attribution": {
+  "byte_identical": true,
+  "canonical_notice": "reviews/2026-09-26-phase-b-semantic-publication/THIRD_PARTY_NOTICES.md",
+  "license_text_reconstructed": false,
+  "reason": "design-pack ships as ./design-pack; the canonical repo-level notice is outside that boundary, so a byte-identical scoped copy is emitted inside it.",
+  "scoped_copy": "design-pack/THIRD_PARTY_NOTICES.md",
+  "sha256": "b04f228ded8896dec1129aa81b13a126f0913086f8830116cbf61325863a4d4c"
+ },
+ "canonical_corpus": {
+  "merge_sha": "44f10443c16e926515af86ebdd1d52e003ed98cc",
+  "path": "reviews/2026-09-26-phase-b-semantic-publication/public_records.json",
+  "sha256": "16ad01fb97f0ad321f254cce93e249e6484110862650dda39e45700be2893e5b"
+ },
+ "generated": true,
+ "generated_artifacts": {
+  "generated/local-extensions.json": {
+   "authority": "pack-local-extension",
+   "phase_b_provenance": false,
+   "sha256": "dde542a5fa9f710b064a8b6786548cc105daec0a74030b8659767dbf3ad57c66"
+  },
+  "generated/projection-support.json": {
+   "authority": "phase-b-corpus",
+   "sha256": "b79dc8f0cb597ab49fa2439fdba16303cafeb8612d1630720eb1e9ae89686348"
+  },
+  "generated/runtime.json": {
+   "authority": "phase-b-corpus",
+   "sha256": "9bd6fb746d4882e01f8e83db7de53c4617a902d09f7de5eae1a6eba8689f2fca"
+  },
+  "generated/skill-reachability.json": {
+   "sha256": "02653e2b434efeee7d375ee4fd9f5aa2b9443ae5882c6fe8ef1b3714cbc5d98b"
+  }
+ },
+ "generator": "design-pack-projector/2",
+ "kind_policy": {
+  "conflict": "projection-support-only",
+  "decision_table": "runtime-control",
+  "dial": "runtime-control",
+  "evidence": "projection-support-only",
+  "rule": "runtime-payload",
+  "synthesized_rule": "runtime-payload"
+ },
+ "population": {
+  "canonical_by_kind": {
+   "conflict": 3,
+   "decision_table": 3,
+   "dial": 3,
+   "evidence": 85,
+   "rule": 443,
+   "synthesized_rule": 5
+  },
+  "canonical_total": 542,
+  "projection_support_by_kind": {
+   "conflict": 3,
+   "evidence": 85
+  },
+  "runtime_control_by_kind": {
+   "decision_table": 3,
+   "dial": 3
+  },
+  "runtime_payload_by_kind": {
+   "rule": 443,
+   "synthesized_rule": 5
+  },
+  "runtime_total": 454,
+  "support_total": 88
+ },
+ "runtime_schema_version": 2,
+ "skill_local_reference_sha256": {
+  "skills/design-review-gate/references/generated/a11y.md": "3577a8a4490e0674433036a588606e1d9f947692e1fccfeddad7ec62da249f1b",
+  "skills/design-review-gate/references/generated/antislop.md": "fb1b5ee3a3db17ee60eeb936ab975f872eeac44b256e4ac205f0bd87f518f72f",
+  "skills/design-review-gate/references/generated/color.md": "ccba30580a7183f33b7e8dc0e778ffe3fe3caf91d2d9a1ee49b8ba70032d5abb",
+  "skills/design-review-gate/references/generated/controls.md": "2b2a8c4b9704469bb21a1d9a5d95f42b71de19095b3f615332860a07f6ede081",
+  "skills/design-review-gate/references/generated/interact.md": "74323a19106a778633114fb59c0564073e68ad6ca2850f01ffdaa3ef1e48b45c",
+  "skills/design-review-gate/references/generated/motion.md": "fe3c3803f28f7666be18d4b78adaceb03bd888be1d62ebdf6efc632bf4c6ca97",
+  "skills/design-review-gate/references/generated/space.md": "d7582256619ff7198712efed8bb9ebdbc18261a11606a0ebd17021cccbeb6e01",
+  "skills/design-review-gate/references/generated/struct.md": "b93a3bde62b5802cde85a94e6922e4bcbd4c5741c119a0c094bc315861e3c261",
+  "skills/design-review-gate/references/generated/typo.md": "67d7fc999f7dc1ad7e45322511d717ee689c6325bf643210e113ad6b5e653c1f",
+  "skills/design-review-gate/references/generated/ux.md": "5d5b14425d02134246ea502d8100e22a78c1be9a500e67b71d468b02c342a605",
+  "skills/motion-craft/references/generated/controls.md": "2b2a8c4b9704469bb21a1d9a5d95f42b71de19095b3f615332860a07f6ede081",
+  "skills/motion-craft/references/generated/motion.md": "fe3c3803f28f7666be18d4b78adaceb03bd888be1d62ebdf6efc632bf4c6ca97",
+  "skills/ui-design-craft/references/generated/a11y.md": "3577a8a4490e0674433036a588606e1d9f947692e1fccfeddad7ec62da249f1b",
+  "skills/ui-design-craft/references/generated/antislop.md": "fb1b5ee3a3db17ee60eeb936ab975f872eeac44b256e4ac205f0bd87f518f72f",
+  "skills/ui-design-craft/references/generated/color.md": "ccba30580a7183f33b7e8dc0e778ffe3fe3caf91d2d9a1ee49b8ba70032d5abb",
+  "skills/ui-design-craft/references/generated/controls.md": "2b2a8c4b9704469bb21a1d9a5d95f42b71de19095b3f615332860a07f6ede081",
+  "skills/ui-design-craft/references/generated/interact.md": "74323a19106a778633114fb59c0564073e68ad6ca2850f01ffdaa3ef1e48b45c",
+  "skills/ui-design-craft/references/generated/space.md": "d7582256619ff7198712efed8bb9ebdbc18261a11606a0ebd17021cccbeb6e01",
+  "skills/ui-design-craft/references/generated/struct.md": "b93a3bde62b5802cde85a94e6922e4bcbd4c5741c119a0c094bc315861e3c261",
+  "skills/ui-design-craft/references/generated/typo.md": "67d7fc999f7dc1ad7e45322511d717ee689c6325bf643210e113ad6b5e653c1f",
+  "skills/ui-design-craft/references/generated/ux.md": "5d5b14425d02134246ea502d8100e22a78c1be9a500e67b71d468b02c342a605"
+ }
+}

@@ -9,6 +9,20 @@ Every animation must serve **feedback** ("it worked"), **continuity** ("that's
 where it went"), or **hierarchy** ("look here"). An animation serving none of
 the three is removed, not tuned. When in doubt: shorter, subtler, or none.
 
+## Corpus-derived semantic references (authoritative)
+
+Motion semantics are bridged to the Phase-B design corpus. Load
+[motion rules](references/generated/motion.md) and, when a rule is selector- or
+dial-gated, [controls](references/generated/controls.md) — only when a task needs
+them; they stay out of context until then. **Where a rule below overlaps a
+generated rule, the shard is the authoritative semantic source.** Authority order:
+**canonical corpus (shard) > pack-local extensions (this file's ms budgets, easing
+curves, and spring formulas) > orchestration prose**; an extension may add or
+tighten, never weaken a corpus rule. Extension registry / classification:
+`design-pack/generated/local-extensions.json`,
+`design-pack/normative-classification.json`. Generated shards are never
+hand-edited — regenerate via `design-pack/tools/project_corpus.py`.
+
 ## 1. Duration budgets
 
 Numbers first; taste second. Defaults for product UI:

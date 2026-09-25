@@ -11,6 +11,24 @@ project's design contract is a finding, not a pass. Review the RENDERED
 surface at real breakpoints - source code is evidence about intent, never
 about appearance.
 
+## Corpus-derived semantic references (authoritative)
+
+Reviewing a surface means checking it against the pack's full design-rule corpus,
+bridged into skill-local supporting files under `references/generated/`. **The
+generated shards are the authoritative semantic source for any rule cited in a
+finding**; this file supplies the review method and orchestration, not a competing
+rule set. Load only the shard(s) relevant to the surface under review — do not load
+every shard at once:
+[struct](references/generated/struct.md), [typo](references/generated/typo.md),
+[color](references/generated/color.md), [space](references/generated/space.md),
+[antislop](references/generated/antislop.md),
+[interact](references/generated/interact.md), [a11y](references/generated/a11y.md),
+[ux](references/generated/ux.md), [motion](references/generated/motion.md), plus
+[controls](references/generated/controls.md) for selector / dial resolution.
+Authority order: **canonical corpus (shards) > pack-local extensions > orchestration
+prose**. Generated shards are never hand-edited — regenerate via
+`design-pack/tools/project_corpus.py`.
+
 ## 1. Measure before judging
 
 Taste words ("feels off", "not premium") are not findings. Extract the

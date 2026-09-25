@@ -20,6 +20,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import derived_checks as _dc
+import design_pack_checks as _dpc
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REAL_ROOT = os.path.realpath(ROOT)
@@ -501,6 +502,8 @@ for _label, _fn in [
      _dc.check_reference_gate),
     ("routing-contract corpus completeness (ARCHITECTURE.md §6, structural only)",
      _dc.check_routing_corpus),
+    ("design-pack production bridge contract (D6-B2.2; runs only when design-pack/generated/ is present)",
+     _dpc.run),
 ]:
     _res = _fn(ROOT)
     _hard = [r for r in _res if not r.startswith("report:")]
