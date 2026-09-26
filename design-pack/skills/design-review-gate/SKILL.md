@@ -79,6 +79,12 @@ facts first, in the running page:
    every point of friction or surprise with its screen.
 6. **Consistency pass** - across screens: one accent, one radius system,
    one theme, one spacing rhythm, same component = same treatment.
+   "Same treatment" scopes to repeated instances of the SAME component
+   staying consistent across contexts/screens/states where the component's
+   role is the same; it does NOT require sibling elements within one
+   composition (e.g. cards or options in a row) to carry equal hierarchy or
+   visual weight. Composition hierarchy stays governed by the corpus-derived
+   structure references, including applicable STRUCT rules such as STRUCT-6001.
 
 Each pass emits findings; no pass emits a verdict alone.
 
