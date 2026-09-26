@@ -5,7 +5,11 @@ in-memory scratch copy only. Exits non-zero on any failure."""
 import hashlib, os, re, subprocess, sys
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-REPO = os.path.abspath(os.path.join(ROOT, "..", ".."))
+REPO = subprocess.run(["git", "-C", ROOT, "rev-parse", "--show-toplevel"],
+                      capture_output=True, text=True, check=True).stdout.strip()
+if not REPO:
+    sys.exit("FATAL: 'git rev-parse --show-toplevel' returned empty; cannot locate repo root")
+REPO = os.path.abspath(REPO)
 TARGET = os.path.join(REPO, "skills/operational-rigor/references/external-systems.md")
 BLOB_PIN = "28216fd898ed7041e98d2286a824abc2147013c4"
 ANCHOR = "Run such mutations serially (one in flight), then resolve in"
