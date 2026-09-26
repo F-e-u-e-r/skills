@@ -290,5 +290,6 @@ glow drove a conic gradient's angle through a registered custom property;
 it animated on desktop while a mobile browser painted the gradient once and
 never repainted it. The replacement moved the motion onto a `rotate`
 transform of a static gradient layer (compositor-run, confirmed on
-desktop); a re-check on the device itself is not on record. Ships `unprobed` per the covenant;
+desktop); the owner later confirmed it animating on the affected phone
+(2026-09-27, reported, no capture on file). Ships `unprobed` per the covenant;
 its probe joins the standing #115 queue.
