@@ -43,6 +43,13 @@ altering frozen campaign evidence*. The adjudicated model is:
 
 ## 1. Hardened harnesses (4) — depth-independent, zero drift
 
+> **Scope of "hardened":** each harness's OWN repo-root / sibling / git-pathspec
+> location logic is made depth-independent and relocation-safe — the single
+> property `relocation_safety_checks.py` proves. This is NOT a claim of
+> end-to-end post-relocation re-runnability; see the erratum at the end of §2 for
+> `t2probe-prefix` / `t2probe-scored`, which invoke the disposition-set prereg
+> checker at runtime.
+
 | Harness | Change |
 |---|---|
 | `reviews/2026-08-13-issue115-t2probe-prefix/prefix_checks.py` | `REPO` → `git -C ROOT rev-parse --show-toplevel`; `PREREG` → `ROOT/../<unit>`; `git status` pathspec → `os.path.relpath(PREREG, REPO)` |
@@ -105,10 +112,24 @@ semantic rewrite could change that, and neither is in R1's scope.
 | `reviews/2026-09-02-recursive-delegation-c12/c12_checks.py` | `git diff --name-only BASE` (whole-repo file-confinement) plus a `startswith("reviews/2026-09-02-recursive-delegation-c12/")` self-path assertion (`:185`–`:188`). |
 
 All eight are already RED or (for `t5p-prefix/prefix_checks.py`) will flip on
-relocation; none is depended upon as a green gate. The hardened harnesses that
-*execute* a disposition-set harness (`t2probe-prefix`/`t2probe-scored` run
-`t2-probe-prereg`) already treat it as "not ALL PASS", so their own pass/fail
-classification is unaffected by the disposition.
+relocation; none is depended upon as a green gate.
+
+**Erratum (correcting an earlier overclaim in this record).** Two of the hardened
+harnesses invoke a disposition-set harness at runtime and REQUIRE it to pass:
+`t2probe-prefix/prefix_checks.py:147` and `t2probe-scored/scored_checks.py:175`
+each run `t2-probe-prereg/static_checks.py` and assert
+`"ALL PASS" in stdout and returncode == 0`, recording their OWN failure otherwise
+— they do NOT tolerate a non-ALL-PASS prereg. So R1a hardens their *own location
+logic* (repo-root discovery + sibling refs + git pathspecs are depth-independent
+and relocation-safe — which is all `relocation_safety_checks.py` claims), but it
+does NOT make `t2probe-prefix` / `t2probe-scored` *end-to-end re-runnable /
+output-stable* after relocation: at runtime they call the sealed disposition-set
+prereg checker, itself a `non-rerunnable historical artifact`. Neither is
+therefore treated as a relocation gate. This is a documentation correction only —
+no code change, no prereg rehabilitation, and option B stays closed.
+(`t2-probe-prereg/static_checks.py` is already RED at baseline on doctrine-pin
+drift, independent of relocation, so this dependency is not a new failure R1a
+introduced.)
 
 ## 3. E-3 resolved — round5 is a single co-located probe unit
 
