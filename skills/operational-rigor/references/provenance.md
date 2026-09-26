@@ -242,6 +242,16 @@ receive, and its shipped docs warn against reading a concurrency
 setting back as proof that execution happened — the
 config-readback-as-result fake-pass shape. Ships `unprobed` per the
 covenant; its probe joins the private round-5 queue.
+The §4 consumer-position rendering clause (2026-09-23) comes from a
+private incident: an animated border effect, driven by animating a
+registered custom-property angle inside a gradient, animated on a
+desktop while the same browser on a mobile device painted the gradient
+once and never repainted it — script-readable state (the animation
+running, the angle advancing) passed on desktop while the pixels on the
+device the product ships to stood still. The fix moved the motion onto a
+compositor transform. Private incident, cited as shape; no product or
+file names. Ships `unprobed` per the covenant; its probe joins the
+standing #115 queue.
 The §2 boundary-refinements bullet (at-mutation recheck + name-last
 publishing), the §3 provenance-attributed-cleanup bullet, the §5
 defer-with-evidence bullet, and the two external-systems entries dated the
