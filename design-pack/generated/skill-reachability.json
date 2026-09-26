@@ -456,6 +456,7 @@
   "UX-4039"
  ],
  "motion-craft": [
+  "A11Y-2001",
   "DIAL-2002",
   "MOTION-1001",
   "MOTION-1002",
@@ -680,6 +681,8 @@
   "INTERACT-4010",
   "INTERACT-6001",
   "INTERACT-6002",
+  "MOTION-2003",
+  "MOTION-2005",
   "SPACE-1001",
   "SPACE-1002",
   "SPACE-1003",

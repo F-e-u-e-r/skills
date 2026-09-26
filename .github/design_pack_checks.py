@@ -33,6 +33,8 @@ def run(root):
     add("skill-reachability", g.check_skill_reachability(runtime, reach))   # missing reachability
     add("runtime-reference-closure", g.check_runtime_reference_closure(runtime))  # dangling refs
     add("per-skill-control-closure", g.check_per_skill_control_closure(runtime, reach))
+    add("full-control-target-closure", g.check_full_control_target_closure(runtime, reach))
+    add("skill-local-dependency-resolution", g.check_skill_local_dependency_resolution(root, runtime, reach))
     add("semantic-preservation", g.check_semantic_preservation(runtime, support, corpus))
     add("generated-reference-fidelity", g.check_generated_reference_fidelity(root, runtime))  # fidelity mismatch
     add("decision-tables", g.check_decision_tables(runtime, corpus))
