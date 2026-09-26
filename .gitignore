@@ -11,6 +11,9 @@ skills-staging/*
 !skills-staging/2026-07-30-campaign-ops/
 !skills-staging/2026-07-30-security-enhancement/
 pack-eval-artifacts/
+# Local-only working directory; not part of the published pack. Ignored so a
+# broad `git add` cannot stage it.
+design-mining/
 # Private session transcripts are never tracked (#100). Convention for future
 # transcript drops: put them under transcripts/ (ignored wholesale), or name
 # a root-level one-off *.transcript.md. The two named files predate the rule.
