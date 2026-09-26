@@ -416,3 +416,39 @@ premise-verification discipline and the fixture flagged for a rebuild
 per the README covenant — no in-repo probe has run; its probe shape
 (two fixtures, shallow evidence present vs removed, grading the
 evidence path rather than the outcome) joins the standing #115 queue.
+
+The §7 tier-change re-probe rule (2026-09-22) combines a public idea, a
+public triage, and a contributor-attested measurement. The idea: Boris
+Cherny (Anthropic, Claude Code) said in interview clips that the Claude
+Code system prompt is re-ablated at each model release — delete it,
+bring it back line by line, measure each line — and that a large majority
+of it was deleted at one release because the lines had been correcting
+behaviors the new model no longer needed (clips as embedded in the
+YouTube commentary video linked in the README acknowledgements; the
+interview itself gives no classification of what may be ablated). The
+three-bucket triage — necessary context / workflow control / safety and
+acceptance boundary — is that commentary video's own proposal, adopted
+here as procedure with bucket (3) re-pointed at §1's existing
+load-bearing class; it is not measured as a taxonomy. The measurement is
+this file's §7 tier-inheritance evidence read forward: the downstream
+consumer whose same-fixture tier replication flipped a bare arm 3/3 →
+0/3 later changed session tier, triaged its rule caches by these buckets,
+and found most of its rule lines in bucket (2) with every prior verdict
+on them taken at a superseded tier (contributor-reported, not linkable).
+The re-probe is pre-registered — hypothesis, decision table, grader
+before any run — but had not run at submission, so the rule ships
+`unprobed` per the README covenant. Probe shape: per rule, bare vs ruled
+arms at the new tier (N≥3), verdicts read by the §7 table, redundant
+fraction against a stated null; what would falsify the premise is a
+tier-change re-probe that reproduces every prior verdict — then verdicts
+do not inherit tier in practice and the trigger costs a pass for
+nothing. Joins the standing #115 queue.
+(§6 review amendment, 2026-09-27: the incident-backing hatch was fenced
+so a rule that is load-bearing by content — safety, verification,
+fail-closed, or authorization-boundary — can never be demoted out of
+bucket (3); the three-bucket procedure was moved to
+`references/tier-change-reprobe.md` with a compact trigger/kernel kept in
+§7 per §4 retrieval-cost; the trigger's audience-tier phrasing was
+tightened to match §7's "the tier the file is written for." The rule's
+doctrine is unchanged. Full delta in the consolidated-branch change
+record.)
