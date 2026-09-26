@@ -997,8 +997,9 @@ default; an AI rewrite does not launder a derivative).
   derive: keep; (2) workflow control a more capable executor may do
   unaided: the re-probe set; (3) the load-bearing class §1's pruning
   guardrail defines (safety, verification, fail-closed,
-  authorization-boundary): keep, never live-probed — and a rule in that
-  class by content never leaves (3), incident or not. Re-probe bucket (2)
+  authorization-boundary, and the gates it lists): keep, never
+  live-probed — and a rule in that class by content never leaves (3),
+  incident or not. Re-probe bucket (2)
   at the new tier by the pair above; a bare pass makes a delete
   candidate, never a deletion (one rule per commit, under the opener's
   ask-first rule). Bind the result to the change record: "bucket triage
