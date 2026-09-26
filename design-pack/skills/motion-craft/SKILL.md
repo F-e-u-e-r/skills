@@ -164,6 +164,15 @@ Numbers first; taste second. Defaults for product UI:
   registered `@property` with `inherits: false` sidesteps it) - so in a
   drawer with many items, drive `transform` on the moving element directly
   instead of `--offset` on the container.
+- Animating a registered custom property that a gradient reads (a conic
+  `from var(--angle)` spun by keyframes) makes each new angle a repaint of
+  the gradient, not a composite (`unprobed` - private incident as shape; see
+  Provenance): one mobile browser painted it once and never again while
+  desktop animated it smoothly. Keep the gradient static and rotate the
+  layer that holds it - an oversized square spun with `rotate`/`transform`
+  behind a static mask - so the motion can run without repainting it. Claim
+  the fix only for targets whose painted result you checked; a named target
+  you could not check stays unverified.
 - Animations are interruptible: new input retargets mid-flight (CSS
   transitions and springs retarget; keyframes restart from zero - wrong for
   toasts, toggles, anything triggered rapidly); no fill-mode or delay may
@@ -275,3 +284,11 @@ honestly - while the ruled arm caught 7 of 7 with budget citations,
 including the keyboard rule and the 500ms total-stagger cap the bare arm
 lacked as concepts. A round-0 run was voided for a leaked in-fixture
 answer key. Trail in the design-pack PR.
+§5's paint-driven custom-property bullet (2026-09-26) comes from a private
+incident, cited as shape (no product or file names): an animated border
+glow drove a conic gradient's angle through a registered custom property;
+it animated on desktop while a mobile browser painted the gradient once and
+never repainted it. The replacement moved the motion onto a `rotate`
+transform of a static gradient layer (compositor-run, confirmed on
+desktop); a re-check on the device itself is not on record. Ships `unprobed` per the covenant;
+its probe joins the standing #115 queue.
