@@ -7,8 +7,12 @@ evidence directory plus the sibling prereg package)."""
 import hashlib, json, os, re, subprocess, sys
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-REPO = os.path.abspath(os.path.join(ROOT, "..", ".."))
-PREREG = os.path.join(REPO, "reviews", "2026-08-13-issue115-t2-probe-prereg")
+REPO = subprocess.run(["git", "-C", ROOT, "rev-parse", "--show-toplevel"],
+                      capture_output=True, text=True, check=True).stdout.strip()
+if not REPO:
+    sys.exit("FATAL: 'git rev-parse --show-toplevel' returned empty; cannot locate repo root")
+REPO = os.path.abspath(REPO)
+PREREG = os.path.abspath(os.path.join(ROOT, "..", "2026-08-13-issue115-t2-probe-prereg"))
 EXPECT_MODEL = "claude-haiku-4-5-20251001"
 S1_DIGEST = "1b35c236c6bec0cd85f71e2f78f1f0d365a54ce723a1b4bfc03293ccaa0adade"
 S2_DIGEST = "3a5f4c271d300b42f13d8449acc46c3e4d1146ae6baf678169aca50c3d5bd2d1"
@@ -142,7 +146,7 @@ r = subprocess.run([sys.executable, os.path.join(PREREG, "static_checks.py")],
                    capture_output=True, text=True)
 chk("prereg static checks ALL PASS (39/39)", "ALL PASS" in r.stdout and r.returncode == 0)
 g = subprocess.run(["git", "-C", REPO, "status", "--porcelain",
-                    "reviews/2026-08-13-issue115-t2-probe-prereg"],
+                    os.path.relpath(PREREG, REPO)],
                    capture_output=True, text=True)
 chk("prereg package untouched in working tree", g.stdout.strip() == "", g.stdout)
 

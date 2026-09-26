@@ -9,8 +9,12 @@ import hashlib, json, os, re, subprocess, sys
 from collections import Counter
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-REPO = os.path.abspath(os.path.join(ROOT, "..", ".."))
-PKG = os.path.join(REPO, "reviews", "2026-08-14-issue115-t5-placement-probe-prereg")
+REPO = subprocess.run(["git", "-C", ROOT, "rev-parse", "--show-toplevel"],
+                      capture_output=True, text=True, check=True).stdout.strip()
+if not REPO:
+    sys.exit("FATAL: 'git rev-parse --show-toplevel' returned empty; cannot locate repo root")
+REPO = os.path.abspath(REPO)
+PKG = os.path.abspath(os.path.join(ROOT, "..", "2026-08-14-issue115-t5-placement-probe-prereg"))
 PIN = "claude-haiku-4-5-20251001"
 FAILURES = []
 
@@ -133,9 +137,9 @@ m = json.load(open(os.path.join(PKG, "MANIFEST.json")))
 check("prereg manifest still records both prior pools as NOT USED",
       "NOT USED" in m["budget"]["t2probe_headroom_11"] and "NOT USED" in m["budget"]["stage2_reserve_18"])
 dirty = subprocess.run(["git", "-C", REPO, "diff", "HEAD", "--",
-                        "reviews/2026-08-14-issue115-t5-placement-probe-prereg",
-                        "reviews/2026-08-15-issue115-t5p-prefix",
-                        "reviews/2026-08-08-issue115-stage2", "skills", "metadata"],
+                        os.path.relpath(PKG, REPO),
+                        os.path.relpath(os.path.join(ROOT, "..", "2026-08-15-issue115-t5p-prefix"), REPO),
+                        os.path.relpath(os.path.join(ROOT, "..", "2026-08-08-issue115-stage2"), REPO), "skills", "metadata"],
                        capture_output=True, text=True).stdout
 check("prereg / prefix / sealed campaign / skills / metadata byte-unchanged", dirty == "", dirty[:200])
 
