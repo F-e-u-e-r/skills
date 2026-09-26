@@ -125,9 +125,28 @@ alongside, but they don't require it.
 
 | Skill | Covers | Main sources |
 |---|---|---|
-| `ui-design-craft` | Surface classification (marketing vs app UI), the AI-tell ban corpus with signatures (hexes, fonts, layouts, labels), layout budgets (hero/nav/section rhythm), accent and contrast discipline, five-state coverage, restyle preservation rules, a mechanical pre-flight gate | taste-skill + refero_skill + open-design + ideas-only refs |
-| `motion-craft` | Duration budgets by surface, easing direction rules, spring/gesture physics (projection, rubber-band, velocity handoff), choreography and stagger caps, performance traps, the reduced-motion floor, misquoted-research corrections, a severity-tiered pre-ship gate | Emil Kowalski + LottieFiles + refero_skill + open-design |
-| `design-review-gate` | Measurement before judgment (browser census snippets), ordered review passes, rule-anchored findings with a bounded fix loop, and the design-contract rules: authority classes, verify-observational-tokens, drift direction, anti-impersonation | Emil Kowalski posture + own synthesis + ideas-only refs |
+| `ui-design-craft` | UI composition and visual craft: layout, hierarchy, typography, color, interaction/state quality, accessibility, and anti-generic design guidance | taste-skill + refero_skill + open-design + ideas-only refs |
+| `motion-craft` | Motion and interaction behavior: timing, easing, gesture/spring behavior, choreography, reduced-motion behavior, and motion performance | Emil Kowalski + LottieFiles + refero_skill + open-design |
+| `design-review-gate` | Structured design review: visual hierarchy, consistency, interaction/state quality, accessibility, motion, and measurable review findings | Emil Kowalski posture + own synthesis + ideas-only refs |
+
+**How it stays grounded — and light in context.** The design guidance is not
+hand-maintained prose copied across three skills. It projects from a **single
+canonical corpus of design semantics**, through a deterministic build, into
+**skill-local reference files** that the three `SKILL.md` entry points load
+**selectively** — a task pulls only the references it needs, never the whole
+rulebook into every prompt. So the same rule reads identically wherever it
+applies (one source of truth, regenerated rather than retyped), while a routine
+task still loads just its relevant slice. Authority runs top-down: the
+**canonical corpus is the primary semantic authority**; a small set of
+**pack-local extensions** adds production-specific guidance *beneath* it (never
+overriding); each `SKILL.md` is a **task entry point** that selects which
+references a job needs, and the corpus governs any overlap.
+
+Example prompts (adapt to your surface):
+
+- *"Use `ui-design-craft` to build a pricing-page hero — no generic AI look."*
+- *"Design the card-hover and page-entry motion with `motion-craft` (respect reduced-motion)."*
+- *"Review this checkout screen with `design-review-gate` — give me ranked findings."*
 
 Notes that keep this honest:
 

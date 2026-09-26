@@ -115,9 +115,24 @@ opus-pack 的 cross-reference 在 opus-pack 未安裝時退化為純脈絡。與
 
 | Skill | 涵蓋 | 主要來源 |
 |---|---|---|
-| `ui-design-craft` | 表面分類(marketing vs app UI)、附特徵的 AI-tell 禁令語料(hex/字體/版面/標籤)、版面預算(hero/nav/段落節奏)、accent 與對比紀律、五狀態覆蓋、改版保存規則、機械式 pre-flight 閘門 | taste-skill + refero_skill + open-design + 純意念來源 |
-| `motion-craft` | 依表面分類的時長預算、easing 方向規則、彈簧/手勢物理(投影、rubber-band、速度交接)、編排與 stagger 上限、效能陷阱、reduced-motion 底線、研究誤引修正、分級 pre-ship 閘門 | Emil Kowalski + LottieFiles + refero_skill + open-design |
-| `design-review-gate` | 先量測後判斷(瀏覽器普查 snippets)、有序審查 pass、規則錨定的 findings 與有界修復迴圈,以及 design-contract 規則:權威分類、觀察性 token 驗證、drift 方向、反模仿 | Emil Kowalski 姿態 + 自行綜合 + 純意念來源 |
+| `ui-design-craft` | UI 組構與視覺工藝:版面、階層、字體排印、色彩、互動/狀態品質、無障礙,以及反通用(anti-generic)設計指引 | taste-skill + refero_skill + open-design + 純意念來源 |
+| `motion-craft` | 動效與互動行為:時長、easing、手勢/彈簧行為、編排、reduced-motion 行為,以及動效效能 | Emil Kowalski + LottieFiles + refero_skill + open-design |
+| `design-review-gate` | 結構化設計審查:視覺階層、一致性、互動/狀態品質、無障礙、動效,以及可量測的審查 findings | Emil Kowalski 姿態 + 自行綜合 + 純意念來源 |
+
+**它如何保持一致、又不塞爆脈絡。** 設計指引不是在三個 skill 之間手動維護、重複
+抄寫的散文。它由**單一的設計語意 canonical corpus**,經確定性建置,投影成**各
+skill 本地的參考檔**,再由三個 `SKILL.md` 進入點**選擇性**取用——一項任務只拉入
+它需要的參考,絕不把整本規則書塞進每個 prompt。於是同一條規則在任何適用處讀來
+一致(單一事實來源、由重生成而非重抄),而日常任務仍只載入相關的切片。權威由上
+而下:**canonical corpus 是主要語意權威**;一小組 **pack-local extensions** 在其
+**之下**補充 production 專屬指引(絕不凌駕);每個 `SKILL.md` 是**任務進入點**,決
+定某項工作需要哪些參考,任何重疊處以 corpus 為準。
+
+範例 prompt(依你的介面調整):
+
+- *「用 `ui-design-craft` 做一個 pricing 頁 hero——不要通用的 AI 感。」*
+- *「用 `motion-craft` 設計卡片 hover 與進場動效(尊重 reduced-motion)。」*
+- *「用 `design-review-gate` 審查這個結帳畫面——給我排序後的 findings。」*
 
 誠實備註:
 
