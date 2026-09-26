@@ -972,26 +972,16 @@ When rigor conflicts with finishing sooner, rigor wins.
   rendering too (`unprobed` — private incident as shape; see
   Provenance): for a visual effect the task exists to deliver, a
   computed style, a running animation's name or clock, or any DOM/state
-  read is what the page asked the engine to draw, never what it drew.
-  The observation is the pixels on each supported target — every
-  browser engine and every device class the task, product, or user
-  names, and for whichever of the two nothing names, every one the
-  product ships to. The same engine on another device class is another
-  target, and an emulated device is its host's paint, never the
-  device's — a phone drawn by a desktop build is a desktop observation.
-  For cyclic motion, capture the effect's region at least twice, a
-  quarter of its cycle or more apart and never a whole number of cycles
-  apart; for a one-shot change, capture before it starts, at least once
-  while it should be mid-way, and after it should have finished — the
-  mid-way frame is what shows it moved rather than snapped. Keep motion
-  enabled in both the page's preference and the capture tool and nothing
-  else in the region changing; identical cyclic captures mean frozen or
-  sampled in phase — resample at another spacing before calling it
-  frozen. Under a reduced-motion preference, the correct paint is the
-  effect's specified reduced-motion behavior, not whatever you see.
-  Report each observation as covering its own target only — "the effect
-  works" only once every target is observed; a target you cannot reach
-  stays unverified — say so and name what the user must run.
+  read is what the page asked the engine to draw, never what it drew;
+  the evidence is the painted pixels, captured often enough to tell the
+  working effect from the broken one; captures that cannot tell them
+  apart leave the effect unverified. An observation covers only the
+  engine and device that painted it — a phone emulated in a desktop
+  browser is evidence about that desktop browser under emulation, not
+  about the phone.
+  Claim the effect only for the targets you observed; a target the task,
+  product, or user names that you could not observe stays unverified —
+  say so and name what the user must run.
   ❌ "the registry shows the package because I pushed it" — checked while
   still logged in as the publisher.
   ❌ "the animation name reads back and its angle advanced 222→235
