@@ -22,9 +22,9 @@ import os
 import re
 
 # --- pinned canonical input identity (PR #254 merge checkpoint) --------------
-CANONICAL_CORPUS_PATH = "reviews/2026-09-26-phase-b-semantic-publication/public_records.json"
+CANONICAL_CORPUS_PATH = "corpus/design-pack/public_records.json"
 CANONICAL_CORPUS_SHA256 = "16ad01fb97f0ad321f254cce93e249e6484110862650dda39e45700be2893e5b"
-CANONICAL_NOTICE_PATH = "reviews/2026-09-26-phase-b-semantic-publication/THIRD_PARTY_NOTICES.md"
+CANONICAL_NOTICE_PATH = "corpus/design-pack/THIRD_PARTY_NOTICES.md"
 CANONICAL_NOTICE_SHA256 = "b04f228ded8896dec1129aa81b13a126f0913086f8830116cbf61325863a4d4c"
 CANONICAL_MERGE_SHA = "44f10443c16e926515af86ebdd1d52e003ed98cc"
 GENERATOR_VERSION = "design-pack-projector/2"

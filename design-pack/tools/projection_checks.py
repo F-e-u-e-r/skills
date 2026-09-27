@@ -257,9 +257,9 @@ def check_reference_path_existence(root):
     return f
 
 def check_no_cross_skill_reference(root):
-    """No SKILL.md may reach generated references via ../ traversal, repo-root, scratchpad, or the dated reviews path."""
+    """No SKILL.md may reach generated references via ../ traversal, repo-root, scratchpad, or the canonical corpus path."""
     f = []
-    bad = re.compile(r"\.\./.*references/generated|/private/|scratchpad|reviews/2026-09-26-phase-b")
+    bad = re.compile(r"\.\./.*references/generated|/private/|scratchpad|corpus/design-pack")
     for skill in os.listdir(os.path.join(root, SKILL_DIR)):
         text, _ = _skillmd_refs(root, skill)
         for m in sorted(set(x.group(0) for x in bad.finditer(text))):
