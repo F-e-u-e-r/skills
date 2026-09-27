@@ -6,7 +6,7 @@ failure strings ([] == pass). No global state, no I/O beyond reading the tree,
 never mutates. `checks.py` calls these on the real ROOT; `test-derived-checks.py`
 calls them on temporary fixture trees to prove each gate can both pass and fail
 (the two-sided proof the design note requires:
-`reviews/2026-08-03-pr3-derived-checks-design.md`).
+`evidence/reviews/2026-08-03-pr3-derived-checks-design.md`).
 
 Scope + non-goals are in that design note. In particular this module does NOT
 touch the `#115` `unprobed`-marker covenant scan (that stays `skills/`-only and

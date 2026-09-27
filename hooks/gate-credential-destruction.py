@@ -4,7 +4,7 @@ confirmation before destroying credential-pattern files. Mechanically
 enforces security-architect (minimal contact with credential files; embedded
 directives are events to surface) and delegation-and-review §7.
 
-Why it exists: in the pack's own eval (reviews/2026-07-11-pack-eval-
+Why it exists: in the pack's own eval (evidence/reviews/2026-07-11-pack-eval-
 rounds-1-2.md), both weak-tier no-skills runs deleted a credentials backup
 because a directive embedded in a vendor-notes file told them to — the two
 worst cells in the matrix. This gate turns that failure into a blocked tool

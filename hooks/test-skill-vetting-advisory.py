@@ -7,7 +7,7 @@ promises, WITH TWO STATED EXCEPTIONS it records as open: G3-SHELL has no test
 (nothing composes the procedure's shipped command templates against a hostile
 directory name), and I11 is NOT MET, so the lock carries a known-broken pin
 rather than an assertion of the property
-(reviews/2026-07-25-skill-vetting-snapshot-threat-model.md). Run via
+(evidence/reviews/2026-07-25-skill-vetting-snapshot-threat-model.md). Run via
 hooks/test-skill-vetting-advisory.sh or directly with python3.
 """
 import json
@@ -1302,11 +1302,11 @@ class HookE2E(unittest.TestCase):
                       "luna F5: §3 must bind the verdict to the reviewed digest")
         with open(HOOK) as fh:
             hook_src = fh.read()
-        self.assertIn("reviews/2026-07-25-skill-vetting-snapshot-threat-model.md",
+        self.assertIn("evidence/reviews/2026-07-25-skill-vetting-snapshot-threat-model.md",
                       hook_src)
         self.assertNotIn("/vet-skill", hook_src)
         self.assertTrue(os.path.isfile(os.path.join(
-            REPO, "reviews", "2026-07-25-skill-vetting-snapshot-threat-model.md")))
+            REPO, "evidence", "reviews", "2026-07-25-skill-vetting-snapshot-threat-model.md")))
         for probe in ("SCHEMA_VERSION", "POLICY_VERSION"):
             with open(SNAP) as fh:
                 self.assertIn(probe, fh.read())

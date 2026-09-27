@@ -1,6 +1,6 @@
 # Target IA architecture — adjudicated design (no relocation authorized)
 
-> **Design / adjudication record. Target shape decided; NO `git mv`, NO migration authorized.** Builds on the migration discovery packet (`reviews/2026-09-27-reviews-relocation-migration-packet.md`, merged `cb0b4cb`). The exhaustive migration manifest (old->new map) is the NEXT step, built against this shape.
+> **Design / adjudication record. Target shape decided; NO `git mv`, NO migration authorized.** Builds on the migration discovery packet (`evidence/reviews/2026-09-27-reviews-relocation-migration-packet.md`, merged `cb0b4cb`). The exhaustive migration manifest (old->new map) is the NEXT step, built against this shape.
 
 ## The core model: separate three concepts the class-count model conflated
 

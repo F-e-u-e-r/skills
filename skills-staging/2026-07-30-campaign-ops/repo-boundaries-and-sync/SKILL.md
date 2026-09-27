@@ -12,7 +12,7 @@ Published (tracked):
 - `skills/`, `design-pack/` — pack source (the marketplace roots).
 - `hooks/`, `.github/`, `.claude-plugin/` — enforcement, CI,
   manifests.
-- `reviews/` — public review and threat-model records.
+- `evidence/` — public review and threat-model records.
 - `README.md`, `README.zh-Hant.md`, `LICENSE`,
   `THIRD-PARTY-NOTICES.md` — docs; the two READMEs mirror each other.
 

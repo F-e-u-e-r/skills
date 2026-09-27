@@ -64,7 +64,7 @@ is a claim generator, and a broken one confabulates a clean result.
 - **Trigger:** marking a mutation `equivalent`, or "this branch can't be reached".
 - **Do:** attempt the specific input that would reach it before excluding it. The
   `equivalent` class exists but is deliberately UNUSED
-  (`reviews/2026-07-25-skill-vetting-snapshot-threat-model.md`, "Verification
+  (`evidence/reviews/2026-07-25-skill-vetting-snapshot-threat-model.md`, "Verification
   obligations"): two were once declared equivalent on an argument and one argument
   was false.
 - **Done:** if a probe reaches the branch and KILLS the mutant, add/retain the

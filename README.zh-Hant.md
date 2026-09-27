@@ -234,7 +234,7 @@ window + 相容涵蓋,且須完成而非僅宣告)只在該 skill 所屬 source 
 
 要達到**模型無法悄悄跳過的強制力**,只有兩條路,都不在 skill 文字裡:**hooks**(下一節——強制力的上限就是 hook 自身的依賴與比對規則)與 **CI**(把 `checks/run-all.sh` 掛進 pipeline)。這正是本包的核心原則:要強制,用閘門,不是用更多散文。
 
-散文與閘門之間有一道量測出來的缺口:**可用不等於會用**。本包自己的 eval(`reviews/2026-07-11-pack-eval-rounds-1-2.md`)量到:24 場帶 skills 的 session 只有 10 場曾自行載入任何 skill——描述是機率性的提示,不是機制。某類工作**必須**觸發某紀律時,請在專案的 `CLAUDE.md` 或 dispatch prompt 裡指名(「動到金流的任務先載入 operational-rigor」):被指名的 skill 近乎必定載入;沒被指名的,即使任務完全符合描述,載入率也不到一半。
+散文與閘門之間有一道量測出來的缺口:**可用不等於會用**。本包自己的 eval(`evidence/reviews/2026-07-11-pack-eval-rounds-1-2.md`)量到:24 場帶 skills 的 session 只有 10 場曾自行載入任何 skill——描述是機率性的提示,不是機制。某類工作**必須**觸發某紀律時,請在專案的 `CLAUDE.md` 或 dispatch prompt 裡指名(「動到金流的任務先載入 operational-rigor」):被指名的 skill 近乎必定載入;沒被指名的,即使任務完全符合描述,載入率也不到一半。
 
 ## 強制層:hooks 設定方法
 
@@ -319,7 +319,7 @@ bash hooks/test-skill_snapshot.sh
   "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/gate-credential-destruction.py" }
 ```
 
-**第四個(可選)hook——未審或變動的第三方 skill 的 advisory 絆線。** `hooks/skill-vetting-advisory.py`(Python 3 標準庫,已測試)是一個**純 advisory** 的 `SessionStart` hook,是 `skill-vetting` skill 的搭檔;它的整個觀測層放在同目錄的 `hooks/skill_snapshot.py` 模組——兩個檔案要一起安裝到同一個目錄(設計紀錄:`reviews/2026-07-25-skill-vetting-snapshot-threat-model.md`)。**簽章掃描不是安全邊界,已移除**:primitive 對受監看 skills 根目錄(`$CLAUDE_CONFIG_DIR/skills`,預設 `~/.claude/skills`,加上專案經由 `$CLAUDE_PROJECT_DIR` 的 `.claude/skills`)之下每個項目的**每個檔案**做快照——所以 skill 內部任何地方(不只它的 `SKILL.md`)的新增/修改/刪除/改名/symlink/檔案型別變動都算(一個例外,威脅模型 G1 有載明:直接躺在 skills 根目錄下的散落一般檔案根本不是候選,因為它不能被當成 skill 載入)——而任何無法完整觀測的東西(讀取錯誤、超大檔案、掃描預算耗盡以及其後被枚舉的每一個候選、任何 symlink、特殊檔案、敵意的**頂層** skill 名稱(巢狀檔名自 round 6 起刻意不做閘控——它們從不回顯,其位元組已綁入 digest)、損毀或版本過期的 baseline)都是**異常:一律提示,絕不可能被認證為「未變動」**。對新增/變動/移除/異常的 skill,它注入一行導向 `skill-vetting` skill。它**絕不擋、也絕不輸出「safe」**——`SessionStart` hook 無法 deny,而會放行的掃描器正是 `skill-vetting` 要避開的虛假保證陷阱;乾淨且未變動的執行靜默,首次執行若有東西要收編,則輸出一行說明它**正在列為基準**、但未經審查的 skill 有幾個(這行在寫入之前發出並如此陳述;寫入若失敗不會另行公告——在單一訊息規則下也不可能——但也不需要,因為什麼都沒寫入,下個 session 會再說一次同樣的話)(root 為空、什麼都沒記錄時同樣靜默)——這個數字包含「觀測完整但結果不利」的候選(symlink、不可讀目錄、特殊檔案、敵意名稱),只排除因資源預算中斷而失落的那些(它們的 digest 只會是佔位符),而被排除的每一個仍會由自己的 anomaly 行提示;advisory **先印出**、baseline(`<config>/skill-vetting/baseline.json`)才前進——投遞失敗下次 session 會重新提示——skill 名字只透過嚴格 ASCII allowlist 或不透明 id 進入 model context。baseline 不具防竄改性(它與 skills 本身同一信任層級);這個限制是誠實記載、不是被防禦。它是導向完整 vetting 閱讀的絆線,絕非替代品。設定方式:
+**第四個(可選)hook——未審或變動的第三方 skill 的 advisory 絆線。** `hooks/skill-vetting-advisory.py`(Python 3 標準庫,已測試)是一個**純 advisory** 的 `SessionStart` hook,是 `skill-vetting` skill 的搭檔;它的整個觀測層放在同目錄的 `hooks/skill_snapshot.py` 模組——兩個檔案要一起安裝到同一個目錄(設計紀錄:`evidence/reviews/2026-07-25-skill-vetting-snapshot-threat-model.md`)。**簽章掃描不是安全邊界,已移除**:primitive 對受監看 skills 根目錄(`$CLAUDE_CONFIG_DIR/skills`,預設 `~/.claude/skills`,加上專案經由 `$CLAUDE_PROJECT_DIR` 的 `.claude/skills`)之下每個項目的**每個檔案**做快照——所以 skill 內部任何地方(不只它的 `SKILL.md`)的新增/修改/刪除/改名/symlink/檔案型別變動都算(一個例外,威脅模型 G1 有載明:直接躺在 skills 根目錄下的散落一般檔案根本不是候選,因為它不能被當成 skill 載入)——而任何無法完整觀測的東西(讀取錯誤、超大檔案、掃描預算耗盡以及其後被枚舉的每一個候選、任何 symlink、特殊檔案、敵意的**頂層** skill 名稱(巢狀檔名自 round 6 起刻意不做閘控——它們從不回顯,其位元組已綁入 digest)、損毀或版本過期的 baseline)都是**異常:一律提示,絕不可能被認證為「未變動」**。對新增/變動/移除/異常的 skill,它注入一行導向 `skill-vetting` skill。它**絕不擋、也絕不輸出「safe」**——`SessionStart` hook 無法 deny,而會放行的掃描器正是 `skill-vetting` 要避開的虛假保證陷阱;乾淨且未變動的執行靜默,首次執行若有東西要收編,則輸出一行說明它**正在列為基準**、但未經審查的 skill 有幾個(這行在寫入之前發出並如此陳述;寫入若失敗不會另行公告——在單一訊息規則下也不可能——但也不需要,因為什麼都沒寫入,下個 session 會再說一次同樣的話)(root 為空、什麼都沒記錄時同樣靜默)——這個數字包含「觀測完整但結果不利」的候選(symlink、不可讀目錄、特殊檔案、敵意名稱),只排除因資源預算中斷而失落的那些(它們的 digest 只會是佔位符),而被排除的每一個仍會由自己的 anomaly 行提示;advisory **先印出**、baseline(`<config>/skill-vetting/baseline.json`)才前進——投遞失敗下次 session 會重新提示——skill 名字只透過嚴格 ASCII allowlist 或不透明 id 進入 model context。baseline 不具防竄改性(它與 skills 本身同一信任層級);這個限制是誠實記載、不是被防禦。它是導向完整 vetting 閱讀的絆線,絕非替代品。設定方式:
 
 ```json
 "SessionStart": [
@@ -347,7 +347,7 @@ skills 的 run 在過程上確有差異(點名引用規則、預先聲明預期�
 scope 契約、「已觀察未處理」清單)——代價約 1.6 倍 session 時間。第二輪
 covert 測試(14 場 session、單一擬真工單,機械判定並經獨立複驗)重現了
 天花板,剩餘的鑑別力全部落在「察覺並回報」層;完整數字與修正見
-[reviews/2026-07-11-pack-eval-rounds-1-2.md](reviews/2026-07-11-pack-eval-rounds-1-2.md)。
+[evidence/reviews/2026-07-11-pack-eval-rounds-1-2.md](evidence/reviews/2026-07-11-pack-eval-rounds-1-2.md)。
 Hooks 現已具備放行/擋下兩路單元測試,但行為層(實測 arm)尚未量測。請據
 此看待本包:它是一層一致性保障與可執行的強制基底,不是已證明的分數提升。(這一輪
 測的是 `opus-pack` 的紀律 skill;`design-pack` 晚於它,帶有自己的 smoke 等級
@@ -390,13 +390,13 @@ slot 後判為 NOT-DISCRIMINATED、或不可計分。請把它讀成
 * **任務用詞能因果地影響 routing。** 對較弱的 `ground-truth-gates` surface,加入明示的 trust / verification 框架後,正確 routing 從 **0/6 提升到 4/6**(小型受控實驗);其中一個 surface 從 **0/3 變 3/3**。
 * **改 skill description 無法重現該效果。** 一個對照實驗維持自然任務用詞不變,只窄幅擴充 `ground-truth-gates` 的 description。目標 surface 的正確 routing 仍維持 **0/6 → 0/6**,而既有的強 surface 得以保留。因此該候選 description **未出貨**。
 
-**Activation Execution Probe v1（AE1）。** AE1 測試：對於已證明能在明確路由條件下正確導向 pack skill 的任務表面，一般執行是否也會自主呼叫該 skill。在預先註冊的 `T4a`/`T4b` 表面上，同期的明確路由 reference gate 通過（**11/12**），但一般執行的 expected-skill activation 為 **0/12**，any-Skill activation 亦為 **0/12**——這表示在本次 AE1 測試配置下，明確可路由性與自主 activation 之間存在可觀察到的 dissociation。AE1 **並未**證明：routing 指令的因果效應、tool allowlist 的因果效應、skill description 與此無關、母體層級的 activation 比率，或任何 skill 的行為價值或增益。設計、計數與詮釋邊界：[reviews/2026-09-24-ae1-v1-scored-reconciliation.md](reviews/2026-09-24-ae1-v1-scored-reconciliation.md)。
+**Activation Execution Probe v1（AE1）。** AE1 測試：對於已證明能在明確路由條件下正確導向 pack skill 的任務表面，一般執行是否也會自主呼叫該 skill。在預先註冊的 `T4a`/`T4b` 表面上，同期的明確路由 reference gate 通過（**11/12**），但一般執行的 expected-skill activation 為 **0/12**，any-Skill activation 亦為 **0/12**——這表示在本次 AE1 測試配置下，明確可路由性與自主 activation 之間存在可觀察到的 dissociation。AE1 **並未**證明：routing 指令的因果效應、tool allowlist 的因果效應、skill description 與此無關、母體層級的 activation 比率，或任何 skill 的行為價值或增益。設計、計數與詮釋邊界：[evidence/reviews/2026-09-24-ae1-v1-scored-reconciliation.md](evidence/reviews/2026-09-24-ae1-v1-scored-reconciliation.md)。
 
 這些實驗是方向性的,且目前每個條件的樣本數很小(small n),所以我們把它們當作工程決策的證據,而非母體層級的效能估計。
 
 目前的工作結論是:主要的剩餘挑戰在於 **activation 與 task-surface 的辨識**,而不是需要大規模改寫 skill description。除非有受控實驗支持,production 的 skill 內容維持不變。
 
-本輪的 per-surface 計數、實驗 identity 與 owner 裁定:[reviews/2026-09-18-activation-eval-reconciliation.md](reviews/2026-09-18-activation-eval-reconciliation.md)。
+本輪的 per-surface 計數、實驗 identity 與 owner 裁定:[evidence/reviews/2026-09-18-activation-eval-reconciliation.md](evidence/reviews/2026-09-18-activation-eval-reconciliation.md)。
 
 ## 本包最可能的退化方式(與內建對策)
 

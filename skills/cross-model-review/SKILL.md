@@ -180,8 +180,8 @@ env-independent control T4S2 saturated 3/3 in both arms) on the frozen
 haiku executor; sealed outcome PASS+SUPPORT; scoped to fixtures
 {T4S1,T4S2}, executor claude-haiku-4-5-20251001, n=3 per arm, and the
 frozen campaign design — not universal, not provider-independent, not
-true-blinded; evidence `reviews/2026-08-09-issue115-scored-t4/` (PR
-#171), synthesis `reviews/2026-08-13-issue115-campaign-synthesis/`
+true-blinded; evidence `evidence/probes/2026-08-09-issue115-scored-t4/` (PR
+#171), synthesis `evidence/reviews/2026-08-13-issue115-campaign-synthesis/`
 (PR #185), package issue115-stage2-v1 MANIFEST.sha256
 `25700fd5bce2b07bbf5e89e9080bb0777acafea7a8282b081e7ac3c24972e860`;
 see Provenance.)

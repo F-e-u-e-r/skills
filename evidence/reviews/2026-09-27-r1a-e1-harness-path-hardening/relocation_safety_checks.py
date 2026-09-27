@@ -78,10 +78,10 @@ finally:
 
 # ---- 2. Hardened harnesses use git-toplevel; none uses REPO=../.. -----------
 HARDENED = [
-    "reviews/2026-08-13-issue115-t2probe-prefix/prefix_checks.py",
-    "reviews/2026-08-13-issue115-t2probe-scored/scored_checks.py",
-    "reviews/2026-08-14-issue115-t2-amendment-design/design_checks.py",
-    "reviews/2026-08-15-issue115-t5p-scored/scored_checks.py",
+    "evidence/probes/2026-08-13-issue115-t2probe-prefix/prefix_checks.py",
+    "evidence/probes/2026-08-13-issue115-t2probe-scored/scored_checks.py",
+    "evidence/reviews/2026-08-14-issue115-t2-amendment-design/design_checks.py",
+    "evidence/probes/2026-08-15-issue115-t5p-scored/scored_checks.py",
 ]
 OLD_REPO_PAT = re.compile(r'REPO\s*=\s*os\.path\.abspath\(os\.path\.join\(ROOT,\s*"\.\.",\s*"\.\."\)\)')
 TOPLEVEL_PAT = re.compile(r'rev-parse",\s*"--show-toplevel"')
@@ -94,7 +94,7 @@ for rel in HARDENED:
 # Control: a disposition-set harness is left untouched and still carries the
 # old depth-sensitive pattern. This proves OLD_REPO_PAT actually matches the
 # superseded construct, so the "dropped REPO=../.." checks above are real.
-DISPO_CONTROL = "reviews/2026-08-13-issue115-t2-probe-prereg/static_checks.py"
+DISPO_CONTROL = "evidence/probes/2026-08-13-issue115-t2-probe-prereg/static_checks.py"
 ctrl = open(os.path.join(REPO, DISPO_CONTROL), encoding="utf-8").read()
 check("[control] disposition-set harness still carries REPO=../.. (untouched by design)",
       OLD_REPO_PAT.search(ctrl) is not None, DISPO_CONTROL)

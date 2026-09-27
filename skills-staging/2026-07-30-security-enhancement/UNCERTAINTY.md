@@ -8,7 +8,7 @@ the raw transcript.
 ## Confirmed open security gaps — documented NOT MET at PR #83 merge, still open
 
 These are the owner's DOCUMENTED accepted-risk items (PR #83's body "Recorded as
-open, not solved"; `reviews/2026-07-25-skill-vetting-snapshot-threat-model.md`;
+open, not solved"; `evidence/reviews/2026-07-25-skill-vetting-snapshot-threat-model.md`;
 `-round8-design.md`), verified still-open in HEAD `79ca49c`. They are current
 behavior, not proposed changes — do not encode them as fixed.
 

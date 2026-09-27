@@ -36,8 +36,8 @@ reached. This library exists so the next session does not re-walk those.
 | SessionStart hook | `hooks/skill-vetting-advisory.py` | thin; in-code comments ARE the round-by-round archaeology |
 | Vetting procedure | `skills/skill-vetting/SKILL.md` | §3 binds a verdict to an exit-0 digest |
 | Evidence harness | `hooks/mutation_matrix.py` + `hooks/mutations.json` | authoritative-mode gate is code-enforced |
-| Threat model + invariants I1–I11 | `reviews/2026-07-25-skill-vetting-snapshot-threat-model.md` | the `NOT MET`/OPEN list is the risk map; I12–I17 are the round-8 DESIGN's, unimplemented; two doc claims that used to overstate the code — the I6 "guaranteed logging" line and the advisory.py docstring's "never re-advises" — were RESOLVED by PR #118 (`c7951bc`); see UNCERTAINTY "Known live-doc defects" |
-| Round-8 design D1–D5 | `reviews/2026-07-25-skill-vetting-round8-design.md` | **DESIGN, explicitly unimplemented** — do not read as shipped |
+| Threat model + invariants I1–I11 | `evidence/reviews/2026-07-25-skill-vetting-snapshot-threat-model.md` | the `NOT MET`/OPEN list is the risk map; I12–I17 are the round-8 DESIGN's, unimplemented; two doc claims that used to overstate the code — the I6 "guaranteed logging" line and the advisory.py docstring's "never re-advises" — were RESOLVED by PR #118 (`c7951bc`); see UNCERTAINTY "Known live-doc defects" |
+| Round-8 design D1–D5 | `evidence/reviews/2026-07-25-skill-vetting-round8-design.md` | **DESIGN, explicitly unimplemented** — do not read as shipped |
 | Consistency gate | `.github/checks.py` | enforces duplicate-test + mutation_matrix env-read invariants |
 
 ## Current state (so you don't misread it)

@@ -457,7 +457,7 @@ trail. Risk ladder for granting tools:
   queued Round-5 weak-tier probe has since run and discriminated cleanly
   (bare 0/3 vs ruled 3/3, n=3) on the pre-registered haiku fixture; scoped
   to that Round-5 fixture and sample budget, not universal correctness and
-  not cross-model; evidence `reviews/2026-08-04-round5-results/` at
+  not cross-model; evidence `evidence/probes/2026-08-04-round5/results/` at
   `e6581e18`, MANIFEST.sha256
   `372823c43f165fa2e906de50e536601e9b50a12ec1792aa77f9793418a672615`; see
   Provenance).

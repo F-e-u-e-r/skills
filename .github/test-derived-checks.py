@@ -2,7 +2,7 @@
 """Two-sided proofs for .github/derived_checks.py (PR 3).
 
 Each gate is shown able to PASS on a valid minimal fixture tree AND to FAIL on a
-specific violation (the matrix in reviews/2026-08-03-pr3-derived-checks-design.md).
+specific violation (the matrix in evidence/reviews/2026-08-03-pr3-derived-checks-design.md).
 A checker never shown able to fail is not a gate. Run: python3 .github/test-derived-checks.py
 """
 import os

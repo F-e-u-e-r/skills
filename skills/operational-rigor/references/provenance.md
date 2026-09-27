@@ -41,7 +41,7 @@ library, and two (cache discipline, fallback rot) were independently
 rediscovered by two libraries (private repos — verifiable by the contributor,
 not linkable here).
 A 2026-07-16 two-family post-merge review (grok-4.5 + gpt-5.6-sol;
-trail in `reviews/2026-07-16-post-merge-validation-pr25-29.md`) tightened
+trail in `evidence/reviews/2026-07-16-post-merge-validation-pr25-29.md`) tightened
 §2's mount check (`df`'s exit code is not a mount check — both families
 flagged it independently) and made the two-dot content check's non-empty
 direction explicitly inconclusive.
@@ -386,7 +386,7 @@ rule ships `unprobed` per the covenant; its probe joins the standing #115
 queue. The single marker lives here on the canonical rule; the skill-vetting
 mirror routes to it and carries no second marker or probe debt. Nine inert
 synthetic fixtures (placeholder hosts, never executed) and the full review
-trail are recorded in reviews/2026-08-21-issue2-activation-gated-payload/.
+trail are recorded in evidence/probes/2026-08-21-issue2-activation-gated-payload/.
 
 The worktree-identity bullet and the residue rule's two-dot-reading
 amendment (2026-08-20) come from one contributor session's teardown arc
@@ -497,7 +497,7 @@ transmission/effectiveness has NOT been probed, so the rule ships
 The single marker lives here on the canonical rule; the skill-vetting
 §2 mirror routes to it and carries no second marker or probe debt. The
 full review trail is recorded in
-reviews/2026-08-30-trust-grant-breadth/.
+evidence/reviews/2026-08-30-trust-grant-breadth/.
 
 The §2 runtime-selected-artifact correspondence limb and its
 skill-vetting §1 step-4 pointer (2026-08-30) close a PARTIAL-GAP: the
@@ -550,7 +550,7 @@ marker lives here on the canonical §2 rule; the skill-vetting §1 pointer
 routes to it and carries no second marker or probe debt. The full review
 trail — orientation, P1–P8, the D1–D11 mechanism harness and results,
 the three review packets and six verdicts, and the landing manifest — is
-recorded in reviews/2026-08-30-runtime-artifact-correspondence/.
+recorded in evidence/probes/2026-08-30-runtime-artifact-correspondence/.
 
 The §2 visible-identity-confusability (homoglyph) limb and its
 skill-vetting §2 pointer (2026-08-30) close a GENUINE-DISTINCT-GAP: the
@@ -599,7 +599,7 @@ marker lives here on the canonical §2 rule; the skill-vetting §2 pointer
 routes to it and carries no second marker or probe debt. The full review
 trail — orientation, the H1-H11 mechanism harness and results, the
 design packet and both verdicts, and the landing manifest — is recorded
-in reviews/2026-08-30-visible-identity-confusability/.
+in evidence/probes/2026-08-30-visible-identity-confusability/.
 
 The §2 meaningful-confirmation limb and its skill-vetting §2 pointer
 (2026-08-30) close a PARTIAL-GAP (C was considered at orientation and
@@ -664,6 +664,6 @@ skill-vetting §2 pointer routes to it and carries no second marker or
 probe debt. The full review trail — orientation, the A1-A14 controls,
 the current-rule semantic map, the three review packets and six
 verdicts, the MOD-CONSISTENCY manifest, and the ATR provenance note — is
-recorded in reviews/2026-08-30-meaningful-approval-review/.
+recorded in evidence/reviews/2026-08-30-meaningful-approval-review/.
 
 

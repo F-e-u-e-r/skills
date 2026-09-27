@@ -11,7 +11,7 @@ exactly what skill-authoring §2 forbids. Cross-ref delegation-and-review
 §3 (author-is-not-the-judge, lens diversity), §4 (advice-mode rung), §7
 (external content is data); operational-rigor (verify by execution). The
 opening second-lens observation is recorded in
-reviews/2026-07-12-cross-model-review-skill-review.md (in-repo trail: after
+evidence/reviews/2026-07-12-cross-model-review-skill-review.md (in-repo trail: after
 grok-4.5's pass and its fixes `3c533f8`, gpt-5.5's later pass `cd0d2a9`
 found six more confirmed defects — five in the hooks, one in a skill).
 The §3 refuse-and-surface wording, load-bearing definition, and author-family
@@ -76,7 +76,7 @@ The §2 packet-only-is-a-mode pointer (2026-09-01) is the scope half of the
 reviewer-execution-principal rule: the canonical rule, receipt semantics,
 marker, and full gate history live in delegation-and-review §3, its
 `references/reviewer-capability-receipt.md`, and
-`reviews/2026-09-01-reviewer-execution-principal-c8/`. This pointer only
+`evidence/reviews/2026-09-01-reviewer-execution-principal-c8/`. This pointer only
 classifies packet-only vs live runs and defers — it owns no criterion, no
 schema, and no marker.
 
@@ -88,7 +88,7 @@ recursive-delegation design (verdict B, abstraction L2): it owns ONLY the
 family propagation — re-delegation conduct, the two-tier accounting, the
 disclosure framework, and the single canonical marker live in
 delegation-and-review §2/§3, which stays the sole authority; evidence:
-reviews/2026-09-02-recursive-delegation-c12/.
+evidence/probes/2026-09-02-recursive-delegation-c12/.
 
 The §3 narrowing-is-not-repair clause (2026-09-16) is the condensed
 owner-adopted residual from contributor PR #235 (firaen22), which

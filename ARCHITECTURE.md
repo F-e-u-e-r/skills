@@ -185,7 +185,7 @@ The regression corpus for this contract lives in `metadata/routing-corpus.jsonl`
 (one human-adjudicated expected route per prompt) and `metadata/routing-intent.json`
 (per-skill routing intent plus the symmetric neighbour graph). The procedure for
 running a routing regression when a description changes — and the honest limit of
-what it proves — is in `reviews/2026-08-03-routing-contract-design.md`. A
+what it proves — is in `evidence/reviews/2026-08-03-routing-contract-design.md`. A
 structural gate (§8) keeps the corpus complete and self-consistent; it does not
 run the model.
 
