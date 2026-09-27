@@ -152,6 +152,12 @@ skill 本地的參考檔**,再由三個 `SKILL.md` 進入點**選擇性**取用�
   NULL(drift-direction 條款的陷阱未上膛)——皆公開於各 skill 的 provenance
   與 PR trail。hex 與字體時尚禁令是本包衰變最快的事實:它們追蹤模型訓練
   資料,每個模型世代都要重驗。
+- **研究紀錄(非本包功能)**:一份針對 [Impeccable](https://github.com/pbakaus/impeccable)
+  commit `9d715cc4` 的獨立相容性研究——以本包 canonical corpus 為對照,觀察 routing、
+  provider fan-out、控制表示法與 attribution 傳播——放在
+  [`research/design-pack/2026-09-impeccable-compatibility-study/`](research/design-pack/2026-09-impeccable-compatibility-study/)。
+  內容只有觀察、fixtures 與矩陣:沒有任何結論被採納進 skills、corpus 或 generated
+  references,也不隨任何 plugin 出貨。
 
 ## 架構與穩定性
 

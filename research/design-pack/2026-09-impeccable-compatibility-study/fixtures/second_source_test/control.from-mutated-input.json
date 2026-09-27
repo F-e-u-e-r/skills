@@ -1,0 +1,26 @@
+{
+  "control_id": "DIAL-2002",
+  "variable": "MOTION_INTENSITY",
+  "range": "1-10",
+  "baseline": 4,
+  "gating": [
+    {
+      "when": "value > 3",
+      "activates": [
+        "A11Y-2001"
+      ]
+    },
+    {
+      "when": "value > 6",
+      "activates": [
+        "MOTION-2003"
+      ]
+    },
+    {
+      "when": "value > 5",
+      "activates": [
+        "MOTION-2005"
+      ]
+    }
+  ]
+}

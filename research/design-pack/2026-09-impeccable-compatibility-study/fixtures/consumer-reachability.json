@@ -1,0 +1,149 @@
+{
+  "schema": "consumer-reachability/1",
+  "matrix": [
+    {
+      "id": "MOTION-1003",
+      "consumer_commands": [
+        "polish"
+      ],
+      "consumer_refs": [
+        "reference/polish.md#3. Triage"
+      ]
+    },
+    {
+      "id": "MOTION-1004",
+      "consumer_commands": [
+        "animate"
+      ],
+      "consumer_refs": [
+        "reference/animate.md#Choose material by meaning"
+      ]
+    },
+    {
+      "id": "MOTION-1005",
+      "consumer_commands": [
+        "animate"
+      ],
+      "consumer_refs": [
+        "reference/animate.md#Timing and easing"
+      ]
+    },
+    {
+      "id": "MOTION-1009",
+      "consumer_commands": [
+        "animate"
+      ],
+      "consumer_refs": [
+        "reference/animate.md#Set the motion thesis"
+      ]
+    },
+    {
+      "id": "MOTION-1016",
+      "consumer_commands": [
+        "animate"
+      ],
+      "consumer_refs": [
+        "reference/animate.md#Choose material by meaning"
+      ]
+    },
+    {
+      "id": "MOTION-1018",
+      "consumer_commands": [
+        "overdrive"
+      ],
+      "consumer_refs": [
+        "reference/overdrive.md#For functional UI"
+      ]
+    },
+    {
+      "id": "MOTION-1019",
+      "consumer_commands": [
+        "animate"
+      ],
+      "consumer_refs": [
+        "reference/animate.md#\"Use motion to explain state, relationship, and hierarchy\""
+      ]
+    },
+    {
+      "id": "MOTION-1020",
+      "consumer_commands": [
+        "polish"
+      ],
+      "consumer_refs": [
+        "reference/polish.md#Content and code"
+      ]
+    },
+    {
+      "id": "MOTION-1023",
+      "consumer_commands": [
+        "animate"
+      ],
+      "consumer_refs": [
+        "reference/animate.md#Choose material by meaning"
+      ]
+    },
+    {
+      "id": "MOTION-2002",
+      "consumer_commands": [
+        "animate"
+      ],
+      "consumer_refs": [
+        "reference/animate.md#Choose material by meaning"
+      ]
+    },
+    {
+      "id": "MOTION-2006",
+      "consumer_commands": [
+        "audit"
+      ],
+      "consumer_refs": [
+        "reference/audit.md#2. Performance"
+      ]
+    },
+    {
+      "id": "MOTION-4001",
+      "consumer_commands": [
+        "animate"
+      ],
+      "consumer_refs": [
+        "reference/animate.md#Timing and easing"
+      ]
+    },
+    {
+      "id": "MOTION-4003",
+      "consumer_commands": [
+        "audit"
+      ],
+      "consumer_refs": [
+        "reference/audit.md#5. Implementation Integrity (CRITICAL)"
+      ]
+    },
+    {
+      "id": "MOTION-4004",
+      "consumer_commands": [
+        "audit"
+      ],
+      "consumer_refs": [
+        "reference/audit.md#5. Implementation Integrity (CRITICAL)"
+      ]
+    },
+    {
+      "id": "MOTION-4006",
+      "consumer_commands": [
+        "polish"
+      ],
+      "consumer_refs": [
+        "reference/polish.md#Content and code"
+      ]
+    },
+    {
+      "id": "MOTION-4008",
+      "consumer_commands": [
+        "animate"
+      ],
+      "consumer_refs": [
+        "reference/animate.md#Implement to the runtime"
+      ]
+    }
+  ]
+}

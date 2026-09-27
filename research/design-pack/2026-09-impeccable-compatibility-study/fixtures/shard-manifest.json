@@ -1,0 +1,51 @@
+{
+  "schema": "shard-manifest/1",
+  "shards": {
+    "animate": {
+      "ids": [
+        "MOTION-1004",
+        "MOTION-1005",
+        "MOTION-1009",
+        "MOTION-1016",
+        "MOTION-1019",
+        "MOTION-1023",
+        "MOTION-2002",
+        "MOTION-4001",
+        "MOTION-4008"
+      ],
+      "count": 9,
+      "raw_sha": "6e23e36ebcae3c0e",
+      "normalized_sha": "0f5457e1fa546ced"
+    },
+    "audit": {
+      "ids": [
+        "MOTION-2006",
+        "MOTION-4003",
+        "MOTION-4004"
+      ],
+      "count": 3,
+      "raw_sha": "f8b2f9c2d479ce27",
+      "normalized_sha": "c042e28bb1bad0b6"
+    },
+    "overdrive": {
+      "ids": [
+        "MOTION-1018"
+      ],
+      "count": 1,
+      "raw_sha": "a512227223ab9553",
+      "normalized_sha": "0581baaa021600e3"
+    },
+    "polish": {
+      "ids": [
+        "MOTION-1003",
+        "MOTION-1020",
+        "MOTION-4006"
+      ],
+      "count": 3,
+      "raw_sha": "5cbdefa80ffa23ed",
+      "normalized_sha": "51861e5340332938"
+    }
+  },
+  "total_ids": 16,
+  "duplicated_ids": []
+}

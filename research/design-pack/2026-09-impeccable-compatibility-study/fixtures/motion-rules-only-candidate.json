@@ -1,0 +1,1018 @@
+{
+  "schema": "motion-rules-only-candidate/1",
+  "motion_population": 42,
+  "candidate_count": 16,
+  "candidate_ids": [
+    "MOTION-1003",
+    "MOTION-1004",
+    "MOTION-1005",
+    "MOTION-1009",
+    "MOTION-1016",
+    "MOTION-1018",
+    "MOTION-1019",
+    "MOTION-1020",
+    "MOTION-1023",
+    "MOTION-2002",
+    "MOTION-2006",
+    "MOTION-4001",
+    "MOTION-4003",
+    "MOTION-4004",
+    "MOTION-4006",
+    "MOTION-4008"
+  ],
+  "accounting": {
+    "CANDIDATE": 16,
+    "EXCLUDED_IMPECCABLE_STRONGER": 3,
+    "EXCLUDED_EQUIVALENT": 18,
+    "EXCLUDED_NO_CONSUMER": 3,
+    "EXCLUDED_CONTROL_DEPENDENT": 2
+  },
+  "accounting_closes": true,
+  "candidates": [
+    {
+      "id": "MOTION-1003",
+      "kind": "rule",
+      "semantic": "Guidance: loading-state feedback matched to expected wait time — applied as contextual jud",
+      "classes": [
+        "DESIGN_PACK_MORE_SPECIFIC"
+      ],
+      "impeccable_refs": [
+        "reference/polish.md#3. Triage"
+      ],
+      "commands": [
+        "polish"
+      ],
+      "value_set": [
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "relation_ids": [
+        "REL-MOTION-0003"
+      ],
+      "bucket": "CANDIDATE",
+      "primary_class": "DESIGN_PACK_MORE_SPECIFIC"
+    },
+    {
+      "id": "MOTION-1004",
+      "kind": "rule",
+      "semantic": "Guidance: number of simultaneously animated elements per view — applied as contextual judg",
+      "classes": [
+        "COMPLEMENTARY"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#Choose material by meaning"
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "SEMANTIC"
+      ],
+      "provenance": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "relation_ids": [
+        "REL-MOTION-0004"
+      ],
+      "bucket": "CANDIDATE",
+      "primary_class": "COMPLEMENTARY"
+    },
+    {
+      "id": "MOTION-1005",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: easing curve selection by motion type — must be satisfied.",
+      "classes": [
+        "DESIGN_PACK_MORE_SPECIFIC"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#Timing and easing"
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "SEMANTIC"
+      ],
+      "provenance": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "relation_ids": [
+        "REL-MOTION-0005"
+      ],
+      "bucket": "CANDIDATE",
+      "primary_class": "DESIGN_PACK_MORE_SPECIFIC"
+    },
+    {
+      "id": "MOTION-1009",
+      "kind": "rule",
+      "semantic": "Discouraged: parallax effects — flagged when parallax runs without a reduced-motion guard.",
+      "classes": [
+        "DESIGN_PACK_MORE_SPECIFIC"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#Set the motion thesis"
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "relation_ids": [
+        "REL-MOTION-0009"
+      ],
+      "bucket": "CANDIDATE",
+      "primary_class": "DESIGN_PACK_MORE_SPECIFIC"
+    },
+    {
+      "id": "MOTION-1016",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: content replacement within one container — must be satisfie",
+      "classes": [
+        "DESIGN_PACK_MORE_SPECIFIC"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#Choose material by meaning"
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "SEMANTIC"
+      ],
+      "provenance": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "relation_ids": [
+        "REL-MOTION-0016"
+      ],
+      "bucket": "CANDIDATE",
+      "primary_class": "DESIGN_PACK_MORE_SPECIFIC"
+    },
+    {
+      "id": "MOTION-1018",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: drag/swipe/pinch gestures — must be satisfied.",
+      "classes": [
+        "COMPLEMENTARY"
+      ],
+      "impeccable_refs": [
+        "reference/overdrive.md#For functional UI"
+      ],
+      "commands": [
+        "overdrive"
+      ],
+      "value_set": [
+        "SEMANTIC"
+      ],
+      "provenance": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "relation_ids": [
+        "REL-MOTION-0018"
+      ],
+      "bucket": "CANDIDATE",
+      "primary_class": "COMPLEMENTARY"
+    },
+    {
+      "id": "MOTION-1019",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: direction of translate/scale used to express hierarchy — mu",
+      "classes": [
+        "DESIGN_PACK_MORE_SPECIFIC"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#\"Use motion to explain state, relationship, and hierarchy\""
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "SEMANTIC"
+      ],
+      "provenance": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "relation_ids": [
+        "REL-MOTION-0019"
+      ],
+      "bucket": "CANDIDATE",
+      "primary_class": "DESIGN_PACK_MORE_SPECIFIC"
+    },
+    {
+      "id": "MOTION-1020",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: duration/easing tokens across a product — must be satisfied",
+      "classes": [
+        "DESIGN_PACK_MORE_SPECIFIC"
+      ],
+      "impeccable_refs": [
+        "reference/polish.md#Content and code"
+      ],
+      "commands": [
+        "polish"
+      ],
+      "value_set": [
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "relation_ids": [
+        "REL-MOTION-0020"
+      ],
+      "bucket": "CANDIDATE",
+      "primary_class": "DESIGN_PACK_MORE_SPECIFIC"
+    },
+    {
+      "id": "MOTION-1023",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: directionality of forward/backward navigation animation — m",
+      "classes": [
+        "DESIGN_PACK_MORE_SPECIFIC"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#Choose material by meaning"
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "relation_ids": [
+        "REL-MOTION-0023"
+      ],
+      "bucket": "CANDIDATE",
+      "primary_class": "DESIGN_PACK_MORE_SPECIFIC"
+    },
+    {
+      "id": "MOTION-2002",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: horizontal scrolling text marquees on one page — flagged wh",
+      "classes": [
+        "DESIGN_PACK_MORE_SPECIFIC"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#Choose material by meaning"
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "Leonxlnx/taste-skill",
+      "relation_ids": [
+        "REL-MOTION-0028"
+      ],
+      "bucket": "CANDIDATE",
+      "primary_class": "DESIGN_PACK_MORE_SPECIFIC"
+    },
+    {
+      "id": "MOTION-2006",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: scroll-position and animation-frame handling in source code",
+      "classes": [
+        "DESIGN_PACK_MORE_SPECIFIC"
+      ],
+      "impeccable_refs": [
+        "reference/audit.md#2. Performance"
+      ],
+      "commands": [
+        "audit"
+      ],
+      "value_set": [
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "Leonxlnx/taste-skill",
+      "relation_ids": [
+        "REL-MOTION-0032"
+      ],
+      "bucket": "CANDIDATE",
+      "primary_class": "DESIGN_PACK_MORE_SPECIFIC"
+    },
+    {
+      "id": "MOTION-4001",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: any CSS transition or animation timing function used on UI ",
+      "classes": [
+        "DESIGN_PACK_MORE_SPECIFIC"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#Timing and easing"
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "Nutlope/hallmark",
+      "relation_ids": [
+        "REL-MOTION-0034"
+      ],
+      "bucket": "CANDIDATE",
+      "primary_class": "DESIGN_PACK_MORE_SPECIFIC"
+    },
+    {
+      "id": "MOTION-4003",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: any CSS transition declaration — flagged when found.",
+      "classes": [
+        "COMPLEMENTARY"
+      ],
+      "impeccable_refs": [
+        "reference/audit.md#5. Implementation Integrity (CRITICAL)"
+      ],
+      "commands": [
+        "audit"
+      ],
+      "value_set": [
+        "VERIFICATION"
+      ],
+      "provenance": "Nutlope/hallmark",
+      "relation_ids": [
+        "REL-MOTION-0036"
+      ],
+      "bucket": "CANDIDATE",
+      "primary_class": "COMPLEMENTARY"
+    },
+    {
+      "id": "MOTION-4004",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: hover effects applied across the page — flagged when ≥ 2 un",
+      "classes": [
+        "DESIGN_PACK_MORE_SPECIFIC"
+      ],
+      "impeccable_refs": [
+        "reference/audit.md#5. Implementation Integrity (CRITICAL)"
+      ],
+      "commands": [
+        "audit"
+      ],
+      "value_set": [
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "Nutlope/hallmark",
+      "relation_ids": [
+        "REL-MOTION-0037"
+      ],
+      "bucket": "CANDIDATE",
+      "primary_class": "DESIGN_PACK_MORE_SPECIFIC"
+    },
+    {
+      "id": "MOTION-4006",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: an element's :hover rule — flagged when count > 1.",
+      "classes": [
+        "DESIGN_PACK_MORE_SPECIFIC"
+      ],
+      "impeccable_refs": [
+        "reference/polish.md#Content and code"
+      ],
+      "commands": [
+        "polish"
+      ],
+      "value_set": [
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "Nutlope/hallmark",
+      "relation_ids": [
+        "REL-MOTION-0039"
+      ],
+      "bucket": "CANDIDATE",
+      "primary_class": "DESIGN_PACK_MORE_SPECIFIC"
+    },
+    {
+      "id": "MOTION-4008",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: the N12 archetype's banner-retract animation — flagged when",
+      "classes": [
+        "DESIGN_PACK_MORE_SPECIFIC"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#Implement to the runtime"
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "Nutlope/hallmark",
+      "relation_ids": [
+        "REL-MOTION-0041"
+      ],
+      "bucket": "CANDIDATE",
+      "primary_class": "DESIGN_PACK_MORE_SPECIFIC"
+    }
+  ],
+  "exclusions": [
+    {
+      "id": "MOTION-1001",
+      "kind": "rule",
+      "semantic": "Guidance: animation duration/timing selection — applied as contextual judgement, not a har",
+      "classes": [
+        "IMPECCABLE_MORE_SPECIFIC"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#Timing and easing"
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "SEMANTIC"
+      ],
+      "provenance": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "relation_ids": [
+        "REL-MOTION-0001"
+      ],
+      "bucket": "EXCLUDED_IMPECCABLE_STRONGER",
+      "why": "Impeccable more specific; check for distinct DP field"
+    },
+    {
+      "id": "MOTION-1002",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: CSS properties animated — flagged when an animation targets",
+      "classes": [
+        "EQUIVALENT"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#Implement to the runtime"
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "relation_ids": [
+        "REL-MOTION-0002"
+      ],
+      "bucket": "EXCLUDED_EQUIVALENT",
+      "why": "Impeccable already carries equivalent guidance"
+    },
+    {
+      "id": "MOTION-1006",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: purpose of any animation — must be satisfied.",
+      "classes": [
+        "EQUIVALENT"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#\"Decoration without purpose is animation debt.\""
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "relation_ids": [
+        "REL-MOTION-0006"
+      ],
+      "bucket": "EXCLUDED_EQUIVALENT",
+      "why": "Impeccable already carries equivalent guidance"
+    },
+    {
+      "id": "MOTION-1007",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: state changes (hover, active, expanded, collapsed, modal) c",
+      "classes": [
+        "EQUIVALENT"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#Find the job"
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "relation_ids": [
+        "REL-MOTION-0007"
+      ],
+      "bucket": "EXCLUDED_EQUIVALENT",
+      "why": "Impeccable already carries equivalent guidance"
+    },
+    {
+      "id": "MOTION-1008",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: page/screen transitions — must be satisfied.",
+      "classes": [
+        "EQUIVALENT"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#Choose material by meaning"
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "relation_ids": [
+        "REL-MOTION-0008"
+      ],
+      "bucket": "EXCLUDED_EQUIVALENT",
+      "why": "Impeccable already carries equivalent guidance"
+    },
+    {
+      "id": "MOTION-1010",
+      "kind": "rule",
+      "semantic": "Guidance: easing curve family — applied as contextual judgement, not a hard gate.",
+      "classes": [
+        "IMPECCABLE_MORE_SPECIFIC"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#Timing and easing"
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "SEMANTIC"
+      ],
+      "provenance": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "relation_ids": [
+        "REL-MOTION-0010"
+      ],
+      "bucket": "EXCLUDED_IMPECCABLE_STRONGER",
+      "why": "Impeccable more specific; check for distinct DP field"
+    },
+    {
+      "id": "MOTION-1011",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: paired enter/exit animation durations — must be satisfied.",
+      "classes": [
+        "EQUIVALENT"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#Timing and easing"
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "relation_ids": [
+        "REL-MOTION-0011"
+      ],
+      "bucket": "EXCLUDED_EQUIVALENT",
+      "why": "Impeccable already carries equivalent guidance"
+    },
+    {
+      "id": "MOTION-1012",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: list/grid item entrance stagger — must be satisfied.",
+      "classes": [
+        "EQUIVALENT"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#Choose material by meaning"
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "relation_ids": [
+        "REL-MOTION-0012"
+      ],
+      "bucket": "EXCLUDED_EQUIVALENT",
+      "why": "Impeccable already carries equivalent guidance"
+    },
+    {
+      "id": "MOTION-1013",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: transitions between screens/major views — must be satisfied",
+      "classes": [
+        "EQUIVALENT"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#Choose material by meaning"
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "relation_ids": [
+        "REL-MOTION-0013"
+      ],
+      "bucket": "EXCLUDED_EQUIVALENT",
+      "why": "Impeccable already carries equivalent guidance"
+    },
+    {
+      "id": "MOTION-1014",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: in-progress animations relative to new user input — must be",
+      "classes": [
+        "EQUIVALENT"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#Verify"
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "relation_ids": [
+        "REL-MOTION-0014"
+      ],
+      "bucket": "EXCLUDED_EQUIVALENT",
+      "why": "Impeccable already carries equivalent guidance"
+    },
+    {
+      "id": "MOTION-1015",
+      "kind": "rule",
+      "semantic": "Discouraged: user input during an in-progress animation — to be avoided by default.",
+      "classes": [
+        "EQUIVALENT"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#Verify"
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "relation_ids": [
+        "REL-MOTION-0015"
+      ],
+      "bucket": "EXCLUDED_EQUIVALENT",
+      "why": "Impeccable already carries equivalent guidance"
+    },
+    {
+      "id": "MOTION-1017",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: press feedback on tappable cards/buttons — must be satisfie",
+      "classes": [
+        "EQUIVALENT"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#Timing and easing"
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "relation_ids": [
+        "REL-MOTION-0017"
+      ],
+      "bucket": "EXCLUDED_EQUIVALENT",
+      "why": "Impeccable already carries equivalent guidance"
+    },
+    {
+      "id": "MOTION-1021",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: fading elements' minimum opacity while transitioning — must",
+      "classes": [
+        "DESIGN_PACK_ONLY"
+      ],
+      "impeccable_refs": [],
+      "commands": [],
+      "value_set": [],
+      "provenance": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "relation_ids": [
+        "REL-MOTION-0043"
+      ],
+      "bucket": "EXCLUDED_NO_CONSUMER",
+      "why": "DESIGN_PACK_ONLY, no Impeccable consumer (orphan)"
+    },
+    {
+      "id": "MOTION-1022",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: modal/sheet entrance animation — must be satisfied.",
+      "classes": [
+        "EQUIVALENT"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#Timing and easing"
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "relation_ids": [
+        "REL-MOTION-0022"
+      ],
+      "bucket": "EXCLUDED_EQUIVALENT",
+      "why": "Impeccable already carries equivalent guidance"
+    },
+    {
+      "id": "MOTION-1024",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: layout-affecting properties in animation — flagged when an ",
+      "classes": [
+        "EQUIVALENT"
+      ],
+      "impeccable_refs": [
+        "reference/audit.md#2. Performance"
+      ],
+      "commands": [
+        "audit"
+      ],
+      "value_set": [
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "relation_ids": [
+        "REL-MOTION-0024"
+      ],
+      "bucket": "EXCLUDED_EQUIVALENT",
+      "why": "Impeccable already carries equivalent guidance"
+    },
+    {
+      "id": "MOTION-1025",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: rapid/repeated state changes mid-animation — must be satisf",
+      "classes": [
+        "EQUIVALENT"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#Verify"
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "relation_ids": [
+        "REL-MOTION-0025"
+      ],
+      "bucket": "EXCLUDED_EQUIVALENT",
+      "why": "Impeccable already carries equivalent guidance"
+    },
+    {
+      "id": "MOTION-1026",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: chart entrance animation — flagged when chart animation has",
+      "classes": [
+        "EQUIVALENT"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#Accessibility and control"
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "relation_ids": [
+        "REL-MOTION-0026"
+      ],
+      "bucket": "EXCLUDED_EQUIVALENT",
+      "why": "Impeccable already carries equivalent guidance"
+    },
+    {
+      "id": "MOTION-1027",
+      "kind": "rule",
+      "semantic": "Guidance: animation timing token selection in native/mobile app UI — applied as contextual",
+      "classes": [
+        "DESIGN_PACK_ONLY"
+      ],
+      "impeccable_refs": [],
+      "commands": [],
+      "value_set": [],
+      "provenance": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "relation_ids": [
+        "REL-MOTION-0043"
+      ],
+      "bucket": "EXCLUDED_NO_CONSUMER",
+      "why": "DESIGN_PACK_ONLY, no Impeccable consumer (orphan)"
+    },
+    {
+      "id": "MOTION-2001",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: any animation added to the page — must be satisfied.",
+      "classes": [
+        "EQUIVALENT"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#\"Decoration without purpose is animation debt.\""
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "SEMANTIC"
+      ],
+      "provenance": "Leonxlnx/taste-skill",
+      "relation_ids": [
+        "REL-MOTION-0027"
+      ],
+      "bucket": "EXCLUDED_EQUIVALENT",
+      "why": "Impeccable already carries equivalent guidance"
+    },
+    {
+      "id": "MOTION-2003",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: the shipped page actually moves where motion is claimed (he",
+      "classes": [
+        "COMPLEMENTARY"
+      ],
+      "impeccable_refs": [
+        "reference/overdrive.md#Iterate with Browser Automation"
+      ],
+      "commands": [
+        "overdrive"
+      ],
+      "value_set": [
+        "CONTROL",
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "Leonxlnx/taste-skill",
+      "relation_ids": [
+        "REL-MOTION-0029"
+      ],
+      "bucket": "EXCLUDED_CONTROL_DEPENDENT",
+      "why": "selector=DIAL-2002 (MOTION_INTENSITY > 4)"
+    },
+    {
+      "id": "MOTION-2004",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: GSAP ScrollTrigger pin configuration for sticky-stack and h",
+      "classes": [
+        "NOT_COMPARABLE"
+      ],
+      "impeccable_refs": [],
+      "commands": [],
+      "value_set": [
+        "CONTROL",
+        "VERIFICATION"
+      ],
+      "provenance": "Leonxlnx/taste-skill",
+      "relation_ids": [
+        "REL-MOTION-0042"
+      ],
+      "bucket": "EXCLUDED_NO_CONSUMER",
+      "why": "NOT_COMPARABLE (routing/tooling/machinery)"
+    },
+    {
+      "id": "MOTION-2005",
+      "kind": "rule",
+      "semantic": "Guidance: magnetic pointer-tracking micro-physics and perpetual/looping micro-interactions",
+      "classes": [
+        "EQUIVALENT"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#\"one authored moment the surface has earned\""
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "CONTROL",
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "Leonxlnx/taste-skill",
+      "relation_ids": [
+        "REL-MOTION-0031"
+      ],
+      "bucket": "EXCLUDED_CONTROL_DEPENDENT",
+      "why": "selector=DIAL-2002 (MOTION_INTENSITY > 5)"
+    },
+    {
+      "id": "MOTION-2007",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: CSS properties targeted by animations/transitions — flagged",
+      "classes": [
+        "EQUIVALENT"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#Implement to the runtime"
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "Leonxlnx/taste-skill",
+      "relation_ids": [
+        "REL-MOTION-0033"
+      ],
+      "bucket": "EXCLUDED_EQUIVALENT",
+      "why": "Impeccable already carries equivalent guidance"
+    },
+    {
+      "id": "MOTION-4002",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: every animation decision in a build — must be satisfied.",
+      "classes": [
+        "IMPECCABLE_MORE_SPECIFIC"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#Set the motion thesis"
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "SEMANTIC"
+      ],
+      "provenance": "Nutlope/hallmark",
+      "relation_ids": [
+        "REL-MOTION-0035"
+      ],
+      "bucket": "EXCLUDED_IMPECCABLE_STRONGER",
+      "why": "Impeccable more specific; check for distinct DP field"
+    },
+    {
+      "id": "MOTION-4005",
+      "kind": "rule",
+      "semantic": "Guidance: transitions on UI state changes (buttons, modals, tooltips). Override: reserve o",
+      "classes": [
+        "EQUIVALENT"
+      ],
+      "impeccable_refs": [
+        "reference/animate.md#Timing and easing"
+      ],
+      "commands": [
+        "animate"
+      ],
+      "value_set": [
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "Nutlope/hallmark",
+      "relation_ids": [
+        "REL-MOTION-0038"
+      ],
+      "bucket": "EXCLUDED_EQUIVALENT",
+      "why": "Impeccable already carries equivalent guidance"
+    },
+    {
+      "id": "MOTION-4007",
+      "kind": "rule",
+      "semantic": "Required; surfaced on failure: every transition/animation declaration is intentional and w",
+      "classes": [
+        "EQUIVALENT"
+      ],
+      "impeccable_refs": [
+        "reference/audit.md#5. Implementation Integrity (CRITICAL)"
+      ],
+      "commands": [
+        "audit"
+      ],
+      "value_set": [
+        "SEMANTIC",
+        "VERIFICATION"
+      ],
+      "provenance": "Nutlope/hallmark",
+      "relation_ids": [
+        "REL-MOTION-0040"
+      ],
+      "bucket": "EXCLUDED_EQUIVALENT",
+      "why": "Impeccable already carries equivalent guidance"
+    }
+  ],
+  "public_note": "Public projection of the study's candidate ledger. The internal artifact (sha256 9322fbc1fd0151292a19d972f0299b30463ec8a1b6a70272470fa57eedbeb519) additionally carried per-rule license bookkeeping for a hypothetical redistribution scenario; those rows are omitted here because they describe a scenario, not a measurement. Origins and MIT status of every candidate id are in fixtures/motion-dp-THIRD-PARTY.md and PROVENANCE.md."
+}
