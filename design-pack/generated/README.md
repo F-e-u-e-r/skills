@@ -1,7 +1,7 @@
 # design-pack/generated/ — GENERATED, do not hand-edit
 
 Deterministic projection of the canonical Phase-B semantic corpus
-(`reviews/2026-09-26-phase-b-semantic-publication/public_records.json`,
+(`corpus/design-pack/public_records.json`,
 SHA-256 `16ad01fb97f0ad321f254cce93e249e6484110862650dda39e45700be2893e5b`,
 merged `44f10443c16e926515af86ebdd1d52e003ed98cc`). These files are
 machine-generated and CI-verifiable — never hand-edit; edit the canonical corpus

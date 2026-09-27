@@ -71,11 +71,10 @@ specific `evidence/` paths. Moving or renaming an existing path is therefore
 every consumer and keep the canonical checks green. Do not relocate an existing
 evidence path outside such a migration.
 
-The design-pack corpus (`reviews/2026-09-26-phase-b-semantic-publication/`,
-read by the `design-pack/` corpus loader) is canonical machine-consumed data,
-not evidence. It is the only tracked content still under the former `reviews/`
-root, pinned at that path until its own dedicated relocation to a canonical-data
-surface; do not move it with, or into, this tree.
+The design-pack corpus (`corpus/design-pack/`, read by the `design-pack/`
+corpus loader) is canonical machine-consumed data, not evidence; it lives on its
+own canonical-data surface, never in this tree. The former `reviews/` root holds
+no tracked content.
 
 ## Placing new evidence
 
@@ -88,5 +87,4 @@ When you add a new record:
   artifacts under `evidence/probes/`, grouped under a dated campaign directory,
   as the existing `2026-08-*` entries are, so bulk output stays separable from
   human records.
-- Do not add new material under the former `reviews/` root; it is retained only
-  for the pinned corpus above.
+- Do not add new material under the former `reviews/` root.

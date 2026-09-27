@@ -2,7 +2,7 @@
  "artifact": "design-pack production bridge manifest (generated; do not hand-edit)",
  "attribution": {
   "byte_identical": true,
-  "canonical_notice": "reviews/2026-09-26-phase-b-semantic-publication/THIRD_PARTY_NOTICES.md",
+  "canonical_notice": "corpus/design-pack/THIRD_PARTY_NOTICES.md",
   "license_text_reconstructed": false,
   "reason": "design-pack ships as ./design-pack; the canonical repo-level notice is outside that boundary, so a byte-identical scoped copy is emitted inside it.",
   "scoped_copy": "design-pack/THIRD_PARTY_NOTICES.md",
@@ -10,7 +10,7 @@
  },
  "canonical_corpus": {
   "merge_sha": "44f10443c16e926515af86ebdd1d52e003ed98cc",
-  "path": "reviews/2026-09-26-phase-b-semantic-publication/public_records.json",
+  "path": "corpus/design-pack/public_records.json",
   "sha256": "16ad01fb97f0ad321f254cce93e249e6484110862650dda39e45700be2893e5b"
  },
  "generated": true,
