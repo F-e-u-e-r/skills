@@ -15,7 +15,7 @@ project observations with no canonical counterpart. Evidence note: unlike the
 other three skills, several OPS incidents are **history-only, sourced from the
 session transcript and the gitignored `internal/gate-b-2026-07-25/` ledger —
 NOT independently repo-verifiable**; the canonical-rule citations (to the
-installed skills) and the `reviews/2026-07-25-skill-vetting-*.md` design records
+installed skills) and the `evidence/reviews/2026-07-25-skill-vetting-*.md` design records
 DO resolve.
 
 ## Reviewer orchestration

@@ -38,7 +38,7 @@ review-only — inline it if you act) and the deliberately-not-done D1–D5 desi
 defect.** Of round-6's twelve fixes, 3 were defective and 6 more incomplete; the
 3 defective ones shared exactly one property — each was a new mechanism invented
 while folding, not a mechanical correction
-(`reviews/2026-07-25-skill-vetting-round8-design.md`, the round-5/6/7 table).
+(`evidence/reviews/2026-07-25-skill-vetting-round8-design.md`, the round-5/6/7 table).
 **Standing rule:** when a fix requires inventing a mechanism (a new lock scheme, a
 shape heuristic, a path guard), do not fold it under pressure — design it, attack
 the design first, THEN implement. Three-defects-one-mechanism (operational-rigor
@@ -166,7 +166,7 @@ the design first, THEN implement. Three-defects-one-mechanism (operational-rigor
 
 ## Deliberately NOT done (do not "helpfully" finish these)
 
-The round-8 design `reviews/2026-07-25-skill-vetting-round8-design.md` (D1–D5) is
+The round-8 design `evidence/reviews/2026-07-25-skill-vetting-round8-design.md` (D1–D5) is
 an **unimplemented DESIGN**. It exists to be attacked BEFORE it is written,
 because the campaign proved that folding these under pressure produces defective
 fixes. None shipped in PR #83.
@@ -217,7 +217,7 @@ mechanics → `mutation-matrix-evidence-discipline`. Running the review campaign
 
 ```
 git show 550689d --stat && git show b427bf8 --stat   # the false-claim + its correction, both in history
-grep -rn "NOT MET\|STILL_OPEN\|D1\|D2\|D3\|D4\|D5" reviews/2026-07-25-skill-vetting-*.md
+grep -rn "NOT MET\|STILL_OPEN\|D1\|D2\|D3\|D4\|D5" evidence/reviews/2026-07-25-skill-vetting-*.md
 ```
 If D1–D5 have since been implemented, the "deliberately not done" section is
 stale — move each landed item to the invariants skill and re-verify its tests.

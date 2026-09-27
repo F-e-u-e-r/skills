@@ -16,7 +16,7 @@ and the official advisor-tool pattern; a 2026-07 mining pass added packet
 cost-asymmetry, edit-conflict reconciliation, and fallback resumption (each
 rule probe-tested on a fresh weaker-tier agent); the §7 surfacing clause
 (2026-07) comes from the pack's own eval rounds 1–2
-(reviews/2026-07-11-pack-eval-rounds-1-2.md — the strongest tested model
+(evidence/reviews/2026-07-11-pack-eval-rounds-1-2.md — the strongest tested model
 refused an embedded directive and never mentioned it); the handoff
 communication lines (2026-07) adapt benjaminard/fable-skills'
 outcome-first-writing and plain-handoff; the §7 cannot-vouch-for-itself
@@ -476,7 +476,7 @@ separate owner-gated item, not started; the general sandbox/zero-trust
 reviewer-runtime layer is deliberately not activated. Full trail — four
 design revisions, five packets, eight verdicts, per-round adjudications,
 fifteen probes, and the closure record — is
-`reviews/2026-09-01-reviewer-execution-principal-c8/`. Ships `unprobed`
+`evidence/reviews/2026-09-01-reviewer-execution-principal-c8/`. Ships `unprobed`
 per the covenant: the marker records that the doctrine's behavioral
 effectiveness on reviewer/orchestrator conduct is unprobed (its probe joins
 the standing #115 queue); it does not mark the harness observations, the
@@ -514,4 +514,4 @@ reading (budget-axis-only vs authorization) and both judged it sound —
 wording frozen as reviewed, zero polish. Behavioral effectiveness of the
 shipped wording is unprobed (the single in-body marker in §2); its probe
 joins the standing #115 queue. Evidence package:
-reviews/2026-09-02-recursive-delegation-c12/.
+evidence/probes/2026-09-02-recursive-delegation-c12/.

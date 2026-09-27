@@ -12,7 +12,7 @@ watched content (ADV-1) as controlling every byte, name, type and shape** under
 the watched trees; same-privilege local code (ADV-2) is out of scope by design.
 These invariants shipped hardened in **PR #83 (`7cd2af6`, merged 2026-07-26)**
 over a multi-round cross-family campaign; the design record
-`reviews/2026-07-25-skill-vetting-snapshot-threat-model.md` defines **goals
+`evidence/reviews/2026-07-25-skill-vetting-snapshot-threat-model.md` defines **goals
 G1–G6 + G3-SHELL and invariants I1–I11** (I12–I17 belong to the *unimplemented*
 round-8 design — see the last section). Each invariant below violates "breaks
 users you cannot see": a silently-missed trojan edit, a discarded BLOCK, a hung
@@ -238,7 +238,7 @@ allowlisted name (pinned open by
 concurrency serialization (the lock is hand-rolled `O_EXCL` at `:226`;
 `fcntl.flock`/design D2 not landed), and the **I2** mid-scan swap window and
 **I10** partial-with-prior half. The round-8 design
-`reviews/2026-07-25-skill-vetting-round8-design.md` (D1–D5, invariants I12–I17)
+`evidence/reviews/2026-07-25-skill-vetting-round8-design.md` (D1–D5, invariants I12–I17)
 is an explicitly **unimplemented** design, not shipped code.
 
 ## When NOT to use

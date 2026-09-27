@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Adversarial matrix for hooks/skill_snapshot.py (the observation/persistence
 primitive). Each test is named for the invariant it holds (threat model:
-reviews/2026-07-25-skill-vetting-snapshot-threat-model.md). Run via
+evidence/reviews/2026-07-25-skill-vetting-snapshot-threat-model.md). Run via
 hooks/test-skill_snapshot.sh or directly: python3 hooks/test-skill_snapshot.py
 """
 import importlib.util

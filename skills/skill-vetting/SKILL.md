@@ -235,7 +235,7 @@ Write one of: **SAFE-TO-PROPOSE / SUSPECT / BLOCK**, with the evidence behind it
   reason, and no digest binding is claimed. That is fail-closed and it is the
   right answer — a hostile name is itself strong evidence — but it is a real
   gap in the executable binding, and the shell-free addressing in
-  `reviews/2026-07-25-skill-vetting-round8-design.md` (D1) is what closes it. Compute the snapshot with the pack's canonical
+  `evidence/reviews/2026-07-25-skill-vetting-round8-design.md` (D1) is what closes it. Compute the snapshot with the pack's canonical
   tool and record its output with the verdict. **Run the tool ONLY from a
   trusted copy OUTSIDE the tree you are vetting, never a path inside the
   candidate.** A relative `hooks/skill_snapshot.py`, or
@@ -260,7 +260,7 @@ Write one of: **SAFE-TO-PROPOSE / SUSPECT / BLOCK**, with the evidence behind it
   you never looked at.
 
   Until the shell-free addressing described in
-  `reviews/2026-07-25-skill-vetting-round8-design.md` (D1) is implemented:
+  `evidence/reviews/2026-07-25-skill-vetting-round8-design.md` (D1) is implemented:
   **if the candidate's directory name is not a plain
   `[A-Za-z0-9][A-Za-z0-9._-]*` identifier, do not put it in a shell command at
   all — record BLOCK and say why.** A hostile name is itself strong evidence.

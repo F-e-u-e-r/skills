@@ -6,7 +6,7 @@ read/write lives in the sibling module `hooks/skill_snapshot.py` (install both
 files together, same directory); this file only resolves the watch roots,
 compares snapshots to the baseline, composes the advisory, and orders delivery
 before baseline advance. Design record:
-`reviews/2026-07-25-skill-vetting-snapshot-threat-model.md`.
+`evidence/reviews/2026-07-25-skill-vetting-snapshot-threat-model.md`.
 
 Signature scanning is not a security boundary and has been removed. The hook
 detects complete skill-tree changes and requires full skill vetting against the

@@ -299,7 +299,7 @@ gpt-5.6-sol; effort tiers per round in the trail) tightened five clauses
 here — timeout-vs-enclosing-deadline,
 error-cooldown cache state, typed advance-signal vs. valid empty, executed
 DST gap/fold cases, and the durable-handoff scope of "await side effects" —
-trail in `reviews/2026-07-16-post-merge-validation-pr25-29.md`.
+trail in `evidence/reviews/2026-07-16-post-merge-validation-pr25-29.md`.
 
 Sync contract: the §4 scheduled-process bullet's opening claim quotes
 this entry's headline verbatim — change the headline here → update that

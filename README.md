@@ -319,7 +319,7 @@ principle: to enforce, use gates, not more prose.
 
 Between prose and gates sits a measured gap: **availability is not
 application**. In the pack's own eval
-(`reviews/2026-07-11-pack-eval-rounds-1-2.md`), only 10 of 24
+(`evidence/reviews/2026-07-11-pack-eval-rounds-1-2.md`), only 10 of 24
 skills-available sessions ever self-loaded a skill — a description is a
 probabilistic nudge, not a mechanism. For a discipline that must fire on a
 given class of work, name the skill in the project's `CLAUDE.md` or in the
@@ -457,7 +457,7 @@ third-party skills.** `hooks/skill-vetting-advisory.py` (Python 3 stdlib, tested
 is a **pure-advisory** `SessionStart` hook, the companion to the `skill-vetting`
 skill; its whole observation layer lives in the sibling module
 `hooks/skill_snapshot.py` — install both files into the same directory (design
-record: `reviews/2026-07-25-skill-vetting-snapshot-threat-model.md`).
+record: `evidence/reviews/2026-07-25-skill-vetting-snapshot-threat-model.md`).
 **Signature scanning is not a security boundary and has been removed**: the
 primitive snapshots every file under each entry of the watched skills roots
 (`$CLAUDE_CONFIG_DIR/skills`, default `~/.claude/skills`, plus the project's
@@ -532,7 +532,7 @@ roughly 1.6× the session time. A second, covert round (14 sessions, one
 realistic ticket, mechanically verified and independently re-checked)
 reproduced the ceiling and moved all remaining discrimination to the
 noticing-and-reporting layer; full numbers and corrections in
-[reviews/2026-07-11-pack-eval-rounds-1-2.md](reviews/2026-07-11-pack-eval-rounds-1-2.md).
+[evidence/reviews/2026-07-11-pack-eval-rounds-1-2.md](evidence/reviews/2026-07-11-pack-eval-rounds-1-2.md).
 The hooks now carry allow+block unit suites but remain unmeasured at the
 behavioral-arm level. Treat the pack accordingly: a consistency layer and
 an enforcement substrate, not a proven score boost. (This round measured
@@ -582,13 +582,13 @@ Current results suggest that **skill availability and routing quality are not th
 * **Task wording can causally affect routing.** For weak `ground-truth-gates` surfaces, adding explicit trust / verification framing increased correct routing from **0/6 to 4/6** in a small controlled experiment; one surface moved from **0/3 to 3/3**.
 * **Changing the skill description did not reproduce that effect.** A reciprocal experiment kept the natural task wording fixed and narrowly expanded the `ground-truth-gates` description. Correct routing on the target surfaces remained **0/6 → 0/6**, while existing strong surfaces were retained. The candidate description was therefore **not shipped**.
 
-**Activation Execution Probe v1 (AE1).** AE1 tested whether tasks that are explicitly routeable to a pack skill also invoke that skill autonomously during ordinary execution. On the preregistered `T4a`/`T4b` surfaces, the contemporaneous explicit-routing reference gate passed (**11/12**), while ordinary execution produced **0/12** expected-skill activations and **0/12** any-Skill activations — an explicit-routeability / autonomous-activation dissociation under the tested AE1 configuration. AE1 does **not** establish a causal effect of the routing instruction or the tool allowlist, that skill descriptions are uninvolved, a population-wide activation rate, or any behavioral skill usefulness or uplift. Design, counts, and interpretation boundary: [reviews/2026-09-24-ae1-v1-scored-reconciliation.md](reviews/2026-09-24-ae1-v1-scored-reconciliation.md).
+**Activation Execution Probe v1 (AE1).** AE1 tested whether tasks that are explicitly routeable to a pack skill also invoke that skill autonomously during ordinary execution. On the preregistered `T4a`/`T4b` surfaces, the contemporaneous explicit-routing reference gate passed (**11/12**), while ordinary execution produced **0/12** expected-skill activations and **0/12** any-Skill activations — an explicit-routeability / autonomous-activation dissociation under the tested AE1 configuration. AE1 does **not** establish a causal effect of the routing instruction or the tool allowlist, that skill descriptions are uninvolved, a population-wide activation rate, or any behavioral skill usefulness or uplift. Design, counts, and interpretation boundary: [evidence/reviews/2026-09-24-ae1-v1-scored-reconciliation.md](evidence/reviews/2026-09-24-ae1-v1-scored-reconciliation.md).
 
 These experiments are directional and currently use small per-condition samples, so we treat them as evidence for engineering decisions rather than population-level performance estimates.
 
 The current working conclusion is that the main remaining challenge is **activation and task-surface discrimination**, not a broad need to rewrite skill descriptions. Production skill content remains unchanged unless a controlled experiment supports the change.
 
-Per-surface counts, experiment identities, and owner adjudications for this round: [reviews/2026-09-18-activation-eval-reconciliation.md](reviews/2026-09-18-activation-eval-reconciliation.md).
+Per-surface counts, experiment identities, and owner adjudications for this round: [evidence/reviews/2026-09-18-activation-eval-reconciliation.md](evidence/reviews/2026-09-18-activation-eval-reconciliation.md).
 
 ## How this pack degrades (and the built-in countermeasure)
 

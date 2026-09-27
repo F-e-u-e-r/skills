@@ -31,7 +31,7 @@ command could sweep in).
 **The trio (START-HERE / MANIFEST / UNCERTAINTY) is REVIEW-ONLY and is NOT
 installed; no installed skill hard-depends on it.** Each skill carries its own
 load-bearing open-items locally (e.g. security-invariants' "Known open items"
-section) and cites the durable `reviews/2026-07-25-skill-vetting-*.md` threat
+section) and cites the durable `evidence/reviews/2026-07-25-skill-vetting-*.md` threat
 model + design records as the authoritative `NOT MET`/OPEN source. A skill's
 "see UNCERTAINTY.md" pointer is a review-time convenience for the fuller
 safe-defaults, not an install-time dependency — after install, the authoritative
@@ -97,7 +97,7 @@ not shipped here.
   disposition tags + the "fold-time-invented-mechanism is the defect" meta-signal,
   the deliberately-NOT-done D1–D5 designs, and the rejected options ← round-5/6/7
   defect table and answered-vs-open questions in
-  `reviews/2026-07-25-skill-vetting-round8-design.md`, commits `550689d`
+  `evidence/reviews/2026-07-25-skill-vetting-round8-design.md`, commits `550689d`
   (false-claim) + `b427bf8` (correction) both in history, round-6/8 in-code
   comments in the two hooks, `.github/workflows/checks.yml` (CI reorder). Failure
   archaeology of a named campaign.

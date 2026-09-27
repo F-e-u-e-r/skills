@@ -5,7 +5,7 @@
 > execution authorization. PARK is not NEXT, and PARK is not latent authorization.
 
 This roadmap is built on the reconciled evaluation state in
-[reviews/2026-09-18-activation-eval-reconciliation.md](reviews/2026-09-18-activation-eval-reconciliation.md)
+[evidence/reviews/2026-09-18-activation-eval-reconciliation.md](evidence/reviews/2026-09-18-activation-eval-reconciliation.md)
 (raw run artifacts are local-only / gitignored). Current production skill content
 is unchanged, and nothing here proposes changing it without a controlled experiment
 that supports the change.
@@ -85,7 +85,7 @@ tested AE1 configuration. It does **not** establish a causal effect of the routi
 instruction or the tool allowlist, that skill descriptions are uninvolved, a
 population-wide activation rate, or any behavioral skill usefulness or uplift. Full
 design, counts, and interpretation boundary:
-[reviews/2026-09-24-ae1-v1-scored-reconciliation.md](reviews/2026-09-24-ae1-v1-scored-reconciliation.md).
+[evidence/reviews/2026-09-24-ae1-v1-scored-reconciliation.md](evidence/reviews/2026-09-24-ae1-v1-scored-reconciliation.md).
 
 Prior supporting evidence (already scored, not reopened): Activation Bridge v1/v2
 each scored appropriate activation 6/41 (generic cues insufficient at this tier;

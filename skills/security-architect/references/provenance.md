@@ -11,7 +11,7 @@ incident response, PKCE rationale; fixed: EncryptedSharedPreferences now
 deprecated) and standard references (OWASP Top 10, RFC 8252, RFC 7636).
 The unprompted-load triggers, minimal-contact rule, and injection-surfacing
 line (2026-07) come from the pack's own eval rounds 1–2
-(reviews/2026-07-11-pack-eval-rounds-1-2.md): this skill fired 0/24 under
+(evidence/reviews/2026-07-11-pack-eval-rounds-1-2.md): this skill fired 0/24 under
 user-ask-shaped triggers while injections were actively being handled; the
 strongest model refused an embedded directive without surfacing it; one run
 read a credentials file it did not need.
@@ -33,7 +33,7 @@ rule is backed by a cited incident commit or audit finding in its source
 library (private repos — incidents verifiable by the contributor, not linkable
 here).
 A 2026-07-16 two-family post-merge review (grok-4.5 + gpt-5.6-sol;
-trail in `reviews/2026-07-16-post-merge-validation-pr25-29.md`) made the
+trail in `evidence/reviews/2026-07-16-post-merge-validation-pr25-29.md`) made the
 webhook dedup row the enqueued event itself and added the
 reconcile-before-reclaim precondition on expiring spend holds.
 The capability-triangle rule (2026-07-24) adapts agent-standard-oss's §10

@@ -15,7 +15,7 @@ spelling is refused rather than digested), and `record` would need that name on 
 command line, which §3 forbids. Such a candidate gets a prose BLOCK and no
 digest binding; closing that is design item D1. The hook itself is a thin
 dispatcher and contains no filesystem-walking logic of its own. Design record:
-`reviews/2026-07-25-skill-vetting-snapshot-threat-model.md` (threat model,
+`evidence/reviews/2026-07-25-skill-vetting-snapshot-threat-model.md` (threat model,
 goals G1-G6, invariants I1-I11). A deliberate naming deviation: this file uses
 an underscore (not the hooks/ hyphen convention) because the hook imports it
 as a Python module; install it NEXT TO the hook (same directory).

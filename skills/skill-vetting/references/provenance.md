@@ -30,7 +30,7 @@ probe is a #115 routing decision, not a new inline marker. Design review was a
 three-round cross-family gate (gpt-5.6-luna + gpt-5.6-sol, max effort, mutually
 blind) that ended at the round cap with luna PROCEED / sol FIX; the final bounded
 precision fixes and the finding-to-explain layering (Option X) were owner-adjudicated,
-not a 2/2 consensus. Evidence: `reviews/2026-08-22-issue1-exfiltration-channel/`.
+not a 2/2 consensus. Evidence: `evidence/probes/2026-08-22-issue1-exfiltration-channel/`.
 
 The companion hook `hooks/skill-vetting-advisory.py` is a delta-detector, not a
 scanner: signature scanning was removed at the 2026-07-25 cross-family security
@@ -42,4 +42,4 @@ never as a runtime detector. The same gate's rounds 2-3 drove the observation
 layer into the separately-tested `hooks/skill_snapshot.py` primitive (injective
 length-prefixed encoding, fd-verified reads, fail-closed anomalies, hardened
 baseline I/O, delivery-before-advance ordering); the threat model and invariants
-live in `reviews/2026-07-25-skill-vetting-snapshot-threat-model.md`. 
+live in `evidence/reviews/2026-07-25-skill-vetting-snapshot-threat-model.md`. 

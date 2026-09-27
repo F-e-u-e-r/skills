@@ -28,7 +28,7 @@ dashboard, a learning-lab experiment harness, a Telegram bot, a link-shortener);
 each is backed by a cited incident or experiment in its source library (private
 repos — verifiable by the contributor, not linkable here).
 A 2026-07-16 two-family post-merge review (grok-4.5 + gpt-5.6-sol;
-trail in `reviews/2026-07-16-post-merge-validation-pr25-29.md`) scoped
+trail in `evidence/reviews/2026-07-16-post-merge-validation-pr25-29.md`) scoped
 experiment calibration to the shared case set and confined synthesized
 fire-path inputs to a labeled test set, never the captured corpus.
 The rule-2 behavioral trap-armed clause (2026-07-16) adapts a published
