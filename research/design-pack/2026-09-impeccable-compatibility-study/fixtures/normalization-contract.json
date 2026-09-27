@@ -1,0 +1,108 @@
+{
+  "schema": "em-dash-normalization-contract/1",
+  "transform_version": "motion-dp-normalize/1",
+  "policy": "U+2014 (em dash) -> ', ' (comma-space); spacing around the dash absorbed; applied ONLY to Impeccable-bound projection text; no corpus edit",
+  "em_dash_occurrences": 16,
+  "occurrences": [
+    {
+      "id": "MOTION-1003",
+      "field": "public_expression",
+      "context_raw": "ed to expected wait time — applied as contextual j",
+      "context_normalized": "ed to expected wait time, applied as contextual j"
+    },
+    {
+      "id": "MOTION-1004",
+      "field": "public_expression",
+      "context_raw": "imated elements per view — applied as contextual j",
+      "context_normalized": "imated elements per view, applied as contextual j"
+    },
+    {
+      "id": "MOTION-1005",
+      "field": "public_expression",
+      "context_raw": "selection by motion type — must be satisfied.",
+      "context_normalized": "selection by motion type, must be satisfied."
+    },
+    {
+      "id": "MOTION-1009",
+      "field": "public_expression",
+      "context_raw": "uraged: parallax effects — flagged when parallax r",
+      "context_normalized": "uraged: parallax effects, flagged when parallax r"
+    },
+    {
+      "id": "MOTION-1016",
+      "field": "public_expression",
+      "context_raw": "ent within one container — must be satisfied.",
+      "context_normalized": "ent within one container, must be satisfied."
+    },
+    {
+      "id": "MOTION-1018",
+      "field": "public_expression",
+      "context_raw": "rag/swipe/pinch gestures — must be satisfied.",
+      "context_normalized": "rag/swipe/pinch gestures, must be satisfied."
+    },
+    {
+      "id": "MOTION-1019",
+      "field": "public_expression",
+      "context_raw": "sed to express hierarchy — must be satisfied.",
+      "context_normalized": "sed to express hierarchy, must be satisfied."
+    },
+    {
+      "id": "MOTION-1020",
+      "field": "public_expression",
+      "context_raw": " tokens across a product — must be satisfied.",
+      "context_normalized": " tokens across a product, must be satisfied."
+    },
+    {
+      "id": "MOTION-1023",
+      "field": "public_expression",
+      "context_raw": "ard navigation animation — must be satisfied.",
+      "context_normalized": "ard navigation animation, must be satisfied."
+    },
+    {
+      "id": "MOTION-2002",
+      "field": "public_expression",
+      "context_raw": "ext marquees on one page — flagged when count > 1.",
+      "context_normalized": "ext marquees on one page, flagged when count > 1."
+    },
+    {
+      "id": "MOTION-2006",
+      "field": "public_expression",
+      "context_raw": " handling in source code — flagged when any of the",
+      "context_normalized": " handling in source code, flagged when any of the"
+    },
+    {
+      "id": "MOTION-4001",
+      "field": "public_expression",
+      "context_raw": "used on UI state changes — flagged when a timing-f",
+      "context_normalized": "used on UI state changes, flagged when a timing-f"
+    },
+    {
+      "id": "MOTION-4003",
+      "field": "public_expression",
+      "context_raw": "S transition declaration — flagged when found.",
+      "context_normalized": "S transition declaration, flagged when found."
+    },
+    {
+      "id": "MOTION-4004",
+      "field": "public_expression",
+      "context_raw": " applied across the page — flagged when ≥ 2 unrela",
+      "context_normalized": " applied across the page, flagged when ≥ 2 unrela"
+    },
+    {
+      "id": "MOTION-4006",
+      "field": "public_expression",
+      "context_raw": "an element's :hover rule — flagged when count > 1.",
+      "context_normalized": "an element's :hover rule, flagged when count > 1."
+    },
+    {
+      "id": "MOTION-4008",
+      "field": "public_expression",
+      "context_raw": "banner-retract animation — flagged when height is ",
+      "context_normalized": "banner-retract animation, flagged when height is "
+    }
+  ],
+  "negative_guard_only_emdash_changed": true,
+  "negative_guard_no_wording_change": true,
+  "raw_semantic_sha256": "2d0f384816bb0f6d65251a220e7511f1c2fd72717cccb481053d8605f8a8c965",
+  "normalized_semantic_sha256": "0c8129a22facdfc10b419dc6380cd72f8d912c830ec82388360a993f1335bff0"
+}

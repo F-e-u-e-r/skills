@@ -1,0 +1,2053 @@
+{
+  "schema": "impeccable-compatibility-study-results/1",
+  "study": "2026-09-impeccable-compatibility-study",
+  "generated_on": "2026-09-28",
+  "independence": "Independent study; not affiliated with or endorsed by the Impeccable maintainers.",
+  "system_under_test": {
+    "name": "Impeccable",
+    "repo": "https://github.com/pbakaus/impeccable",
+    "commit": "9d715cc4f5564a990ca8345abfdd5df6dc9b41c8",
+    "license": "Apache-2.0",
+    "versions": {
+      "plugin": "4.4.0",
+      "npm_package": "4.1.0",
+      "engine": "0.1.6"
+    }
+  },
+  "comparison_corpus": {
+    "name": "Design Pack canonical corpus",
+    "repo_path": "corpus/design-pack/public_records.json",
+    "seal_commit": "bd8cb1a97474b7a180b93f50bb114404da2d2b99",
+    "sha256": "16ad01fb97f0ad321f254cce93e249e6484110862650dda39e45700be2893e5b",
+    "records": {
+      "total": 542,
+      "runtime": 454,
+      "runtime_breakdown": {
+        "rule": 443,
+        "synthesized_rule": 5,
+        "decision_table": 3,
+        "dial": 3
+      },
+      "support": 88,
+      "support_breakdown": {
+        "evidence": 85,
+        "conflict": 3
+      }
+    }
+  },
+  "provider_counting_units": {
+    "transformer_definitions": {
+      "count": 19,
+      "definition": "entries of PROVIDERS in scripts/lib/transformers/providers.js at 9d715cc4, one configDir each (the antigravity entry uses configDir .agent)"
+    },
+    "build_log_assembled_providers": {
+      "count": 19,
+      "definition": "the build's own log line when assembling dist/universal ('19 providers'); same set as the transformer definitions"
+    },
+    "dist_directories": {
+      "count": 23,
+      "definition": "directories directly under dist/ after `node scripts/build.js --skip-root-sync`: 19 transformer-named provider directories + cursor-plugin + openai + vscode + universal"
+    },
+    "universal": {
+      "count": 1,
+      "definition": "dist/universal, an aggregate directory holding all 19 configDir trees; counted inside the 23, excluded from the evaluated fan-out"
+    },
+    "evaluated_fanout_outputs": {
+      "count": 22,
+      "definition": "the 23 dist directories minus universal; each checked for the 4 shards, the attribution file, the 4 command-reference links, all 16 ids and no unrelated-command link"
+    },
+    "zip_packaging_outputs": {
+      "count": 2,
+      "definition": "openai-plugin.zip and universal.zip under dist/; archives of the above, not separately evaluated"
+    },
+    "attribution_gate_reference_dirs": {
+      "count": 41,
+      "definition": "skills/impeccable/reference/ directories found by walking the 23 dist directories (several providers and universal hold more than one)"
+    }
+  },
+  "models": {
+    "orchestrator": "claude-opus-4-8 (Claude Code main session, 2026-09-27/28)",
+    "behavioral_cells": "claude-sonnet-5 (Claude Code subagents) for all 21 cells",
+    "fact_verification": "one claude-opus-4-8 read-only subagent (repository facts)",
+    "packaging_session": "claude-fable-5-1 (Claude Code 2.1.283, 2026-09-28)",
+    "cells": {
+      "first_run_consumption": 6,
+      "matched_content_consumption": 6,
+      "control_binding": 3,
+      "behavioral_sanity": 2,
+      "routed_commands": 4,
+      "total": 21,
+      "n_per_cell": 1
+    },
+    "blindness": "agents were told they were in a controlled test and instructed to follow only the provided reference file(s); they were not told the hypothesis, but the design was not hypothesis-blind or double-blind",
+    "attribution_method": "per-cell model ids read from the study session's subagent transcripts (internal); every behavioral cell resolved to claude-sonnet-5"
+  },
+  "reproduction_run": {
+    "date": "2026-09-28",
+    "tools_run_log": "internal release-validation/01-public-tools-run.log",
+    "fresh_build_log": "internal release-validation/03-fresh-reproduction-build.log",
+    "tools_exit_codes": "8/8 exit 0",
+    "outputs_identical_to_fixtures_or_internal_evidence": "20/20",
+    "fresh_build": {
+      "copy": "pinned clone at 9d715cc4 copied without .git/node_modules/dist; devDependencies reused from the study's build copy",
+      "command": "node scripts/build.js --skip-root-sync",
+      "exit": 0,
+      "build_log_summary": "exit 0; the build reported the universal directory assembled from 19 providers, both of its prose validators clean, and completion",
+      "dist_entries": 25
+    },
+    "attribution_gate_on_fresh_build": "PASS (41 distribution reference dirs across 23 dist directories)",
+    "fanout_on_fresh_build": "22/22 provider-specific dist directories PRESERVED"
+  },
+  "tests": [
+    {
+      "id": "T01",
+      "family": "inventory",
+      "question": "What command/reference surface does Impeccable expose at the tested commit?",
+      "unit": "commands",
+      "n": 24,
+      "status": "final",
+      "outcome": {
+        "commands_total": 24,
+        "active": 23,
+        "deprecated_alias": 1,
+        "detectors": 61,
+        "detector_categories": {
+          "slop": 32,
+          "quality": 29
+        },
+        "transformer_definitions": 19,
+        "non_command_references": [
+          "android.md",
+          "component-review.md",
+          "craft-floor.md",
+          "doctor.md",
+          "hooks.md",
+          "ios.md",
+          "live-setup.md",
+          "new-work.md",
+          "operate.md",
+          "region-map.md",
+          "routing.md",
+          "visualize.md"
+        ],
+        "versions": {
+          "plugin": "4.4.0",
+          "npm_package": "4.1.0",
+          "engine": "0.1.6"
+        },
+        "license": "Apache-2.0"
+      },
+      "table": [
+        {
+          "name": "craft",
+          "status": "deprecated_alias",
+          "alias_of": "new-work flow (generate/shape)",
+          "reference": "reference/craft.md",
+          "native_variant": false
+        },
+        {
+          "name": "init",
+          "status": "active",
+          "alias_of": null,
+          "reference": "reference/init.md",
+          "native_variant": false
+        },
+        {
+          "name": "document",
+          "status": "active",
+          "alias_of": null,
+          "reference": "reference/document.md",
+          "native_variant": false
+        },
+        {
+          "name": "extract",
+          "status": "active",
+          "alias_of": null,
+          "reference": "reference/extract.md",
+          "native_variant": false
+        },
+        {
+          "name": "live",
+          "status": "active",
+          "alias_of": null,
+          "reference": "reference/live.md",
+          "native_variant": false
+        },
+        {
+          "name": "generate",
+          "status": "active",
+          "alias_of": null,
+          "reference": "reference/generate.md",
+          "native_variant": false
+        },
+        {
+          "name": "adapt",
+          "status": "active",
+          "alias_of": null,
+          "reference": "reference/adapt.md",
+          "native_variant": true
+        },
+        {
+          "name": "animate",
+          "status": "active",
+          "alias_of": null,
+          "reference": "reference/animate.md",
+          "native_variant": false
+        },
+        {
+          "name": "audit",
+          "status": "active",
+          "alias_of": null,
+          "reference": "reference/audit.md",
+          "native_variant": true
+        },
+        {
+          "name": "bolder",
+          "status": "active",
+          "alias_of": null,
+          "reference": "reference/bolder.md",
+          "native_variant": false
+        },
+        {
+          "name": "clarify",
+          "status": "active",
+          "alias_of": null,
+          "reference": "reference/clarify.md",
+          "native_variant": false
+        },
+        {
+          "name": "colorize",
+          "status": "active",
+          "alias_of": null,
+          "reference": "reference/colorize.md",
+          "native_variant": false
+        },
+        {
+          "name": "critique",
+          "status": "active",
+          "alias_of": null,
+          "reference": "reference/critique.md",
+          "native_variant": false
+        },
+        {
+          "name": "delight",
+          "status": "active",
+          "alias_of": null,
+          "reference": "reference/delight.md",
+          "native_variant": false
+        },
+        {
+          "name": "distill",
+          "status": "active",
+          "alias_of": null,
+          "reference": "reference/distill.md",
+          "native_variant": false
+        },
+        {
+          "name": "harden",
+          "status": "active",
+          "alias_of": null,
+          "reference": "reference/harden.md",
+          "native_variant": false
+        },
+        {
+          "name": "onboard",
+          "status": "active",
+          "alias_of": null,
+          "reference": "reference/onboard.md",
+          "native_variant": false
+        },
+        {
+          "name": "layout",
+          "status": "active",
+          "alias_of": null,
+          "reference": "reference/layout.md",
+          "native_variant": false
+        },
+        {
+          "name": "optimize",
+          "status": "active",
+          "alias_of": null,
+          "reference": "reference/optimize.md",
+          "native_variant": false
+        },
+        {
+          "name": "overdrive",
+          "status": "active",
+          "alias_of": null,
+          "reference": "reference/overdrive.md",
+          "native_variant": false
+        },
+        {
+          "name": "polish",
+          "status": "active",
+          "alias_of": null,
+          "reference": "reference/polish.md",
+          "native_variant": false
+        },
+        {
+          "name": "quieter",
+          "status": "active",
+          "alias_of": null,
+          "reference": "reference/quieter.md",
+          "native_variant": false
+        },
+        {
+          "name": "shape",
+          "status": "active",
+          "alias_of": null,
+          "reference": "reference/shape.md",
+          "native_variant": false
+        },
+        {
+          "name": "typeset",
+          "status": "active",
+          "alias_of": null,
+          "reference": "reference/typeset.md",
+          "native_variant": false
+        }
+      ],
+      "redaction": "pointer-form: command descriptions and argument hints (Impeccable prose) are not reproduced",
+      "source_artifacts": [
+        {
+          "internal_path": "artifacts/impeccable-inventory.json",
+          "sha256": "33e9cbffd91a170cf8c088c1299154da6599d0347ded68e6ec5a65bb85115c29"
+        }
+      ]
+    },
+    {
+      "id": "T02",
+      "family": "semantic overlap accounting",
+      "question": "How do Impeccable's reference statements relate to the Design Pack rule records?",
+      "unit": "relation records",
+      "n": 274,
+      "status": "final",
+      "outcome": {
+        "relation_records": 274,
+        "unique_impeccable_references": 182,
+        "unique_impeccable_references_definition": "distinct impeccable_ref strings = reference file + heading, further distinguished by the specific statement cited",
+        "unique_file_heading_anchors": 97,
+        "reference_files_touched": 19,
+        "unique_design_pack_ids": 448,
+        "design_pack_rule_and_synthesized_rule_records": 448,
+        "complete_partition": true,
+        "classification_counts": {
+          "DESIGN_PACK_MORE_SPECIFIC": 100,
+          "EQUIVALENT": 63,
+          "IMPECCABLE_MORE_SPECIFIC": 30,
+          "DESIGN_PACK_ONLY": 27,
+          "COMPLEMENTARY": 26,
+          "IMPECCABLE_ONLY": 12,
+          "POTENTIAL_CONFLICT": 10,
+          "NOT_COMPARABLE": 6
+        },
+        "confidence": {
+          "high": 137,
+          "pattern-inferred": 137
+        }
+      },
+      "redaction": "relation-level records (which quote Impeccable statements) are not published; counts only",
+      "source_artifacts": [
+        {
+          "internal_path": "artifacts/semantic-map-A11YINT.json",
+          "sha256": "774c1908661e57247747b6ea39dffc1ce0e70291f74bf3844441f531c87c6dab"
+        },
+        {
+          "internal_path": "artifacts/semantic-map-MOTION.json",
+          "sha256": "464a7535a64aef494031c0ff86c32c3fe2d47fd1799a93bc196223e43d443d36"
+        },
+        {
+          "internal_path": "artifacts/semantic-map-STRUCTURE.json",
+          "sha256": "4ca6ef2c926ed07abf4de3156c9d28310ee2b2bd3a931e04dc37485ac1927a7f"
+        },
+        {
+          "internal_path": "artifacts/semantic-map-UXAS.json",
+          "sha256": "6003c528f77731a40a1826808e9bc4366f5592dbe6c285a149ddaaa739f3d44e"
+        },
+        {
+          "internal_path": "artifacts/semantic-map-VISUAL.json",
+          "sha256": "0481419a54b9ead33808d252b13a301572cc1001362b544c63287e03eac69aef"
+        }
+      ]
+    },
+    {
+      "id": "T03",
+      "family": "conflicts",
+      "question": "Where do the two rule sets give materially incompatible guidance on the same trigger?",
+      "unit": "conflict rows",
+      "n": 10,
+      "status": "final",
+      "outcome": {
+        "total": 10,
+        "real": 7,
+        "real_narrow": 2,
+        "apparent_resolved_by_scope": 1,
+        "structural": 0,
+        "winner_adjudicated": 0
+      },
+      "table": [
+        {
+          "conflict_id": "REL-A11YINT-0001",
+          "status": "real",
+          "classification": "POTENTIAL_CONFLICT",
+          "blocker_class": "local (rule-level; resolvable per rule)",
+          "design_pack_ids": [
+            "A11Y-1022",
+            "INTERACT-6001"
+          ],
+          "design_pack_effective_semantics": {
+            "A11Y-1022": {
+              "strength": "default",
+              "scope": "web pointer (mouse/touch) targets, a distinct figure from the 44x44pt/48x48dp touch minimum",
+              "condition": null,
+              "override": "a documented exception under WCAG 2.2 SC 2.5.8 target-size criteria",
+              "enforcement": "must_surface",
+              "verification": "L2"
+            },
+            "INTERACT-6001": {
+              "strength": "default",
+              "scope": "any interactive tap/click target (buttons, icon controls, mobile form inputs, interactive chart elements) web+native",
+              "condition": null,
+              "override": "a pointer-only/desktop context governed instead by the web-pointer minimum A11Y-1022 (24x24 CSS px); a control whose hit area is legitimately extended beyond the visual glyph to meet the minimum satisfies the rule (check exception, not a rule defeat)",
+              "enforcement": "must_surface",
+              "verification": "L2"
+            }
+          },
+          "impeccable_pointer": {
+            "commit": "9d715cc4f5564a990ca8345abfdd5df6dc9b41c8",
+            "path": "skill/reference/audit.md",
+            "locator": "line 50 (accessibility checklist; the file declares a web-only scope at line 5)"
+          },
+          "impeccable_side_paraphrase": "The audit checklist applies one 44 x 44 px minimum to interactive targets in a web-scoped file, with no separate case for pointer-only input.",
+          "design_pack_side_paraphrase": "A11Y-1022 sets a 24 x 24 CSS px web-pointer minimum (WCAG 2.2 SC 2.5.8) distinct from the 44 pt / 48 dp touch minimum; INTERACT-6001's override routes pointer-only or desktop contexts to that rule. A 30 px desktop-only pointer target therefore satisfies the corpus and is flagged by the checklist.",
+          "adjudication": "none (no winner picked by the study)"
+        },
+        {
+          "conflict_id": "REL-STRUCT-0038",
+          "status": "real",
+          "classification": "POTENTIAL_CONFLICT",
+          "blocker_class": "local (rule-level; resolvable per rule)",
+          "design_pack_ids": [
+            "STRUCT-2011"
+          ],
+          "design_pack_effective_semantics": {
+            "STRUCT-2011": {
+              "strength": "default",
+              "scope": "eyebrow (small uppercase wide-tracking) labels above section headlines",
+              "condition": null,
+              "override": null,
+              "enforcement": "must_surface",
+              "verification": "L1"
+            }
+          },
+          "impeccable_pointer": {
+            "commit": "9d715cc4f5564a990ca8345abfdd5df6dc9b41c8",
+            "path": "skill/reference/craft-floor.md",
+            "locator": "line 27 (rule id skill-ban-eyebrow-on-every-section)"
+          },
+          "impeccable_side_paraphrase": "Eyebrow or kicker labels above headings are disallowed unconditionally; the rule is written as a ban with no override.",
+          "design_pack_side_paraphrase": "STRUCT-2011 (default strength, must_surface) limits eyebrows above section headings under a count ceiling rather than forbidding them. Bounded use versus categorical ban on the same element.",
+          "adjudication": "none (no winner picked by the study)"
+        },
+        {
+          "conflict_id": "REL-STRUCT-0035",
+          "status": "real",
+          "classification": "POTENTIAL_CONFLICT",
+          "blocker_class": "local (rule-level; resolvable per rule)",
+          "design_pack_ids": [
+            "STRUCT-2006"
+          ],
+          "design_pack_effective_semantics": {
+            "STRUCT-2006": {
+              "strength": "default",
+              "scope": "hero text-element composition and trust/logo-wall placement relative to the hero",
+              "condition": null,
+              "override": null,
+              "enforcement": "must_surface",
+              "verification": "L1"
+            }
+          },
+          "impeccable_pointer": {
+            "commit": "9d715cc4f5564a990ca8345abfdd5df6dc9b41c8",
+            "path": "skill/reference/craft-floor.md",
+            "locator": "line 27 (same rule as REL-STRUCT-0038)"
+          },
+          "impeccable_side_paraphrase": "The same unconditional eyebrow ban.",
+          "design_pack_side_paraphrase": "STRUCT-2006 (hero composition) tolerates a single hero eyebrow below its composition-count threshold. Hero-scoped instance of REL-STRUCT-0038.",
+          "adjudication": "none (no winner picked by the study)"
+        },
+        {
+          "conflict_id": "REL-STRUCT-0041",
+          "status": "real",
+          "classification": "POTENTIAL_CONFLICT",
+          "blocker_class": "local (rule-level; resolvable per rule)",
+          "design_pack_ids": [
+            "STRUCT-2015"
+          ],
+          "design_pack_effective_semantics": {
+            "STRUCT-2015": {
+              "strength": "default",
+              "scope": "container/box nesting depth around a single content region",
+              "condition": null,
+              "override": "a box has a clear, documented purpose",
+              "enforcement": "contextual",
+              "verification": "L2"
+            }
+          },
+          "impeccable_pointer": {
+            "commit": "9d715cc4f5564a990ca8345abfdd5df6dc9b41c8",
+            "path": "skill/reference/craft-floor.md",
+            "locator": "line 25 (rule id skill-layout-cards-lazy)"
+          },
+          "impeccable_side_paraphrase": "Nested cards are treated as categorically wrong, with no exception.",
+          "design_pack_side_paraphrase": "STRUCT-2015 (contextual enforcement) permits nested containers when the box has a clear, documented purpose. Override versus no-override on the same trigger; scope note: the corpus speaks of container/box nesting, the reference of cards (cards are a subset of boxes).",
+          "adjudication": "none (no winner picked by the study)"
+        },
+        {
+          "conflict_id": "REL-VISUAL-0031",
+          "status": "real",
+          "classification": "POTENTIAL_CONFLICT",
+          "blocker_class": "local (rule-level; resolvable per rule)",
+          "design_pack_ids": [
+            "TYPO-1011"
+          ],
+          "design_pack_effective_semantics": {
+            "TYPO-1011": {
+              "strength": "avoid",
+              "scope": "letter-spacing/tracking on body text",
+              "condition": null,
+              "override": null,
+              "enforcement": "contextual",
+              "verification": "none"
+            }
+          },
+          "impeccable_pointer": {
+            "commit": "9d715cc4f5564a990ca8345abfdd5df6dc9b41c8",
+            "path": "skill/reference/typeset.md",
+            "locator": "line 48"
+          },
+          "impeccable_side_paraphrase": "Body text set light-on-dark is to be compensated in more than one way, one of them a slight increase in letter-spacing.",
+          "design_pack_side_paraphrase": "TYPO-1011 (avoid, no override) avoids letter-spacing on body text with no stated exception. Direct contradiction for a common scenario; a light-on-dark carve-out in the corpus would resolve it.",
+          "adjudication": "none (no winner picked by the study)"
+        },
+        {
+          "conflict_id": "REL-VISUAL-0026",
+          "status": "real",
+          "classification": "POTENTIAL_CONFLICT",
+          "blocker_class": "local (rule-level; resolvable per rule)",
+          "design_pack_ids": [
+            "COLOR-4005"
+          ],
+          "design_pack_effective_semantics": {
+            "COLOR-4005": {
+              "strength": "default",
+              "scope": "neutral and surface color tokens carry appropriate warmth",
+              "condition": null,
+              "override": "the modern-minimal genre permits chroma-free neutral tokens — the monochrome style of brands such as Stripe or ElevenLabs",
+              "enforcement": "must_surface",
+              "verification": "L1"
+            }
+          },
+          "impeccable_pointer": {
+            "commit": "9d715cc4f5564a990ca8345abfdd5df6dc9b41c8",
+            "path": "skill/reference/colorize.md",
+            "locator": "line 44"
+          },
+          "impeccable_side_paraphrase": "Untinted neutral gray is acceptable by default; tinting neutrals is conditional on the brand hue creating cohesion.",
+          "design_pack_side_paraphrase": "COLOR-4005 (must_surface) requires tinted or warm neutrals by default unless the genre is modern-minimal. Opposite defaults on the same decision: a non-minimal brand whose gray is right passes the reference and is flagged by the corpus unless genre-tagged.",
+          "adjudication": "none (no winner picked by the study)"
+        },
+        {
+          "conflict_id": "REL-VISUAL-0019",
+          "status": "real",
+          "classification": "POTENTIAL_CONFLICT",
+          "blocker_class": "local (rule-level; resolvable per rule)",
+          "design_pack_ids": [
+            "COLOR-2002"
+          ],
+          "design_pack_effective_semantics": {
+            "COLOR-2002": {
+              "strength": "default",
+              "scope": "the palette suits premium-consumer briefs (cookware, wellness, artisan, luxury, heritage-craft, DTC home goods)",
+              "condition": "those briefs",
+              "override": "the brief names those colors, or the identity is genuinely vintage, artisan, or warm-craft and the specific palette is justified for that brand",
+              "enforcement": "must_surface",
+              "verification": "L1"
+            }
+          },
+          "impeccable_pointer": {
+            "commit": "9d715cc4f5564a990ca8345abfdd5df6dc9b41c8",
+            "path": "skill/reference/colorize.md",
+            "locator": "line 38"
+          },
+          "impeccable_side_paraphrase": "The hue choice is to follow what the product means and where its visual direction points, rather than a stock association with the product's category.",
+          "design_pack_side_paraphrase": "COLOR-2002 encodes a brief-genre to palette default (for example premium-consumer leaning warm) with a brief-justified override. Methodological difference: a genre-based default versus meaning-led hue selection; both admit meaning-justified deviation, and the genre default is the point of friction.",
+          "adjudication": "none (no winner picked by the study)"
+        },
+        {
+          "conflict_id": "REL-VISUAL-0027",
+          "status": "real-narrow",
+          "classification": "POTENTIAL_CONFLICT",
+          "blocker_class": "local (rule-level; resolvable per rule)",
+          "design_pack_ids": [
+            "COLOR-4006"
+          ],
+          "design_pack_effective_semantics": {
+            "COLOR-4006": {
+              "strength": "default",
+              "scope": "the accent color's viewport coverage stays restrained",
+              "condition": null,
+              "override": "the atmospheric genre permits accent-tinted radial blooms over roughly 20% of the canvas, where the bloom is the design",
+              "enforcement": "contextual",
+              "verification": "L2"
+            }
+          },
+          "impeccable_pointer": {
+            "commit": "9d715cc4f5564a990ca8345abfdd5df6dc9b41c8",
+            "path": "skill/reference/colorize.md",
+            "locator": "line 27"
+          },
+          "impeccable_side_paraphrase": "Accent dosage is to follow the brief and the chosen visual world; fixed-percentage rules are rejected.",
+          "design_pack_side_paraphrase": "COLOR-4006's override permits accent radial blooms over roughly 20% of the canvas, a fixed band. Friction on the numeric band only; the shared restraint principle agrees.",
+          "adjudication": "none (no winner picked by the study)"
+        },
+        {
+          "conflict_id": "REL-VISUAL-0028",
+          "status": "real-narrow",
+          "classification": "POTENTIAL_CONFLICT",
+          "blocker_class": "local (rule-level; resolvable per rule)",
+          "design_pack_ids": [
+            "COLOR-4007"
+          ],
+          "design_pack_effective_semantics": {
+            "COLOR-4007": {
+              "strength": "avoid",
+              "scope": "an abstract background used as hero enrichment",
+              "condition": "the page has an abstract background",
+              "override": "the atmospheric genre permits up to two warm-toned radial blooms over roughly 20–30% of the canvas, fixed-attached and not animating",
+              "enforcement": "contextual",
+              "verification": "L2"
+            }
+          },
+          "impeccable_pointer": {
+            "commit": "9d715cc4f5564a990ca8345abfdd5df6dc9b41c8",
+            "path": "skill/reference/colorize.md",
+            "locator": "line 27 and the section headed 'Apply at system scale'"
+          },
+          "impeccable_side_paraphrase": "Same rejection of fixed-percentage dosage, plus the principle that decoration must relate to hierarchy and the visual world.",
+          "design_pack_side_paraphrase": "COLOR-4007 (avoid) permits by override up to two warm radial blooms over roughly 20 to 30% of the canvas. Same tension as REL-VISUAL-0027; partially aligned with the decoration-must-relate principle.",
+          "adjudication": "none (no winner picked by the study)"
+        },
+        {
+          "conflict_id": "REL-VISUAL-0007",
+          "status": "apparent-resolved-by-scope",
+          "classification": "POTENTIAL_CONFLICT",
+          "blocker_class": "local (rule-level; resolvable per rule)",
+          "design_pack_ids": [
+            "COLOR-1008"
+          ],
+          "design_pack_effective_semantics": {
+            "COLOR-1008": {
+              "strength": "default",
+              "scope": "error/success state colors",
+              "condition": null,
+              "override": null,
+              "enforcement": "must_surface",
+              "verification": "L1"
+            }
+          },
+          "impeccable_pointer": {
+            "commit": "9d715cc4f5564a990ca8345abfdd5df6dc9b41c8",
+            "path": "skill/reference/colorize.md",
+            "locator": "lines 60-61 (contrast table)"
+          },
+          "impeccable_side_paraphrase": "The contrast table allows 3:1 for large text and for controls, icons and focus indicators, and 4.5:1 for body text.",
+          "design_pack_side_paraphrase": "COLOR-1008 (must_surface, no override) sets a 4.5:1 floor for error and success state colors. A conflict only if that floor is read to include non-text indicators; none if it governs text labels. Lowest confidence of the ten; resolves by clarifying COLOR-1008's text-versus-non-text scope.",
+          "adjudication": "none (no winner picked by the study)"
+        }
+      ],
+      "redaction": "pointer-form: commit + path + locator + our paraphrase; no Impeccable line quotations",
+      "source_artifacts": [
+        {
+          "internal_path": "artifacts/conflict-register.json",
+          "sha256": "82871bf42648971e8dc14b8d51f4ef1e0b62edc41841d4e4b96b93e8afa99567"
+        }
+      ]
+    },
+    {
+      "id": "T04",
+      "family": "detector alignment",
+      "question": "How do Impeccable's 61 deterministic detectors align with the corpus?",
+      "unit": "detectors",
+      "n": 61,
+      "status": "final",
+      "outcome": {
+        "classification_counts": {
+          "DIRECT_EXECUTABLE_MATCH": 9,
+          "PARTIAL_EXECUTABLE_MATCH": 38,
+          "ADJACENT_SIGNAL": 9,
+          "IMPECCABLE_ONLY_DETECTOR": 5
+        },
+        "categories": {
+          "slop": 32,
+          "quality": 29
+        },
+        "reverse_gap": {
+          "criteria": "rule/synthesized_rule records with effective_semantics.enforcement in {hard_block, must_surface} OR effective_semantics.verification in {L1, L1+L2}, that are not a candidate_dp_id of any DIRECT_EXECUTABLE_MATCH or PARTIAL_EXECUTABLE_MATCH detector record (ADJACENT_SIGNAL candidates don't count as 'corresponding' since they don't prove the rule)",
+          "qualifying_design_pack_rules": 216,
+          "matched_by_a_detector": 40,
+          "undetected": 176,
+          "undetected_by_domain": {
+            "A11Y": 33,
+            "ANTISLOP": 4,
+            "COLOR": 9,
+            "INTERACT": 34,
+            "MOTION": 15,
+            "SPACE": 4,
+            "STRUCT": 48,
+            "TYPO": 8,
+            "UX": 21
+          }
+        }
+      },
+      "table": [
+        {
+          "detector_id": "side-tab",
+          "category": "slop",
+          "classification": "DIRECT_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "STRUCT-4011"
+          ]
+        },
+        {
+          "detector_id": "border-accent-on-rounded",
+          "category": "slop",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "STRUCT-4011",
+            "STRUCT-2013"
+          ]
+        },
+        {
+          "detector_id": "overused-font",
+          "category": "slop",
+          "classification": "DIRECT_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "TYPO-4002"
+          ]
+        },
+        {
+          "detector_id": "flat-type-hierarchy",
+          "category": "slop",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "TYPO-1007"
+          ]
+        },
+        {
+          "detector_id": "gradient-text",
+          "category": "slop",
+          "classification": "DIRECT_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "COLOR-4003"
+          ]
+        },
+        {
+          "detector_id": "ai-color-palette",
+          "category": "slop",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "COLOR-2001",
+            "COLOR-4003"
+          ]
+        },
+        {
+          "detector_id": "cream-palette",
+          "category": "slop",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "COLOR-4004",
+            "COLOR-4005"
+          ]
+        },
+        {
+          "detector_id": "nested-cards",
+          "category": "slop",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "STRUCT-2015"
+          ]
+        },
+        {
+          "detector_id": "monotonous-spacing",
+          "category": "slop",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "SPACE-1002",
+            "SPACE-1009",
+            "SPACE-1005"
+          ]
+        },
+        {
+          "detector_id": "bounce-easing",
+          "category": "slop",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "MOTION-4001",
+            "MOTION-4005"
+          ]
+        },
+        {
+          "detector_id": "pulsing-dot",
+          "category": "slop",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "ANTISLOP-2005"
+          ]
+        },
+        {
+          "detector_id": "blinking-cursor",
+          "category": "slop",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "ANTISLOP-4005"
+          ]
+        },
+        {
+          "detector_id": "shape-assembled-illustration",
+          "category": "slop",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "ANTISLOP-2003"
+          ]
+        },
+        {
+          "detector_id": "organic-clip-path",
+          "category": "quality",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "ANTISLOP-2003"
+          ]
+        },
+        {
+          "detector_id": "buried-raster",
+          "category": "quality",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "ANTISLOP-2003"
+          ]
+        },
+        {
+          "detector_id": "dark-glow",
+          "category": "slop",
+          "classification": "ADJACENT_SIGNAL",
+          "candidate_dp_ids": [
+            "STRUCT-1004",
+            "STRUCT-1006"
+          ]
+        },
+        {
+          "detector_id": "radial-halo",
+          "category": "slop",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "COLOR-4007",
+            "COLOR-4006",
+            "ANTISLOP-4005"
+          ]
+        },
+        {
+          "detector_id": "radial-spotlight-glow",
+          "category": "slop",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "COLOR-4007",
+            "COLOR-4006",
+            "ANTISLOP-4005"
+          ]
+        },
+        {
+          "detector_id": "marquee",
+          "category": "slop",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "MOTION-2002"
+          ]
+        },
+        {
+          "detector_id": "icon-tile-stack",
+          "category": "slop",
+          "classification": "ADJACENT_SIGNAL",
+          "candidate_dp_ids": [
+            "STRUCT-6001"
+          ]
+        },
+        {
+          "detector_id": "italic-serif-display",
+          "category": "slop",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "TYPO-2002"
+          ]
+        },
+        {
+          "detector_id": "hero-eyebrow-chip",
+          "category": "slop",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "ANTISLOP-2004",
+            "STRUCT-4025"
+          ]
+        },
+        {
+          "detector_id": "kicker-above-heading",
+          "category": "slop",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "STRUCT-4025",
+            "STRUCT-2011",
+            "ANTISLOP-2004"
+          ]
+        },
+        {
+          "detector_id": "numbered-section-labels",
+          "category": "slop",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "ANTISLOP-2004",
+            "STRUCT-2011"
+          ]
+        },
+        {
+          "detector_id": "em-dash-overuse",
+          "category": "slop",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "ANTISLOP-2001"
+          ]
+        },
+        {
+          "detector_id": "marketing-buzzword",
+          "category": "slop",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "ANTISLOP-2002",
+            "ANTISLOP-4003"
+          ]
+        },
+        {
+          "detector_id": "aphoristic-cadence",
+          "category": "slop",
+          "classification": "ADJACENT_SIGNAL",
+          "candidate_dp_ids": [
+            "ANTISLOP-4003"
+          ]
+        },
+        {
+          "detector_id": "oversized-h1",
+          "category": "slop",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "TYPO-4001",
+            "STRUCT-2004"
+          ]
+        },
+        {
+          "detector_id": "extreme-negative-tracking",
+          "category": "slop",
+          "classification": "ADJACENT_SIGNAL",
+          "candidate_dp_ids": [
+            "TYPO-1011"
+          ]
+        },
+        {
+          "detector_id": "broken-image",
+          "category": "quality",
+          "classification": "IMPECCABLE_ONLY_DETECTOR",
+          "candidate_dp_ids": []
+        },
+        {
+          "detector_id": "script-error",
+          "category": "quality",
+          "classification": "IMPECCABLE_ONLY_DETECTOR",
+          "candidate_dp_ids": []
+        },
+        {
+          "detector_id": "content-hidden-at-rest",
+          "category": "quality",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "MOTION-2003"
+          ]
+        },
+        {
+          "detector_id": "edge-flush-cards",
+          "category": "quality",
+          "classification": "ADJACENT_SIGNAL",
+          "candidate_dp_ids": [
+            "SPACE-1010"
+          ]
+        },
+        {
+          "detector_id": "text-occlusion",
+          "category": "quality",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "STRUCT-1016"
+          ]
+        },
+        {
+          "detector_id": "first-viewport-column-overflow",
+          "category": "quality",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "STRUCT-4020"
+          ]
+        },
+        {
+          "detector_id": "gray-on-color",
+          "category": "quality",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "A11Y-1001",
+            "A11Y-4006"
+          ]
+        },
+        {
+          "detector_id": "low-contrast",
+          "category": "quality",
+          "classification": "DIRECT_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "A11Y-1001",
+            "A11Y-4006",
+            "A11Y-4007"
+          ]
+        },
+        {
+          "detector_id": "layout-transition",
+          "category": "quality",
+          "classification": "DIRECT_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "MOTION-1002",
+            "MOTION-2007",
+            "MOTION-1024"
+          ]
+        },
+        {
+          "detector_id": "line-length",
+          "category": "quality",
+          "classification": "DIRECT_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "SPACE-4002",
+            "TYPO-6001"
+          ]
+        },
+        {
+          "detector_id": "cramped-padding",
+          "category": "quality",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "SPACE-1002"
+          ]
+        },
+        {
+          "detector_id": "body-text-viewport-edge",
+          "category": "quality",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "SPACE-4002",
+            "SPACE-1002"
+          ]
+        },
+        {
+          "detector_id": "tight-leading",
+          "category": "quality",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "TYPO-1004"
+          ]
+        },
+        {
+          "detector_id": "skipped-heading",
+          "category": "quality",
+          "classification": "DIRECT_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "A11Y-1011"
+          ]
+        },
+        {
+          "detector_id": "heading-rhythm",
+          "category": "quality",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "SPACE-1009"
+          ]
+        },
+        {
+          "detector_id": "justified-text",
+          "category": "quality",
+          "classification": "IMPECCABLE_ONLY_DETECTOR",
+          "candidate_dp_ids": []
+        },
+        {
+          "detector_id": "tiny-text",
+          "category": "quality",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "TYPO-1001"
+          ]
+        },
+        {
+          "detector_id": "undersized-ui-text",
+          "category": "quality",
+          "classification": "ADJACENT_SIGNAL",
+          "candidate_dp_ids": [
+            "TYPO-1001"
+          ]
+        },
+        {
+          "detector_id": "all-caps-body",
+          "category": "quality",
+          "classification": "ADJACENT_SIGNAL",
+          "candidate_dp_ids": [
+            "TYPO-4007"
+          ]
+        },
+        {
+          "detector_id": "wide-tracking",
+          "category": "quality",
+          "classification": "DIRECT_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "TYPO-1011"
+          ]
+        },
+        {
+          "detector_id": "text-overflow",
+          "category": "quality",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "STRUCT-1014",
+            "STRUCT-4021",
+            "STRUCT-4023"
+          ]
+        },
+        {
+          "detector_id": "repeated-container-text",
+          "category": "quality",
+          "classification": "IMPECCABLE_ONLY_DETECTOR",
+          "candidate_dp_ids": []
+        },
+        {
+          "detector_id": "clipped-overflow-container",
+          "category": "quality",
+          "classification": "IMPECCABLE_ONLY_DETECTOR",
+          "candidate_dp_ids": []
+        },
+        {
+          "detector_id": "design-system-font",
+          "category": "quality",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "COLOR-4008"
+          ]
+        },
+        {
+          "detector_id": "design-system-color",
+          "category": "quality",
+          "classification": "DIRECT_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "COLOR-1004",
+            "COLOR-4008",
+            "COLOR-4002"
+          ]
+        },
+        {
+          "detector_id": "design-system-radius",
+          "category": "quality",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "STRUCT-2013"
+          ]
+        },
+        {
+          "detector_id": "design-system-font-size",
+          "category": "quality",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "TYPO-1007"
+          ]
+        },
+        {
+          "detector_id": "gpt-thin-border-wide-shadow",
+          "category": "slop",
+          "classification": "ADJACENT_SIGNAL",
+          "candidate_dp_ids": [
+            "STRUCT-4011",
+            "STRUCT-1006"
+          ]
+        },
+        {
+          "detector_id": "repeating-stripes-gradient",
+          "category": "slop",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "ANTISLOP-4005"
+          ]
+        },
+        {
+          "detector_id": "codex-grid-background",
+          "category": "slop",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "COLOR-4007",
+            "ANTISLOP-4005"
+          ]
+        },
+        {
+          "detector_id": "theater-slop-phrase",
+          "category": "slop",
+          "classification": "PARTIAL_EXECUTABLE_MATCH",
+          "candidate_dp_ids": [
+            "ANTISLOP-4003"
+          ]
+        },
+        {
+          "detector_id": "image-hover-transform",
+          "category": "slop",
+          "classification": "ADJACENT_SIGNAL",
+          "candidate_dp_ids": [
+            "MOTION-4004"
+          ]
+        }
+      ],
+      "redaction": "detector ids, categories and our classification only; detector names/descriptions and our per-detector notes are not reproduced",
+      "source_artifacts": [
+        {
+          "internal_path": "artifacts/detector-map.json",
+          "sha256": "e9bbce0cd29f290d43fa5b3b678d906ad1ad3685663192b88152bfc090d889db"
+        }
+      ]
+    },
+    {
+      "id": "T05",
+      "family": "control layer",
+      "question": "How do the corpus's 6 runtime controls relate to Impeccable, and how is runtime coverage accounted?",
+      "unit": "control relation records",
+      "n": 6,
+      "status": "final",
+      "outcome": {
+        "counts": {
+          "control_relation_records": 6,
+          "unique_control_ids": 6,
+          "decision_tables": 3,
+          "dials": 3
+        },
+        "closure_all_complete": true,
+        "classification_counts": {
+          "DESIGN_PACK_MORE_SPECIFIC": 3,
+          "COMPLEMENTARY": 2,
+          "DESIGN_PACK_ONLY": 1
+        },
+        "hard_control_conflicts": 0,
+        "soft_observations": [
+          "Control-KIND impedance (architecture, not a semantic conflict): DP dials are semantic rule-gating controls; Impeccable's live.md params are user-facing CSS-var tuning knobs + prose ambition. No shared trigger with incompatible guidance.",
+          "DIAL-2002 baseline 6 (energetic motion default) vs Impeccable animate.md restraint-by-default: a soft default-posture difference; the dial's gated target rules are non-conflicting (COMPLEMENTARY), so not a POTENTIAL_CONFLICT."
+        ],
+        "runtime_accounting": {
+          "rule_and_synthesized_rule_records_mapped": 448,
+          "runtime_controls_evaluated_separately": 6,
+          "corresponds_to_runtime_records": 454,
+          "support_records_described_separately": 88,
+          "statement": "448 rule/synthesized-rule records were mapped and accounted (T02) and 6 runtime controls were evaluated separately (this test); together these correspond to the 454 runtime records of the corpus. The study does not claim an existing single combined 454-row public ledger, and the 88 support records (85 evidence + 3 conflict) are described separately and were not mapped."
+        }
+      },
+      "source_artifacts": [
+        {
+          "internal_path": "artifacts/control-map.json",
+          "sha256": "d53e1439e3ee9c87570a7b921a071095e4b5cfc795dbe06faa3607a741581b4d"
+        }
+      ]
+    },
+    {
+      "id": "T06",
+      "family": "deterministic projection + fidelity gate",
+      "question": "Can a deterministic projection of the MOTION scope carry DIAL-2002 with full control semantics, and can the gate fail?",
+      "unit": "projection + 3 negative variants",
+      "n": 1,
+      "status": "final",
+      "outcome": {
+        "regeneration": "byte-identical across runs",
+        "fidelity_gate": "PASS on the real projection; all 3 corrupted variants (missing target, altered threshold, flattened control) correctly FAIL"
+      },
+      "reproduction": {
+        "tool": "tools/project_motion.py + tools/fidelity_test.py",
+        "result": "identical bytes; FIDELITY GATE: PASS (real passes, all 3 negatives fail)"
+      },
+      "source_artifacts": [
+        {
+          "internal_path": "poc-motion/artifacts/motion-projection.json",
+          "sha256": "62d4a82194e0c11616b4e29f83a631be9e9b6193c52f9457be488a3b50d0600d"
+        }
+      ]
+    },
+    {
+      "id": "T07",
+      "family": "representation ablation",
+      "question": "Does a structured (YAML) control block gate more faithfully than prose carrying the same facts?",
+      "unit": "behavioral cells (agent declares the active gated-rule set)",
+      "n": "6 cells, n=1 each",
+      "status": "final",
+      "outcome": {
+        "matched_content_arms": {
+          "semantic_fields_identical": 21,
+          "structured_correct": "3/3",
+          "prose_correct": "3/3",
+          "cells": [
+            {
+              "cell": "structured@2",
+              "arm": "structured",
+              "intensity": 2,
+              "rm": false,
+              "active": [],
+              "a11y": "not-active",
+              "gt": "NONE/not-active",
+              "verdict": "CORRECT"
+            },
+            {
+              "cell": "structured@7",
+              "arm": "structured",
+              "intensity": 7,
+              "rm": false,
+              "active": [
+                "A11Y-2001",
+                "MOTION-2003",
+                "MOTION-2005"
+              ],
+              "a11y": "absolute-enforced",
+              "gt": "all3/absolute",
+              "verdict": "CORRECT"
+            },
+            {
+              "cell": "structured@7+RM",
+              "arm": "structured",
+              "intensity": 7,
+              "rm": true,
+              "active": [
+                "A11Y-2001",
+                "MOTION-2003",
+                "MOTION-2005"
+              ],
+              "a11y": "absolute-enforced",
+              "gt": "all3/absolute",
+              "verdict": "CORRECT"
+            },
+            {
+              "cell": "flattened@2",
+              "arm": "flattened",
+              "intensity": 2,
+              "rm": false,
+              "active": [],
+              "a11y": "not-active",
+              "gt": "NONE/not-active",
+              "verdict": "CORRECT"
+            },
+            {
+              "cell": "flattened@7",
+              "arm": "flattened",
+              "intensity": 7,
+              "rm": false,
+              "active": [
+                "A11Y-2001",
+                "MOTION-2003",
+                "MOTION-2005"
+              ],
+              "a11y": "absolute-enforced",
+              "gt": "all3/absolute",
+              "verdict": "CORRECT"
+            },
+            {
+              "cell": "flattened@7+RM",
+              "arm": "flattened",
+              "intensity": 7,
+              "rm": true,
+              "active": [
+                "A11Y-2001",
+                "MOTION-2003",
+                "MOTION-2005"
+              ],
+              "a11y": "absolute-enforced",
+              "gt": "all3/absolute",
+              "verdict": "CORRECT"
+            }
+          ]
+        },
+        "finding": "with information held constant, prose gated as reliably as the structured block: representation was not load-bearing, information content was"
+      },
+      "supersedes": "T07-first-run",
+      "reproduction": {
+        "tool": "tools/build_matched_arms.py",
+        "result": "both arms byte-identical to fixtures/matched; PARITY: PASS"
+      },
+      "source_artifacts": [
+        {
+          "internal_path": "poc-motion/artifacts/matched-consumption-results.json",
+          "sha256": "124503665433fc26c412e2a8db62a523193ddc29050434ce455ac3d5c81d7efa"
+        },
+        {
+          "internal_path": "poc-motion/artifacts/matched/structured3.md",
+          "sha256": "e681218bac7753c412753411d51e2a2f0791a84354b37acc2f7a3275db05d93d"
+        },
+        {
+          "internal_path": "poc-motion/artifacts/matched/flattened3.md",
+          "sha256": "ac3810b6fea64af9c19bd6cc1015495d3c903109570aacc9fbffe4721c62b82c"
+        }
+      ]
+    },
+    {
+      "id": "T07-first-run",
+      "family": "representation ablation (first run)",
+      "question": "Same question, first design",
+      "unit": "behavioral cells",
+      "n": "6 cells, n=1 each",
+      "status": "superseded",
+      "superseded_by": "T07",
+      "outcome": {
+        "structured_correct": "3/3",
+        "prose_correct": "0/3",
+        "cells": [
+          {
+            "cell": "S-A",
+            "arm": "structured",
+            "intensity": 2,
+            "reduced_motion": false,
+            "active": [
+              "A11Y-2001"
+            ],
+            "a11y": "absolute-enforced",
+            "ground_truth": [
+              "A11Y-2001"
+            ],
+            "verdict": "CORRECT",
+            "note": "MOTION-2003/2005 present-but-gated-off (not >4/>5); A11Y-2001 absolute because motion present — real gating, not presence-match"
+          },
+          {
+            "cell": "S-B",
+            "arm": "structured",
+            "intensity": 7,
+            "reduced_motion": false,
+            "active": [
+              "A11Y-2001",
+              "MOTION-2003",
+              "MOTION-2005"
+            ],
+            "a11y": "absolute-enforced",
+            "ground_truth": [
+              "A11Y-2001",
+              "MOTION-2003",
+              "MOTION-2005"
+            ],
+            "verdict": "CORRECT",
+            "note": "all thresholds cleared"
+          },
+          {
+            "cell": "S-C",
+            "arm": "structured",
+            "intensity": 7,
+            "reduced_motion": true,
+            "active": [
+              "A11Y-2001",
+              "MOTION-2003",
+              "MOTION-2005"
+            ],
+            "a11y": "absolute-enforced",
+            "ground_truth": [
+              "A11Y-2001",
+              "MOTION-2003",
+              "MOTION-2005"
+            ],
+            "verdict": "CORRECT",
+            "note": "A11Y-2001 absolute; intensity 7 grants no reduced-motion exemption"
+          },
+          {
+            "cell": "F-A",
+            "arm": "flattened",
+            "intensity": 2,
+            "reduced_motion": false,
+            "active": [],
+            "a11y": "not-in-reference",
+            "ground_truth": "UNGATEABLE",
+            "verdict": "NEGATIVE-CONTROL (cannot gate; IDs stripped; kept generic RM prose)"
+          },
+          {
+            "cell": "F-B",
+            "arm": "flattened",
+            "intensity": 7,
+            "reduced_motion": false,
+            "active": [],
+            "a11y": "not-in-reference",
+            "ground_truth": "UNGATEABLE",
+            "verdict": "NEGATIVE-CONTROL (cannot gate at high intensity either)"
+          },
+          {
+            "cell": "F-C",
+            "arm": "flattened",
+            "intensity": 7,
+            "reduced_motion": true,
+            "active": [],
+            "a11y": "not-in-reference",
+            "ground_truth": "UNGATEABLE",
+            "verdict": "NEGATIVE-CONTROL (cannot gate; kept generic RM prose)"
+          }
+        ],
+        "why_superseded": "the prose arm had rule ids and thresholds stripped, so the comparison ablated information, not representation (CORRECTIONS.md C2); the structured cell at intensity 2 also over-applied A11Y-2001 because the projector injected a non-canonical clause (C3)"
+      },
+      "source_artifacts": [
+        {
+          "internal_path": "poc-motion/artifacts/consumption-results.json",
+          "sha256": "e01fc267c77e6884586618fcdf62891cab78c2b02c5b583762ab2184636f006a"
+        },
+        {
+          "internal_path": "poc-motion/artifacts/motion-reference.structured.md",
+          "sha256": "6d29c451cb9ce8f1bca5fd3e0dde5c3b6d46e1d384042d0c830f990ecd9ed192"
+        },
+        {
+          "internal_path": "poc-motion/artifacts/motion-reference.flattened.md",
+          "sha256": "19e34d41c485ed2ea00abb375c01fa2b5f7cd34ee5e1abcfdde391da2db445df"
+        }
+      ]
+    },
+    {
+      "id": "T08",
+      "family": "control input / default behavior",
+      "question": "How does the dial resolve when the host supplies no explicit intensity?",
+      "unit": "behavioral cells",
+      "n": "3 cells, n=1 each",
+      "status": "final",
+      "outcome": {
+        "cells": [
+          {
+            "signal": "none (plain animate)",
+            "resolved": 6,
+            "posture": "balanced",
+            "active": [
+              "A11Y-2001",
+              "MOTION-2003",
+              "MOTION-2005"
+            ],
+            "note": "anchored on dial baseline 6, NOT animate.md restraint; agent flagged the disagreement explicitly"
+          },
+          {
+            "signal": "restrained/subtle (NL)",
+            "resolved": 5,
+            "posture": "restraint",
+            "active": [
+              "A11Y-2001",
+              "MOTION-2003"
+            ],
+            "note": "NL pulled below baseline; MOTION-2005 rejected"
+          },
+          {
+            "signal": "bold/expressive (NL)",
+            "resolved": 8,
+            "posture": "energetic",
+            "active": [
+              "A11Y-2001",
+              "MOTION-2003",
+              "MOTION-2005"
+            ],
+            "note": "NL pulled above baseline; noted no rule-step past 5 (6-10 indistinct)"
+          }
+        ],
+        "default_path": "REAL_DEFAULT_CONFLICT on no-input path (baseline 6 dominates; command identity did not self-resolve to restraint)",
+        "explicit_signal": "DEFAULT_CONFLICT_RESOLVED_BY_EXISTING_SIGNAL only when user explicitly supplies intensity (NL restrained/bold bind to 5/8)",
+        "dial_effective_resolution": "~3 bands (<=3, 4-5, >=6); no rule-step past 5",
+        "host_intensity_sources": "no structured MOTION_INTENSITY source exists in the host at the tested commit; the only deterministic path is the dial's own baseline"
+      },
+      "source_artifacts": [
+        {
+          "internal_path": "poc-motion/artifacts/control-binding-behavior.json",
+          "sha256": "8f6ebaf2d15a7d5a294f3b302f300aae020d45e922e957bc79f0f6f2cd02370c"
+        }
+      ]
+    },
+    {
+      "id": "T09",
+      "family": "rules-only candidate",
+      "question": "Which MOTION rules are additive to the host and independent of the control layer?",
+      "unit": "MOTION rule records",
+      "n": 42,
+      "status": "final",
+      "outcome": {
+        "accounting": {
+          "CANDIDATE": 16,
+          "EXCLUDED_IMPECCABLE_STRONGER": 3,
+          "EXCLUDED_EQUIVALENT": 18,
+          "EXCLUDED_NO_CONSUMER": 3,
+          "EXCLUDED_CONTROL_DEPENDENT": 2
+        },
+        "accounting_closes": true,
+        "candidate_ids": [
+          "MOTION-1003",
+          "MOTION-1004",
+          "MOTION-1005",
+          "MOTION-1009",
+          "MOTION-1016",
+          "MOTION-1018",
+          "MOTION-1019",
+          "MOTION-1020",
+          "MOTION-1023",
+          "MOTION-2002",
+          "MOTION-2006",
+          "MOTION-4001",
+          "MOTION-4003",
+          "MOTION-4004",
+          "MOTION-4006",
+          "MOTION-4008"
+        ],
+        "candidate_primary_classes": {
+          "DESIGN_PACK_MORE_SPECIFIC": 13,
+          "COMPLEMENTARY": 3
+        },
+        "control_independent": "16/16"
+      },
+      "reproduction": {
+        "tool": "tools/build_rules_only.py",
+        "result": "control-independence proof and rules-only references byte-identical"
+      },
+      "redaction": "the public fixture omits the internal artifact's license/proposed-use bookkeeping rows (a redistribution scenario, not a measurement)",
+      "source_artifacts": [
+        {
+          "internal_path": "poc-motion/artifacts/motion-rules-only-candidate.json",
+          "sha256": "9322fbc1fd0151292a19d972f0299b30463ec8a1b6a70272470fa57eedbeb519"
+        },
+        {
+          "internal_path": "poc-motion/artifacts/control-independence-proof.json",
+          "sha256": "27dafe12d37168340fbfb9b2aca6be682b0819abb455b5553d80c841b0cf4252"
+        }
+      ]
+    },
+    {
+      "id": "T10",
+      "family": "build prose gate",
+      "question": "Does corpus text pass the host's build-time prose validator unchanged?",
+      "unit": "em-dash occurrences",
+      "n": 16,
+      "status": "final",
+      "outcome": {
+        "raw_projection": "build FAILS: the validator rejects the U+2014 em dash present in the corpus public_expression text (16 occurrences across the 16 candidate rules; the study's run reported 17 issues, the 17th being an em dash in the study's own shard template title, fixed)",
+        "normalization": "U+2014 (em dash) -> ', ' (comma-space); spacing around the dash absorbed; applied ONLY to Impeccable-bound projection text; no corpus edit",
+        "transform_version": "motion-dp-normalize/1",
+        "guards": {
+          "only_em_dash_changed": true,
+          "no_wording_change": true
+        },
+        "normalized_projection": "build PASSES (exit 0)"
+      },
+      "reproduction": {
+        "fresh_build": {
+          "copy": "pinned clone at 9d715cc4 copied without .git/node_modules/dist; devDependencies reused from the study's build copy",
+          "command": "node scripts/build.js --skip-root-sync",
+          "exit": 0,
+          "build_log_summary": "exit 0; the build reported the universal directory assembled from 19 providers, both of its prose validators clean, and completion",
+          "dist_entries": 25
+        }
+      },
+      "source_artifacts": [
+        {
+          "internal_path": "poc-motion/artifacts/normalization-contract.json",
+          "sha256": "4689f48c7c74355e91a079ec2ef719d7d5ecca6852ad3810f73f34b313814b88"
+        },
+        {
+          "internal_path": "poc-motion/artifacts/provider-fanout.json",
+          "sha256": "12659d6cd179e290d2a23bade054c4e7a89c842d47f636c8deebb074643213e7"
+        }
+      ]
+    },
+    {
+      "id": "T11",
+      "family": "provider fan-out preservation",
+      "question": "Do all provider-specific outputs of the host build carry the normalized shards intact?",
+      "unit": "evaluated fan-out outputs (see provider_counting_units)",
+      "n": 22,
+      "status": "final",
+      "outcome": {
+        "preserved": 22,
+        "blocked": 0,
+        "semantics_rewritten": 0,
+        "per_output": {
+          "agents": "PRESERVED",
+          "antigravity": "PRESERVED",
+          "claude-code": "PRESERVED",
+          "codex": "PRESERVED",
+          "cursor": "PRESERVED",
+          "cursor-plugin": "PRESERVED",
+          "dsh": "PRESERVED",
+          "gemini": "PRESERVED",
+          "github": "PRESERVED",
+          "grok": "PRESERVED",
+          "hermes": "PRESERVED",
+          "kiro": "PRESERVED",
+          "openai": "PRESERVED",
+          "opencode": "PRESERVED",
+          "pi": "PRESERVED",
+          "qoder": "PRESERVED",
+          "rovo-dev": "PRESERVED",
+          "trae": "PRESERVED",
+          "trae-cn": "PRESERVED",
+          "veto": "PRESERVED",
+          "vibe": "PRESERVED",
+          "vscode": "PRESERVED"
+        }
+      },
+      "reproduction": {
+        "fresh_build": "22/22 provider-specific dist directories PRESERVED"
+      },
+      "source_artifacts": [
+        {
+          "internal_path": "poc-motion/artifacts/provider-fanout.json",
+          "sha256": "12659d6cd179e290d2a23bade054c4e7a89c842d47f636c8deebb074643213e7"
+        }
+      ]
+    },
+    {
+      "id": "T12",
+      "family": "Codex build path",
+      "question": "Does the Codex output receive the per-command reference directory?",
+      "unit": "dist directory",
+      "n": 1,
+      "status": "final",
+      "outcome": {
+        "result": "the build regenerates .codex/skills/impeccable/reference/ including the shards and links",
+        "note": "supersedes the intake's interim reading that Codex had no per-command reference directory (the committed clone's .codex tree was partial); see CORRECTIONS.md C1"
+      },
+      "reproduction": {
+        "fresh_build": "codex dist directory PRESERVED"
+      },
+      "source_artifacts": [
+        {
+          "internal_path": "poc-motion/artifacts/provider-fanout.json",
+          "sha256": "12659d6cd179e290d2a23bade054c4e7a89c842d47f636c8deebb074643213e7"
+        },
+        {
+          "internal_path": "artifacts/integration-blockers.json",
+          "sha256": "b2f4fc7bb005abdca32e239c035df42f1645515a022ca8ff802e07cb69a30d71"
+        }
+      ]
+    },
+    {
+      "id": "T13",
+      "family": "selective loading and routing",
+      "question": "Do command-local shards reach only their consuming commands, without overreach?",
+      "unit": "routes (behavioral n=1) + static checks on the 22 evaluated fan-out outputs",
+      "n": "4 behavioral cells + 22 evaluated fan-out outputs (static)",
+      "status": "final",
+      "outcome": {
+        "consumer_partition": {
+          "animate": [
+            "MOTION-1004",
+            "MOTION-1005",
+            "MOTION-1009",
+            "MOTION-1016",
+            "MOTION-1019",
+            "MOTION-1023",
+            "MOTION-2002",
+            "MOTION-4001",
+            "MOTION-4008"
+          ],
+          "audit": [
+            "MOTION-2006",
+            "MOTION-4003",
+            "MOTION-4004"
+          ],
+          "overdrive": [
+            "MOTION-1018"
+          ],
+          "polish": [
+            "MOTION-1003",
+            "MOTION-1020",
+            "MOTION-4006"
+          ]
+        },
+        "rules_with_exactly_one_consumer": 16,
+        "shards": {
+          "animate": {
+            "count": 9,
+            "ids": [
+              "MOTION-1004",
+              "MOTION-1005",
+              "MOTION-1009",
+              "MOTION-1016",
+              "MOTION-1019",
+              "MOTION-1023",
+              "MOTION-2002",
+              "MOTION-4001",
+              "MOTION-4008"
+            ]
+          },
+          "audit": {
+            "count": 3,
+            "ids": [
+              "MOTION-2006",
+              "MOTION-4003",
+              "MOTION-4004"
+            ]
+          },
+          "overdrive": {
+            "count": 1,
+            "ids": [
+              "MOTION-1018"
+            ]
+          },
+          "polish": {
+            "count": 3,
+            "ids": [
+              "MOTION-1003",
+              "MOTION-1020",
+              "MOTION-4006"
+            ]
+          }
+        },
+        "duplicated_ids": [],
+        "routed_behavior": {
+          "animate": {
+            "loaded": [
+              "motion-dp-animate.md"
+            ],
+            "applied": [
+              "MOTION-1004",
+              "MOTION-1005",
+              "MOTION-1019",
+              "MOTION-4001"
+            ],
+            "loaded_not_applicable": [
+              "MOTION-1009",
+              "MOTION-1016",
+              "MOTION-1023",
+              "MOTION-2002",
+              "MOTION-4008"
+            ],
+            "cross_reach": false
+          },
+          "audit": {
+            "loaded": [
+              "motion-dp-audit.md"
+            ],
+            "applied": [
+              "MOTION-4003",
+              "MOTION-4004"
+            ],
+            "loaded_not_applicable": [
+              "MOTION-2006"
+            ],
+            "cross_reach": false,
+            "overreach_bait": "ease-keyword would trigger MOTION-4001 but that is in animate shard; audit route did NOT reach it"
+          },
+          "polish": {
+            "loaded": [
+              "motion-dp-polish.md"
+            ],
+            "applied": [
+              "MOTION-1020",
+              "MOTION-4006"
+            ],
+            "loaded_not_applicable": [
+              "MOTION-1003"
+            ],
+            "cross_reach": false
+          },
+          "overdrive": {
+            "loaded": "static-verified (1 rule MOTION-1018; shard+link present in all 22 evaluated fan-out outputs); not separately behaviorally run",
+            "applied": "n/a"
+          }
+        },
+        "negative_controls": {
+          "colorize": {
+            "loaded": [],
+            "applied": [],
+            "note": "no motion-dp link; files exist but not opened"
+          },
+          "critique": {
+            "note": "NOT a MOTION-candidate consumer per the map (consumer is overdrive, not critique); critique.md has no motion-dp link -> NONE, structurally like colorize"
+          }
+        },
+        "static_all_outputs": "22/22 evaluated fan-out outputs: 4 shards present, each command reference links only its own shard, no unrelated command links a shard, no cross-shard id contamination"
+      },
+      "reproduction": {
+        "tool": "tools/gen_shards.py",
+        "result": "8 shards + shard manifest byte-identical; fresh build 22/22 PRESERVED incl. links"
+      },
+      "source_artifacts": [
+        {
+          "internal_path": "poc-motion/artifacts/consumer-reachability.json",
+          "sha256": "b1c3e070bc8215f30c578f093f43fb25527a8d1d70905c610c81ce90a5c824c7"
+        },
+        {
+          "internal_path": "poc-motion/artifacts/shard-manifest.json",
+          "sha256": "84f53ed22574c6906f0bee2b312bf4d16596b0de63b955c830f5224eec2eff4d"
+        },
+        {
+          "internal_path": "poc-motion/artifacts/routed-behavior.json",
+          "sha256": "a71a2552edd7621b36aead8f4fa082c0658ecb0c343864676c81505daa9bd856"
+        }
+      ]
+    },
+    {
+      "id": "T14",
+      "family": "behavioral additivity",
+      "question": "Do the candidate rules add non-redundant triggers over the host's own motion reference without leaking the control layer?",
+      "unit": "behavioral cells (baseline vs candidate)",
+      "n": "2 cells, n=1 each",
+      "status": "final",
+      "outcome": {
+        "applied": [
+          "MOTION-1004",
+          "MOTION-1005",
+          "MOTION-1019",
+          "MOTION-1020",
+          "MOTION-4001",
+          "MOTION-4003",
+          "MOTION-4004",
+          "MOTION-4006"
+        ],
+        "not_applicable_task_selective": [
+          "MOTION-1003",
+          "MOTION-1009",
+          "MOTION-1016",
+          "MOTION-1018",
+          "MOTION-1023",
+          "MOTION-2002",
+          "MOTION-2006",
+          "MOTION-4008"
+        ],
+        "references_dial_or_baseline6": false,
+        "overapplied_excluded": false
+      },
+      "source_artifacts": [
+        {
+          "internal_path": "poc-motion/artifacts/behavioral-sanity.json",
+          "sha256": "74cde8e9512312f8681299efacba92ad0d9d3cf5da65a78dd500d3b38697de9c"
+        }
+      ]
+    },
+    {
+      "id": "T15",
+      "family": "single source of truth",
+      "question": "Is the projected control a pure function of the corpus input?",
+      "unit": "input mutation",
+      "n": 1,
+      "status": "final",
+      "outcome": {
+        "mutations": "baseline 6 -> 4; MOTION-2003 threshold value > 4 -> value > 6",
+        "propagated": "exactly the two mutated values changed; A11Y-2001 and MOTION-2005 gates unchanged",
+        "live_artifact": "carries the original-input values (no manually maintained duplicate)"
+      },
+      "reproduction": {
+        "tool": "tools/second_source_test.py",
+        "result": "VERDICT: SINGLE SOURCE OF TRUTH; both control JSONs byte-identical to fixtures"
+      },
+      "source_artifacts": [
+        {
+          "internal_path": "poc-motion/second_source_test/control.from-original-input.json",
+          "sha256": "ccfb215729c466d61092eb9c6221a04ca6445d6a9b0bb1b39fd9b891c36fe70a"
+        },
+        {
+          "internal_path": "poc-motion/second_source_test/control.from-mutated-input.json",
+          "sha256": "fd6887589c55f4d9d92211ba72da988f44ac4f55985979be626e60b02f200dd6"
+        }
+      ]
+    },
+    {
+      "id": "T16",
+      "family": "attribution propagation",
+      "question": "Does third-party attribution travel with the derived shards into every distributed output, and can the gate fail?",
+      "unit": "distribution reference directories",
+      "n": 41,
+      "status": "final",
+      "outcome": {
+        "study_run": "PASS: 41 reference dirs across 23 dist directories; 22/22 provider-specific outputs carry the 4 shards and the attribution file, 0 orphans",
+        "gate_negatives_in_study": "orphan shard (attribution removed) -> FAIL; unapproved id (MOTION-9999) -> FAIL",
+        "why_skill_bundled": "the host build ships no root NOTICE.md into the provider skill packages (only the cursor and vscode outputs receive the Apache-2.0 LICENSE), so a root-only notice would be orphaned from the packaged distributions"
+      },
+      "reproduction": {
+        "tool": "tools/gen_attribution.py + tools/attribution-gate.py",
+        "result": "attribution fixture byte-identical; gate PASS on the fresh build (41/23)"
+      },
+      "source_artifacts": [
+        {
+          "internal_path": "poc-motion/artifacts/motion-dp-THIRD-PARTY.md",
+          "sha256": "33a49f470c9a3964ad8945f65dff4d051ad99f0ad075d3db2bb05e9f7253122e"
+        }
+      ]
+    },
+    {
+      "id": "T17",
+      "family": "license provenance",
+      "question": "What are the origins and licenses of the 16 candidate rules?",
+      "unit": "candidate rules",
+      "n": 16,
+      "status": "final",
+      "outcome": {
+        "all_original_licenses": "MIT (all 3 origins)",
+        "ids_by_origin": {
+          "nextlevelbuilder/ui-ux-pro-max-skill": [
+            "MOTION-1003",
+            "MOTION-1004",
+            "MOTION-1005",
+            "MOTION-1009",
+            "MOTION-1016",
+            "MOTION-1018",
+            "MOTION-1019",
+            "MOTION-1020",
+            "MOTION-1023"
+          ],
+          "Leonxlnx/taste-skill": [
+            "MOTION-2002",
+            "MOTION-2006"
+          ],
+          "Nutlope/hallmark": [
+            "MOTION-4001",
+            "MOTION-4003",
+            "MOTION-4004",
+            "MOTION-4006",
+            "MOTION-4008"
+          ]
+        },
+        "pinned_commits": {
+          "nextlevelbuilder/ui-ux-pro-max-skill": "dcc40ff5133ef78276117db0cc34e7b83cc8aeba",
+          "Nutlope/hallmark": "13ac0ec7e148655948100b6396439e481361d690",
+          "Leonxlnx/taste-skill": "c184364c58658b2f131b4ae8bd3d206cabb3deee"
+        },
+        "path_level_license_exceptions": 0,
+        "transformation": "Design Pack-derived governance metadata (verbatim effective_semantics), upstream source works not redistributed"
+      },
+      "source_artifacts": [
+        {
+          "internal_path": "poc-motion/artifacts/license-decision-packet.json",
+          "sha256": "f7da56bb5c4771587dd67a89335ee4b9dc594c815b849c5370274b808ddb617a"
+        }
+      ]
+    },
+    {
+      "id": "T18",
+      "family": "upstream freshness",
+      "question": "Is the tested commit still the upstream default branch head?",
+      "unit": "git ls-remote",
+      "n": 1,
+      "status": "final",
+      "outcome": {
+        "study_end": "refs/heads/main == 9d715cc4 (2026-09-28, study session)",
+        "packaging": "refs/heads/main == 9d715cc4 at 2026-09-27T20:14:53Z UTC (git ls-remote https://github.com/pbakaus/impeccable.git refs/heads/main)"
+      },
+      "source_artifacts": []
+    }
+  ],
+  "internal_evidence_package": {
+    "note": "not published; available to reviewers on request",
+    "manifests_sha256": {
+      "home/PACKAGE-MANIFEST.sha256": "fd4b1c13f5b6737e87277558783734b546566cebad96c71f3c4fc0d462b3f1e9",
+      "home/poc-motion/PACKAGE-MANIFEST.sha256": "65d6dfaa3cdfa5d49b3d8f53639348f8457881e29fd304199586036e3da3d767",
+      "home/MANIFEST.json": "8c4283013d3fbf6c259331cd5229132884b2369557a13c891d60b5f71443fa0b"
+    },
+    "disposable_integration_patch": "a production-shaped patch was tested on a disposable copy of the host (internal sha256 prefix 526fc4db, 15 files, +1577 lines); it is internal evidence and not shipped"
+  }
+}

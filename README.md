@@ -173,6 +173,13 @@ Notes that keep this honest:
   skills' provenance notes and the PR trail. The hex and font-fashion bans
   are the fastest-decaying facts in the pack: they track model training
   data, so re-verify them each model generation.
+- **Research record (not a pack capability):** an independent compatibility study
+  of [Impeccable](https://github.com/pbakaus/impeccable) at commit `9d715cc4` —
+  routing, provider fan-out, control-representation and attribution-propagation
+  observations against this pack's canonical corpus — lives in
+  [`research/design-pack/2026-09-impeccable-compatibility-study/`](research/design-pack/2026-09-impeccable-compatibility-study/).
+  It is observations, fixtures and matrices only: nothing from it is adopted into
+  the skills, the corpus or the generated references, and it ships in no plugin.
 
 ## Architecture & stability
 
