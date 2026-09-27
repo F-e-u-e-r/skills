@@ -209,9 +209,9 @@ fixtures carry is Design Pack-derived governance metadata, not upstream source.
 They establish, for the tested revision and the bounded behavioral runs described in this study:
 that the host's reference layer, build and fan-out can carry a deterministic, attributed projection
 of corpus semantics to every evaluated output without a second source of truth; that faithful gating
-depends on information completeness rather than serialization format; that the tested consumer-
-scoped routing confined the projected semantics to the declared consumers; and that, on the tested
-no-input path, the canonical control default became the effective host default when the host
+depends on information completeness rather than serialization format; that the tested
+consumer-scoped routing confined the projected semantics to the declared consumers; and that, on the
+tested no-input path, the canonical control default became the effective host default when the host
 supplied no value.
 
 They do not establish: statistical reliability (n = 1), cross-model generality (one family), runtime
