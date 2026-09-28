@@ -1,12 +1,100 @@
 {
  "artifact": "design-pack production bridge manifest (generated; do not hand-edit)",
  "attribution": {
-  "byte_identical": true,
-  "canonical_notice": "corpus/design-pack/THIRD_PARTY_NOTICES.md",
+  "apache_4b": {
+   "must_point_at": [
+    "LICENSE-APACHE-2.0",
+    "THIRD_PARTY_NOTICES.md"
+   ],
+   "must_state": [
+    "adapted",
+    "modified"
+   ],
+   "notice_mark": "Change notice (Apache-2.0 section 4(b))",
+   "rule": "every file carrying adapted expression from an applicable Apache-2.0 work carries a prominent change notice inside the adapted section (sites read from the root notice)",
+   "sites": [
+    {
+     "adapted_from": "craft/state-coverage.md",
+     "file": "design-pack/skills/ui-design-craft/SKILL.md",
+     "section": 4,
+     "skill": "ui-design-craft",
+     "upstream": "nexu-io/open-design"
+    },
+    {
+     "adapted_from": "craft/animation-discipline.md",
+     "file": "design-pack/skills/motion-craft/SKILL.md",
+     "section": 7,
+     "skill": "motion-craft",
+     "upstream": "nexu-io/open-design"
+    }
+   ]
+  },
+  "applicability_markers": [
+   "design-pack",
+   "ui-design-craft",
+   "motion-craft",
+   "design-review-gate"
+  ],
+  "bundle": {
+   "design-pack/LICENSE": {
+    "derivation": "verbatim-copy",
+    "sha256": "c703dd38b8e0c7f5a2223f2323494a436a7c8ae1a8136b5bfdf146a495eb58d4",
+    "source": "LICENSE",
+    "why": "recipients of the plugin must receive the license governing its own material"
+   },
+   "design-pack/LICENSE-APACHE-2.0": {
+    "derivation": "verbatim-copy",
+    "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "source": "LICENSE-APACHE-2.0",
+    "why": "Part B carries an Apache-2.0 work whose adapted expression ships in this payload; Apache-2.0 section 4(a) requires a copy of the License with any redistribution"
+   },
+   "design-pack/THIRD_PARTY_NOTICES.md": {
+    "apache_entries": [
+     "### open-design — `nexu-io/open-design`"
+    ],
+    "applicable_entries": [
+     "### Emil Kowalski — `emilkowalski/skills`",
+     "### Leonxlnx — `Leonxlnx/taste-skill`",
+     "### LottieFiles — `LottieFiles/motion-design-skill`",
+     "### Refero Design — `referodesign/refero_skill`",
+     "### open-design — `nexu-io/open-design`"
+    ],
+    "derivation": "composed: Part A = corpus notice verbatim; Part B = root-notice entries selected by the applicability markers, verbatim, + the root MIT text restricted to those works",
+    "mit_entries": [
+     "### Emil Kowalski — `emilkowalski/skills`",
+     "### Leonxlnx — `Leonxlnx/taste-skill`",
+     "### LottieFiles — `LottieFiles/motion-design-skill`",
+     "### Refero Design — `referodesign/refero_skill`"
+    ],
+    "sha256": "5e68a60694fde1d593cea678054850cb2d9f4945867a9f91628ee4fffa4ae733",
+    "sources": [
+     "corpus/design-pack/THIRD_PARTY_NOTICES.md",
+     "THIRD-PARTY-NOTICES.md"
+    ],
+    "why": "every third-party notice applicable to the files in this directory must travel with them"
+   }
+  },
   "license_text_reconstructed": false,
-  "reason": "design-pack ships as ./design-pack; the canonical repo-level notice is outside that boundary, so a byte-identical scoped copy is emitted inside it.",
-  "scoped_copy": "design-pack/THIRD_PARTY_NOTICES.md",
-  "sha256": "b04f228ded8896dec1129aa81b13a126f0913086f8830116cbf61325863a4d4c"
+  "reason": "design-pack ships as ./design-pack alone; every legal source (the repository LICENSE, the canonical third-party notice, the Apache-2.0 full text, the corpus notice) lies outside that boundary, so byte-derived copies of everything applicable to this payload are emitted inside it and gated.",
+  "sources": {
+   "LICENSE": {
+    "role": "license governing design-pack's own material (MIT)",
+    "sha256": "c703dd38b8e0c7f5a2223f2323494a436a7c8ae1a8136b5bfdf146a495eb58d4"
+   },
+   "LICENSE-APACHE-2.0": {
+    "pinned_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "role": "Apache License 2.0 full text; bytes = https://www.apache.org/licenses/LICENSE-2.0.txt",
+    "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+   },
+   "THIRD-PARTY-NOTICES.md": {
+    "consumed_sha256": "7540e761ee200638d819f983c03864155a28e9d5c63c7dd2979c69aecadc78e0",
+    "role": "canonical legal notice; semantic authority for attribution (the applicable entries and the MIT text are consumed)"
+   },
+   "corpus/design-pack/THIRD_PARTY_NOTICES.md": {
+    "role": "canonical corpus notice (Part A)",
+    "sha256": "b04f228ded8896dec1129aa81b13a126f0913086f8830116cbf61325863a4d4c"
+   }
+  }
  },
  "canonical_corpus": {
   "merge_sha": "44f10443c16e926515af86ebdd1d52e003ed98cc",

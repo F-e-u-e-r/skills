@@ -9,7 +9,7 @@ and regenerate.
 
 - `runtime.json` — 454 runtime records (443 rule, 5 synthesized_rule, 3 decision_table, 3 dial). **Zero evidence/conflict.**
 - `projection-support.json` — 88 projection-support-only records (85 evidence, 3 conflict). Not required for ordinary skill execution.
-- `manifest.json` — schema/version, canonical corpus SHA + merge SHA, kind policy, populations, per-artifact SHA-256, attribution linkage.
+- `manifest.json` — schema/version, canonical corpus SHA + merge SHA, kind policy, populations, per-artifact SHA-256, attribution linkage. Its `attribution` block is the distribution-legal accounting: the payload's `../LICENSE`, `../LICENSE-APACHE-2.0` and `../THIRD_PARTY_NOTICES.md` are projector outputs byte-derived from the repository-root `LICENSE`, `LICENSE-APACHE-2.0`, `THIRD-PARTY-NOTICES.md` and the corpus notice (source, derivation, expected SHA-256 and reason per artifact).
 - `skill-reachability.json` — which production skill(s) reach each of the 454 runtime records.
 - agent-consumption shards are mirrored SKILL-LOCALLY at `design-pack/skills/<skill>/references/generated/*.md` (per-domain + `controls.md`; deterministic copies, byte duplication is not context duplication).
 - `local-extensions.json` — pack-local production requirements NOT in the corpus (authority=pack-local-extension, no Phase-B provenance).

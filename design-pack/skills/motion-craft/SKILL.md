@@ -190,6 +190,12 @@ Numbers first; taste second. Defaults for product UI:
 
 ## 7. Misquoted research - do not cite these wrong
 
+_Change notice (Apache-2.0 section 4(b)): the correction items in this section
+are adapted from `nexu-io/open-design` (`craft/animation-discipline.md`,
+Apache-2.0) and were modified for Design Pack. License text:
+`LICENSE-APACHE-2.0`; notices: `THIRD_PARTY_NOTICES.md` (both at the plugin
+root, `design-pack/`)._
+
 These corrections are adapted from open-design's primary-literature review
 (Apache-2.0; adaptation notice in THIRD-PARTY-NOTICES). The papers were
 NOT re-opened for this pack - each line below is that review's checked
