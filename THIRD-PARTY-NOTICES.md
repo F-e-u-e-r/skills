@@ -130,6 +130,10 @@ Copyright (c) 2026 Refero
 
 - **License:** Apache License, Version 2.0
   (https://www.apache.org/licenses/LICENSE-2.0).
+- **Copyright notice (upstream `LICENSE` appendix; checked 2026-09-28):**
+  `Copyright 2026 Open Design contributors`
+- **Full license text:** `LICENSE-APACHE-2.0` (repository root; a byte-identical
+  copy ships inside `design-pack/`).
 - **How used:** ideas and facts informing design-pack's `ui-design-craft`
   (accent budget), `motion-craft`, and `design-review-gate` (the
   promote-rules-into-a-linter stance) - AND two passages of **adapted

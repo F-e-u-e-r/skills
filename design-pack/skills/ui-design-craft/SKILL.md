@@ -191,6 +191,11 @@ override is the recorded reason, never silent).
 
 ## 4. State coverage - the most reliable generated-UI failure
 
+_Change notice (Apache-2.0 section 4(b)): the five-state table in this section
+is adapted from `nexu-io/open-design` (`craft/state-coverage.md`, Apache-2.0)
+and was modified for Design Pack. License text: `LICENSE-APACHE-2.0`; notices:
+`THIRD_PARTY_NOTICES.md` (both at the plugin root, `design-pack/`)._
+
 Shipping only the populated state IS the failure mode. Every surface that
 fetches, accepts, or transforms data renders five states before it is done:
 

@@ -12,6 +12,8 @@ def copy_tree():
     os.makedirs(os.path.join(d,os.path.dirname(pc.CANONICAL_CORPUS_PATH)),exist_ok=True)
     shutil.copy(pc.CANONICAL_CORPUS_PATH, os.path.join(d,pc.CANONICAL_CORPUS_PATH))
     shutil.copy(pc.CANONICAL_NOTICE_PATH, os.path.join(d,pc.CANONICAL_NOTICE_PATH))
+    for rel in (pc.ROOT_LICENSE_PATH, pc.ROOT_APACHE_TEXT_PATH, pc.ROOT_NOTICE_PATH):  # legal sources
+        shutil.copy(rel, os.path.join(d, rel))
     return d
 
 def mini_root(skillmd=None, classification=None, local_ext=None, manifest=None, runtime_text=None, corpus_ok=True, notice_ok=True):
@@ -19,9 +21,12 @@ def mini_root(skillmd=None, classification=None, local_ext=None, manifest=None, 
     os.makedirs(os.path.join(d,os.path.dirname(pc.CANONICAL_CORPUS_PATH)),exist_ok=True)
     open(os.path.join(d,pc.CANONICAL_CORPUS_PATH),"w").write(
         open(os.path.join(ROOT,pc.CANONICAL_CORPUS_PATH)).read() if corpus_ok else "tampered\n")
+    shutil.copy(pc.CANONICAL_NOTICE_PATH, os.path.join(d,pc.CANONICAL_NOTICE_PATH))
+    for rel in (pc.ROOT_LICENSE_PATH, pc.ROOT_APACHE_TEXT_PATH, pc.ROOT_NOTICE_PATH):  # legal sources
+        shutil.copy(rel, os.path.join(d, rel))
     os.makedirs(os.path.join(d,os.path.dirname(pc.SCOPED_NOTICE)),exist_ok=True)
-    nb=open(os.path.join(ROOT,pc.CANONICAL_NOTICE_PATH),"rb").read() if notice_ok else b"X\n"
-    open(os.path.join(d,pc.SCOPED_NOTICE),"wb").write(nb)
+    for rel,data in pc.render_legal_bundle(d)[0].items():  # the derived legal bundle; corrupt the notice on request
+        open(os.path.join(d,rel),"wb").write(data if (notice_ok or rel!=pc.SCOPED_NOTICE) else b"X\n")
     if skillmd:
         for name,text in skillmd.items():
             sd=os.path.join(d,g.SKILL_DIR,name); os.makedirs(sd,exist_ok=True)
@@ -61,6 +66,47 @@ def _neg_clean_regen():
     open(p,"a").write(" ")  # one byte drift
     return g.check_clean_regeneration(d)
 
+# --- legal-bundle negatives (distribution closure); each mutates a full copy of the tree ---------
+def _neg_legal(mutate):
+    d=copy_tree(); mutate(d); return g.check_distribution_attribution(d)
+def _rm(rel): return lambda d: os.remove(os.path.join(d,rel))
+def _append_byte(rel): return lambda d: open(os.path.join(d,rel),"ab").write(b" ")
+def _drop_entry(d):  # one required provenance entry removed from the emitted notice
+    secs=pc.parse_root_notice(open(os.path.join(d,pc.ROOT_NOTICE_PATH),encoding="utf-8").read())
+    _,e=pc.applicable_root_entries(secs)[-1]
+    p=os.path.join(d,pc.SCOPED_NOTICE); t=open(p,encoding="utf-8").read(); assert e["text"] in t
+    open(p,"w",encoding="utf-8").write(t.replace(e["text"],"",1))
+def _provenance_change(d):  # an applicable MIT work's copyright line changes at the root; bundle NOT regenerated
+    p=os.path.join(d,pc.ROOT_NOTICE_PATH); t=open(p,encoding="utf-8").read()
+    old="Copyright (c) 2025 LottieFiles"; assert t.count(old)==2, t.count(old)
+    open(p,"w",encoding="utf-8").write(t.replace(old,"Copyright (c) 2024 LottieFiles"))
+def _new_applicable_entry(d):  # a new design-pack source appears at the root; bundle NOT regenerated
+    p=os.path.join(d,pc.ROOT_NOTICE_PATH); t=open(p,encoding="utf-8").read()
+    anchor="\n---\n\n## 2. Works under the Apache License 2.0"; assert anchor in t
+    entry=("\n### Example Author \u2014 `example/design-source`\n\n```\nCopyright (c) 2026 Example Author\n```\n\n"
+           "- **How used:** a fixture source adapted into design-pack's `motion-craft`.\n")
+    t=t.replace(anchor, entry+anchor, 1)
+    t=t.replace("\n\nPermission is hereby granted", "\nCopyright (c) 2026 Example Author\n\nPermission is hereby granted", 1)
+    open(p,"w",encoding="utf-8").write(t)
+def _notice_para(text):  # the Apache 4(b) change-notice paragraph of a SKILL.md (mark .. first blank line)
+    i=text.index(pc.CHANGE_NOTICE_MARK); s=text.rfind("\n\n",0,i)+2; e=text.index("\n\n",i)
+    return text[s:e]
+def _mutate_skill(skill, fn):
+    def m(d):
+        p=os.path.join(d,"design-pack/skills",skill,"SKILL.md"); t=open(p,encoding="utf-8").read()
+        open(p,"w",encoding="utf-8").write(fn(t))
+    return m
+def _4b_remove(skill):  # the file-level change notice is missing
+    return _mutate_skill(skill, lambda t: t.replace(_notice_para(t)+"\n\n","",1))
+def _4b_wrong_upstream(skill):  # the notice no longer identifies open-design
+    return _mutate_skill(skill, lambda t: t.replace(_notice_para(t), _notice_para(t).replace("nexu-io/open-design","example/other-project"),1))
+def _4b_dead_pointer(skill):  # the notice points at a legal artifact that does not ship
+    return _mutate_skill(skill, lambda t: t.replace(_notice_para(t), _notice_para(t).replace("`LICENSE-APACHE-2.0`","`LICENSE-APACHE-2.0.txt`"),1))
+def _stale_accounting(d):  # manifest still records an old hash for an emitted legal artifact
+    p=os.path.join(d,pc.GEN_DIR,"manifest.json"); m=json.load(open(p))
+    m["attribution"]["bundle"][pc.BUNDLE_LICENSE]["sha256"]="0"*64
+    json.dump(m,open(p,"w"))
+
 def main():
     runtime,support,manifest,reach,corpus=g.load_all(ROOT)
     R=[]
@@ -95,7 +141,22 @@ def main():
         g.check_pack_local_extension_non_conflict(mini_root(local_ext=badext)))
     b=clone(runtime); b["rules"][0]["id"]="FAKE-9999"; rec("provenance-separation", g.check_provenance_separation(ROOT,runtime), g.check_provenance_separation(ROOT,b))
     R.append(("unmapped-prose (real gate)", g.check_unmapped_prose(ROOT)==[], True))
-    rec("distribution-attribution", g.check_distribution_attribution(ROOT), g.check_distribution_attribution(mini_root(notice_ok=False)))
+    real_att=g.check_distribution_attribution(ROOT)
+    rec("distribution-attribution", real_att, g.check_distribution_attribution(mini_root(notice_ok=False)))
+    rec("distribution-attribution[notice missing]", real_att, _neg_legal(_rm(pc.SCOPED_NOTICE)))
+    rec("distribution-attribution[entry missing]", real_att, _neg_legal(_drop_entry))
+    rec("distribution-attribution[Apache text missing]", real_att, _neg_legal(_rm(pc.BUNDLE_APACHE_TEXT)))
+    rec("distribution-attribution[LICENSE missing]", real_att, _neg_legal(_rm(pc.BUNDLE_LICENSE)))
+    rec("distribution-attribution[artifact drift]", real_att, _neg_legal(_append_byte(pc.BUNDLE_LICENSE)))
+    rec("distribution-attribution[provenance changed]", real_att, _neg_legal(_provenance_change))
+    rec("distribution-attribution[new applicable entry]", real_att, _neg_legal(_new_applicable_entry))
+    rec("distribution-attribution[stale accounting]", real_att, _neg_legal(_stale_accounting))
+    rec("distribution-attribution[4b notice missing: ui-design-craft]", real_att, _neg_legal(_4b_remove("ui-design-craft")))
+    rec("distribution-attribution[4b notice missing: motion-craft]", real_att, _neg_legal(_4b_remove("motion-craft")))
+    rec("distribution-attribution[4b notice names wrong upstream]", real_att, _neg_legal(_4b_wrong_upstream("ui-design-craft")))
+    rec("distribution-attribution[4b notice dead pointer]", real_att, _neg_legal(_4b_dead_pointer("motion-craft")))
+    d=copy_tree(); _provenance_change(d)
+    rec("clean-regeneration[provenance changed]", g.check_clean_regeneration(ROOT), g.check_clean_regeneration(d))
 
     # --- D6-C closure-repair gates ---
     badr=clone(reach)

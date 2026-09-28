@@ -384,14 +384,11 @@ def check_clean_regeneration(root):
     for skill, files in per_skill.items():
         for fn in files:
             skill_shard_sha[f"skills/{skill}/references/generated/{fn}"] = pc.sha256_bytes(_stext(skill, fn).encode())
-    scoped = os.path.join(root, pc.SCOPED_NOTICE)
-    notice_rel = {
-        "reason": "design-pack ships as ./design-pack; the canonical repo-level notice is outside that boundary, so a byte-identical scoped copy is emitted inside it.",
-        "canonical_notice": pc.CANONICAL_NOTICE_PATH, "scoped_copy": pc.SCOPED_NOTICE,
-        "sha256": pc.CANONICAL_NOTICE_SHA256,
-        "byte_identical": os.path.exists(scoped) and pc.sha256_file(scoped) == pc.CANONICAL_NOTICE_SHA256,
-        "license_text_reconstructed": False}
-    manifest_txt = pc.dumps(pc.build_manifest(corpus_sha, runtime_txt, support_txt, reach_txt, ext_txt, skill_shard_sha, recs, notice_rel))
+    try:
+        legal_outputs, attribution = pc.render_legal_bundle(root)
+    except pc.ProjectionError as e:
+        return [f"clean-regen: {e}"]
+    manifest_txt = pc.dumps(pc.build_manifest(corpus_sha, runtime_txt, support_txt, reach_txt, ext_txt, skill_shard_sha, recs, attribution))
     want = {os.path.join(GEN, "runtime.json"): runtime_txt, os.path.join(GEN, "projection-support.json"): support_txt,
             os.path.join(GEN, "skill-reachability.json"): reach_txt, os.path.join(GEN, "local-extensions.json"): ext_txt,
             os.path.join(GEN, "manifest.json"): manifest_txt}
@@ -404,8 +401,12 @@ def check_clean_regeneration(root):
             f.append(f"clean-regen: missing {rel}")
         elif open(p, encoding="utf-8").read() != text:
             f.append(f"clean-regen: {rel} differs from clean regeneration")
-    if not notice_rel["byte_identical"]:
-        f.append("clean-regen: scoped notice not byte-identical")
+    for rel, data in legal_outputs.items():  # legal bundle: binary compare against the canonical derivation
+        p = os.path.join(root, rel)
+        if not os.path.exists(p):
+            f.append(f"clean-regen: missing {rel}")
+        elif open(p, "rb").read() != data:
+            f.append(f"clean-regen: {rel} differs from clean regeneration")
     return f
 
 def check_pack_local_extension_non_conflict(root):
@@ -465,13 +466,106 @@ def check_unmapped_prose(root):
             f.append(f"unmapped-prose: {skill} section '{sec}' removed without a recorded mapping")
     return f
 
+_SKILL_SECTION_RE = r"^## {n}\. .*?(?=^## |\Z)"
+_BACKTICK_NAME_RE = re.compile(r"`([A-Za-z0-9_.-]+)`")
+
+def _skill_section(text, n):
+    """Text of the '## <n>. ...' section of a SKILL.md (heading through the line before the next '## '), or None."""
+    m = re.search(_SKILL_SECTION_RE.format(n=n), text, flags=re.M | re.S)
+    return m.group(0) if m else None
+
 def check_distribution_attribution(root):
-    """design-pack ships as ./design-pack; the canonical notice is outside that boundary,
-    so a byte-identical scoped copy must exist inside design-pack/."""
+    """Distribution closure. design-pack ships as ./design-pack alone, so every legal artifact applicable to that
+    payload must exist inside it with bytes derived from its canonical repository source (LICENSE, the root
+    THIRD-PARTY-NOTICES.md, LICENSE-APACHE-2.0, the corpus notice); the scoped notice must cover all and only the
+    applicable third-party entries, each MIT work's copyright + permission notice and the Apache-2.0 full text
+    must be present, and the manifest accounting must match the artifacts and their sources."""
     f = []
-    scoped = os.path.join(root, pc.SCOPED_NOTICE)
-    if not os.path.exists(scoped):
-        return ["attribution: scoped notice missing inside design-pack/"]
-    if pc.sha256_file(scoped) != pc.CANONICAL_NOTICE_SHA256:
-        f.append("attribution: scoped notice not byte-identical to canonical")
+    try:
+        expected, acct = pc.render_legal_bundle(root)
+    except pc.ProjectionError as e:
+        return [f"attribution: {e}"]
+    on_disk = {}
+    for rel, data in expected.items():
+        p = os.path.join(root, rel)
+        if not os.path.isfile(p):
+            f.append(f"attribution: {rel} missing inside design-pack/"); continue
+        on_disk[rel] = open(p, "rb").read()
+        if on_disk[rel] != data:
+            f.append(f"attribution: {rel} differs from its canonical derivation")
+    notice = on_disk.get(pc.SCOPED_NOTICE, b"").decode("utf-8", "replace")
+    part_a, _, part_b = notice.partition("## Part B")
+    # coverage: ALL applicable root entries present (with each MIT copyright line), and ONLY those
+    sections = pc.parse_root_notice(open(os.path.join(root, pc.ROOT_NOTICE_PATH), encoding="utf-8").read())
+    selected = pc.applicable_root_entries(sections)
+    for kind, e in selected:
+        if e["text"] not in part_b:
+            f.append(f"attribution: applicable root entry missing from the scoped notice: {e['heading']}")
+        if kind == "mit":
+            for l in e["copyright_lines"]:
+                if l not in part_b: f.append(f"attribution: MIT copyright line missing from the scoped notice: {l}")
+    if any(k == "mit" for k, _ in selected) and pc.MIT_CONDITION_SENTENCE not in part_b:
+        f.append("attribution: MIT permission text missing from Part B of the scoped notice")
+    for title in (pc.ROOT_MIT_SECTION, pc.ROOT_APACHE_SECTION):
+        for e in pc._section(sections, title)["entries"]:
+            if not pc.entry_applicable(e) and e["heading"] in notice:
+                f.append(f"attribution: non-applicable root entry present in the scoped notice: {e['heading']}")
+    if any(k == "apache" for k, _ in selected):
+        p = os.path.join(root, pc.BUNDLE_APACHE_TEXT)
+        if not os.path.isfile(p):
+            f.append("attribution: Apache-2.0 full text missing inside design-pack/ (an applicable Apache-2.0 work is present)")
+        elif pc.sha256_file(p) != pc.APACHE_TEXT_SHA256:
+            f.append("attribution: Apache-2.0 full text inside design-pack/ != pinned canonical text")
+        if os.path.basename(pc.BUNDLE_APACHE_TEXT) not in part_b:
+            f.append("attribution: scoped notice does not point at the Apache-2.0 full text")
+    # Apache-2.0 section 4(b): every file carrying adapted expression (sites read from the root notice) must
+    # itself carry a prominent change notice inside the adapted section: the notice names the upstream, states
+    # the material was adapted and modified, and every plain filename it points at actually ships.
+    for site in pc.apache_adapted_sites(sections):
+        p = os.path.join(root, site["file"])
+        if not os.path.isfile(p):
+            f.append(f"attribution: adapted-expression file missing: {site['file']}"); continue
+        sec = _skill_section(open(p, encoding="utf-8").read(), site["section"])
+        if sec is None:
+            f.append(f"attribution: {site['file']} has no section {site['section']} for the declared adapted expression"); continue
+        if pc.CHANGE_NOTICE_MARK not in sec:
+            f.append(f"attribution: {site['file']} section {site['section']} lacks the Apache-2.0 4(b) change notice"); continue
+        para = sec[sec.index(pc.CHANGE_NOTICE_MARK):].split("\n\n", 1)[0]
+        if site["upstream"] not in para:
+            f.append(f"attribution: {site['file']} change notice does not identify {site['upstream']}")
+        for w in pc.CHANGE_NOTICE_WORDS:
+            if w not in para:
+                f.append(f"attribution: {site['file']} change notice does not state '{w}'")
+        for rel in (pc.BUNDLE_APACHE_TEXT, pc.SCOPED_NOTICE):
+            if os.path.basename(rel) not in para:
+                f.append(f"attribution: {site['file']} change notice does not point at {os.path.basename(rel)}")
+        for name in _BACKTICK_NAME_RE.findall(para):  # every plain filename the notice names must ship
+            if not os.path.isfile(os.path.join(root, "design-pack", name)):
+                f.append(f"attribution: {site['file']} change notice points at {name}, which does not ship in design-pack/")
+    # Part A must name every upstream the corpus records actually carry
+    corpus = _load(root, pc.CANONICAL_CORPUS_PATH)
+    for u in sorted({(r.get("provenance") or {}).get("upstream_repo") for r in corpus} - {None}):
+        if u not in part_a:
+            f.append(f"attribution: corpus upstream {u} not named in Part A of the scoped notice")
+    # manifest accounting: first-class expected payload members, hashes current
+    try:
+        man = _load(root, os.path.join(GEN, "manifest.json"))
+    except Exception as e:
+        return f + [f"attribution: manifest unreadable ({e})"]
+    att = man.get("attribution") or {}
+    bundle = att.get("bundle") or {}
+    for rel, data in expected.items():
+        rec = bundle.get(rel)
+        if not rec:
+            f.append(f"attribution: manifest accounting lacks {rel}"); continue
+        if rec.get("sha256") != pc.sha256_bytes(data):
+            f.append(f"attribution: manifest accounting for {rel} is stale against the canonical derivation (regenerate)")
+        if rel in on_disk and rec.get("sha256") != pc.sha256_bytes(on_disk[rel]):
+            f.append(f"attribution: manifest accounting for {rel} != on-disk artifact")
+    if (att.get("sources") or {}) != acct["sources"]:
+        f.append("attribution: manifest source accounting != current canonical sources (regenerate)")
+    if att.get("apache_4b") != acct["apache_4b"]:
+        f.append("attribution: manifest Apache-2.0 4(b) site accounting != root notice (regenerate)")
+    if att.get("license_text_reconstructed") is not False:
+        f.append("attribution: license text must never be reconstructed")
     return f
