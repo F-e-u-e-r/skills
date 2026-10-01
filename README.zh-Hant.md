@@ -445,7 +445,7 @@ hooks(不得有 `hooks/hooks.json`、`plugin.json` 不得有 hooks 欄位)——
 
 發版命名:每次 `plugin.json` 版本號提升,都要打對應的 `vX.Y.Z` git tag 並建立 GitHub
 Release(仍在 alpha 期間標為 pre-release),README 的版本 badge 也寫 `vX.Y.Z`。`v0.1.16`
-之前的 tag 用舊的 `alpha-X.Y.Z` 形式、停在 `alpha-0.1.2`;中間的版本從未打過 tag。
+之前的 tag 用舊的 `alpha-X.Y.Z` 形式;中間的版本從未個別打過 tag,`v0.1.16` 是第一個正式的 release of record。
 
 ## 已解決的規則衝突
 

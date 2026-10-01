@@ -20,7 +20,7 @@ top out at Opus 4.8, so any stronger-tier rule must be conditional, not assumed.
 | Miguok/fable-harness (164★) | Skipped — already upstream of verify-before-stop hook (via curtischoutw); two-critic + lens-diversity covers the three-persona panel |
 | Anil-matcha/awesome-claude-fable-5 (320★) | Skipped — use-case catalog, not a method source |
 
-## Changes landed (alpha-0.1.2 working tree)
+## Changes landed (working tree at the prior alpha baseline, commit `e27a011c4ac6a854ccae9918a93607e37e607a92`)
 
 1. `skills/delegation-and-review/SKILL.md` §4 rung 3 — conditional advice-mode
    consult at a stronger tier (tier-relative, self-skips when the session already
