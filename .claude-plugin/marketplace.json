@@ -9,8 +9,8 @@
     {
       "name": "opus-pack",
       "source": "./",
-      "description": "Ten agent-discipline skills: operational-rigor, delegation-and-review, ground-truth-gates, cross-model-review, skill-authoring, security-architect, product-roadmap, personal-goal-planning, domain-evidence-discipline, skill-vetting. Hooks stay manual-install by design (per-user consent).",
-      "version": "0.1.16",
+      "description": "Twelve agent-discipline skills: operational-rigor, delegation-and-review, ground-truth-gates, cross-model-review, skill-authoring, security-architect, product-roadmap, personal-goal-planning, domain-evidence-discipline, skill-vetting, planning, plan-reconciliation. Hooks stay manual-install by design (per-user consent).",
+      "version": "0.2.0",
       "author": {
         "name": "F-e-u-e-r"
       }
