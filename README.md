@@ -655,7 +655,8 @@ either README → mirror the change in the other language.
 Release naming: every `plugin.json` version bump gets a matching `vX.Y.Z` git tag
 and a GitHub Release (marked pre-release while the pack is alpha), and the README
 version badge reads `vX.Y.Z`. Tags before `v0.1.16` used the legacy `alpha-X.Y.Z`
-form and stop at `alpha-0.1.2`; intermediate versions were never tagged.
+form; intermediate versions were never individually tagged, and `v0.1.16`
+is the first canonical release of record.
 
 ## Rule conflicts resolved during distillation
 

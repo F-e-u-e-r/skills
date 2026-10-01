@@ -63,7 +63,7 @@ verified against the repo on 2026-07-30.
   inside PR #83 (commit `32c6929`) and is unchanged through #84–#97.
   The 2026-07-12-era "bump every substantive PR" convention is
   historical, superseded by observed practice.
-- Git tags still end at `alpha-0.1.2`; versioning lives in the README
+- Git tags still end at the legacy alpha baseline (commit `e27a011c4ac6a854ccae9918a93607e37e607a92`); versioning lives in the README
   badge AND "Early alpha" callout lines (both languages),
   `plugin.json`, and `marketplace.json` — six sites per `32c6929`'s
   own message; checks.py check 2 enforces their agreement, so a bump

@@ -70,7 +70,7 @@ evidence in `UNCERTAINTY.md`):
 
 - "bump the version every substantive PR" (2026-07-12-era rule) →
   **historically-valid**; contradicted by observed practice #84–#97
-  (0.1.16 unchanged; tags end at alpha-0.1.2).
+  (0.1.16 unchanged; the latest tag then was the legacy alpha baseline, commit `e27a011c4ac6a854ccae9918a93607e37e607a92`).
 - The 2026-07 reviewer lineup recorded in the older local library
   (gpt-5.5 xhigh + grok-4.5 max) → **historically-valid**; the
   campaign lineup differs and is itself date-stamped volatile.
