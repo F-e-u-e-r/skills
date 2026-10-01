@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
-  <img alt="Version v0.1.16" src="https://img.shields.io/badge/version-v0.1.16-orange.svg">
+  <img alt="Version v0.2.0" src="https://img.shields.io/badge/version-v0.2.0-orange.svg">
   <img alt="Status: ACTIVE" src="https://img.shields.io/badge/status-ACTIVE-7aa2ff.svg">
   <img alt="For Claude Code" src="https://img.shields.io/badge/for-Claude%20Code-8A2BE2.svg">
   <a href="https://github.com/F-e-u-e-r/skills/issues"><img alt="PRs welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"></a>
@@ -34,7 +34,7 @@ marketplace,而非硬相依(它的審查 skill 對 opus-pack 的 cross-reference
 opus-pack 在場時解析得到;見 [`design-pack`](#design-pack設計-skill))。
 
 > [!NOTE]
-> **早期 alpha(`v0.1.16`)。** 規則會隨真實 session 暴露的缺口調整,而且本包
+> **早期 alpha(`v0.2.0`)。** 規則會隨真實 session 暴露的缺口調整,而且本包
 > 用它自己的教條[檢驗自己](#evals測試這個-pack-本身)——包含一個誠實的 null result。
 > 歡迎用具體失敗案例開 issue 或 PR。
 
@@ -100,9 +100,22 @@ mkdir -p ~/.claude/skills && cp -R design-pack/skills/* ~/.claude/skills/
 | `domain-evidence-discipline` | 非程式交付物的證據紀律(行銷/研究/資料/營運):各領域的最低證據集、權威順序、「以觀察驗證」的定義、給審查者獵捕的 fraud table;red-line 專業判斷一律拒絕並轉介合格人類 | fable-method schema + 自有實例 |
 | `skill-vetting` | 在第三方 skill / plugin / hook / 指令檔執行前先掃 trojan:把 operational-rigor §2 的 install gate 變成可執行流程,附 trojan-shape checklist 與 fail-closed 判決(乾淨掃描絕不等於「safe」);另附一個 opt-in 的 advisory session-start 絆線(`hooks/skill-vetting-advisory.py`) | operational-rigor §2 + 社群安全稽查 |
 | `cross-model-review` | load-bearing merge 前找**不同模型家族**做對抗審查:session 時偵測審查者(不寫死陣容)、自足 packet、findings 視為主張、有界的審查-修正迴圈(每位審查者都給出確認過的 verdict——各自為 PROCEED,或其每個剩餘 FIX 項皆為記錄在案且有正當理由的 gap,才 merge;timeout/空回應不算 verdict)、exit code≠通過。只放 doctrine——具體 CLI 不進 pack | owner 私有 CLI 筆記(只放 doctrine) |
+| `planning` | Planning Pack:動工前產出可執行的工作契約——framed intent、可測需求與驗收標準、界定的 non-goals、記錄的決策、相依排序的任務拆解與逐項驗證、整體計畫驗證、交棒給執行;深度 D0–D3(D0 小任務留給 `operational-rigor`) | Planning Pack Architecture v1 |
+| `plan-reconciliation` | Planning Pack:執行開始後把核准計畫與現實對齊——計畫不再吻合時修訂(重複失敗、前提被證偽、無法滿足的需求),或工作完成時收尾,逐項對照 baseline 附證據;保留 revalidation / re-approval / Ops 授權閘門(下方有已記錄的弱層限制) | Planning Pack Architecture v1 |
 
 `ground-truth-gates/template/` 已實跑驗證(Node v23,2026-07-06):
 無 snapshot 時正確 FAIL、凍結後全綠、改變 transform 行為時精準列出漂移的紀錄並 exit 1。
+
+### Planning Pack
+
+以上兩個 skill——`planning` 與 `plan-reconciliation`——組成 **Planning Pack**(Planning ↔ Ops):它們負責*要蓋什麼、計畫如何變*,而執行紀律 skill(`operational-rigor`、`delegation-and-review`、`ground-truth-gates`……)負責*把它做出來*。Planning 產物從不等於執行授權,Planning 深度也不折抵執行的 rigor。
+
+- **`planning`** 在動工前觸發——當你要一份計畫、spec、需求拆解、工作拆分或設計決策時。它停在核准的計畫並交棒給執行。小而清楚、低風險的任務是 **深度 D0**:不產出計畫產物,留給 `operational-rigor` 的 inline task contract。
+- **`plan-reconciliation`** 從執行中觸發——核准計畫與現實分歧(revise)或工作完成(close)時。不是用來事前寫計畫(那是 `planning`),也不是執行期的喊停本身(那是 `operational-rigor`)。
+- 與 domain adapter 區別:`product-roadmap` 是產品*方向*(接下來蓋什麼、Now/Next/Later),不寫 build contract;`personal-goal-planning` 是*個人*的人生/職涯目標;`planning` 是軟體的 build contract。
+
+**已記錄的弱層限制(QUALIFIED-ADOPTABLE)。** Planning Pack 以 **QUALIFIED-ADOPTABLE:14 項行為主張中 13 項乾淨、1 項已記錄的弱層限制、0 項有害行為、D0 保留** 發佈。那唯一未結的主張是一項已記錄的弱層限制,在此載明而非略過。限制內容:`plan-reconciliation` 能可靠保留 revalidation / re-approval / Ops 授權閘門,但在較弱的執行層,它不能可靠地*自行*執行對「缺漏」敏感的整體計畫 orphan 偵測(傾向描述或請求 revalidation,而非自己做)。失效模式是 fail-safe——偵測不足時預設「不可 resume / 升級」,絕不會誤判為「safe to resume」。
+
 
 ## `design-pack`:設計 skill
 
@@ -173,7 +186,7 @@ skill 本地的參考檔**,再由三個 `SKILL.md` 進入點**選擇性**取用�
 | Tier | Skills |
 |------|--------|
 | Core(7) | `operational-rigor`、`delegation-and-review`、`ground-truth-gates`、`cross-model-review`、`skill-authoring`、`skill-vetting`、`security-architect` |
-| Domain adapter(3) | `product-roadmap`、`personal-goal-planning`、`domain-evidence-discipline` |
+| Domain adapter(5) | `product-roadmap`、`personal-goal-planning`、`domain-evidence-discipline`、`planning`、`plan-reconciliation` |
 <!-- END GENERATED SKILL TIERS -->
 
 Core skill 是共用的 agent 執行 doctrine;domain adapter 把該紀律套到更窄的領域。

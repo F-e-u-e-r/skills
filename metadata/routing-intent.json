@@ -31,15 +31,23 @@
     },
     "product-roadmap": {
       "intent": "Selected for product-owner planning of a repo or product - 'what should we build next?', roadmap/milestone/MVP/priority/PRD questions, or assessing a repo for product direction.",
-      "neighbors": ["personal-goal-planning", "domain-evidence-discipline"]
+      "neighbors": ["personal-goal-planning", "domain-evidence-discipline", "planning"]
     },
     "personal-goal-planning": {
       "intent": "Selected for coach-style planning of a PERSON's goals - career, study, fitness, or side-project plans, weekly time budgeting, or a progress cadence - not product or repo planning.",
-      "neighbors": ["product-roadmap"]
+      "neighbors": ["product-roadmap", "planning"]
     },
     "domain-evidence-discipline": {
       "intent": "Selected when producing or judging a NON-code deliverable whose correctness rests on sources and claims - marketing copy, a research report, a data analysis, or a business/ops document.",
       "neighbors": ["operational-rigor", "product-roadmap"]
+    },
+    "planning": {
+      "intent": "Selected for producing an executable plan BEFORE building or changing a software/project system - when the user asks for a plan, spec, requirements breakdown, work decomposition, or design decision, or when operational-rigor classified an ask as plan-first - not product direction, personal goals, or a plan that already exists and is diverging.",
+      "neighbors": ["product-roadmap", "personal-goal-planning", "plan-reconciliation"]
+    },
+    "plan-reconciliation": {
+      "intent": "Selected once execution has started and the approved plan no longer matches reality (revise) or all planned work is done (close) - reconciling the plan before completion is claimed, not writing a plan before execution.",
+      "neighbors": ["planning"]
     }
   }
 }

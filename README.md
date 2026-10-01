@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
-  <img alt="Version v0.1.16" src="https://img.shields.io/badge/version-v0.1.16-orange.svg">
+  <img alt="Version v0.2.0" src="https://img.shields.io/badge/version-v0.2.0-orange.svg">
   <img alt="Status: ACTIVE" src="https://img.shields.io/badge/status-ACTIVE-7aa2ff.svg">
   <img alt="For Claude Code" src="https://img.shields.io/badge/for-Claude%20Code-8A2BE2.svg">
   <a href="https://github.com/F-e-u-e-r/skills/issues"><img alt="PRs welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"></a>
@@ -36,7 +36,7 @@ opus-pack simply resolve when opus-pack is present; see
 [`design-pack`](#design-pack-the-design-skills)).
 
 > [!NOTE]
-> **Early alpha (`v0.1.16`).** Rules change as real sessions expose misses,
+> **Early alpha (`v0.2.0`).** Rules change as real sessions expose misses,
 > and the pack is [measured against its own doctrine](#evals-testing-the-pack-itself)
 > — honest null result included. Issues and PRs with concrete failure cases are welcome.
 
@@ -107,10 +107,37 @@ occupies context until triggered.
 | `domain-evidence-discipline` | Evidence discipline for non-code deliverables (marketing / research / data / ops): per-domain minimum evidence set, authority order, what verification-by-observation means, and the fraud table a reviewer hunts; red-line professional judgment refused and routed to a qualified human | fable-method schema + own worked instances |
 | `skill-vetting` | Vet a third-party skill / plugin / hook / instruction file for trojan patterns before it runs: turns operational-rigor §2's install gate into a runnable procedure, with a trojan-shape checklist and a fail-closed verdict (a clean scan is never "safe"); ships an opt-in advisory session-start tripwire (`hooks/skill-vetting-advisory.py`) | operational-rigor §2 + community-security audit |
 | `cross-model-review` | Adversarial review from a *different model family* before a load-bearing merge: session-time reviewer discovery (no hard-coded lineup), self-contained packet, findings-are-claims, bounded review-and-fix loop (merge only when every reviewer returned a confirmed verdict — each one PROCEED, or a FIX whose every remaining item is a recorded, justified gap; a timeout/empty body is not a verdict), exit-code≠pass. Doctrine only — concrete CLIs stay out of the pack | owner's private CLI notes (doctrine only) |
+| `planning` | Planning Pack: produce an executable work contract BEFORE building — framed intent, testable requirements with acceptance criteria, scoped non-goals, recorded decisions, a dependency-ordered task breakdown with per-item verification, whole-plan validation, hand-off to execution; depth D0–D3 (D0 small tasks stay with `operational-rigor`) | Planning Pack Architecture v1 |
+| `plan-reconciliation` | Planning Pack: reconcile an approved plan with reality once execution has started — revise when it no longer fits (repeated failure, falsified precondition, unmeetable requirement) or close when work is done, reconciling every intended item against the baseline with evidence; preserves the revalidation / re-approval / Ops-authorization gate (documented weak-tier limitation below) | Planning Pack Architecture v1 |
 
 `ground-truth-gates/template/` was verified by execution (Node v23, 2026-07-06):
 correctly FAILs without a snapshot, goes all-green after freezing, and lists
 drifted records precisely (exit 1) when transform behavior changes.
+
+### Planning Pack
+
+Two of the skills above — `planning` and `plan-reconciliation` — form the **Planning Pack** (Planning ↔ Ops):
+they own *what to build and how the plan changes*, while the execution-discipline skills (`operational-rigor`,
+`delegation-and-review`, `ground-truth-gates`, …) own *carrying it out*. A Planning artifact is never execution
+authorization, and Planning depth never discounts execution rigor.
+
+- **`planning`** fires BEFORE building — when you ask for a plan, spec, requirements breakdown, work decomposition,
+  or design decision. It stops at an approved plan and hands off to execution. A small, clear, low-risk task is
+  **depth D0**: no plan artifact — it stays with `operational-rigor`'s inline task contract.
+- **`plan-reconciliation`** fires FROM execution — once the approved plan diverges from reality (revise) or all
+  work is done (close). Not for writing a plan up front (that is `planning`), and not for the execution-time stop
+  itself (that is `operational-rigor`).
+- Distinct from the domain adapters: `product-roadmap` is product *direction* (what to build next,
+  Now/Next/Later) with no build contract; `personal-goal-planning` is a *person's* life/career goals; `planning`
+  is the software build contract.
+
+**Known weak-tier limitation (QUALIFIED-ADOPTABLE).** The Planning Pack ships as **QUALIFIED-ADOPTABLE: 13/14
+clean behavioural claims, 1 documented weak-tier limitation, 0 harmful behaviours, D0 preserved**. The one open claim is a documented weak-tier limitation, stated here rather than omitted. The limitation: `plan-reconciliation` reliably preserves the revalidation /
+re-approval / Ops-authorization gate, but on weaker executor tiers it does not reliably perform absence-sensitive
+whole-plan orphan detection itself (it tends to describe or request the revalidation rather than carry it out).
+The failure mode is fail-safe — under-detection defaults to "cannot resume / escalate", never a false "safe to
+resume".
+
 
 ## `design-pack`: the design skills
 
@@ -196,7 +223,7 @@ grammar. This section is a summary projection; **on any inconsistency,
 | Tier | Skills |
 |------|--------|
 | Core (7) | `operational-rigor`, `delegation-and-review`, `ground-truth-gates`, `cross-model-review`, `skill-authoring`, `skill-vetting`, `security-architect` |
-| Domain adapter (3) | `product-roadmap`, `personal-goal-planning`, `domain-evidence-discipline` |
+| Domain adapter (5) | `product-roadmap`, `personal-goal-planning`, `domain-evidence-discipline`, `planning`, `plan-reconciliation` |
 <!-- END GENERATED SKILL TIERS -->
 
 Core skills are the shared agent-execution doctrine; a domain adapter applies
