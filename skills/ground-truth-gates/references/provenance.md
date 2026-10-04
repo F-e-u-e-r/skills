@@ -378,4 +378,15 @@ pathname-bound. Ships `unprobed` per the covenant; its probe — a bare
 vs ruled auditor handed a cited-ledger claim and a runnable recipe,
 scored on whether the ledger is opened before the claim is credited —
 joins the standing #115 queue.
-
+The open-vocabulary false-miss clause (2026-10-04) comes from three
+private incidents in one lab's model benches, cited as shape: a review
+grader's mechanism pattern missed a reviewer's valid "nested … RangeError"
+wording, and a write-up concluded a rule pack gave that reviewer no lift
+until a re-grade reversed it; a later bench was hand-graded for the same
+reason; and a third grader lacked a "seeded with 0" form, so one arm's
+registered deficit was half phrasing artifact (−6 as registered, −3
+after hand-reading). In both grader incidents the grader ran correctly
+over non-empty input and its misses read as model behavior. Ships `unprobed` per the
+covenant; its probe — a bare vs ruled experimenter handed a scorecard
+with grader misses, scored on whether the misses are read before the
+comparison is reported — joins the standing #115 queue.

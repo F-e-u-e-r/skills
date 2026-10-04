@@ -441,11 +441,19 @@ Every packet names:
   fills with a plausible guess.
 - **Edge behavior named** — every edge the task can meet (empty / zero /
   negative / NaN / undefined / oversized / malformed) with its required
-  behavior. Unstated edges are the shared blind spot of every model tier: the
-  worker picks SOMETHING plausible and you find out at the gate — in one
-  bench, 9 of 10 models infinite-looped on an unstated `size=0`, and even the
-  strongest tier hung on a negative capacity. Post-hoc review of edges is too
-  late; spec them or lose them.
+  behavior — and for numeric work, the magnitudes inputs, intermediates and
+  results can reach and the precision owed there (exact past the number type's
+  exact-integer limit — 2^53 for doubles — in a declared exact type, a stated
+  tolerance, or a declared error; `unprobed` — see Provenance). Unstated edges
+  are the shared blind spot of every model tier: the worker picks SOMETHING
+  plausible and you find out at the gate — in one bench, 9 of 10 models
+  infinite-looped on an unstated `size=0`, and even the strongest tier hung on
+  a negative capacity. Stating them helped where it was tested: in a private
+  bench (toy subjects, sizes written knowing what the grader tested) one
+  implementer passed 20 of 50 scale checks with 19 silently wrong numbers when
+  sizes went unstated, and 50 of 50 with none when the same spec named the
+  sizes and the return-type contract. Post-hoc review of edges is too late;
+  spec them or lose them.
   ❌ "the function is obvious, it'll handle empty input sensibly."
 - **Cost asymmetry** — for reviewers/verifiers, name which failure direction is
   expensive (e.g. a missed unverified claim vs. a false alarm) so scrutiny is
