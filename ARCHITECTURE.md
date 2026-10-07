@@ -7,8 +7,8 @@ tables, a short policy summary, and pointers back here. **Where a README (in any
 language) and this file disagree, this file wins.** Translations and summaries
 are conveniences, not independent contracts.
 
-The repository publishes two plugins today: `ops-pack` (twelve agent-discipline
-skills) and `design-pack` (three design-craft skills). They version
+The repository publishes three plugins today: `ops-pack` (ten agent-discipline
+skills), `planning-pack` (two planning skills), and `design-pack` (three design-craft skills). They version
 independently.
 
 ## 1. Skill tiers
@@ -98,6 +98,16 @@ A permitted pre-1.0 migration must include:
 6. verification that existing users do not silently lose the published
    capability during the transition.
 
+**Completed instance (ops-pack 0.3.0).** `planning` and `plan-reconciliation`
+moved from `ops-pack` to a new `planning-pack` plugin on this pre-1.0 path. The
+move is documented in both READMEs as a **namespace migration, not transparent
+compatibility** — there is no cross-plugin skill-rename bridge, so a v0.2.0 user
+who updates without installing `planning-pack` finds the two skills absent; that
+absence is announced, never silent. The READMEs name the two affected skills and
+their new `planning-pack:` namespace and instruct existing users to install
+**both** `ops-pack@opus-pack` and `planning-pack@opus-pack` to restore the full
+set. This satisfies clauses 1-6 for that move.
+
 This pre-1.0 path is the **only** breaking-migration mechanism this contract
 defines. After 1.0 it is closed and no replacement opens: this contract does
 **not** pre-authorize any post-1.0 removal, rename, relocation, or trigger-scope
@@ -146,6 +156,24 @@ Declared after the 2026-08 isolated-install audit.
   design-pack **verbatim** and bind on their own; each names its `ops-pack`
   copy as the authority on disagreement (a sync contract), so no rule silently
   loses its home when `ops-pack` is absent.
+
+### 4.2 planning-pack — `recommended-with ops-pack`
+
+Declared after the 2026-10 isolated-install audit (the `ops-pack` -> `planning-pack` split).
+
+- **Functional without `ops-pack`:** `planning` produces a usable executable
+  work contract (frame -> specify -> decide -> decompose -> validate -> hand
+  off) on its own; `plan-reconciliation` revises or closes a plan baseline with
+  evidence on its own. The primary capability — produce or reconcile a plan —
+  completes standalone.
+- **Reduced without `ops-pack`:** the named Ops execution safeguards
+  (`operational-rigor`'s authorization gate, evidence quality, and non-reversal;
+  `delegation-and-review`'s review) are not loaded — the plan is produced but its
+  downstream execution is not enforced by the pack.
+- **Not standalone:** the skills make heavy, explicit material use of `ops-pack`
+  (INV-1 "a Planning artifact is not execution authorization" hands authorization
+  to Ops; evidence quality is Ops's call), so the class is `recommended-with`,
+  not `standalone`.
 
 ## 5. Adjacent and specialized skills
 

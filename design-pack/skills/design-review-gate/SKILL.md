@@ -202,11 +202,11 @@ then state the assumption you will work under."
   code-review tooling; this file judges the rendered surface only.
 - Driving the browser itself -> the harness's browser tooling docs; the
   snippets in §1 assume you already have a page open.
-- This file names opus-pack siblings (operational-rigor,
+- This file names ops-pack siblings (operational-rigor,
   domain-evidence-discipline, delegation-and-review) at several seams. The
   two load-bearing clauses travel here as verbatim quotes and bind on
   their own; the remaining pointers assume those skills are installed -
-  without opus-pack they degrade to context, and the packs are designed
+  without ops-pack they degrade to context, and the packs are designed
   to run together.
 
 ## Provenance

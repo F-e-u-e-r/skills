@@ -4,6 +4,10 @@
     "design-pack": {
       "dependency_class": "recommended_with",
       "companion_plugin": "ops-pack"
+    },
+    "planning-pack": {
+      "dependency_class": "recommended_with",
+      "companion_plugin": "ops-pack"
     }
   }
 }

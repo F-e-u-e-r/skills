@@ -143,9 +143,9 @@ a reason**; skill text carries no default.
 
 ## Provenance
 
-Part of the ops-pack (Planning ↔ Ops). Planning Pack Architecture v1: §3 `planning` (37 doctrines) + §4 depth +
+Part of the planning-pack (Planning ↔ Ops). Planning Pack Architecture v1: §3 `planning` (37 doctrines) + §4 depth +
 §5 artifact/hand-off + §7 parameters + §2 invariants. Citations to the Ops siblings (operational-rigor §1–§6,
 delegation-and-review §2/§3, ground-truth-gates, domain-evidence-discipline) resolve against those skills as
 co-shipped in this pack; re-resolve on install (skill-authoring §6). Development history, the fresh-context
 review record, and the adoption-evidence summary are in `references/provenance.md`.
-Re-verify sibling section anchors: `grep -n '^## ' skills/{operational-rigor,delegation-and-review}/SKILL.md`.
+Re-verify sibling section anchors: `grep -n '^## ' ops-pack/skills/{operational-rigor,delegation-and-review}/SKILL.md`.

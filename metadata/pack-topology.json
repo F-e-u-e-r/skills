@@ -1,5 +1,5 @@
 {
   "schema_version": 1,
   "dependency_referent": "ops-pack",
-  "metadata_governed_plugins": ["ops-pack"]
+  "metadata_governed_plugins": ["ops-pack", "planning-pack"]
 }

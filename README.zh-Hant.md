@@ -17,19 +17,20 @@
 
 ---
 
-**Ops Pack 是一個 Claude Code plugin marketplace** —— 一個 repo、兩個可各自
-安裝的 plugin、共 13 個 skill,為 Fable 5 退場後的日常模型
+**Ops Pack 是一個 Claude Code plugin marketplace** —— 一個 repo、三個可各自
+安裝的 plugin、共 15 個 skill,為 Fable 5 退場後的日常模型
 (Opus 4.8 / Sonnet 5 / Haiku)而做:
 
 | Plugin | 領域 | 安裝內容 |
 |---|---|---|
-| **`ops-pack`** | Agent 紀律——工作如何完成:rigor、委派、驗證、證據 | 12 個 skill |
+| **`ops-pack`** | Agent 紀律——工作如何完成:rigor、委派、驗證、證據 | 10 個 skill |
+| **`planning-pack`** | 規劃——可執行的工作契約與其對齊(Planning ↔ Ops) | 2 個 skill |
 | **`design-pack`** | 設計工藝——同一風格的視覺/UI 判斷:版面、動效、審查 | 3 個 skill |
 
 另有**四個選配 hook**——repo 層級、手動安裝;兩個 plugin 都不註冊它們
 (見[強制層:hooks](#強制層hooks-設定方法))。全部押注一件事:強模型本就具備的
 判斷力,靠**更多散文**得到的提升,遠不如靠**在工作出錯時大聲失敗的閘門**。
-兩個 plugin 可擇一或兩者都裝——`design-pack` 與 `ops-pack` 共用這個
+三個 plugin 可擇一或任意組合安裝——`design-pack` 與 `planning-pack` 都與 `ops-pack` 共用這個
 marketplace,而非硬相依(它的審查 skill 對 ops-pack 的 cross-reference 只是在
 ops-pack 在場時解析得到;見 [`design-pack`](#design-pack設計-skill))。
 
@@ -48,7 +49,7 @@ ops-pack 在場時解析得到;見 [`design-pack`](#design-pack設計-skill))。
 
 ## 目錄
 
-- [安裝](#安裝) · [`ops-pack`:紀律 skill](#ops-pack紀律-skill) · [`design-pack`:設計 skill](#design-pack設計-skill)
+- [安裝](#安裝) · [`ops-pack`:紀律 skill](#ops-pack紀律-skill) · [`planning-pack`:規劃 skill](#planning-pack規劃-skill) · [`design-pack`:設計 skill](#design-pack設計-skill)
 - [最高槓桿的十條原則](#萃取時保留的核心原則最高槓桿的十條)
 - [刻意捨棄的部分(與為什麼)](#刻意捨棄的部分與為什麼)
 - [Skill 會自動呼叫 agent 嗎?](#skill-會自動呼叫-agent-嗎) · [強制層:hooks](#強制層hooks-設定方法)
@@ -63,11 +64,12 @@ ops-pack 在場時解析得到;見 [`design-pack`](#design-pack設計-skill))。
 ```
 /plugin marketplace add F-e-u-e-r/skills
 /plugin install ops-pack@opus-pack
+/plugin install planning-pack@opus-pack
 /plugin install design-pack@opus-pack
 ```
 
-`ops-pack@opus-pack` 裝紀律 plugin(12 個 skill);`design-pack@opus-pack`
-裝設計 plugin(3 個 skill)。擇一或兩者都裝。Skills 會以 namespace 形式載入
+`ops-pack@opus-pack` 裝紀律 plugin(10 個 skill);`planning-pack@opus-pack` 裝規劃 plugin(2 個 skill);`design-pack@opus-pack`
+裝設計 plugin(3 個 skill)。擇一或全部三者都裝。Skills 會以 namespace 形式載入
 (`ops-pack:operational-rigor`、`design-pack:ui-design-craft`……),用
 `/plugin marketplace update` 更新。兩個 plugin 都不註冊 hooks——它們改變
 harness 行為,必須由使用者手動逐一決定(見[強制層:hooks 設定方法](#強制層hooks-設定方法))。
@@ -102,21 +104,26 @@ mkdir -p ~/.claude/skills && cp -R design-pack/skills/* ~/.claude/skills/
 | `domain-evidence-discipline` | 非程式交付物的證據紀律(行銷/研究/資料/營運):各領域的最低證據集、權威順序、「以觀察驗證」的定義、給審查者獵捕的 fraud table;red-line 專業判斷一律拒絕並轉介合格人類 | fable-method schema + 自有實例 |
 | `skill-vetting` | 在第三方 skill / plugin / hook / 指令檔執行前先掃 trojan:把 operational-rigor §2 的 install gate 變成可執行流程,附 trojan-shape checklist 與 fail-closed 判決(乾淨掃描絕不等於「safe」);另附一個 opt-in 的 advisory session-start 絆線(`hooks/skill-vetting-advisory.py`) | operational-rigor §2 + 社群安全稽查 |
 | `cross-model-review` | load-bearing merge 前找**不同模型家族**做對抗審查:session 時偵測審查者(不寫死陣容)、自足 packet、findings 視為主張、有界的審查-修正迴圈(每位審查者都給出確認過的 verdict——各自為 PROCEED,或其每個剩餘 FIX 項皆為記錄在案且有正當理由的 gap,才 merge;timeout/空回應不算 verdict)、exit code≠通過。只放 doctrine——具體 CLI 不進 pack | owner 私有 CLI 筆記(只放 doctrine) |
-| `planning` | Planning Pack:動工前產出可執行的工作契約——framed intent、可測需求與驗收標準、界定的 non-goals、記錄的決策、相依排序的任務拆解與逐項驗證、整體計畫驗證、交棒給執行;深度 D0–D3(D0 小任務留給 `operational-rigor`) | Planning Pack Architecture v1 |
-| `plan-reconciliation` | Planning Pack:執行開始後把核准計畫與現實對齊——計畫不再吻合時修訂(重複失敗、前提被證偽、無法滿足的需求),或工作完成時收尾,逐項對照 baseline 附證據;保留 revalidation / re-approval / Ops 授權閘門(下方有已記錄的弱層限制) | Planning Pack Architecture v1 |
 
 `ground-truth-gates/template/` 已實跑驗證(Node v23,2026-07-06):
 無 snapshot 時正確 FAIL、凍結後全綠、改變 transform 行為時精準列出漂移的紀錄並 exit 1。
 
-### Planning Pack
+## `planning-pack`:規劃 skill
 
-以上兩個 skill——`planning` 與 `plan-reconciliation`——組成 **Planning Pack**(Planning ↔ Ops):它們負責*要蓋什麼、計畫如何變*,而執行紀律 skill(`operational-rigor`、`delegation-and-review`、`ground-truth-gates`……)負責*把它做出來*。Planning 產物從不等於執行授權,Planning 深度也不折抵執行的 rigor。
+| Skill | 領域 | 主要來源 |
+|---|---|---|
+| `planning` | 動工前產出可執行的工作契約——framed intent、可測需求與驗收標準、界定的 non-goals、記錄的決策、相依排序的任務拆解與逐項驗證、整體計畫驗證、交棒給執行;深度 D0–D3(D0 小任務留給 `operational-rigor`) | Planning Pack Architecture v1 |
+| `plan-reconciliation` | 執行開始後把核准計畫與現實對齊——計畫不再吻合時修訂(重複失敗、前提被證偽、無法滿足的需求),或工作完成時收尾,逐項對照 baseline 附證據;保留 revalidation / re-approval / Ops 授權閘門(下方有已記錄的弱層限制) | Planning Pack Architecture v1 |
+
+`planning` 與 `plan-reconciliation` 組成 **Planning Pack**(Planning ↔ Ops):它們負責*要蓋什麼、計畫如何變*,而 `ops-pack` 的執行紀律 skill(`operational-rigor`、`delegation-and-review`、`ground-truth-gates`……)負責*把它做出來*。Planning 產物從不等於執行授權,Planning 深度也不折抵執行的 rigor。
 
 - **`planning`** 在動工前觸發——當你要一份計畫、spec、需求拆解、工作拆分或設計決策時。它停在核准的計畫並交棒給執行。小而清楚、低風險的任務是 **深度 D0**:不產出計畫產物,留給 `operational-rigor` 的 inline task contract。
 - **`plan-reconciliation`** 從執行中觸發——核准計畫與現實分歧(revise)或工作完成(close)時。不是用來事前寫計畫(那是 `planning`),也不是執行期的喊停本身(那是 `operational-rigor`)。
 - 與 domain adapter 區別:`product-roadmap` 是產品*方向*(接下來蓋什麼、Now/Next/Later),不寫 build contract;`personal-goal-planning` 是*個人*的人生/職涯目標;`planning` 是軟體的 build contract。
 
 **已記錄的弱層限制(QUALIFIED-ADOPTABLE)。** Planning Pack 以 **QUALIFIED-ADOPTABLE:14 項行為主張中 13 項乾淨、1 項已記錄的弱層限制、0 項有害行為、D0 保留** 發佈。那唯一未結的主張是一項已記錄的弱層限制,在此載明而非略過。限制內容:`plan-reconciliation` 能可靠保留 revalidation / re-approval / Ops 授權閘門,但在較弱的執行層,它不能可靠地*自行*執行對「缺漏」敏感的整體計畫 orphan 偵測(傾向描述或請求 revalidation,而非自己做)。失效模式是 fail-safe——偵測不足時預設「不可 resume / 升級」,絕不會誤判為「safe to resume」。
+
+> **遷移——Planning 已獨立成自己的 plugin(ops-pack 0.3.0)。** `planning` 與 `plan-reconciliation` 在 v0.2.0 前內含於 `ops-pack` plugin;自 `ops-pack` 0.3.0 起,它們以獨立的 **`planning-pack`** plugin(版本 0.1.0)發佈。這是**有記錄的 namespace 遷移,不是透明相容**:沒有跨 plugin 的 skill 改名橋接,所以原本啟用 `ops-pack@opus-pack`、更新時**未**安裝 `planning-pack` 的使用者,會發現那兩個 skill **直接消失**。該消失是**預期且在此載明的——不是 silent loss**。要恢復完整集合,請**同時**安裝 `ops-pack@opus-pack` **與** `planning-pack@opus-pack`;安裝 `planning-pack` 後,`planning` 與 `plan-reconciliation` 會在 `planning-pack:` namespace 下**恰好一次**回歸。四包導向的完整設定需要兩者都裝。見 `ARCHITECTURE.md` §3。
 
 
 ## `design-pack`:設計 skill
@@ -198,7 +205,7 @@ skill tier 與 plugin dependency class 是兩條獨立的軸。
 **Plugin dependency class。** `design-pack` 是 **`recommended-with ops-pack`**:
 其 skill 各自能獨立完成主要 workflow(`motion-craft` 完全無跨包依賴;兩條
 load-bearing 的跨包條款以逐字方式內載、能獨立成立),而 `ops-pack` 補上其指標
-所指的額外 rigor。見 `ARCHITECTURE.md` §4。
+所指的額外 rigor。`planning-pack` 是 **`recommended-with ops-pack`**:它能獨立產出可用的 plan,但會指名它交棒給 Ops 的執行防護(授權、證據、不可回退)。見 `ARCHITECTURE.md` §4。
 <!-- END GENERATED PLUGIN DEPENDENCIES -->
 
 **穩定性一句話:** published skill 是穩定介面、預設**加法演進**(additive by
