@@ -1,6 +1,6 @@
 # Third-Party Notices
 
-Opus Pack is released under the MIT License (see `LICENSE`). It incorporates,
+Ops Pack is released under the MIT License (see `LICENSE`). It incorporates,
 adapts, or draws ideas from the third-party works listed below. This file
 preserves the copyright and permission notices those upstream licenses require
 to travel with the code. Narrative provenance — including idea-level sources
@@ -119,7 +119,7 @@ Copyright (c) 2026 Refero
   `delegation-and-review` skill. Its 24-skill granularity was evaluated and
   deliberately **not** adopted.
 - **Notice:** No source code or other copyrightable expression from this
-  project is included in Opus Pack; only non-copyrightable ideas were
+  project is included in Ops Pack; only non-copyrightable ideas were
   incorporated. Attribution is provided here in keeping with the Apache-2.0
   attribution requirements (§4) and good practice. Should any portion ever be
   found to reproduce this project's expression, that portion remains licensed
@@ -192,7 +192,7 @@ SOFTWARE.
 
 ## 4. Idea-level and private-note sources (no license text required)
 
-The following informed Opus Pack at the level of ideas and impose no
+The following informed Ops Pack at the level of ideas and impose no
 notice-retention obligation. They are credited in full in `README.md`;
 copyright protects expression, not ideas or methods, and no substantial
 verbatim expression from these sources is reproduced:

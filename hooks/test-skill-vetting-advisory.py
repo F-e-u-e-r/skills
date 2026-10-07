@@ -1291,7 +1291,7 @@ class HookE2E(unittest.TestCase):
     # -- repo coordination (executable doc-binding) ------------------------
 
     def test_repo_references_are_real(self):
-        with open(os.path.join(REPO, "skills", "skill-vetting", "SKILL.md")) as fh:
+        with open(os.path.join(REPO, "ops-pack", "skills", "skill-vetting", "SKILL.md")) as fh:
             skill = fh.read()
         self.assertIn("skill_snapshot.py", skill,
                       "R2-14: the verdict binding must name the executable tool")

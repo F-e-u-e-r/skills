@@ -1,4 +1,4 @@
-# Opus Pack — research roadmap
+# Ops Pack — research roadmap
 
 > All items below are **PARKED** until explicitly promoted by the owner. "Now"
 > means the highest-priority item to consider authorizing next; it is **not**

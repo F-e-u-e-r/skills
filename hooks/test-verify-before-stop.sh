@@ -11,7 +11,7 @@ command -v python3 >/dev/null 2>&1 || {
   exit 0
 }
 
-tmp=$(mktemp -d "${TMPDIR:-/tmp}/opus-pack-vbs-test.XXXXXX")
+tmp=$(mktemp -d "${TMPDIR:-/tmp}/ops-pack-vbs-test.XXXXXX")
 trap 'rm -rf "$tmp"' EXIT
 
 # Build a transcript JSONL: a real user prompt, then tool_use blocks.

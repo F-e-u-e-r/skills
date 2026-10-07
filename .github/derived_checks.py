@@ -9,7 +9,7 @@ calls them on temporary fixture trees to prove each gate can both pass and fail
 `evidence/reviews/2026-08-03-pr3-derived-checks-design.md`).
 
 Scope + non-goals are in that design note. In particular this module does NOT
-touch the `#115` `unprobed`-marker covenant scan (that stays `skills/`-only and
+touch the `#115` `unprobed`-marker covenant scan (that stays scoped to the published skill trees and
 independent), does not change skill descriptions or policy semantics, and does
 not auto-fix. Every failure names the canon, the file, and the specific
 difference.
@@ -90,12 +90,39 @@ def marketplace_plugins(root):
     return out
 
 
-def _base_plugin_name(plugins):
-    """The base/root plugin = the entry whose source is the repo root ('.')."""
-    for name, src in plugins:
-        if src == ".":
-            return name
-    return None
+def _pack_topology(root):
+    """metadata/pack-topology.json as a usable object, or None. Returns None when
+    the file is missing, malformed, or carries an unsupported schema_version -
+    so every consumer below fails CLOSED (a loud, direct failure) instead of
+    silently reading an empty governed set. check_pack_topology reports the
+    specific defect; these helpers only answer 'usable or not'."""
+    obj, err = _load_json(root, "metadata/pack-topology.json")
+    if err or not isinstance(obj, dict) or not _schema_ok(obj):
+        return None
+    return obj
+
+
+def _dependency_referent(root):
+    """The dependency referent plugin: extensions name it as companion and it must
+    not itself carry a dependency class. Declared in metadata/pack-topology.json
+    (was inferred as the source=='.' plugin). None when the topology is unusable."""
+    obj = _pack_topology(root)
+    if obj is None:
+        return None
+    ref = obj.get("dependency_referent")
+    return ref if isinstance(ref, str) and ref else None
+
+
+def _governed_plugins(root):
+    """Plugins whose skills the repo-global metadata/ governs (tier canon + routing
+    contract). Declared in metadata/pack-topology.json; [] when it is unusable."""
+    obj = _pack_topology(root)
+    if obj is None:
+        return []
+    gov = obj.get("metadata_governed_plugins")
+    if not isinstance(gov, list):
+        return []
+    return [pl for pl in gov if isinstance(pl, str) and pl]
 
 
 def published_skills(root):
@@ -126,12 +153,13 @@ def published_skills(root):
     return skills, orphans
 
 
-def opus_pack_skill_ids(root):
-    """Published skill IDs owned by the base plugin (opus-pack)."""
-    plugins = marketplace_plugins(root)
-    base = _base_plugin_name(plugins)
+def governed_skill_ids(root):
+    """Published skill IDs owned by any metadata-governed plugin (was the base
+    plugin under the source=='.' model; now the pack-topology governed set)."""
+    governed = set(_governed_plugins(root))
     skills, _ = published_skills(root)
-    return sorted(sid for sid, owners in skills.items() if base in owners)
+    return sorted(sid for sid, owners in skills.items()
+                  if any(o in governed for o in owners))
 
 
 # --- gate 1: tier canon integrity ---
@@ -154,13 +182,17 @@ def check_tier_canon(root):
             f.append(f"tier canon (metadata/skill-tiers.json): skill {sid!r} has invalid tier {tier!r} "
                      f"(allowed: {', '.join(VALID_TIERS)})")
     canon_ids = set(tiers)
-    published = set(opus_pack_skill_ids(root))
+    if not _governed_plugins(root):
+        return f + ["tier canon (metadata/skill-tiers.json): no metadata-governed plugins resolved "
+                    "(metadata/pack-topology.json missing, malformed, unsupported, or empty); "
+                    "cannot validate the tier canon - see the pack topology check"]
+    published = set(governed_skill_ids(root))
     for missing in sorted(published - canon_ids):
-        f.append(f"tier canon (metadata/skill-tiers.json): published opus-pack skill {missing!r} is not "
+        f.append(f"tier canon (metadata/skill-tiers.json): published metadata-governed skill {missing!r} is not "
                  f"classed in metadata/skill-tiers.json")
     for extra in sorted(canon_ids - published):
         f.append(f"tier canon (metadata/skill-tiers.json): lists {extra!r}, which "
-                 f"is not a published opus-pack skill")
+                 f"is not a published metadata-governed skill")
     return f
 
 
@@ -182,7 +214,12 @@ def check_plugin_dependencies(root):
         return f + ["dependency canon (metadata/plugin-dependencies.json): 'plugins' is missing or not an object"]
     plugins = marketplace_plugins(root)
     names = {n for n, _ in plugins}
-    base = _base_plugin_name(plugins)
+    base = _dependency_referent(root)
+    if base is None or not _governed_plugins(root):
+        return f + ["dependency canon (metadata/plugin-dependencies.json): pack-topology unusable - "
+                    "no dependency referent resolved, or metadata_governed_plugins is empty or "
+                    "malformed (metadata/pack-topology.json missing, malformed, unsupported, or "
+                    "empty); cannot validate the dependency contract - see the pack topology check"]
     extensions = {n for n in names if n != base}
     for pname, spec in entries.items():
         if pname not in names:
@@ -216,6 +253,58 @@ def check_plugin_dependencies(root):
     for missing in sorted(extensions - declared):
         f.append(f"dependency canon (metadata/plugin-dependencies.json): extension plugin {missing!r} has no entry in "
                  f"metadata/plugin-dependencies.json")
+    return f
+
+
+# --- gate 2b: pack topology declaration (dependency referent + governed set) ---
+
+def check_pack_topology(root):
+    """metadata/pack-topology.json declares the dependency referent and the set of
+    plugins whose skills the repo-global metadata/ governs - the explicit
+    replacement for the former source=='.' base inference. Validate its shape and
+    referential integrity against the marketplace; fail closed on any malformation
+    so the tier/routing/dependency gates never silently read an empty governed set.
+    """
+    P = "pack topology (metadata/pack-topology.json)"
+    obj, err = _load_json(root, "metadata/pack-topology.json")
+    if err:
+        return [f"{P}: {err.split(': ', 1)[-1]}"]
+    if not isinstance(obj, dict):
+        return [f"{P}: top level is not an object"]
+    f = []
+    if not _schema_ok(obj):
+        f.append(f"{P}: schema_version {obj.get('schema_version')!r} is not a supported "
+                 f"integer version ({SUPPORTED_SCHEMA})")
+    plugins = marketplace_plugins(root)
+    names = {n for n, _ in plugins}
+    sources = dict(plugins)
+    referent = obj.get("dependency_referent")
+    if not isinstance(referent, str) or not referent:
+        f.append(f"{P}: 'dependency_referent' is missing or not a non-empty string")
+        referent = None
+    elif referent not in names:
+        f.append(f"{P}: dependency_referent {referent!r} is not a marketplace plugin")
+    governed = obj.get("metadata_governed_plugins")
+    if not isinstance(governed, list) or not governed:
+        f.append(f"{P}: 'metadata_governed_plugins' is missing or not a non-empty list")
+        governed = []
+    seen = []
+    for g in governed:
+        if not isinstance(g, str) or not g:
+            f.append(f"{P}: metadata_governed_plugins contains a non-string or empty entry")
+            continue
+        if g in seen:
+            f.append(f"{P}: metadata_governed_plugins lists {g!r} more than once")
+        seen.append(g)
+        if g not in names:
+            f.append(f"{P}: governed plugin {g!r} is not a marketplace plugin")
+        else:
+            src = sources.get(g)
+            rel_root = "skills" if src == "." else f"{src}/skills"
+            if not os.path.isdir(os.path.join(root, rel_root)):
+                f.append(f"{P}: governed plugin {g!r} skills root {rel_root}/ does not exist")
+    if referent and seen and referent not in seen:
+        f.append(f"{P}: dependency_referent {referent!r} must be one of metadata_governed_plugins")
     return f
 
 
@@ -587,7 +676,7 @@ def check_reference_gate(root):
 # --- gate 6: routing-contract corpus (ARCHITECTURE.md §6) ---
 #
 # STRUCTURAL only. Verifies the routing regression corpus is well-formed and
-# covers every published opus-pack skill on an EDGE basis. It does NOT run the
+# covers every published metadata-governed skill on an EDGE basis. It does NOT run the
 # model or verify that a description actually routes as authored: per
 # ARCHITECTURE.md §8 that is the manual routing-contract review, not a mechanical
 # check. Green means the corpus is complete and self-consistent, nothing about
@@ -601,7 +690,11 @@ def check_routing_corpus(root):
     P = "routing intent (metadata/routing-intent.json)"
     C = "routing corpus (metadata/routing-corpus.jsonl)"
     f = []
-    published = set(opus_pack_skill_ids(root))
+    if not _governed_plugins(root):
+        return [f"{P}: no metadata-governed plugins resolved (metadata/pack-topology.json missing, "
+                f"malformed, unsupported, or empty); cannot validate the routing contract - see the "
+                f"pack topology check"]
+    published = set(governed_skill_ids(root))
 
     # --- intent map + symmetric neighbor graph ---
     intent, err = _load_json(root, "metadata/routing-intent.json", ordered=True)
@@ -619,9 +712,9 @@ def check_routing_corpus(root):
         skills = {}
     intent_ids = set(skills)
     for missing in sorted(published - intent_ids):
-        f.append(f"{P}: published opus-pack skill {missing!r} has no routing-intent entry")
+        f.append(f"{P}: published metadata-governed skill {missing!r} has no routing-intent entry")
     for extra in sorted(intent_ids - published):
-        f.append(f"{P}: lists {extra!r}, which is not a published opus-pack skill")
+        f.append(f"{P}: lists {extra!r}, which is not a published metadata-governed skill")
     for sid, entry in skills.items():
         if not isinstance(entry, dict):
             f.append(f"{P}: entry for {sid!r} is not an object")
@@ -638,7 +731,7 @@ def check_routing_corpus(root):
             if n == sid:
                 f.append(f"{P}: skill {sid!r} lists itself as a neighbor")
             elif n not in published:
-                f.append(f"{P}: skill {sid!r} neighbor {n!r} is not a published opus-pack skill")
+                f.append(f"{P}: skill {sid!r} neighbor {n!r} is not a published metadata-governed skill")
             else:
                 clean.add(n)
             if n in seen_n:
@@ -705,7 +798,7 @@ def check_routing_corpus(root):
             ids_seen[cid] = lineno
         anchor = obj.get("for")
         if anchor not in published:
-            f.append(f"{C}:{lineno}: 'for' {anchor!r} is not a published opus-pack skill")
+            f.append(f"{C}:{lineno}: 'for' {anchor!r} is not a published metadata-governed skill")
             anchor = None
         if cid and anchor:
             parts = cid.split(".")
@@ -733,7 +826,7 @@ def check_routing_corpus(root):
                 aoa = []
             for e in aoa:
                 if e not in published:
-                    f.append(f"{C}:{lineno}: acceptable_any_of {e!r} is not a published opus-pack skill")
+                    f.append(f"{C}:{lineno}: acceptable_any_of {e!r} is not a published metadata-governed skill")
             if anchor is not None and anchor not in aoa:
                 f.append(f"{C}:{lineno}: ambiguous case for {anchor!r} must include {anchor!r} in acceptable_any_of")
             if anchor is not None:
@@ -757,7 +850,7 @@ def check_routing_corpus(root):
                     oos[anchor] = oos.get(anchor, 0) + 1
             elif kind == "positive":
                 if not isinstance(exp, str) or exp not in published:
-                    f.append(f"{C}:{lineno}: positive 'expected' {exp!r} is not a published opus-pack skill")
+                    f.append(f"{C}:{lineno}: positive 'expected' {exp!r} is not a published metadata-governed skill")
                 elif anchor is not None and exp != anchor:
                     f.append(f"{C}:{lineno}: positive for {anchor!r} must expect {anchor!r}, not {exp!r}")
                 elif anchor is not None:

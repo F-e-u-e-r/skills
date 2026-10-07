@@ -28,12 +28,15 @@ def _skill(name, section="## 1. First\n", extra=""):
 
 
 MARKETPLACE = ('{"name":"mp","plugins":['
-               '{"name":"opus-pack","source":"./"},'
+               '{"name":"ops-pack","source":"./"},'
                '{"name":"design-pack","source":"./design-pack"}]}')
 
 TIERS_OK = '{"schema_version":1,"tiers":{"alpha":"core","beta":"domain_adapter"}}'
 DEPS_OK = ('{"schema_version":1,"plugins":{"design-pack":'
-           '{"dependency_class":"recommended_with","companion_plugin":"opus-pack"}}}')
+           '{"dependency_class":"recommended_with","companion_plugin":"ops-pack"}}}')
+
+TOPOLOGY_OK = ('{"schema_version":1,"dependency_referent":"ops-pack",'
+               '"metadata_governed_plugins":["ops-pack"]}')
 
 
 def _readme(tiers_rows, dep_line, link=True, notice_en=True, zh=False, arch=None):
@@ -52,7 +55,7 @@ def _readme(tiers_rows, dep_line, link=True, notice_en=True, zh=False, arch=None
 
 
 TIERS_ROWS_OK = "| Core | `alpha` |\n| Domain adapter | `beta` |\n"
-DEP_LINE_OK = "`design-pack` is `recommended-with opus-pack`."
+DEP_LINE_OK = "`design-pack` is `recommended-with ops-pack`."
 
 
 ROUTING_INTENT_OK = (
@@ -95,6 +98,7 @@ class Base(unittest.TestCase):
         root = tempfile.mkdtemp()
         self.addCleanup(lambda: __import__("shutil").rmtree(root, ignore_errors=True))
         _w(root, ".claude-plugin/marketplace.json", MARKETPLACE)
+        _w(root, "metadata/pack-topology.json", TOPOLOGY_OK)
         _w(root, "skills/alpha/SKILL.md", _skill("alpha", extra="See beta §1 here.\n"))
         _w(root, "skills/beta/SKILL.md", _skill("beta"))
         _w(root, "design-pack/skills/gamma/SKILL.md", _skill("gamma"))
@@ -113,7 +117,7 @@ class Base(unittest.TestCase):
 class GreenBaseline(Base):
     def test_valid_tree_passes_every_gate(self):
         root = self.valid()
-        for fn in (d.check_tier_canon, d.check_plugin_dependencies, d.check_inventory,
+        for fn in (d.check_pack_topology, d.check_tier_canon, d.check_plugin_dependencies, d.check_inventory,
                    d.check_readme_projection, d.check_reference_gate, d.check_routing_corpus):
             self.assertEqual([], self.hard(fn, root), f"{fn.__name__} should pass clean")
 
@@ -159,17 +163,17 @@ class TierCanon(Base):
 class DependencyContract(Base):
     def test_nonexistent_plugin_entry(self):
         root = self.valid()
-        _w(root, "metadata/plugin-dependencies.json", '{"schema_version":1,"plugins":{"design-pack":{"dependency_class":"recommended_with","companion_plugin":"opus-pack"},"ghost":{"dependency_class":"standalone"}}}')
+        _w(root, "metadata/plugin-dependencies.json", '{"schema_version":1,"plugins":{"design-pack":{"dependency_class":"recommended_with","companion_plugin":"ops-pack"},"ghost":{"dependency_class":"standalone"}}}')
         self.assertTrue(any("not a marketplace plugin" in r for r in d.check_plugin_dependencies(root)))
 
     def test_invalid_class(self):
         root = self.valid()
-        _w(root, "metadata/plugin-dependencies.json", '{"schema_version":1,"plugins":{"design-pack":{"dependency_class":"maybe","companion_plugin":"opus-pack"}}}')
+        _w(root, "metadata/plugin-dependencies.json", '{"schema_version":1,"plugins":{"design-pack":{"dependency_class":"maybe","companion_plugin":"ops-pack"}}}')
         self.assertTrue(any("invalid dependency_class" in r for r in d.check_plugin_dependencies(root)))
 
     def test_standalone_with_companion(self):
         root = self.valid()
-        _w(root, "metadata/plugin-dependencies.json", '{"schema_version":1,"plugins":{"design-pack":{"dependency_class":"standalone","companion_plugin":"opus-pack"}}}')
+        _w(root, "metadata/plugin-dependencies.json", '{"schema_version":1,"plugins":{"design-pack":{"dependency_class":"standalone","companion_plugin":"ops-pack"}}}')
         self.assertTrue(any("must not name a companion" in r for r in d.check_plugin_dependencies(root)))
 
     def test_missing_companion(self):
@@ -190,15 +194,15 @@ class DependencyContract(Base):
     def test_base_plugin_must_not_be_classed(self):
         root = self.valid()
         _w(root, "metadata/plugin-dependencies.json",
-           '{"schema_version":1,"plugins":{"opus-pack":{"dependency_class":"standalone"},'
-           '"design-pack":{"dependency_class":"recommended_with","companion_plugin":"opus-pack"}}}')
+           '{"schema_version":1,"plugins":{"ops-pack":{"dependency_class":"standalone"},'
+           '"design-pack":{"dependency_class":"recommended_with","companion_plugin":"ops-pack"}}}')
         self.assertTrue(any("base plugin" in r for r in d.check_plugin_dependencies(root)))
 
     def test_bool_schema_version_rejected_deps(self):
         root = self.valid()
         _w(root, "metadata/plugin-dependencies.json",
            '{"schema_version":true,"plugins":{"design-pack":'
-           '{"dependency_class":"recommended_with","companion_plugin":"opus-pack"}}}')
+           '{"dependency_class":"recommended_with","companion_plugin":"ops-pack"}}}')
         self.assertTrue(any("schema_version" in r for r in d.check_plugin_dependencies(root)))
 
     def test_nested_malformed_dependency_class_does_not_crash(self):
@@ -207,7 +211,7 @@ class DependencyContract(Base):
         root = self.valid()
         _w(root, "metadata/plugin-dependencies.json",
            '{"schema_version":1,"plugins":{"design-pack":'
-           '{"dependency_class":["x"],"companion_plugin":"opus-pack"}}}')
+           '{"dependency_class":["x"],"companion_plugin":"ops-pack"}}}')
         d.check_readme_projection(root)  # must not raise
         self.assertTrue(any("invalid dependency_class" in r
                             for r in d.check_plugin_dependencies(root)))
@@ -216,7 +220,7 @@ class DependencyContract(Base):
         root = self.valid()
         _w(root, "metadata/plugin-dependencies.json",
            '{"schema_version":1,"plugins":{"design-pack":'
-           '{"dependency_class":"recommended_with","companion_plugin":["opus-pack"]}}}')
+           '{"dependency_class":"recommended_with","companion_plugin":["ops-pack"]}}}')
         res = d.check_plugin_dependencies(root)  # must not raise
         self.assertTrue(any("must be a string" in r for r in res))
 
@@ -230,7 +234,7 @@ class Inventory(Base):
     def test_missing_manifest_root(self):
         root = self.valid()
         _w(root, ".claude-plugin/marketplace.json",
-           '{"name":"mp","plugins":[{"name":"opus-pack","source":"./"},{"name":"design-pack","source":"./design-pack"},{"name":"ghost","source":"./ghost"}]}')
+           '{"name":"mp","plugins":[{"name":"ops-pack","source":"./"},{"name":"design-pack","source":"./design-pack"},{"name":"ghost","source":"./ghost"}]}')
         self.assertTrue(any("does not exist" in r for r in d.check_inventory(root)))
 
     def test_orphan_dir_without_skillmd(self):
@@ -238,9 +242,9 @@ class Inventory(Base):
         os.makedirs(os.path.join(root, "skills/orphan"))
         self.assertTrue(any("orphan" in r for r in d.check_inventory(root)))
 
-    def test_staging_shaped_dir_not_counted(self):
+    def test_undeclared_dir_not_counted(self):
         root = self.valid()
-        _w(root, "skills-staging/whatever/SKILL.md", _skill("whatever"))
+        _w(root, "not-a-plugin-root/whatever/SKILL.md", _skill("whatever"))
         skills, _ = d.published_skills(root)
         self.assertNotIn("whatever", skills)
         self.assertEqual([], self.hard(d.check_inventory, root))
@@ -254,7 +258,7 @@ class Inventory(Base):
     def test_malformed_source_not_coerced_to_base(self):
         root = self.valid()
         _w(root, ".claude-plugin/marketplace.json",
-           '{"name":"mp","plugins":[{"name":"opus-pack","source":"./"},'
+           '{"name":"mp","plugins":[{"name":"ops-pack","source":"./"},'
            '{"name":"design-pack","source":"./design-pack"},{"name":"junk","source":[1]}]}')
         skills, _ = d.published_skills(root)
         owners = {p for os_ in skills.values() for p in os_}
@@ -286,7 +290,7 @@ class ReadmeProjection(Base):
 
     def test_wrong_dependency_class(self):
         root = self.valid()
-        _w(root, "README.md", _readme(TIERS_ROWS_OK, "`design-pack` is `requires opus-pack`."))
+        _w(root, "README.md", _readme(TIERS_ROWS_OK, "`design-pack` is `requires ops-pack`."))
         self.assertTrue(any("dependency block" in r for r in d.check_readme_projection(root)))
 
     def test_unpaired_marker(self):
@@ -329,7 +333,7 @@ class ReadmeProjection(Base):
         root = self.valid()
         _w(root, "README.md", _readme(
             TIERS_ROWS_OK,
-            "`design-pack` is `recommended-with opus-pack`. `ghost-pack` is `standalone`."))
+            "`design-pack` is `recommended-with ops-pack`. `ghost-pack` is `standalone`."))
         self.assertTrue(any("not in metadata/plugin-dependencies.json" in r
                             for r in d.check_readme_projection(root)))
 
@@ -376,8 +380,8 @@ class ReadmeProjection(Base):
         root = self.valid()
         _w(root, "README.md", _readme(
             TIERS_ROWS_OK,
-            "`design-pack` is `recommended-with opus-pack`. "
-            "`design-pack` is `requires opus-pack`."))
+            "`design-pack` is `recommended-with ops-pack`. "
+            "`design-pack` is `requires ops-pack`."))
         self.assertTrue(any("more than once in the dependency block" in r
                             for r in d.check_readme_projection(root)))
 
@@ -541,7 +545,7 @@ class RoutingCorpus(Base):
 
     def test_unknown_expected(self):
         root = self.valid(); c = _ok_cases(); c[0]["expected"] = "zeta"
-        self._cw(root, c); self.assertTrue(self._fail(root, "is not a published opus-pack skill"))
+        self._cw(root, c); self.assertTrue(self._fail(root, "is not a published metadata-governed skill"))
 
     def test_positive_wrong_expected(self):
         root = self.valid(); c = _ok_cases(); c[0]["expected"] = "beta"
@@ -611,7 +615,7 @@ class RoutingCorpus(Base):
         _w(root, "metadata/routing-intent.json",
            '{"schema_version":1,"skills":{"alpha":{"intent":"a","neighbors":["beta"]},'
            '"beta":{"intent":"b","neighbors":["alpha"]},"zeta":{"intent":"z","neighbors":[]}}}')
-        self.assertTrue(self._fail(root, "not a published opus-pack skill"))
+        self.assertTrue(self._fail(root, "not a published metadata-governed skill"))
 
     def test_missing_neighbor_negative(self):
         root = self.valid()
@@ -657,6 +661,142 @@ class DescriptionCap(unittest.TestCase):
 
     def test_cap_is_1024(self):
         self.assertEqual(d.DESCRIPTION_MAX_CHARS, 1024)
+
+
+class PackTopologyAndGeneralization(Base):
+    """Gate for metadata/pack-topology.json and the source-'.'-independent base
+    model it replaces (the migration's checker generalization). Two-sided."""
+
+    def _subdir_tree(self):
+        """A marketplace with NO source-'.' plugin: the governed/referent plugin
+        lives at ./ops-pack. Proves the contracts do not depend on a root plugin."""
+        root = tempfile.mkdtemp()
+        self.addCleanup(lambda: __import__("shutil").rmtree(root, ignore_errors=True))
+        mp = ('{"name":"mp","plugins":['
+              '{"name":"ops-pack","source":"./ops-pack"},'
+              '{"name":"design-pack","source":"./design-pack"}]}')
+        _w(root, ".claude-plugin/marketplace.json", mp)
+        _w(root, "metadata/pack-topology.json", TOPOLOGY_OK)
+        _w(root, "ops-pack/skills/alpha/SKILL.md", _skill("alpha", extra="See beta 1 here.\n"))
+        _w(root, "ops-pack/skills/beta/SKILL.md", _skill("beta"))
+        _w(root, "design-pack/skills/gamma/SKILL.md", _skill("gamma"))
+        _w(root, "metadata/skill-tiers.json", TIERS_OK)
+        _w(root, "metadata/plugin-dependencies.json", DEPS_OK)
+        _w(root, "README.md", _readme(TIERS_ROWS_OK, DEP_LINE_OK))
+        _w(root, "README.zh-Hant.md", _readme(TIERS_ROWS_OK, DEP_LINE_OK, zh=True))
+        _w(root, "metadata/routing-intent.json", ROUTING_INTENT_OK)
+        _w(root, "metadata/routing-corpus.jsonl", _corpus(_ok_cases()))
+        return root
+
+    def test_subdir_only_layout_does_not_collapse(self):
+        # D1 key: no plugin at source '.', yet every governed contract holds.
+        root = self._subdir_tree()
+        for fn in (d.check_pack_topology, d.check_tier_canon, d.check_plugin_dependencies,
+                   d.check_inventory, d.check_reference_gate, d.check_routing_corpus):
+            self.assertEqual([], self.hard(fn, root),
+                             f"{fn.__name__} should pass with no source-'.' plugin")
+
+    def test_topology_valid_passes(self):
+        self.assertEqual([], self.hard(d.check_pack_topology, self.valid()))
+
+    def test_topology_missing_file_fails(self):
+        root = self.valid()
+        os.remove(os.path.join(root, "metadata/pack-topology.json"))
+        self.assertTrue(self.hard(d.check_pack_topology, root))
+        # governed set now empty -> the tier gate must not silently pass
+        self.assertTrue(self.hard(d.check_tier_canon, root))
+
+    def test_topology_referent_not_a_plugin_fails(self):
+        root = self.valid()
+        _w(root, "metadata/pack-topology.json",
+           '{"schema_version":1,"dependency_referent":"ghost","metadata_governed_plugins":["ops-pack"]}')
+        self.assertTrue(any("is not a marketplace plugin" in r for r in d.check_pack_topology(root)))
+
+    def test_topology_governed_not_a_plugin_fails(self):
+        root = self.valid()
+        _w(root, "metadata/pack-topology.json",
+           '{"schema_version":1,"dependency_referent":"ops-pack","metadata_governed_plugins":["ghost"]}')
+        self.assertTrue(any("is not a marketplace plugin" in r for r in d.check_pack_topology(root)))
+
+    def test_topology_referent_not_in_governed_fails(self):
+        root = self.valid()
+        _w(root, "metadata/pack-topology.json",
+           '{"schema_version":1,"dependency_referent":"ops-pack","metadata_governed_plugins":["design-pack"]}')
+        self.assertTrue(any("must be one of metadata_governed_plugins" in r
+                            for r in d.check_pack_topology(root)))
+
+    def test_topology_empty_governed_fails(self):
+        root = self.valid()
+        _w(root, "metadata/pack-topology.json",
+           '{"schema_version":1,"dependency_referent":"ops-pack","metadata_governed_plugins":[]}')
+        self.assertTrue(any("non-empty list" in r for r in d.check_pack_topology(root)))
+
+    def test_topology_bad_schema_fails(self):
+        root = self.valid()
+        _w(root, "metadata/pack-topology.json",
+           '{"schema_version":2,"dependency_referent":"ops-pack","metadata_governed_plugins":["ops-pack"]}')
+        self.assertTrue(any("schema_version" in r for r in d.check_pack_topology(root)))
+
+    def test_governed_set_drives_tier_canon(self):
+        # Flip the governed set to a plugin owning none of the canon's skills:
+        # the tier gate must reject every canon id (membership enforced, not
+        # inferred from source '.').
+        root = self.valid()
+        _w(root, "metadata/pack-topology.json",
+           '{"schema_version":1,"dependency_referent":"ops-pack","metadata_governed_plugins":["design-pack"]}')
+        self.assertTrue(any("not a published metadata-governed skill" in r
+                            for r in d.check_tier_canon(root)))
+
+
+    # -- fail-closed on an unusable pack-topology (cross-family review finding) --
+
+    def test_missing_topology_fails_tier_directly(self):
+        root = self.valid()
+        os.remove(os.path.join(root, "metadata/pack-topology.json"))
+        self.assertTrue(any("no metadata-governed plugins resolved" in r
+                            for r in d.check_tier_canon(root)),
+                        "tier canon must fail CLOSED (directly) when pack-topology is missing")
+
+    def test_empty_canon_plus_missing_topology_still_fails(self):
+        # The degenerate case: an EMPTY tier canon no longer masks a missing
+        # topology. Without the fail-closed guard this passed silently.
+        root = self.valid()
+        os.remove(os.path.join(root, "metadata/pack-topology.json"))
+        _w(root, "metadata/skill-tiers.json", '{"schema_version":1,"tiers":{}}')
+        self.assertTrue(self.hard(d.check_tier_canon, root),
+                        "empty canon + missing topology must still fail (no silent pass)")
+
+    def test_bad_schema_topology_fails_tier_and_routing(self):
+        # An unsupported schema with an otherwise-usable governed list must not be
+        # silently consumed by the tier/routing gates.
+        root = self.valid()
+        _w(root, "metadata/pack-topology.json",
+           '{"schema_version":2,"dependency_referent":"ops-pack","metadata_governed_plugins":["ops-pack"]}')
+        self.assertTrue(any("no metadata-governed plugins resolved" in r for r in d.check_tier_canon(root)))
+        self.assertTrue(any("no metadata-governed plugins resolved" in r for r in d.check_routing_corpus(root)))
+
+    def test_missing_topology_fails_routing_directly(self):
+        root = self.valid()
+        os.remove(os.path.join(root, "metadata/pack-topology.json"))
+        self.assertTrue(any("no metadata-governed plugins resolved" in r
+                            for r in d.check_routing_corpus(root)),
+                        "routing contract must fail CLOSED when pack-topology is missing")
+
+    def test_valid_referent_empty_governed_fails_deps(self):
+        # A schema-valid topology with a valid referent but an EMPTY governed list
+        # must still fail the dependency gate (uniform fail-closed; cross-family round 2).
+        root = self.valid()
+        _w(root, "metadata/pack-topology.json",
+           '{"schema_version":1,"dependency_referent":"ops-pack","metadata_governed_plugins":[]}')
+        self.assertTrue(self.hard(d.check_plugin_dependencies, root),
+                        "dependency gate must fail closed on an empty governed list")
+
+    def test_missing_topology_fails_deps_directly(self):
+        root = self.valid()
+        os.remove(os.path.join(root, "metadata/pack-topology.json"))
+        self.assertTrue(any("no dependency referent resolved" in r
+                            for r in d.check_plugin_dependencies(root)),
+                        "dependency contract must fail CLOSED when pack-topology is missing")
 
 
 if __name__ == "__main__":

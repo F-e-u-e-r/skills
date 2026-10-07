@@ -1,4 +1,4 @@
-<h1 align="center">Opus Pack</h1>
+<h1 align="center">Ops Pack</h1>
 
 <p align="center">
   <em>為日常 Claude 模型萃取的 skill —<br><strong>少而密的規則,可執行的閘門勝過冗長散文。</strong></em>
@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
-  <img alt="Version v0.2.0" src="https://img.shields.io/badge/version-v0.2.0-orange.svg">
+  <img alt="Version v0.3.0" src="https://img.shields.io/badge/version-v0.3.0-orange.svg">
   <img alt="Status: ACTIVE" src="https://img.shields.io/badge/status-ACTIVE-7aa2ff.svg">
   <img alt="For Claude Code" src="https://img.shields.io/badge/for-Claude%20Code-8A2BE2.svg">
   <a href="https://github.com/F-e-u-e-r/skills/issues"><img alt="PRs welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"></a>
@@ -17,24 +17,24 @@
 
 ---
 
-**Opus Pack 是一個 Claude Code plugin marketplace** —— 一個 repo、兩個可各自
+**Ops Pack 是一個 Claude Code plugin marketplace** —— 一個 repo、兩個可各自
 安裝的 plugin、共 13 個 skill,為 Fable 5 退場後的日常模型
 (Opus 4.8 / Sonnet 5 / Haiku)而做:
 
 | Plugin | 領域 | 安裝內容 |
 |---|---|---|
-| **`opus-pack`** | Agent 紀律——工作如何完成:rigor、委派、驗證、證據 | 10 個 skill |
+| **`ops-pack`** | Agent 紀律——工作如何完成:rigor、委派、驗證、證據 | 12 個 skill |
 | **`design-pack`** | 設計工藝——同一風格的視覺/UI 判斷:版面、動效、審查 | 3 個 skill |
 
 另有**四個選配 hook**——repo 層級、手動安裝;兩個 plugin 都不註冊它們
 (見[強制層:hooks](#強制層hooks-設定方法))。全部押注一件事:強模型本就具備的
 判斷力,靠**更多散文**得到的提升,遠不如靠**在工作出錯時大聲失敗的閘門**。
-兩個 plugin 可擇一或兩者都裝——`design-pack` 與 `opus-pack` 共用這個
-marketplace,而非硬相依(它的審查 skill 對 opus-pack 的 cross-reference 只是在
-opus-pack 在場時解析得到;見 [`design-pack`](#design-pack設計-skill))。
+兩個 plugin 可擇一或兩者都裝——`design-pack` 與 `ops-pack` 共用這個
+marketplace,而非硬相依(它的審查 skill 對 ops-pack 的 cross-reference 只是在
+ops-pack 在場時解析得到;見 [`design-pack`](#design-pack設計-skill))。
 
 > [!NOTE]
-> **早期 alpha(`v0.2.0`)。** 規則會隨真實 session 暴露的缺口調整,而且本包
+> **早期 alpha(`v0.3.0`)。** 規則會隨真實 session 暴露的缺口調整,而且本包
 > 用它自己的教條[檢驗自己](#evals測試這個-pack-本身)——包含一個誠實的 null result。
 > 歡迎用具體失敗案例開 issue 或 PR。
 
@@ -48,7 +48,7 @@ opus-pack 在場時解析得到;見 [`design-pack`](#design-pack設計-skill))�
 
 ## 目錄
 
-- [安裝](#安裝) · [`opus-pack`:紀律 skill](#opus-pack紀律-skill) · [`design-pack`:設計 skill](#design-pack設計-skill)
+- [安裝](#安裝) · [`ops-pack`:紀律 skill](#ops-pack紀律-skill) · [`design-pack`:設計 skill](#design-pack設計-skill)
 - [最高槓桿的十條原則](#萃取時保留的核心原則最高槓桿的十條)
 - [刻意捨棄的部分(與為什麼)](#刻意捨棄的部分與為什麼)
 - [Skill 會自動呼叫 agent 嗎?](#skill-會自動呼叫-agent-嗎) · [強制層:hooks](#強制層hooks-設定方法)
@@ -62,31 +62,33 @@ opus-pack 在場時解析得到;見 [`design-pack`](#design-pack設計-skill))�
 
 ```
 /plugin marketplace add F-e-u-e-r/skills
-/plugin install opus-pack@opus-pack
+/plugin install ops-pack@opus-pack
 /plugin install design-pack@opus-pack
 ```
 
-`opus-pack@opus-pack` 裝紀律 plugin(10 個 skill);`design-pack@opus-pack`
+`ops-pack@opus-pack` 裝紀律 plugin(12 個 skill);`design-pack@opus-pack`
 裝設計 plugin(3 個 skill)。擇一或兩者都裝。Skills 會以 namespace 形式載入
-(`opus-pack:operational-rigor`、`design-pack:ui-design-craft`……),用
+(`ops-pack:operational-rigor`、`design-pack:ui-design-craft`……),用
 `/plugin marketplace update` 更新。兩個 plugin 都不註冊 hooks——它們改變
 harness 行為,必須由使用者手動逐一決定(見[強制層:hooks 設定方法](#強制層hooks-設定方法))。
 
 **或把 skill 複製到位**——全域,或單一專案。每個區塊各自完整:
 
 ```bash
-# opus-pack(紀律)skills,全域:
-mkdir -p ~/.claude/skills && cp -R skills/* ~/.claude/skills/
+# ops-pack(紀律)skills,全域:
+mkdir -p ~/.claude/skills && cp -R ops-pack/skills/* ~/.claude/skills/
 # design-pack(設計)skills,全域:
 mkdir -p ~/.claude/skills && cp -R design-pack/skills/* ~/.claude/skills/
 # 只裝進單一專案:把 ~/.claude 換成 <repo>/.claude
 ```
 
 每個 plugin 擇一方法即可:同一 plugin 既裝又複製,會讓每個 skill 出現兩份
-(`opus-pack:<skill>` 與 `<skill>`),自動選用時可能取到任一份。Skill 按需
+(`ops-pack:<skill>` 與 `<skill>`),自動選用時可能取到任一份。Skill 按需
 載入:平時只有 description 佔 context,觸發才讀全文。
 
-## `opus-pack`:紀律 skill
+> **從 `opus-pack` plugin id 升級。** 紀律 plugin 已更名 `opus-pack` -> `ops-pack`;marketplace id 刻意維持 `opus-pack`,所以安裝 id 現為 `ops-pack@opus-pack`。若你在更名前已啟用 `opus-pack@opus-pack`,請執行 `/plugin marketplace update opus-pack`,再執行一次 `/plugin install ops-pack@opus-pack` —— 你的啟用狀態會沿用(執行前舊 id 會標示為「Renamed to ops-pack」),不會遺失任何 skill。透過 managed(管理員)設定強制的啟用不會自動遷移,需由管理員在該處更新。
+
+## `ops-pack`:紀律 skill
 
 | Skill | 涵蓋 | 主要來源 |
 |---|---|---|
@@ -122,8 +124,8 @@ mkdir -p ~/.claude/skills && cp -R design-pack/skills/* ~/.claude/skills/
 三個設計工藝 skill,把同一套 doctrine 風格——數值預算、禁用模式、可觀測閘門
 ——應用到視覺設計工作。像任何 plugin 一樣安裝(見上方[安裝](#安裝));版本獨立
 (目前 0.1.0)。這些 skill 可獨立成立:`design-review-gate` 的 contract 規則
-逐字引用 opus-pack 的兩條 load-bearing 條款(所以那些完整旅行),其餘對
-opus-pack 的 cross-reference 在 opus-pack 未安裝時退化為純脈絡。與 opus-pack
+逐字引用 ops-pack 的兩條 load-bearing 條款(所以那些完整旅行),其餘對
+ops-pack 的 cross-reference 在 ops-pack 未安裝時退化為純脈絡。與 ops-pack
 並用會更利,但並不需要它。
 
 | Skill | 涵蓋 | 主要來源 |
@@ -179,7 +181,7 @@ skill 本地的參考檔**,再由三個 `SKILL.md` 進入點**選擇性**取用�
 變更與 reference grammar 的 canonical source。本節只是摘要投影;**任何不一致以
 `ARCHITECTURE.md`(英文)為準。**
 
-**Skill tiers**(`opus-pack`;canonical map 在
+**Skill tiers**(`ops-pack`;canonical map 在
 [`metadata/skill-tiers.json`](metadata/skill-tiers.json)):
 
 <!-- BEGIN GENERATED SKILL TIERS -->
@@ -193,9 +195,9 @@ Core skill 是共用的 agent 執行 doctrine;domain adapter 把該紀律套到�
 skill tier 與 plugin dependency class 是兩條獨立的軸。
 
 <!-- BEGIN GENERATED PLUGIN DEPENDENCIES -->
-**Plugin dependency class。** `design-pack` 是 **`recommended-with opus-pack`**:
+**Plugin dependency class。** `design-pack` 是 **`recommended-with ops-pack`**:
 其 skill 各自能獨立完成主要 workflow(`motion-craft` 完全無跨包依賴;兩條
-load-bearing 的跨包條款以逐字方式內載、能獨立成立),而 `opus-pack` 補上其指標
+load-bearing 的跨包條款以逐字方式內載、能獨立成立),而 `ops-pack` 補上其指標
 所指的額外 rigor。見 `ARCHITECTURE.md` §4。
 <!-- END GENERATED PLUGIN DEPENDENCIES -->
 
@@ -208,9 +210,9 @@ window + 相容涵蓋,且須完成而非僅宣告)只在該 skill 所屬 source 
 
 ## 萃取時保留的核心原則(最高槓桿的十條)
 
-*以下的 doctrine 區塊——原則、刻意捨棄、強制層、evals、退化——是 `opus-pack`
+*以下的 doctrine 區塊——原則、刻意捨棄、強制層、evals、退化——是 `ops-pack`
 的紀律血統與這個 marketplace 共享的 house rules。各 plugin 的 skill 清單在上方
-各自的區塊裡;各 plugin 的 probe 證據則放在該 plugin 回報它的地方——opus-pack
+各自的區塊裡;各 plugin 的 probe 證據則放在該 plugin 回報它的地方——ops-pack
 的在下方 Evals 段,design-pack 的在它自己的區塊。*
 
 1. **散文不會讓可驗證的工作變好,ground truth 才會**——把力氣花在建閘門,不是寫更長的規則。
@@ -369,7 +371,7 @@ covert 測試(14 場 session、單一擬真工單,機械判定並經獨立複驗
 [evidence/reviews/2026-07-11-pack-eval-rounds-1-2.md](evidence/reviews/2026-07-11-pack-eval-rounds-1-2.md)。
 Hooks 現已具備放行/擋下兩路單元測試,但行為層(實測 arm)尚未量測。請據
 此看待本包:它是一層一致性保障與可執行的強制基底,不是已證明的分數提升。(這一輪
-測的是 `opus-pack` 的紀律 skill;`design-pack` 晚於它,帶有自己的 smoke 等級
+測的是 `ops-pack` 的紀律 skill;`design-pack` 晚於它,帶有自己的 smoke 等級
 probe 紀錄,在[它自己的區塊](#design-pack設計-skill)裡。)
 
 Round-4 更新(2026-07-24):接班套件在弱模型層(haiku)完成一輪預先註冊的
@@ -391,7 +393,7 @@ slot 後判為 NOT-DISCRIMINATED、或不可計分。請把它讀成
 
 ## 評測結果
 
-我們用受控的 routing 與行為 probe 來評測 Opus Pack,而不是只靠軼事式的例子。
+我們用受控的 routing 與行為 probe 來評測 Ops Pack,而不是只靠軼事式的例子。
 
 目前結果顯示:**skill 可用性與 routing 品質,並不等於 skill 的自主 activation**。
 
@@ -433,12 +435,12 @@ frontmatter、四處版本號一致、README 相對連結、零寬/雙向字符�
 hooks(不得有 `hooks/hooks.json`、`plugin.json` 不得有 hooks 欄位)——
 安裝段聲明的同意姿態依賴這一點。
 
-這個工作目錄可能有兩份相同的 skill:`skills/` 是發佈源;`.claude/skills/`
+這個工作目錄可能有兩份相同的 skill:`ops-pack/skills/` 是發佈源;`.claude/skills/`
 是本機即用安裝,已由 git ignore。改任何一份 SKILL.md → 同步另一份
-(`cp -R skills/. .claude/skills/`),推 GitHub 前逐一比對每個已發佈 skill
+(`cp -R ops-pack/skills/. .claude/skills/`),推 GitHub 前逐一比對每個已發佈 skill
 (本機的 project skill 才不會被誤判為漂移):
-`for d in skills/*/; do diff -rq "$d" ".claude/skills/$(basename $d)"; done`。
-這個迴圈只檢查仍存在於 `skills/` 的目錄(而 `cp -R` 從不刪除),所以移除或
+`for d in ops-pack/skills/*/; do diff -rq "$d" ".claude/skills/$(basename $d)"; done`。
+這個迴圈只檢查仍存在於 `ops-pack/skills/` 的目錄(而 `cp -R` 從不刪除),所以移除或
 改名一個已發佈 skill 時,要在同一次修改裡手動刪掉 `.claude/skills/` 裡
 對應的舊目錄;改任一語言的 README →
 同步鏡像另一份。
@@ -502,6 +504,6 @@ Release(仍在 alpha 期間標為 pre-release),README 的版本 badge 也寫 `vX
 
 ## 授權
 
-Opus Pack 以 [MIT License](LICENSE) 發佈——Copyright (c) 2026 F-e-u-e-r。
+Ops Pack 以 [MIT License](LICENSE) 發佈——Copyright (c) 2026 F-e-u-e-r。
 
 本包納入並改作了採寬鬆式授權(MIT 與 Apache-2.0)的第三方作品;這些授權要求隨附的版權與授權聲明,集中收錄於 [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md)。最具體的一例是 `verify-before-stop` hook——改作自 Curtis Chou(其上游為 Miguok)的 MIT 授權程式碼。整條鏈路不含任何 copyleft(GPL/AGPL/LGPL)。`guideline *.txt` 來源草稿為私人來源素材(擁有者自有,及 firaen22 的私人筆記),不隨發佈散佈(已由 `.gitignore` 排除)。

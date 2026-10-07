@@ -68,4 +68,4 @@ jobs:
         with:
           node-version: "22"
       - name: ground-truth-gates starter template runs green
-        run: bash skills/ground-truth-gates/template/run-all.sh
+        run: bash ops-pack/skills/ground-truth-gates/template/run-all.sh

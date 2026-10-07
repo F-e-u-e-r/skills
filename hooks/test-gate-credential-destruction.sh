@@ -10,7 +10,7 @@ command -v python3 >/dev/null 2>&1 || {
   exit 0
 }
 
-tmp=$(mktemp -d "${TMPDIR:-/tmp}/opus-pack-credgate-test.XXXXXX")
+tmp=$(mktemp -d "${TMPDIR:-/tmp}/ops-pack-credgate-test.XXXXXX")
 trap 'rm -rf "$tmp"' EXIT
 
 json_for() {
