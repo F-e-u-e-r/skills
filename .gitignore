@@ -4,12 +4,6 @@ guideline *.txt
 .claude/
 evals/
 internal/
-# Staging zone: local material is ignored by default; a delivered library is
-# whitelisted per directory once it ships via a reviewed PR (policy: #98).
-skills-staging/*
-!skills-staging/2026-07-30-starledger-retro/
-!skills-staging/2026-07-30-campaign-ops/
-!skills-staging/2026-07-30-security-enhancement/
 pack-eval-artifacts/
 # Local-only working directory; not part of the published pack. Ignored so a
 # broad `git add` cannot stage it.
