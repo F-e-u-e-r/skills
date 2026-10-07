@@ -167,8 +167,8 @@ for _rel_root, _abs_root in skill_roots:
         ):
             fail(f"{_extra}: frontmatter declares hooks - plugins must never register hooks (standing invariant)")
 
-# 2. Version agreement: README badges + callouts track the ROOT plugin
-#    (opus-pack); every marketplace entry is shape-checked and must agree
+# 2. Version agreement: README badges + callouts track the primary plugin
+#    (ops-pack); every marketplace entry is shape-checked and must agree
 #    with its own source's plugin.json (name and version), so sibling
 #    plugins version independently. The callout patterns are a deliberate
 #    tripwire - a reword that breaks them forces a conscious re-pin of all
@@ -196,7 +196,7 @@ def nonempty_str(d, key):
 
 plugin = marketplace = None
 try:
-    plugin = json.loads(read(".claude-plugin/plugin.json"))
+    plugin = json.loads(read("ops-pack/.claude-plugin/plugin.json"))
     for k in ("name", "description", "version"):
         if not nonempty_str(plugin, k):
             fail(f"plugin.json: {k} missing or not a non-empty string")
@@ -278,13 +278,13 @@ try:
         hooks_file = "hooks/hooks.json" if norm == "." else f"{norm}/hooks/hooks.json"
         if os.path.exists(os.path.join(ROOT, hooks_file)):
             fail(f"{hooks_file} exists - plugins must never register hooks (standing invariant)")
-        if pname == "opus-pack":
-            if src != "./":
-                fail(f"{ctx}: the root opus-pack plugin's source must be './', got {src!r}")
+        if pname == "ops-pack":
+            if src != "./ops-pack":
+                fail(f"{ctx}: the ops-pack plugin's source must be './ops-pack', got {src!r}")
             if isinstance(mp.get("version"), str) and re.fullmatch(SEMVER, mp["version"]):
-                versions.append(("marketplace.json[opus-pack]", mp["version"]))
-    if entries and "opus-pack" not in seen_names:
-        fail("marketplace.json: root plugin entry 'opus-pack' is missing")
+                versions.append(("marketplace.json[ops-pack]", mp["version"]))
+    if entries and "ops-pack" not in seen_names:
+        fail("marketplace.json: primary plugin entry 'ops-pack' is missing")
 except (OSError, ValueError) as e:
     fail(f"marketplace.json: unreadable or malformed ({e})")
 if versions and len({v for _, v in versions}) == 1:
@@ -492,6 +492,7 @@ if os.path.isfile(_matrix):
 # A 'report:' line from the reference gate is a cross-plugin advisory, not a
 # failure - it prints as a note and never sets the exit code.
 for _label, _fn in [
+    ("pack topology declaration (metadata/pack-topology.json)", _dc.check_pack_topology),
     ("tier canon (metadata/skill-tiers.json) integrity", _dc.check_tier_canon),
     ("extension dependency contract (metadata/plugin-dependencies.json)",
      _dc.check_plugin_dependencies),

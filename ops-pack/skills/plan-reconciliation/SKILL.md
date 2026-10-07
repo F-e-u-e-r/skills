@@ -85,7 +85,7 @@ Run before OR's completion claim; OR still owns the honesty of that claim (OR §
 
 ## Provenance
 
-Part of the opus-pack (Planning ↔ Ops). Planning Pack Architecture v1: §3 `plan-reconciliation` (11 doctrines) +
+Part of the ops-pack (Planning ↔ Ops). Planning Pack Architecture v1: §3 `plan-reconciliation` (11 doctrines) +
 §6 lifecycle (revise/close, three delivery states) + owner rules AR-A9-C1 / AR-A11-C1. A9-02 (revision-scope
 widening) and A11-04 (Planning disposition for unverifiable items) are **not** doctrine (deferred). Citations to
 the Ops siblings (operational-rigor §2/§4/§5, delegation-and-review §3) resolve against those skills as

@@ -13,7 +13,7 @@ command -v python3 >/dev/null 2>&1 || {
   exit 0
 }
 
-tmp=$(mktemp -d "${TMPDIR:-/tmp}/opus-pack-hook-test.XXXXXX")
+tmp=$(mktemp -d "${TMPDIR:-/tmp}/ops-pack-hook-test.XXXXXX")
 trap 'rm -rf "$tmp"' EXIT
 
 red="$tmp/red"

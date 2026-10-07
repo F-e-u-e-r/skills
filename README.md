@@ -1,4 +1,4 @@
-<h1 align="center">Opus Pack</h1>
+<h1 align="center">Ops Pack</h1>
 
 <p align="center">
   <em>Distilled skills for daily-driver Claude models —<br><strong>few dense rules, executable gates over long prose.</strong></em>
@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
-  <img alt="Version v0.2.0" src="https://img.shields.io/badge/version-v0.2.0-orange.svg">
+  <img alt="Version v0.3.0" src="https://img.shields.io/badge/version-v0.3.0-orange.svg">
   <img alt="Status: ACTIVE" src="https://img.shields.io/badge/status-ACTIVE-7aa2ff.svg">
   <img alt="For Claude Code" src="https://img.shields.io/badge/for-Claude%20Code-8A2BE2.svg">
   <a href="https://github.com/F-e-u-e-r/skills/issues"><img alt="PRs welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"></a>
@@ -17,13 +17,13 @@
 
 ---
 
-**Opus Pack is a Claude Code plugin marketplace** — one repo, two plugins you
+**Ops Pack is a Claude Code plugin marketplace** — one repo, two plugins you
 install independently, 13 skills in total, for the daily-driver models that
 remain after Fable 5's window closes (Opus 4.8 / Sonnet 5 / Haiku):
 
 | Plugin | Focus | Installs |
 |---|---|---|
-| **`opus-pack`** | Agent discipline — how work gets done: rigor, delegation, verification, evidence | 10 skills |
+| **`ops-pack`** | Agent discipline — how work gets done: rigor, delegation, verification, evidence | 12 skills |
 | **`design-pack`** | Design-craft — visual/UI judgment in the same style: layout, motion, review | 3 skills |
 
 Plus **four optional hooks** — repo-level, installed by hand; neither plugin
@@ -31,12 +31,12 @@ registers them (see [Enforcement: hooks](#enforcement-setting-up-hooks)). All of
 it encodes one bet: the judgment strong models already have improves less from
 **more prose** than from **gates that fail loudly when the work is wrong.**
 Install either plugin alone or both — `design-pack` shares this marketplace with
-`opus-pack`, not a hard dependency on it (its review skill's cross-references to
-opus-pack simply resolve when opus-pack is present; see
+`ops-pack`, not a hard dependency on it (its review skill's cross-references to
+ops-pack simply resolve when ops-pack is present; see
 [`design-pack`](#design-pack-the-design-skills)).
 
 > [!NOTE]
-> **Early alpha (`v0.2.0`).** Rules change as real sessions expose misses,
+> **Early alpha (`v0.3.0`).** Rules change as real sessions expose misses,
 > and the pack is [measured against its own doctrine](#evals-testing-the-pack-itself)
 > — honest null result included. Issues and PRs with concrete failure cases are welcome.
 
@@ -50,7 +50,7 @@ opus-pack simply resolve when opus-pack is present; see
 
 ## Contents
 
-- [Install](#install) · [`opus-pack`: the discipline skills](#opus-pack-the-discipline-skills) · [`design-pack`: the design skills](#design-pack-the-design-skills)
+- [Install](#install) · [`ops-pack`: the discipline skills](#ops-pack-the-discipline-skills) · [`design-pack`: the design skills](#design-pack-the-design-skills)
 - [The ten highest-leverage principles](#the-ten-highest-leverage-principles-kept)
 - [Deliberately dropped (and why)](#deliberately-dropped-and-why)
 - [Do skills auto-call agents?](#do-skills-auto-call-agents) · [Enforcement: hooks](#enforcement-setting-up-hooks)
@@ -65,13 +65,13 @@ want. Install targets use `plugin@marketplace`, and the marketplace ID is
 
 ```
 /plugin marketplace add F-e-u-e-r/skills
-/plugin install opus-pack@opus-pack
+/plugin install ops-pack@opus-pack
 /plugin install design-pack@opus-pack
 ```
 
-`opus-pack@opus-pack` installs the discipline plugin (10 skills);
+`ops-pack@opus-pack` installs the discipline plugin (12 skills);
 `design-pack@opus-pack` installs the design plugin (3 skills). Install either,
-or both. Skills arrive namespaced (`opus-pack:operational-rigor`,
+or both. Skills arrive namespaced (`ops-pack:operational-rigor`,
 `design-pack:ui-design-craft`, …) and update via `/plugin marketplace update`.
 Neither plugin registers the hooks — they change harness behavior, so
 installing them stays a manual, per-user decision (see
@@ -81,19 +81,21 @@ installing them stays a manual, per-user decision (see
 self-contained:
 
 ```bash
-# opus-pack (discipline) skills, global:
-mkdir -p ~/.claude/skills && cp -R skills/* ~/.claude/skills/
+# ops-pack (discipline) skills, global:
+mkdir -p ~/.claude/skills && cp -R ops-pack/skills/* ~/.claude/skills/
 # design-pack (design) skills, global:
 mkdir -p ~/.claude/skills && cp -R design-pack/skills/* ~/.claude/skills/
 # per project instead: swap ~/.claude for <repo>/.claude
 ```
 
 Pick ONE method per plugin: installing a plugin AND copying its skills makes
-every skill available twice (`opus-pack:<skill>` and `<skill>`), and automatic
+every skill available twice (`ops-pack:<skill>` and `<skill>`), and automatic
 selection may pick either copy. Skills load on demand: only the description
 occupies context until triggered.
 
-## `opus-pack`: the discipline skills
+> **Upgrading from the `opus-pack` plugin id.** The discipline plugin was renamed `opus-pack` -> `ops-pack`; the marketplace id intentionally stays `opus-pack`, so the install id is now `ops-pack@opus-pack`. If you enabled `opus-pack@opus-pack` before the rename, run `/plugin marketplace update opus-pack` and then, once, `/plugin install ops-pack@opus-pack` -- your enablement carries over (the old id shows as "Renamed to ops-pack" until you do) and no skills are lost. Enablement enforced through managed (admin) settings does not auto-migrate; an administrator must update it there.
+
+## `ops-pack`: the discipline skills
 
 | Skill | Covers | Main source |
 |---|---|---|
@@ -145,9 +147,9 @@ Three design-craft skills applying the same doctrine style — numeric budgets,
 prohibited patterns, observable gates — to visual design work. Install it like
 any plugin ([Install](#install) above); it versions independently
 (currently 0.1.0). The skills stand on their own: `design-review-gate`'s
-contract rules quote two load-bearing clauses from opus-pack verbatim (so those
-travel intact), and its remaining cross-references to opus-pack resolve to plain
-context when opus-pack isn't installed. They're sharper with opus-pack
+contract rules quote two load-bearing clauses from ops-pack verbatim (so those
+travel intact), and its remaining cross-references to ops-pack resolve to plain
+context when ops-pack isn't installed. They're sharper with ops-pack
 alongside, but they don't require it.
 
 | Skill | Covers | Main sources |
@@ -216,7 +218,7 @@ classes, adjacent-skill rules, routing-contract changes, and the reference
 grammar. This section is a summary projection; **on any inconsistency,
 `ARCHITECTURE.md` (English) is authoritative.**
 
-**Skill tiers** (`opus-pack`; canonical map in
+**Skill tiers** (`ops-pack`; canonical map in
 [`metadata/skill-tiers.json`](metadata/skill-tiers.json)):
 
 <!-- BEGIN GENERATED SKILL TIERS -->
@@ -231,10 +233,10 @@ that discipline to a narrower domain. Skill tier and plugin dependency class are
 separate axes.
 
 <!-- BEGIN GENERATED PLUGIN DEPENDENCIES -->
-**Plugin dependency class.** `design-pack` is **`recommended-with opus-pack`**:
+**Plugin dependency class.** `design-pack` is **`recommended-with ops-pack`**:
 its skills complete their primary workflows on their own (`motion-craft` has no
 cross-pack dependency; the two load-bearing cross-pack clauses are carried
-verbatim and bind on their own), while `opus-pack` adds the extra rigor its
+verbatim and bind on their own), while `ops-pack` adds the extra rigor its
 pointers name. See `ARCHITECTURE.md` §4.
 <!-- END GENERATED PLUGIN DEPENDENCIES -->
 
@@ -250,10 +252,10 @@ skills stay indefinitely with no pre-authorized break path. Details in
 ## The ten highest-leverage principles kept
 
 *The doctrine sections that follow — principles, deliberately-dropped,
-enforcement, evals, degradation — are `opus-pack`'s discipline lineage and the
+enforcement, evals, degradation — are `ops-pack`'s discipline lineage and the
 marketplace's shared house rules. Each plugin's skill inventory sits in its own
 section above; each plugin's probe evidence is scoped where that plugin reports
-it — opus-pack's in the Evals section below, design-pack's in its own section.*
+it — ops-pack's in the Evals section below, design-pack's in its own section.*
 
 1. **Prose does not improve verifiable work; ground truth does** — invest in
    gates, not longer rules.
@@ -570,7 +572,7 @@ noticing-and-reporting layer; full numbers and corrections in
 The hooks now carry allow+block unit suites but remain unmeasured at the
 behavioral-arm level. Treat the pack accordingly: a consistency layer and
 an enforcement substrate, not a proven score boost. (This round measured
-`opus-pack`'s discipline skills; `design-pack` postdates it and carries its own
+`ops-pack`'s discipline skills; `design-pack` postdates it and carries its own
 smoke-grade probe record in [its section](#design-pack-the-design-skills).)
 
 Round-4 update (2026-07-24): the successor suite ran a pre-registered
@@ -598,7 +600,7 @@ unpublished like the rest of the suite.
 
 ## Evaluation results
 
-We evaluate Opus Pack with controlled routing and behavioral probes rather than relying only on anecdotal examples.
+We evaluate Ops Pack with controlled routing and behavioral probes rather than relying only on anecdotal examples.
 
 Current results suggest that **skill availability and routing quality are not the same thing as autonomous skill activation**.
 
@@ -642,12 +644,12 @@ package must never declare or register hooks (no `hooks/hooks.json`, no
 hooks field in `plugin.json`) — the consent posture stated in the install
 section depends on it.
 
-This working tree may hold two identical skill sets: `skills/` is the publish
+This working tree may hold two identical skill sets: `ops-pack/skills/` is the publish
 source; `.claude/skills/` is the local live install and is ignored by git. Edit
-any SKILL.md → sync the other copy (`cp -R skills/. .claude/skills/`) and, before
+any SKILL.md → sync the other copy (`cp -R ops-pack/skills/. .claude/skills/`) and, before
 pushing, diff per published skill so local project skills don't read as drift:
-`for d in skills/*/; do diff -rq "$d" ".claude/skills/$(basename $d)"; done`. The
-loop only checks dirs still present in `skills/` (and `cp -R` never deletes), so
+`for d in ops-pack/skills/*/; do diff -rq "$d" ".claude/skills/$(basename $d)"; done`. The
+loop only checks dirs still present in `ops-pack/skills/` (and `cp -R` never deletes), so
 when you remove or rename a published skill, delete its old dir from
 `.claude/skills/` by hand in the same change. Edit
 either README → mirror the change in the other language.
@@ -930,7 +932,7 @@ link so the attribution survives link rot.
 
 ## License
 
-Opus Pack is released under the [MIT License](LICENSE) — Copyright (c) 2026
+Ops Pack is released under the [MIT License](LICENSE) — Copyright (c) 2026
 F-e-u-e-r.
 
 It incorporates and adapts third-party work under permissive licenses (MIT and

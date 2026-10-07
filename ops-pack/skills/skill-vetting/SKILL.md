@@ -268,7 +268,7 @@ Write one of: **SAFE-TO-PROPOSE / SUSPECT / BLOCK**, with the evidence behind it
   ```bash
   # $TOOL = a trusted copy OUTSIDE the candidate, e.g.
   #   "$CLAUDE_PLUGIN_ROOT"/hooks/skill_snapshot.py   (plugin-bundled)
-  #   ~/.local/share/opus-pack/skill_snapshot.py      (your own separate install)
+  #   ~/.local/share/ops-pack/skill_snapshot.py      (your own separate install)
   # NEVER "$CLAUDE_PROJECT_DIR"/.claude/... when the project is what you're vetting.
   # Every <placeholder> below is QUOTED because its value is attacker-chosen.
   python3 "$TOOL" digest "<candidate-skill-dir>"

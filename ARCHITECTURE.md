@@ -7,13 +7,13 @@ tables, a short policy summary, and pointers back here. **Where a README (in any
 language) and this file disagree, this file wins.** Translations and summaries
 are conveniences, not independent contracts.
 
-The repository publishes two plugins today: `opus-pack` (ten agent-discipline
+The repository publishes two plugins today: `ops-pack` (twelve agent-discipline
 skills) and `design-pack` (three design-craft skills). They version
 independently.
 
 ## 1. Skill tiers
 
-Every published `opus-pack` skill has exactly one **tier**. The tier is an
+Every published `ops-pack` skill has exactly one **tier**. The tier is an
 authored judgment — it cannot be derived from the filesystem or the manifests —
 so it is recorded once, in a single machine-readable source:
 
@@ -81,7 +81,7 @@ before the 1.0 release of the affected skill's source plugin** — the plugin
 through which that skill was published immediately before the migration began.
 A migration may change a skill's owning plugin, so the deadline anchors to that
 source plugin, never a destination or a shifting one. Plugins version
-independently (`opus-pack` and `design-pack` share no version line), so each
+independently (`ops-pack` and `design-pack` share no version line), so each
 plugin carries its own 1.0 boundary and its own stability clock; **"1.0"
 throughout this contract means that source plugin's 1.0**, not a repository-wide
 version. Any migration on this path must be **fully completed strictly before
@@ -108,44 +108,44 @@ skills stay indefinitely) holds unconditionally after that 1.0.
 ## 4. Extension-plugin dependency classes
 
 Every extension plugin declares **exactly one** dependency class, and only after
-an **isolated-install audit** (installed without `opus-pack`, judged on whether
+an **isolated-install audit** (installed without `ops-pack`, judged on whether
 its *principal documented workflow* — not merely loading — remains
 understandable and executable). Assign the class in this order, which makes the
 three **mutually exclusive**:
 
-1. **requires opus-pack** — its primary workflow or normative instructions
-   depend on `opus-pack` (they do not complete or make sense without it); the
+1. **requires ops-pack** — its primary workflow or normative instructions
+   depend on `ops-pack` (they do not complete or make sense without it); the
    install docs must state the requirement.
-2. **recommended-with opus-pack** — its primary capability completes without
-   `opus-pack`, **but** it names specific `opus-pack` safeguards, rigor, or
+2. **recommended-with ops-pack** — its primary capability completes without
+   `ops-pack`, **but** it names specific `ops-pack` safeguards, rigor, or
    review procedures that enhance it — so it runs alone yet is meaningfully
-   better with `opus-pack` installed.
-3. **standalone** — its primary capability completes without `opus-pack` **and**
-   it makes no material use of `opus-pack` (it names no `opus-pack` safeguard it
+   better with `ops-pack` installed.
+3. **standalone** — its primary capability completes without `ops-pack` **and**
+   it makes no material use of `ops-pack` (it names no `ops-pack` safeguard it
    leans on).
 
 The ordering resolves the overlap between the last two: a plugin that both runs
-alone **and** names `opus-pack` rigor is `recommended-with`, not `standalone`. A
+alone **and** names `ops-pack` rigor is `recommended-with`, not `standalone`. A
 plugin is **not** labelled `standalone` merely because it loads in isolation.
 A `recommended-with` declaration must document: what stays functional when
-`opus-pack` is absent; which safeguards or guarantees are reduced; and the local
-fallback followed when a referenced `opus-pack` skill is unavailable.
+`ops-pack` is absent; which safeguards or guarantees are reduced; and the local
+fallback followed when a referenced `ops-pack` skill is unavailable.
 
-### 4.1 design-pack — `recommended-with opus-pack`
+### 4.1 design-pack — `recommended-with ops-pack`
 
 Declared after the 2026-08 isolated-install audit.
 
-- **Functional without `opus-pack`:** `motion-craft` has no cross-pack
+- **Functional without `ops-pack`:** `motion-craft` has no cross-pack
   dependency at all; `ui-design-craft` and `design-review-gate` complete their
   primary workflows (produce/judge a surface; run the review passes and the
   gate) on their own.
-- **Reduced without `opus-pack`:** the advisory cross-references to
+- **Reduced without `ops-pack`:** the advisory cross-references to
   `operational-rigor`, `domain-evidence-discipline`, and `delegation-and-review`
   degrade to plain context — the extra rigor they point at is not loaded.
 - **Local fallback:** the two load-bearing cross-pack clauses are carried in
-  design-pack **verbatim** and bind on their own; each names its `opus-pack`
+  design-pack **verbatim** and bind on their own; each names its `ops-pack`
   copy as the authority on disagreement (a sync contract), so no rule silently
-  loses its home when `opus-pack` is absent.
+  loses its home when `ops-pack` is absent.
 
 ## 5. Adjacent and specialized skills
 
@@ -217,7 +217,7 @@ What the gate guarantees:
 
 - tier-canon integrity: `metadata/skill-tiers.json` parses, its
   `schema_version` is supported, every value is a valid tier, and its skill set
-  matches the published `opus-pack` skills exactly (each published skill classed
+  matches the published `ops-pack` skills exactly (each published skill classed
   once; nothing missing; no non-existent or unpublished skill listed);
 - extension dependency contract: `metadata/plugin-dependencies.json` parses and
   is supported, each extension plugin is classed exactly once with a valid
@@ -239,7 +239,7 @@ What the gate guarantees:
   fails on a missing section; a cross-plugin reference is reported, not failed;
 - routing-corpus completeness (§6, structural only): `metadata/routing-intent.json`
   and `metadata/routing-corpus.jsonl` parse and are supported; the intent skill set
-  equals the published `opus-pack` skills; the neighbour graph is symmetric; every
+  equals the published `ops-pack` skills; the neighbour graph is symmetric; every
   case carries a unique well-formed id, a rationale, and either a single `expected`
   (positive / neighbour-negative / out-of-scope) or `acceptable_any_of` of ≥2
   (ambiguous) naming published skills; and coverage is met on an edge basis — each
