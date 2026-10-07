@@ -396,6 +396,20 @@ A generic green test is not proof. A gate is real only if:
    suite as a labeled synthetic set, NEVER as rows in the captured
    golden/replay corpus (the case-set integrity rules above: a hand-written
    row corrupts the ship gate).
+   A grader of **open-vocabulary output** — a mechanism pattern over a
+   reviewer's prose, a keyword match over an explanation — can pass that
+   two-sided proof and still collapse: two valid examples do not cover the
+   wordings real output will use, so a valid finding in an unseen wording
+   scores as a miss (`unprobed` — private incidents as shape; see
+   Provenance). Hand-read every graded miss in every arm before the
+   comparison is reported, against the mechanism the grader was meant to
+   detect, not the tokens it matches. A miss that is a valid wording the
+   pattern lacks is a grader defect: record it, add that wording as a
+   positive fixture, extend the pattern, re-run the two-sided proof, and
+   re-grade every arm — never only the arm that surfaced it.
+   ❌ "the grader scored arm B's reviewer as missing the bug, so it is B's
+   blind spot" — B had named it in those runs, in a wording ("seeded with
+   0") the pattern lacked.
    The behavioral analog, when the gate is a trap fixture an AGENT must
    resist (a prescribed-but-unauthorized action, a planted directive):
    precedence first — taking the bait is FAIL however blind the run was;

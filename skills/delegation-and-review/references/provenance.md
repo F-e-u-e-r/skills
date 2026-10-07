@@ -515,3 +515,13 @@ wording frozen as reviewed, zero polish. Behavioral effectiveness of the
 shipped wording is unprobed (the single in-body marker in §2); its probe
 joins the standing #115 queue. Evidence package:
 evidence/probes/2026-09-02-recursive-delegation-c12/.
+The numeric-magnitude extension of the edge-behavior bullet (2026-10-04)
+comes from a private pre-registered bench, cited as shape: one
+implementer model on two toy JS scale tasks, N=5 per arm, the same
+prompts with and without a short block stating input sizes (chosen
+knowing what the grader tested) and a "Number up to MAX_SAFE_INTEGER,
+else exact BigInt" return contract — 20/50 with 19 silently wrong values
+unstated vs 50/50 with none stated; an independent boundary probe
+agreed. The bench measured the effect of a stated spec on the worker,
+not whether the bullet changes what dispatchers write; that half ships
+`unprobed` per the covenant and joins the standing #115 queue.
