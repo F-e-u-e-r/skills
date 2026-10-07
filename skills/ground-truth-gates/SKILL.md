@@ -451,6 +451,20 @@ A generic green test is not proof. A gate is real only if:
    scored 2/6 against a recorded 0/6, and the 2 passes were exactly the two
    capacity-edge cases whose accepted-throw branch swallowed the harness's
    own error.) (`unprobed` — private incident as shape; see Provenance.)
+   **Untrusted-code submission graders** (Python or similar): before any model
+   arm runs, `--selftest` must exercise good and bad fixtures; hidden tests run
+   in a **child interpreter** with a **minimal environment** (not the parent's
+   full `os.environ`). Do not leave pass/fail oracles on importable module
+   attributes the submission can read. The parent must learn pass/fail through
+   a channel the graded code **cannot write**, with any completion secret **absent
+   from the child's environment** (a static name ban does not prove the runtime
+   cannot read `os.environ`). `--selftest` must include a **forged-completion**
+   negative. Reject source that is not already **NFKC-normalized**
+   before you normalize for execution (scope smuggling). Run a **static scope
+   scan** (AST + string literals) before exec; extend fixtures when a cross
+   reviewer finds a bypass. External shape only (`unprobed` — distilled from an
+   off-repo pilot harness, 2026-10-07;
+   `evidence/reviews/2026-10-07-external-harness-pilot-before-routing.md`).
 3. The **easy fake pass is named** and closed — hardcoded expected value,
    weakened assertion, testing the mock, a test that compiled but was never
    registered/run, a permanently `#[ignore]`/`.skip`ped backlog test that reads

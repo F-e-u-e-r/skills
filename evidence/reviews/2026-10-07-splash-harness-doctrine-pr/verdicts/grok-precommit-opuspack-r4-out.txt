@@ -1,0 +1,10 @@
+**PROCEED.** The staged doctrine is additive, keeps the dual-family gate, labels the external pilot `unprobed`, and yields to the canonical skills.
+
+Reviewed `staged/cross-model-review-SKILL.md` §5b, `staged/ground-truth-gates-SKILL.md` (untrusted-code grader paragraph), and `staged/evidence-record.md` against `ARCHITECTURE.md` §2 and §7, `cross-model-review` §1 and §6, and `delegation-and-review` §3. `python3 .github/checks.py` was not re-run here.
+
+- **Style.** §5b leads with the ship verdict: a same-family `PROCEED` on that run’s methods packet is not ship evidence. The clause is marked `unprobed` and points only at `evidence/reviews/2026-10-07-external-harness-pilot-before-routing.md`. The grader paragraph states the child-interpreter, non-writable pass channel, secret-absent-from-the-child, forged-completion, NFKC-before-normalize, and static-scope rules, then marks them external shape only with the same `unprobed` pointer. The sibling gloss sits on one line as `delegation-and-review §3`; that section does say a subordinate’s report stays a claim (the reproduction duty is in that same bullet).
+- **Stability.** Both skill edits add body text. Frontmatter `description` fields are unchanged. No published skill is added, removed, or renamed, and no routing corpus is edited. `ARCHITECTURE.md` §2 stays intact.
+- **Dual-family gate.** §5b says reproduction is for triage and does not satisfy §1. A second family is still required under §1, or §6’s recorded fallback (fresh-context critic plus a recorded gap). It forbids a fabricated cross-model `PROCEED`. Deterministic selftest and metrics gates are limited to harness state. §6 itself is unchanged.
+- **Evidence authority.** The record calls itself a human review record and measurement pointer, not pack doctrine, and says canonical skills win on conflict (`evidence/README.md`). N=3/10 is harness validation. Routing is not promoted. That is not a fleet-coder claim for Splash Qwen.
+
+PROCEED

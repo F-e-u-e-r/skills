@@ -1,0 +1,5 @@
+PROCEED — single-lens review; no blocking findings against the four rubric items. [verified: current staged additions, §1/§6, ARCHITECTURE.md stability policy, and evidence authority notice]
+
+Checks passed. [verified: `python3 -B .github/checks.py`, exit 0; all three staged copies match the index and checked files] External pilot outcomes remain [unverified].
+
+PROCEED

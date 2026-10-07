@@ -277,6 +277,24 @@ stop and escalate with the trail — never loop "until all PROCEED" unbounded.
 - **Partial failure ≠ dual gate.** One reviewer OK + one quota/timeout is a
   single-lens review: record the missing lens, don't claim cross-model.
 
+## 5b. Same-model / same-bench confound (weak lens)
+
+When the **same model family** that produced a run also reviews the **methods
+packet for that run** (bench self-review, harness self-review, "did our
+pipeline pass?"), its printed `PROCEED` is **not evidence for ship** — same
+blind spot as the author, not an independent family
+(delegation-and-review §3: a subordinate's report stays a claim until you
+reproduce).
+Reproduce findings (read files back, run the grader) before you triage its
+text, but reproduction **does not** satisfy the dual-family gate in §1: you
+still need a second family per §1/§6, or §6's documented fallback
+(fresh-context critic + recorded gap), never a fabricated cross-model
+`PROCEED`. Deterministic instrument gates (selftest green, typed metrics
+drivers) validate **harness state**, not that lens's judgment.
+
+(`unprobed` — incident shape from an external bench pilot, 2026-10-07; pointer
+only: `evidence/reviews/2026-10-07-external-harness-pilot-before-routing.md`.)
+
 ## 6. On failure / unavailable
 
 Zero review CLIs, no network, **or you cannot assemble ≥2 different families**
