@@ -8,7 +8,7 @@ records, measurement/probe artifacts, and historical campaign material. It is
 
 - **Is:** the durable record of how decisions were reached and what was
   measured -- human-written review records, machine-produced probe/eval
-  artifacts, and the historical evidence behind claims made elsewhere in the
+  artifacts, and preserved reference and operating libraries behind claims made elsewhere in the
   repo.
 - **Is not:** normative doctrine. The canonical, normative sources are the
   skills' own `SKILL.md` files and `ARCHITECTURE.md` (the stability/architecture
@@ -19,7 +19,7 @@ records, measurement/probe artifacts, and historical campaign material. It is
 ## Content classes
 
 Entries fall into three semantic classes. Artifact role is the tree's **one
-physical axis** (the two subdirectories below); lifecycle is recorded on the
+physical axis** (the three subdirectories below); lifecycle is recorded on the
 entry, never as a directory (see "Path stability" below):
 
 - **Human review records** (`evidence/reviews/`) -- a person's or a review
@@ -30,15 +30,19 @@ entry, never as a directory (see "Path stability" below):
   (e.g. the `issue115` activation-probe campaign, the round-5 results). Typically
   large, numerous, and produced mechanically; a campaign's harness, fixtures,
   output, and manifest stay together as one unit.
-- **Historical evidence** -- superseded or completed-campaign material retained
-  as the record behind a finding: no longer the current state, kept so the claim
-  it backs stays checkable. This is a lifecycle status (`current` / `closed` /
-  `superseded` / `historical`) marked on the entry; a closed campaign stays
-  under its artifact-role home.
+- **Preserved reference / operating libraries** (`evidence/libraries/`) -- a
+  retained reference or operating library kept for the record: distilled skill
+  libraries, campaign playbooks, and similar operating material that is neither a
+  human review record nor a machine probe artifact (e.g. the `2026-07-30-*`
+  retiring-architect / campaign libraries). Staged, not installed -- preserved as
+  evidence, never loaded as a production skill.
 
 A single entry may carry more than one class; an entry that mixes a human
 record with a runnable checker gets one home by its primary role, never a
-split.
+split. **Lifecycle status** -- `staged`, `current`, `closed`, `superseded`,
+`historical`, `declined` -- is recorded on the entry, never as a directory: a
+closed, superseded, historical, or declined entry stays under its artifact-role
+home (`reviews/`, `probes/`, or `libraries/`).
 
 ## Authority
 
@@ -82,9 +86,10 @@ When you add a new record:
 
 - **Name its class** -- make it clear (in the entry's own heading/README or its
   containing note) whether it is a human review record, a machine probe
-  artifact, or historical evidence, and mark its lifecycle status.
-- Put human review records under `evidence/reviews/` and machine probe / eval
-  artifacts under `evidence/probes/`, grouped under a dated campaign directory,
-  as the existing `2026-08-*` entries are, so bulk output stays separable from
-  human records.
+  artifact, or a preserved reference / operating library, and mark its lifecycle status.
+- Put human review records under `evidence/reviews/`, machine probe / eval
+  artifacts under `evidence/probes/`, and preserved reference / operating
+  libraries under `evidence/libraries/`, grouped under a dated campaign
+  directory, as the existing `2026-08-*` entries are, so bulk output stays
+  separable from human records.
 - Do not add new material under the former `reviews/` root.
