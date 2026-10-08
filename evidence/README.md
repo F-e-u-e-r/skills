@@ -4,6 +4,8 @@ This directory holds the project's **evidence and record trail**: review
 records, measurement/probe artifacts, and historical campaign material. It is
 **not** canonical doctrine.
 
+Two top-level summary pages index this trail: [`ops-pack-evaluation.md`](ops-pack-evaluation.md) (how the Ops Pack is tested, with links into the records) and [`provenance.md`](provenance.md) (full source history and acknowledgements). The dated records themselves live under the three subdirectories described below.
+
 ## What this is / is not
 
 - **Is:** the durable record of how decisions were reached and what was

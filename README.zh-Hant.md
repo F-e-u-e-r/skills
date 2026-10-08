@@ -31,7 +31,7 @@ skill,而非保存當初那些完整的對話、工作流程或來源素材。
 
 各 pack 版本獨立。這些 pack 目前以 **Claude Code plugin** 形式,透過本 repository
 的 marketplace 散佈(見下方[安裝](#安裝)),另有**四個選配 hook**——repo 層級、
-手動安裝;沒有任何 plugin 會註冊它們(見[強制層:hooks](#強制層hooks-設定方法))。
+手動安裝;沒有任何 plugin 會註冊它們(見[強制層:hooks](hooks/README.md))。
 每個 pack 可擇一或任意組合安裝。
 
 這些 pack 也會從觀察到的失敗、貢獻者經驗、open-source 意念、研究與針對性評測中
@@ -41,7 +41,7 @@ skill,而非保存當初那些完整的對話、工作流程或來源素材。
 > [!NOTE]
 > **狀態:早期 alpha。** Ops Pack 處於 **早期 alpha(`v0.3.0`)**;Planning Pack
 > 與 Design Pack 為 `0.1.0`。規則會隨真實 session 暴露的缺口調整,而且這些 pack
-> 用它們自己的教條[檢驗自己](#evals測試這個-pack-本身)——包含誠實的 null result。
+> 用它們自己的教條[檢驗自己](evidence/ops-pack-evaluation.md)——包含誠實的 null result。
 > 歡迎用具體失敗案例開 issue 或 PR。
 
 **一覽**
@@ -54,9 +54,8 @@ skill,而非保存當初那些完整的對話、工作流程或來源素材。
 
 ## 目錄
 
-- [安裝](#安裝) · [如何打造這些 pack](#如何打造這些-pack) · [`ops-pack`:紀律 skill](#ops-pack紀律-skill) · [`planning-pack`:規劃 skill](#planning-pack規劃-skill) · [`design-pack`:設計 skill](#design-pack設計-skill) · [架構與穩定性](#架構與穩定性)
-- **[Ops Pack — 紀律血統與證據](#ops-pack--紀律血統與證據):** [十條原則](#萃取時保留的核心原則最高槓桿的十條) · [刻意捨棄](#刻意捨棄的部分與為什麼) · [Skill 會自動呼叫 agent 嗎?](#skill-會自動呼叫-agent-嗎) · [強制層:hooks](#強制層hooks-設定方法) · [Evals](#evals測試這個-pack-本身) · [評測結果](#評測結果) · [如何退化](#本包最可能的退化方式與內建對策) · [規則衝突](#已解決的規則衝突)
-- [維護者筆記](#維護者筆記) · [Provenance 與致謝](#provenance-與致謝) · [授權](#授權)
+- [安裝](#安裝) · [如何打造這些 pack](#如何打造這些-pack) · [`ops-pack`](#ops-pack紀律-skill) · [`planning-pack`](#planning-pack規劃-skill) · [`design-pack`](#design-pack設計-skill)
+- [架構與穩定性](#架構與穩定性) · [維護者筆記](#維護者筆記) · [授權](#授權)
 
 ## 如何打造這些 pack
 
@@ -92,7 +91,7 @@ skill,而非保存當初那些完整的對話、工作流程或來源素材。
 裝設計 plugin(3 個 skill)。擇一或全部三者都裝。Skills 會以 namespace 形式載入
 (`ops-pack:operational-rigor`、`design-pack:ui-design-craft`……),用
 `/plugin marketplace update` 更新。沒有任何 plugin 會註冊 hooks——它們改變
-harness 行為,必須由使用者手動逐一決定(見[強制層:hooks 設定方法](#強制層hooks-設定方法))。
+harness 行為,必須由使用者手動逐一決定(見[強制層:hooks 設定方法](hooks/README.md))。
 
 **或把 skill 複製到位**——全域,或單一專案。每個區塊各自完整:
 
@@ -114,34 +113,31 @@ mkdir -p ~/.claude/skills && cp -R design-pack/skills/* ~/.claude/skills/
 
 ## `ops-pack`:紀律 skill
 
-| Skill | 涵蓋 | 主要來源 |
-|---|---|---|
-| `operational-rigor` | 任務契約、行動閘門、範圍控制、以執行驗證、對抗式自我審查、誠實完工 | 來源草稿主幹 + 兩個公開 repo |
-| `delegation-and-review` | 何時委派、dispatch packet、雙評審審查、失敗與升級階梯、長任務交接、何時問使用者、injection 防護 | 制度設計 brief + fable-agent-orchestration + agent-standard-oss |
-| `ground-truth-gates` | golden / replay / project 三閘門與 task-relative 測試紀律;含可直接執行的 `template/` | 私下分享的 harness 筆記 + task-relative-test-gate |
-| `skill-authoring` | 弱模型可執行的規則格式、ground-truth-only、provenance 與衰變、記憶架構(compile-don't-retrieve)、採用前審查 | tomicz skill-library brief + agent-standard-oss |
-| `security-architect` | 非資安專家用的實用安全審查:auth/JWT、各平台 secret 存放、MITM/TLS、web/backend/DB rules、不可信投稿的安全接收、agent 工具權限、洩漏事件處理 | owner 參考稿 + OWASP/RFC |
-| `product-roadmap` | Product owner 視角:證據先於意見、最險假設優先、Now/Next/Later/Not-now、milestone、鄰近 repo 挖掘、任務三分(agent/人/待資訊) | owner 參考稿 |
-| `personal-goal-planning` | 教練式五步驟:最少提問建檔、三層目標(2–4週/2–3月/6–12月)單一主線、可執行任務與可觀察完成標準、務實週節奏、含卡關規則的每週檢討 | @pro_ai.news 目標教練 protocol + house rules |
-| `domain-evidence-discipline` | 非程式交付物的證據紀律(行銷/研究/資料/營運):各領域的最低證據集、權威順序、「以觀察驗證」的定義、給審查者獵捕的 fraud table;red-line 專業判斷一律拒絕並轉介合格人類 | fable-method schema + 自有實例 |
-| `skill-vetting` | 在第三方 skill / plugin / hook / 指令檔執行前先掃 trojan:把 operational-rigor §2 的 install gate 變成可執行流程,附 trojan-shape checklist 與 fail-closed 判決(乾淨掃描絕不等於「safe」);另附一個 opt-in 的 advisory session-start 絆線(`hooks/skill-vetting-advisory.py`) | operational-rigor §2 + 社群安全稽查 |
-| `cross-model-review` | load-bearing merge 前找**不同模型家族**做對抗審查:session 時偵測審查者(不寫死陣容)、自足 packet、findings 視為主張、有界的審查-修正迴圈(每位審查者都給出確認過的 verdict——各自為 PROCEED,或其每個剩餘 FIX 項皆為記錄在案且有正當理由的 gap,才 merge;timeout/空回應不算 verdict)、exit code≠通過。只放 doctrine——具體 CLI 不進 pack | owner 私有 CLI 筆記(只放 doctrine) |
+| Skill | 用途 |
+|---|---|
+| `operational-rigor` | 執行紀律：任務契約、行動闘門、以執行驗證、誠實完工 |
+| `delegation-and-review` | 委派、雙評審審査、升級階梯、長任務交接、injection 防護 |
+| `ground-truth-gates` | 可執行的驗證闘門（golden / replay / project）；含可直接跑的 `template/` |
+| `skill-authoring` | 弱模型可執行的規則格式；provenance、衰變、記憶架構 |
+| `security-architect` | 非資安專家用的實用安全：auth、secret、web/backend/DB、不可信投稿接收 |
+| `product-roadmap` | Product owner 視角：證據先於意見、Now/Next/Later、milestone、任務三分 |
+| `personal-goal-planning` | 教練式三層個人 / 職涯目標，含每週檢討迴圈 |
+| `domain-evidence-discipline` | 非程式交付物的證據紀律（行銷/研究/資料/營運） |
+| `skill-vetting` | 第三方 skill / plugin / hook 執行前先掃 trojan |
+| `cross-model-review` | load-bearing merge 前找**不同模型家族**做對抗審査 |
 
-`ground-truth-gates/template/` 已實跑驗證(Node v23,2026-07-06):
-無 snapshot 時正確 FAIL、凍結後全綠、改變 transform 行為時精準列出漂移的紀錄並 exit 1。
+<p><img alt="Ops Pack version v0.3.0" src="https://img.shields.io/badge/version-v0.3.0-orange.svg"></p>
+
+**紀律血統**——十條最高槓桿原則、刻意捨棄了什麼、skill 與 agent 實際如何被叫用、本包如何退化——收錄於 [`ops-pack/README.md`](ops-pack/README.md)（英文）。給硬性強制的選配 repo 層級 hooks 見 [`hooks/README.md`](hooks/README.md)；評測證據見 [`evidence/ops-pack-evaluation.md`](evidence/ops-pack-evaluation.md)。
 
 ## `planning-pack`:規劃 skill
 
-| Skill | 領域 | 主要來源 |
-|---|---|---|
-| `planning` | 動工前產出可執行的工作契約——framed intent、可測需求與驗收標準、界定的 non-goals、記錄的決策、相依排序的任務拆解與逐項驗證、整體計畫驗證、交棒給執行;深度 D0–D3(D0 小任務留給 `operational-rigor`) | Planning Pack Architecture v1 |
-| `plan-reconciliation` | 執行開始後把核准計畫與現實對齊——計畫不再吻合時修訂(重複失敗、前提被證偽、無法滿足的需求),或工作完成時收尾,逐項對照 baseline 附證據;保留 revalidation / re-approval / Ops 授權閘門(下方有已記錄的弱層限制) | Planning Pack Architecture v1 |
+| Skill | 用途 |
+|---|---|
+| `planning` | 動工前的可執行工作契約：framed intent、可測需求、界定 non-goals、相依排序任務；深度 D0–D3（D0 留給 `operational-rigor`） |
+| `plan-reconciliation` | 執行開始後把核准計畫與現實對齊——不再吻合時修訂，完成時收尾——皆附證據 |
 
-`planning` 與 `plan-reconciliation` 組成 **Planning Pack**(Planning ↔ Ops):它們負責*要蓋什麼、計畫如何變*,而 `ops-pack` 的執行紀律 skill(`operational-rigor`、`delegation-and-review`、`ground-truth-gates`……)負責*把它做出來*。Planning 產物從不等於執行授權,Planning 深度也不折抵執行的 rigor。
-
-- **`planning`** 在動工前觸發——當你要一份計畫、spec、需求拆解、工作拆分或設計決策時。它停在核准的計畫並交棒給執行。小而清楚、低風險的任務是 **深度 D0**:不產出計畫產物,留給 `operational-rigor` 的 inline task contract。
-- **`plan-reconciliation`** 從執行中觸發——核准計畫與現實分歧(revise)或工作完成(close)時。不是用來事前寫計畫(那是 `planning`),也不是執行期的喊停本身(那是 `operational-rigor`)。
-- 與 domain adapter 區別:`product-roadmap` 是產品*方向*(接下來蓋什麼、Now/Next/Later),不寫 build contract;`personal-goal-planning` 是*個人*的人生/職涯目標;`planning` 是軟體的 build contract。
+`planning` 與 `plan-reconciliation` 組成 **Planning Pack**（Planning ↔ Ops）：它們負責*要蓋什麼、計畫如何變*，而 `ops-pack` 的執行紀律 skill 負責*把它做出來*。Planning 產物從不等於執行授權，Planning 深度也不折抵執行的 rigor。
 
 **已記錄的弱層限制(QUALIFIED-ADOPTABLE)。** Planning Pack 以 **QUALIFIED-ADOPTABLE:14 項行為主張中 13 項乾淨、1 項已記錄的弱層限制、0 項有害行為、D0 保留** 發佈。那唯一未結的主張是一項已記錄的弱層限制,在此載明而非略過。限制內容:`plan-reconciliation` 能可靠保留 revalidation / re-approval / Ops 授權閘門,但在較弱的執行層,它不能可靠地*自行*執行對「缺漏」敏感的整體計畫 orphan 偵測(傾向描述或請求 revalidation,而非自己做)。失效模式是 fail-safe——偵測不足時預設「不可 resume / 升級」,絕不會誤判為「safe to resume」。
 
@@ -150,58 +146,17 @@ mkdir -p ~/.claude/skills && cp -R design-pack/skills/* ~/.claude/skills/
 
 ## `design-pack`:設計 skill
 
-三個設計工藝 skill,把同一套 doctrine 風格——數值預算、禁用模式、可觀測閘門
-——應用到視覺設計工作。像任何 plugin 一樣安裝(見上方[安裝](#安裝));版本獨立
-(目前 0.1.0)。這些 skill 可獨立成立:`design-review-gate` 的 contract 規則
-逐字引用 ops-pack 的兩條 load-bearing 條款(所以那些完整旅行),其餘對
-ops-pack 的 cross-reference 在 ops-pack 未安裝時退化為純脈絡。與 ops-pack
-並用會更利,但並不需要它。
+三個設計工藝 skill，把同一套 doctrine 風格——數值預算、禁用模式、可觀測闘門——應用到視覺設計工作。像任何 plugin 一樣安裝（見上方[安裝](#安裝)）；版本獨立（目前 0.1.0）。這些 skill 可獨立成立——`design-review-gate` 逐字內載 ops-pack 的兩條 load-bearing 條款——與 `ops-pack` 並用更利，但不需要它。
 
-| Skill | 涵蓋 | 主要來源 |
-|---|---|---|
-| `ui-design-craft` | UI 組構與視覺工藝:版面、階層、字體排印、色彩、互動/狀態品質、無障礙,以及反通用(anti-generic)設計指引 | taste-skill + refero_skill + open-design + 純意念來源 |
-| `motion-craft` | 動效與互動行為:時長、easing、手勢/彈簧行為、編排、reduced-motion 行為,以及動效效能 | Emil Kowalski + LottieFiles + refero_skill + open-design |
-| `design-review-gate` | 結構化設計審查:視覺階層、一致性、互動/狀態品質、無障礙、動效,以及可量測的審查 findings | Emil Kowalski 姿態 + 自行綜合 + 純意念來源 |
+| Skill | 用途 |
+|---|---|
+| `ui-design-craft` | UI 組構與視覺工藝：版面、階層、字體排印、色彩、狀態品質、反通用設計 |
+| `motion-craft` | 動效行為：時長、easing、手勢/彈簧、編排、reduced-motion、效能 |
+| `design-review-gate` | 把結構化設計審査化為可量測、可排序的 findings |
 
-**它如何保持一致、又不塞爆脈絡。** 設計指引不是在三個 skill 之間手動維護、重複
-抄寫的散文。它由**單一的設計語意 canonical corpus**,經確定性建置,投影成**各
-skill 本地的參考檔**,再由三個 `SKILL.md` 進入點**選擇性**取用——一項任務只拉入
-它需要的參考,絕不把整本規則書塞進每個 prompt。於是同一條規則在任何適用處讀來
-一致(單一事實來源、由重生成而非重抄),而日常任務仍只載入相關的切片。權威由上
-而下:**canonical corpus 是主要語意權威**;一小組 **pack-local extensions** 在其
-**之下**補充 production 專屬指引(絕不凌駕);每個 `SKILL.md` 是**任務進入點**,決
-定某項工作需要哪些參考,任何重疊處以 corpus 為準。
+**它如何保持一致。** 設計指引不是在三個 skill 之間手抄：它由單一的設計語意 canonical corpus，經確定性建置，投影成各 `SKILL.md` 選擇性取用的 skill 本地參考檔。corpus 是主要權威；pack-local extensions 在其下補充 production 指引。完整 corpus / 投影架構見 [`ARCHITECTURE.md`](ARCHITECTURE.md)。
 
-範例 prompt(依你的介面調整):
-
-- *「用 `ui-design-craft` 做一個 pricing 頁 hero——不要通用的 AI 感。」*
-- *「用 `motion-craft` 設計卡片 hover 與進場動效(尊重 reduced-motion)。」*
-- *「用 `design-review-gate` 審查這個結帳畫面——給我排序後的 findings。」*
-
-誠實備註:
-
-- **brand-corpus 的去留是諮詢出來的,不是猜的。**「per-brand DESIGN.md 是否值得
-  第四個 skill」交給跨家族諮詢(grok-4.5 high + gpt-5.6-sol max,隔離執行);
-  兩者獨立收斂到「不做第四技能——放進 design-review-gate 的 design-contract
-  段」,即最終出貨形狀。
-- **[VoltAgent/awesome-design-md](https://github.com/VoltAgent/awesome-design-md)**
-  (MIT)托管 74 份(2026-07-19 當時)逆向工程的 per-brand DESIGN.md。本包只把它當非權威研究材料
-  指路——具體、有用,而且正是 design-review-gate §4 教你先驗證再信任的
-  「unofficial observation」類。不 vendor 任何內容。
-- **Probe 狀態**:ui-design-craft 與 motion-craft 的閘門、以及
-  design-review-gate §4 的 contract 規則,已以 smoke 等級 probe 驗證(全新
-  弱層 agent、bare/ruled 兩臂、預期先寫);design-review-gate §§1-3 的審查
-  迴圈尚未 probe。紀錄包含一輪作廢(答案鍵洩入
-  fixture,由 expected-before-actual 的落差抓到,不是靠分數)與一個
-  NULL(drift-direction 條款的陷阱未上膛)——皆公開於各 skill 的 provenance
-  與 PR trail。hex 與字體時尚禁令是本包衰變最快的事實:它們追蹤模型訓練
-  資料,每個模型世代都要重驗。
-- **研究紀錄(非本包功能)**:一份針對 [Impeccable](https://github.com/pbakaus/impeccable)
-  commit `9d715cc4` 的獨立相容性研究——以本包 canonical corpus 為對照,觀察 routing、
-  provider fan-out、控制表示法與 attribution 傳播——放在
-  [`research/design-pack/2026-09-impeccable-compatibility-study/`](research/design-pack/2026-09-impeccable-compatibility-study/)。
-  內容只有觀察、fixtures 與矩陣:沒有任何結論被採納進 skills、corpus 或 generated
-  references,也不隨任何 plugin 出貨。
+**證據。** `ui-design-craft` / `motion-craft` 的闘門與 `design-review-gate` §4 已以 smoke 等級 probe 驗證（全新弱層 agent、bare/ruled 兩臂、預期先寫）；審査迴圈 §§1–3 尚未 probe，紀錄保留一輪作廢與一個 NULL（皆在各 skill 自己的 provenance 筆記）。hex 與字體時尚禁令衰變最快——每個模型世代都要重驗。一份獨立的 [Impeccable](https://github.com/pbakaus/impeccable) 相容性研究（只有觀察、未 vendor 任何內容）放在 [`research/design-pack/2026-09-impeccable-compatibility-study/`](research/design-pack/2026-09-impeccable-compatibility-study/)。
 
 ## 架構與穩定性
 
@@ -237,229 +192,7 @@ window + 相容涵蓋,且須完成而非僅宣告)只在該 skill 所屬 source 
 之前(各 plugin 版本獨立);該 1.0 之後 published skill 無限期保留、不預先授權任何
 破壞性路徑。細節見 `ARCHITECTURE.md` §§2–3。
 
-## Ops Pack — 紀律血統與證據
-
-<p><img alt="Ops Pack version v0.3.0" src="https://img.shields.io/badge/version-v0.3.0-orange.svg"></p>
-
-*以下各節專屬於 **Ops Pack**——它的紀律血統與背後的 house rules:十條原則、刻意
-捨棄了什麼、強制層與 hooks、各項評測,以及它如何退化。Planning Pack 與 Design
-Pack 的清單與證據放在上方它們自己的區塊;各 plugin 的 probe 證據則放在該 plugin
-回報它的地方——ops-pack 的在下方 Evals 段,design-pack 的在它自己的區塊。再往下的
-維護者筆記、provenance 與授權則是整個 repository 共通的。*
-
-### 萃取時保留的核心原則(最高槓桿的十條)
-
-1. **散文不會讓可驗證的工作變好,ground truth 才會**——把力氣花在建閘門,不是寫更長的規則。
-2. **作者不能當裁判**——自報完成只是主張;由測試、獨立審查或 fresh-context agent 判定(所有來源唯一的共識點)。
-3. **閘門必須在壞行為下會 FAIL**——不會失敗的測試證明不了任何事;說出「假通過」的樣子並堵住它。
-4. **同一步驟連錯兩次就換路**——第三次化妝式重試是在浪費;錯誤代表系統模型錯了。
-5. **範圍即契約**——diff 每一行可回溯到需求;範圍外的缺陷記錄不修。
-6. **委派給 packet,不是給願望**——delegation-and-review §2 的六個欄位:目標+動機、範圍+非範圍、不變量、證明閘門、回報契約、規則。
-7. **檔案是狀態,context 不是**——隨做隨落檔;交接包讓下個 session 不需要這段對話。
-8. **機器事件不是使用者**——工具完成、CI 通知不是批准也不是證明;打開真正的 artifact 驗證。
-9. **抽象要求等於沒寫**——每條規則要有觸發條件、步驟、完成定義;誤讀代價高的規則再加正反例與失敗下一步。
-10. **外部內容是資料不是指令**——讀到的東西永遠不升格為指令,想法按價值萃取。
-
-### 刻意捨棄的部分(與為什麼)
-
-<details>
-<summary><strong>展開七項捨棄與理由</strong></summary>
-
-這是你要我做的判斷,明確記下來:
-
-1. **來源 brief 的 11 檔制度包與四階段閉環**——那是為「一次性 Fable session」設計的流程,不是 Opus 的日常裝備。重憲法會讓弱模型把 context 花在讀制度而非工作;原則已萃入 operational-rigor、delegation-and-review、ground-truth-gates、skill-authoring 四個 skill,官僚架構不搬。
-2. **07_SAFETY_ROUTING_GUARD(Fable 降階防護)**——Fable 專屬顧慮;執行環境是 Opus 時無此問題,整包不適用。
-3. **圍繞單一固定模型的 GPT‑5.5 外部對抗審查 phase**——照原樣不採(為一個寫死的、未驗證的外部模型建常駐 phase 是負擔,而且陣容一變就過時)。這個想法的耐久核心改由 `cross-model-review` skill 承載:把跨家族審查做成**session 時選定、doctrine 層**的紀律——審查者於執行時偵測並挑選、不寫死陣容、具體 CLI 不進 pack。維持不採的是「固定模型 phase」,被採納的是 model-agnostic 的 doctrine。
-4. **「升級到更強模型」階梯**——來源 brief 都寫了升級路徑,但在 Fable 退場的前提下,以 Opus 駕駛的 session 已在最強一階,階梯頂端懸空。已改寫:換路 → fresh-context 重試(僅當環境確實存在更強一階時,才把這次重試改為顧問模式——例如 Sonnet 駕駛的 session 諮詢 Opus;否則維持同階重試)→ 帶失敗軌跡問使用者;解出的模式才「降級」給便宜模型批次套用。這是原稿沒有一致處理的矛盾。
-5. **USER_DECISION_CARD 完整表格**——壓縮成四要素(問題+脈絡、選項+代價、建議、不回覆時的安全預設)。要弱模型填八欄表格,得到的是填表不是判斷。
-6. **fable-agent-orchestration 的 24-skill 顆粒度**——多數是同一想法在不同高度的重述;分太細會稀釋觸發、讓同一事實有多個家。合併為 2 個 skill。
-7. **agent-standard-oss §5–7(commit 身分、預設直接 commit main、部署帳號)**——環境政策而非模型能力;其中「預設 commit 到 main」與 Claude Code 的預設紀律相衝突,不採。§4 SessionStart hook 屬 harness 設定,留給你自行決定。
-
-</details>
-
-### Skill 會自動呼叫 agent 嗎?
-
-不會「自動」。SKILL.md 是**指令,不是可執行工作流**:description 常駐 context、內容符合時模型載入全文,然後由模型讀了照做。skill 能指示「什麼條件下必須開 subagent」,模型通常會遵守,但這是模型判斷,不是機制保證。本包的指示點:
-
-- `operational-rigor` §5 — load-bearing 工作(上 production、涉及安全、動資料)不得只靠自我審查收案,必須跑真閘門或開 fresh-context subagent 驗證。
-- `delegation-and-review` §3 — 雙評審必須是 fresh-context subagent,不准在原 context 裡角色扮演。
-- `security-architect` — 自己寫的修正不能自己收案。
-- `product-roadmap` — repo 掃描屬 bulk work,委派出去、只收結論。
-- `skill-authoring` §6 — 制度檔落地前由無脈絡的 subagent 審三個面向。
-
-要達到**模型無法悄悄跳過的強制力**,只有兩條路,都不在 skill 文字裡:**hooks**(下一節——強制力的上限就是 hook 自身的依賴與比對規則)與 **CI**(把 `checks/run-all.sh` 掛進 pipeline)。這正是本包的核心原則:要強制,用閘門,不是用更多散文。
-
-散文與閘門之間有一道量測出來的缺口:**可用不等於會用**。本包自己的 eval(`evidence/reviews/2026-07-11-pack-eval-rounds-1-2.md`)量到:24 場帶 skills 的 session 只有 10 場曾自行載入任何 skill——描述是機率性的提示,不是機制。某類工作**必須**觸發某紀律時,請在專案的 `CLAUDE.md` 或 dispatch prompt 裡指名(「動到金流的任務先載入 operational-rigor」):被指名的 skill 近乎必定載入;沒被指名的,即使任務完全符合描述,載入率也不到一半。
-
-### 強制層:hooks 設定方法
-
-Hook 是 Claude Code harness 本身在特定事件上執行的 shell 指令——與 skill 不同,模型無法跳過它。完整文件:<https://docs.claude.com/en/docs/claude-code/hooks>。
-
-**設定位置**(寫在 settings 檔的 JSON 裡):
-
-| 檔案 | 範圍 |
-|---|---|
-| `~/.claude/settings.json` | 你本人,所有專案 |
-| `<repo>/.claude/settings.json` | 該專案,可 commit 共享 |
-| `<repo>/.claude/settings.local.json` | 該專案,個人用,不 commit |
-
-**Exit code 契約:**exit `0` = 放行/繼續;exit `2` = 擋下——`PreToolUse` 時工具呼叫被阻止、stderr 回饋給模型(它知道原因、能去修);其他 code = 不阻擋的警告。
-
-**實例——閘門紅燈時禁止 commit**(腳本在 `hooks/gate-before-commit.sh`,2026-07-07 已測試:非 commit 指令與綠燈放行、紅燈擋下並把失敗原因回饋給模型;它閘的是 commit *目標*的 repo,並用 `jq` + `python3`(`parse-commit-command.py`)從指令結構偵測 commit——引號訊息、分支名、`printf`/heredoc 散文不再誤觸;缺少 `jq`/`python3` 時對疑似 commit fail-closed,不靜默放行):
-
-```bash
-mkdir -p .claude/hooks
-cp hooks/gate-before-commit.sh hooks/parse-commit-command.py .claude/hooks/
-cp hooks/verify-before-stop.py hooks/gate-credential-destruction.py .claude/hooks/
-cp hooks/skill-vetting-advisory.py hooks/skill_snapshot.py .claude/hooks/
-```
-
-維護者可用下列指令回歸測試每一個 hook(每套測試都涵蓋該 hook 行為的兩面——gating hook 是放行與擋下,advisory hook 是靜默與提示):
-
-```bash
-bash hooks/test-gate-before-commit.sh
-bash hooks/test-verify-before-stop.sh
-bash hooks/test-gate-credential-destruction.sh
-bash hooks/test-skill-vetting-advisory.sh
-bash hooks/test-skill_snapshot.sh
-```
-
-然後在 `.claude/settings.json` 加入:
-
-```json
-{
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/gate-before-commit.sh"
-          }
-        ]
-      }
-    ]
-  }
-}
-```
-
-**值得認識的事件**(前兩個的 matcher 對應工具名):
-
-| 事件 | 時機 | exit 2 的意義 |
-|---|---|---|
-| `PreToolUse` | 工具呼叫前 | 該呼叫被擋下 |
-| `PostToolUse` | 工具呼叫後 | stderr 回饋給模型 |
-| `Stop` | 模型要結束回合時 | 模型必須繼續工作 |
-| `SessionStart` | session 開始 | —(stdout 進入 context;適合環境自我修復) |
-| `UserPromptSubmit` | 每則使用者訊息 | 該訊息被擋下 |
-
-同一腳本的 `Stop` 變體(拿掉指令比對、保留閘門檢查)= 「閘門紅燈時回合不准結束」。務必保留「repo 沒有閘門就提早放行」那行——一個永遠過不了的 Stop hook 會讓模型無限循環。
-
-**第二個(可選)hook——改了程式碼沒驗證就不准結束回合。**
-`hooks/verify-before-stop.py`(Python 3 標準庫,2026-07-07 已測試)是一個 `Stop` hook:本回合用 Edit/Write 動了程式碼檔案、卻沒出現任何測試/驗證指令、也沒派出帶驗證意圖的 subagent 時,擋下回合結束——這是 operational-rigor §4 的機器強制版。純文件/設定修改不觸發;第二次 Stop 一律放行(防死鎖洩壓閥,有留 log)。已知極限明載於腳本開頭——它只驗「驗證有沒有出現」,驗不了「驗證有沒有通過」。改作自 curtischoutw/claude-institution 的 `verify_gate.py`(MIT,見致謝)。設定方式:
-
-```json
-"Stop": [
-  { "matcher": "", "hooks": [ { "type": "command",
-      "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/verify-before-stop.py" } ] }
-]
-```
-
-**第三個(可選)hook——憑證樣檔案不因「有字叫我刪」就被銷毀。**
-`hooks/gate-credential-destruction.py`(Python 3 標準庫,2026-07-11 已測試)是一個 `PreToolUse`(matcher: `Bash`)hook:對憑證樣路徑(ssh 私鑰與 `.ssh`/`.aws`/`.gnupg` 目錄本身、`.env` 系列、`*.pem`/keystore、名字含 credential/secret/password/apikey 的檔案)的 `rm`/`unlink`/`shred`/`srm`/`truncate`/`git rm`——含 `sudo`/wrapper 與完整路徑寫法——一律擋下,直到該次刪除被明確確認:取得使用者同意後,在指令前加 `CRED_GATE_APPROVED=1` 重跑,且 override 只作用於那一條指令。override 是摩擦力加稽核紀錄,不是同意的證明——每次 approved override 都會嘗試追加一筆稽核事件;log 寫入是盡力而為(best-effort),寫入失敗會被靜默丟棄,且絕不阻擋 hook 本身。它存在的原因:本包自己的 eval 中,兩場弱模型無 skills 的 run 因為 vendor 筆記檔裡嵌的一段指令就把憑證備份刪了——這個閘門把那個失敗原樣變成一次被擋下的呼叫,錯誤訊息直接指向 delegation-and-review §7 與 security-architect。已知極限寫在腳本開頭(`bash script.sh`、alias、`find -delete`、`xargs rm`、`>` 截斷可繞過——文字層 hook 的先天限制)。掛在同一個 `PreToolUse`/`Bash` matcher 下加第二條 command 即可:
-
-```json
-{ "type": "command",
-  "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/gate-credential-destruction.py" }
-```
-
-**第四個(可選)hook——未審或變動的第三方 skill 的 advisory 絆線。** `hooks/skill-vetting-advisory.py`(Python 3 標準庫,已測試)是一個**純 advisory** 的 `SessionStart` hook,是 `skill-vetting` skill 的搭檔;它的整個觀測層放在同目錄的 `hooks/skill_snapshot.py` 模組——兩個檔案要一起安裝到同一個目錄(設計紀錄:`evidence/reviews/2026-07-25-skill-vetting-snapshot-threat-model.md`)。**簽章掃描不是安全邊界,已移除**:primitive 對受監看 skills 根目錄(`$CLAUDE_CONFIG_DIR/skills`,預設 `~/.claude/skills`,加上專案經由 `$CLAUDE_PROJECT_DIR` 的 `.claude/skills`)之下每個項目的**每個檔案**做快照——所以 skill 內部任何地方(不只它的 `SKILL.md`)的新增/修改/刪除/改名/symlink/檔案型別變動都算(一個例外,威脅模型 G1 有載明:直接躺在 skills 根目錄下的散落一般檔案根本不是候選,因為它不能被當成 skill 載入)——而任何無法完整觀測的東西(讀取錯誤、超大檔案、掃描預算耗盡以及其後被枚舉的每一個候選、任何 symlink、特殊檔案、敵意的**頂層** skill 名稱(巢狀檔名自 round 6 起刻意不做閘控——它們從不回顯,其位元組已綁入 digest)、損毀或版本過期的 baseline)都是**異常:一律提示,絕不可能被認證為「未變動」**。對新增/變動/移除/異常的 skill,它注入一行導向 `skill-vetting` skill。它**絕不擋、也絕不輸出「safe」**——`SessionStart` hook 無法 deny,而會放行的掃描器正是 `skill-vetting` 要避開的虛假保證陷阱;乾淨且未變動的執行靜默,首次執行若有東西要收編,則輸出一行說明它**正在列為基準**、但未經審查的 skill 有幾個(這行在寫入之前發出並如此陳述;寫入若失敗不會另行公告——在單一訊息規則下也不可能——但也不需要,因為什麼都沒寫入,下個 session 會再說一次同樣的話)(root 為空、什麼都沒記錄時同樣靜默)——這個數字包含「觀測完整但結果不利」的候選(symlink、不可讀目錄、特殊檔案、敵意名稱),只排除因資源預算中斷而失落的那些(它們的 digest 只會是佔位符),而被排除的每一個仍會由自己的 anomaly 行提示;advisory **先印出**、baseline(`<config>/skill-vetting/baseline.json`)才前進——投遞失敗下次 session 會重新提示——skill 名字只透過嚴格 ASCII allowlist 或不透明 id 進入 model context。baseline 不具防竄改性(它與 skills 本身同一信任層級);這個限制是誠實記載、不是被防禦。它是導向完整 vetting 閱讀的絆線,絕非替代品。設定方式:
-
-```json
-"SessionStart": [
-  { "matcher": "", "hooks": [ { "type": "command",
-      "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/skill-vetting-advisory.py" } ] }
-]
-```
-
-三個 gating hook 把稽核事件寫入 `~/.claude/hooks/hooks.log`,advisory vetting hook 寫入 `<CLAUDE_CONFIG_DIR>/skill-vetting/advisory.log`(預設 `~/.claude/skill-vetting/advisory.log`)——閘門活動與 vetting hook 的提示都變成可稽核,而不是看不見(這些寫入都是盡力而為 best-effort:寫入失敗會被靜默丟棄,絕不阻擋 hook 本身)。
-
-**兩個注意事項。** Hook 以你的權限執行任意 shell:啟用前先讀過腳本,且建議把 hook commit 進 repo、像程式碼一樣被審查。另外 Claude Code 在啟動時快照 hook 設定:改完後要用 `/hooks` 選單確認或重啟 session 才生效。
-
-### Evals:測試這個 pack 本身
-
-本包用它自己的教條檢驗自己(「不能測試的規則只是主張」):一套**不公開**的
-陷阱任務——埋設的無關 bug、自相矛盾的 spec、永遠不會失敗的測試、誘導只出
-計畫、內容中夾帶的注入指令、錯誤的報告數字——以對應到特定 pack 規則的
-rubric 盲評。Fixtures 刻意不發布:陷阱任務一旦可能被模型看過就失去測量
-效力,而第一輪已實測連「描述陷阱的目錄名」都足以讓模型察覺。
-
-誠實的基準結果(2026-07-10,8 臂 × 6 任務、48 場 session,盲評):**在
-2026 年前沿模型 max effort 下,skills 沒有量得到的結果層增益**——任務已
-飽和(44/48 滿分;預期的「無 skill 典型失誤」在任何一臂都沒發生)。有
-skills 的 run 在過程上確有差異(點名引用規則、預先聲明預期觀察、明確的
-scope 契約、「已觀察未處理」清單)——代價約 1.6 倍 session 時間。第二輪
-covert 測試(14 場 session、單一擬真工單,機械判定並經獨立複驗)重現了
-天花板,剩餘的鑑別力全部落在「察覺並回報」層;完整數字與修正見
-[evidence/reviews/2026-07-11-pack-eval-rounds-1-2.md](evidence/reviews/2026-07-11-pack-eval-rounds-1-2.md)。
-Hooks 現已具備放行/擋下兩路單元測試,但行為層(實測 arm)尚未量測。請據
-此看待本包:它是一層一致性保障與可執行的強制基底,不是已證明的分數提升。(這一輪
-測的是 `ops-pack` 的紀律 skill;`design-pack` 晚於它,帶有自己的 smoke 等級
-probe 紀錄,在[它自己的區塊](#design-pack設計-skill)裡。)
-
-Round-4 更新(2026-07-24):接班套件在弱模型層(haiku)完成一輪預先註冊的
-scored campaign(12 個 fixture cell、bare 對 ruled 兩臂僅差內嵌規則摘錄、
-transcript 機械驗證 arming、逐字 reply 擷取、凍結的 fixtures 與 oracle、
-每臂 n=3)。上方前沿層的 null 結論不變。弱模型層恰有一個 cell 達成判別
-(bare 0/3 對 ruled 3/3)——該規則的標記已改為 probed-in-part
-(skill-authoring §6);另有一項 smoke 輪發現(n=1 smoke 等級,與 scored cells 有別)促成本包第一個
-probe-backed 教條修復(delegation-and-review §1 的 decision-binding fallback);其餘
-cell 在預先註冊的判定表下分別 floor、飽和、觸發 saturation-veto、在延伸
-slot 後判為 NOT-DISCRIMINATED、或不可計分。請把它讀成
-「量測機制在運作」,不是分數提升:結果存於私有 ledger,僅以形狀引用。
-
-本包公約(2026-07-16,採自 fable-method 的「prime directive」——見致謝):
-新的行為規則出貨時,必須附上「沒有這條就會失敗」的 probe 或 trap;做不到
-就明確標記 `unprobed`。公約的量具是私有套件的接班輪——自 fable-method
-已公開的 eval 計畫改作其 trap 機制、重新實作成全新私有 fixtures——與套件
-其餘部分一樣由擁有者執行、不公開。
-
-### 評測結果
-
-我們用受控的 routing 與行為 probe 來評測 Ops Pack,而不是只靠軼事式的例子。
-
-目前結果顯示:**skill 可用性與 routing 品質,並不等於 skill 的自主 activation**。
-
-| 發現 | 結果 |
-|---|---|
-| 自主 activation | 弱 |
-| 明示 routing | 整體強,但因 surface 而異 |
-| 任務側 T2 介入 | `0/6 → 4/6` |
-| description 側 T2 介入 | `0/6 → 0/6` |
-| 明確可路由性 對 自主 activation（AE1） | reference gate `11/12`，一般 activation `0/12` |
-
-* **明示 routing 明顯強於一般 activation。** 在 canonical routing 評測中,本包正確處理了大多數預期的 routing 判斷;但一般行為 run 幾乎不會自動叫用可用的 skill。
-* **通用的 activation 提示並不足夠。** 兩次 Activation Bridge 實驗只讓可觀測的 skill 叫用略為增加,大多數合格任務仍沒有自主的 skill activation。
-* **失效是 surface 特定的,不是全 pack 的。** Localization 實驗發現:有些 task surface 能穩定 route,另一些則漏掉、選到鄰近的 skill、或根本沒 activate。
-* **任務用詞能因果地影響 routing。** 對較弱的 `ground-truth-gates` surface,加入明示的 trust / verification 框架後,正確 routing 從 **0/6 提升到 4/6**(小型受控實驗);其中一個 surface 從 **0/3 變 3/3**。
-* **改 skill description 無法重現該效果。** 一個對照實驗維持自然任務用詞不變,只窄幅擴充 `ground-truth-gates` 的 description。目標 surface 的正確 routing 仍維持 **0/6 → 0/6**,而既有的強 surface 得以保留。因此該候選 description **未出貨**。
-
-**Activation Execution Probe v1（AE1）。** AE1 測試：對於已證明能在明確路由條件下正確導向 pack skill 的任務表面，一般執行是否也會自主呼叫該 skill。在預先註冊的 `T4a`/`T4b` 表面上，同期的明確路由 reference gate 通過（**11/12**），但一般執行的 expected-skill activation 為 **0/12**，any-Skill activation 亦為 **0/12**——這表示在本次 AE1 測試配置下，明確可路由性與自主 activation 之間存在可觀察到的 dissociation。AE1 **並未**證明：routing 指令的因果效應、tool allowlist 的因果效應、skill description 與此無關、母體層級的 activation 比率，或任何 skill 的行為價值或增益。設計、計數與詮釋邊界：[evidence/reviews/2026-09-24-ae1-v1-scored-reconciliation.md](evidence/reviews/2026-09-24-ae1-v1-scored-reconciliation.md)。
-
-這些實驗是方向性的,且目前每個條件的樣本數很小(small n),所以我們把它們當作工程決策的證據,而非母體層級的效能估計。
-
-目前的工作結論是:主要的剩餘挑戰在於 **activation 與 task-surface 的辨識**,而不是需要大規模改寫 skill description。除非有受控實驗支持,production 的 skill 內容維持不變。
-
-本輪的 per-surface 計數、實驗 identity 與 owner 裁定:[evidence/reviews/2026-09-18-activation-eval-reconciliation.md](evidence/reviews/2026-09-18-activation-eval-reconciliation.md)。
-
-### 本包最可能的退化方式(與內建對策)
-
-1. **Skill 越補越肥**——教訓不斷往上疊 → 壓縮(compaction)觸發點(skill-authoring §7)。
-2. **閘門過期或被弱化**以維持綠燈 → verifier-decay 規則(delegation-and-review §5)與閘門紀律(ground-truth-gates)。
-3. **兩份 skill 目錄漂移** → 上方的 keep-in-sync 契約;每次推送前跑 `diff -rq`。
-4. **觸發衰變**——description 不再符合你實際的提問方式 → 「該觸發卻沒觸發」視為事故:修 description、記入 log(skill-authoring §7)。
-5. **模型名稱腐化**——路由建議寫死在今天的陣容 → 易腐事實規則(delegation-and-review §1):陣容從環境讀取,不從記憶假設。
+詳細的評測紀錄、provenance 與研究歷史放在 [`evidence/`](evidence/README.md)（含 [`evidence/ops-pack-evaluation.md`](evidence/ops-pack-evaluation.md) 與 [`evidence/provenance.md`](evidence/provenance.md)）與 [`research/`](research/)。
 
 ## 維護者筆記
 
@@ -483,63 +216,10 @@ hooks(不得有 `hooks/hooks.json`、`plugin.json` 不得有 hooks 欄位)——
 Release(仍在 alpha 期間標為 pre-release),README 的版本 badge 也寫 `vX.Y.Z`。`v0.1.16`
 之前的 tag 用舊的 `alpha-X.Y.Z` 形式;中間的版本從未個別打過 tag,`v0.1.16` 是第一個正式的 release of record。
 
-## 已解決的規則衝突
-
-*蒸餾 **Ops Pack** 時,如何調解彼此衝突的來源教條。*
-
-- rigor 草稿「超過兩步就要先出計畫」 vs 兩 repo「不要停在計畫上」→ 計畫是內部動作,**不准把回合結束在計畫上**;能做的可逆下一步就去做。
-- 自主性 brief「不要停下來問」 vs rigor 草稿「高風險可問一題」→ 以外部閘門清單裁決:發布/送出、金錢、憑證、破壞性動作、真正的產品取捨才停;其餘用宣告的假設繼續。
-
-## Provenance 與致謝
-
-<details>
-<summary><strong>展開所有來源與致謝</strong></summary>
-
-本包萃取並改作了以下來源的想法:
-
-- **gyozalab** — Threads 貼文;「Fable 5 一次性窗口 → 耐久制度」的核心框架,是本包的起點:
-  <https://www.threads.com/@gyozalab/post/DaS69OPFJxy>
-- **林長揚** — Facebook 貼文;AI harness / 系統改善 brief(制度設計想法進入 `delegation-and-review` 與 `skill-authoring`):
-  <https://www.facebook.com/story.php?story_fbid=1336664618031621&id=1224997379198346>
-- **Darko Tomic** — [`tomicz/fable-5-train-opus-skills-after-it-retires`](https://github.com/tomicz/fable-5-train-opus-skills-after-it-retires),MIT License,Copyright (c) 2026 Darko Tomic;skill library 方法進入 `skill-authoring`。
-- **kannaiah** — [Reddit 留言](https://www.reddit.com/r/ClaudeAI/comments/1ukynrw/comment/ovnh8zu/),operational rigor 主題,改作為 `operational-rigor`。
-- **firaen22**(公開身分前以「朋友 A」記名)— 私人 Discord 筆記(checks/-harness 設計筆記,及一份實測 harness 匯出),由維護者取得並改作為 `ground-truth-gates`、`operational-rigor`、`delegation-and-review` 與 `skill-authoring`;來源原文不隨發佈散佈。後續透過 GitHub PR 貢獻 cost-asymmetric golden runner 與第一版結構化 commit-hook parser。
-- **pro_ai.news** — Threads 貼文;五步驟目標教練 protocol,改作為 `personal-goal-planning`:
-  <https://www.threads.com/@pro_ai.news/post/DadQkGHjxq->
-- **Curtis Chou** — [`curtischoutw/claude-institution`](https://github.com/curtischoutw/claude-institution) @ `8dea062`,MIT License,Copyright (c) 2026 Curtis Chou。`verify-before-stop` hook 改作自其 `verify_gate.py`(該檔又改作自 Miguok/fable-harness),另有約 10 條判斷規則吸收進 operational-rigor / delegation-and-review / skill-authoring。已通讀審查;其常載/每回合提醒/罐頭模板層刻意不採——理由同捨棄清單第 5 項。2026-07-24 對其 `8dea062` 之後的 commits 做了一輪 delta 掃描,再採三個意念:顯式指定模型+派工標示規則與「頂級模型起手」倒轉階梯(`delegation-and-review` §1/§4,後者改作自其「Fable 起手」機制)、偽造工具輸出防禦(`operational-rigor` §4,源自其 hard-rule #15 與兩筆事故記錄);同輪並把其上游(Miguok)的 fail-open 遙測修法意念移植進我們的 `verify-before-stop` hook(另以 PR #74 落地)。
-- **echo-of-machines** — [`echo-of-machines/fable-advisor`](https://github.com/echo-of-machines/fable-advisor);顧問模式諮詢(更強一階出建議、目前一階續執行),以 tier-relative 形式改作進 `delegation-and-review` §4;與 Anthropic 官方 [advisor tool](https://platform.claude.com/docs/en/agents-and-tools/tool-use/advisor-tool) 同一模式。只採意念,未取任何程式碼。
-- **TheColliny** — [`TheColliny/FableClaudeMDForOpus`](https://github.com/TheColliny/FableClaudeMDForOpus);事件措辭路由,改作為 `skill-authoring` §5 的狀態措辭觸發規則。只採意念,未取任何程式碼。
-- **hamanpaul** — [`hamanpaul/testpilot-core`](https://github.com/hamanpaul/testpilot-core);其 tier-2 環境復原設計——升級計數由 orchestrator 自己的 verify gate 驅動,而非 worker 的自報;且「介入」標記與「gate 通過」分開——改作進 `delegation-and-review` §4。MIT,只採意念,未取任何程式碼。
-- **openai/codex-security** — [`openai/codex-security`](https://github.com/openai/codex-security)(Apache-2.0);2026-07-31 雙 repo 挖礦掃描的 `security-architect` 半場,同輪另一來源 [`Mapleeeeeeeeeee/cc-session-reader`](https://github.com/Mapleeeeeeeeeee/cc-session-reader) 的材料見 review/handoff 批次自身條目。方法:十個 agent 逐字掃描、跨兩個模型家族、再加第三家族交叉檢查,所有 load-bearing 引文對原文逐條核實,只保留裁決後在現有 skill 找不到等價物的概念。只採意念、未取文字。本批次全部源自安全掃描產品的 threat model、runtime 安全注記、內附審查 doctrine 與 tracker-intake 規則:子程序環境最小化、policy 形資料層、severity 與 confidence 分離、系統範圍 threat model、對外披露的讀眾檢查。(review/handoff 批次附有其自身的致謝條目。)
-- **2026-07 安全 skill 稽查** — 對 12 個社群「安全」skill 的通盤審查,先於 2026-07-12 的 doctrine 批次。只採意念、未取任何程式碼:**eddygk/skill-vetting**(anti-override 規則 → `delegation-and-review` §7;其 GitHub repo 網址 2026-07-24 起不可用——致謝以 eddygk/skill-vetting(GitHub)保留)、**UnitOneAI/SecuritySkills**(載入時執行稽核 → `operational-rigor` §2)、**mukul975/Anthropic-Cybersecurity-Skills**(JWT `kid`/`jku`/`x5u` 檢查項、零寬/雙向 Unicode 清查)、**gitgoodordietrying**(SCA 進 CI)、**jgarrison929**(magic-byte 上傳驗證)。同次稽查判定 12 個中 3 個為活體木馬——全部自稱安全工具;未從中採用任何內容,此發現本身成為 doctrine(`operational-rigor` §2:自稱安全工具受更嚴檢視,而非更寬)。
-- **openai/codex-security · Mapleeeeeeeeeee/cc-session-reader — review/handoff 批次(2026-07-31)** — 源自 [`openai/codex-security`](https://github.com/openai/codex-security) 與 [`Mapleeeeeeeeeee/cc-session-reader`](https://github.com/Mapleeeeeeeeeee/cc-session-reader)(皆 Apache-2.0;只採意念、未取文字——同輪的 `security-architect` 批次另有自身條目;兩批同一方法:十個 agent 逐字掃描、第三家族交叉檢查、load-bearing 引文逐條核實)。自壓縮工具的決策記錄:保留按可重推導性分配、同一操作+同一錯誤才可合併、附實跑過檢索步驟的具名省略標記、抽查被丟內容的稽查責任(`delegation-and-review` §5)。自安全掃描產品的完成、比對與發佈管線規則:blocked 時拒絕的「扮完成」形態(`delegation-and-review` §2)、循環審查的「缺席不等於已解決」(`delegation-and-review` `references/recurring-sweep-ledgers.md`)、收斂只升優先級不升狀態(`cross-model-review` §3)、消費者位置驗證(`operational-rigor` §4)。
-- **Sahir619** — [`Sahir619/fable-method`](https://github.com/Sahir619/fable-method),MIT License;另一個平行的 Fable 退役蒸餾,附已發布的 trap-scenario eval 計畫(勝敗皆錄)。只採意念、未取任何檔案:`ground-truth-gates` 的行為層 trap-armed 條款(源自其已發布的負結果——安全結局可能只是從未遇上陷阱)、Evals 段的「附失敗測試才出貨」公約,其已公開 eval 計畫的 trap 機制——重新實作為本包私有套件的全新 fixtures,以及跨 `operational-rigor`、`delegation-and-review`、`skill-authoring` 三個 skill 的 authority-order、twin-sweep、ask-classification、prescribed-follow-up、completion-claim-audit 規則,加上 enforcement ladder、指針警示與 red-line 授權門檻(該批次的行為規則出貨前已在該批 fixtures 上 probe 驗證;其設計/規範性規則在本體標記 `unprobed`)。v1.4.0 增量與其後續批次——AUTH 逐字引述 artifact、owed-lines artifact gate、installed-skill 非授權向量、gate-placement 規則、`domain-evidence-discipline` skill(其 domain-adapter schema 濃縮為單一四名詞 pattern)與 declared-scope、orient-first、debris 三規則——全部在本體明標 `unprobed` 出貨(依 covenant),其已發布結果只述形狀(若轉述數字,必附對方自標的 smoke-grade 等級)。
-- **Matt Pocock 的 Grill-me 模式;Superpowers(obra);OpenSpec** — 公開 spec-isolation/brainstorming 工作流的 grill/決策筆記層,改作為 `operational-rigor` 的 §1 grill pass 與 §5 decisions-note。只採意念、未取程式碼。2026-07-24 對 Superpowers v6.2.0 做 delta 掃描,再採三個意念(MIT,只採意念):壓縮切割的壓力測試紀律與 probe-tuned 文字的逐字搬移表(`skill-authoring` §7)、change-detector/「bug 還是決策」條款(`ground-truth-gates` 規則 2)。
-- **設計包來源(2026-07-19 對 14 個設計 repo 的調查)** — 以 MIT 改作文字並附 notices(見 `THIRD-PARTY-NOTICES.md`):**Emil Kowalski**([`emilkowalski/skills`](https://github.com/emilkowalski/skills))、**Leonxlnx**([`Leonxlnx/taste-skill`](https://github.com/leonxlnx/taste-skill))、**LottieFiles**([`LottieFiles/motion-design-skill`](https://github.com/LottieFiles/motion-design-skill))、**Refero Design**([`referodesign/refero_skill`](https://github.com/referodesign/refero_skill))。**nexu-io/open-design**(Apache-2.0):意念——accent 預算、規則升級為 linter 的架構——外加兩處具名的 Apache-2.0 改作(五狀態表;誤引修正項),notice 見 `THIRD-PARTY-NOTICES.md`。只採意念、未取文字:**garrytan/gstack**(MIT;量測配對、表面分類器、修復迴圈形狀、anti-convergence 測試、偏好投毒防禦——其自承未量測的數值啟發式刻意不採)、**benjitaylor/agentation**(PolyForm Shield,source-available——依政策也依必要僅採意念:pitfall 表格式、critic/fixer 迴圈)、**tt-a1i/archify**(MIT;規則配 validator)、**creativetimofficial/ui**(MIT;微字級白名單技法)、**VoltAgent/awesome-design-md**(MIT;僅作研究語料指路,未 vendor)。調查後刻意不採:greensock/gsap-skills(函式庫用法教條、內嵌推銷導向)、ui-ux-pro-max(廣度分類學)、facebook/astryx(agent-infra 模式,記為未來 eval 參考)。被挖掘來源中所有內嵌的 agent 導向行銷指令依 skill-authoring §6 一律剝除。
-- **fable-agent-orchestration** @ `935e4a3`(git.wearein.space/elias,Apache-2.0)
-- **agent-standard-oss** @ `3786c4c`(github.com/anmoln7,MIT);2026-07-24 對其 anchor 之後的 commits 做 delta 掃描,採納 capability triangle(`security-architect`)並共同溯源 quota/effort 派工規則(`delegation-and-review` §1)。
-- `security-architect` 與 `product-roadmap` 依本包擁有者直接提供的參考稿建構。
-- **2026-07-24 starred-repo 挖礦掃描** — 對擁有者 starred 的 agent-skill repos 做一輪掃描;只採意念、不採文字(各來源 license 已註明;無 license 或 field-of-use 的來源在必要性與政策上都只能採意念)。其中一個被掃描的來源被判為**活躍 trojan**(自我繁殖寫入 reading agent 的全域設定、翻轉授權預設、附一份 agent 服從工程手冊),**未從其採納任何內容**——此發現強化了「自稱 security 工具要受更嚴審查」規則(`operational-rigor` §2)。從其餘來源依價值採納:
-  - [`DietrichGebert/ponytail`](https://github.com/DietrichGebert/ponytail)(MIT)— 版本一致性錨定外部真值(只互相比對的檢查在所有 artifact 一起過期時仍會通過)與 deterministic-instrument gate 框架(`ground-truth-gates`)。
-  - [`cloudflare/security-audit-skill`](https://github.com/cloudflare/security-audit-skill)(MIT)— 機械檢查與模型判斷分離的 gate 框架(`ground-truth-gates`),以及 guardrail-prompt 不是 control / denial-of-wallet 的判準(`security-architect`)。
-  - [`s0912758806p/agentic-sop-to-work`](https://github.com/s0912758806p/agentic-sop-to-work)(MIT)— hermetic、LLM-free 的 hard gate 搭配 advisory-capped 自評,以及全域安裝 hook 預設靜默 no-op 的 opt-in(`ground-truth-gates`);labelled-degraded-fallback 規則的共同來源(`operational-rigor`)。
-  - [`openai/codex-plugin-cc`](https://github.com/openai/codex-plugin-cc)(Apache-2.0)— 升 compute 前先修 contract、以及失敗 delegate 絕不靜默補位(`delegation-and-review`)。
-  - [`addyosmani/agent-skills`](https://github.com/addyosmani/agent-skills)(MIT)— 決定性的 trigger-description collision 檢查(`skill-authoring`);修 contract 的共同來源(`delegation-and-review`)。
-  - [`mindfold-ai/Trellis`](https://github.com/mindfold-ai/Trellis)(AGPL-3.0 — 嚴格只採意念、不採文字)— subagent no-commit/push/merge 邊界(`delegation-and-review`)與依 lifespan 分層的三層記憶分類(`skill-authoring`)。
-  - [`NYCU-Chung/my-claude-devteam`](https://github.com/NYCU-Chung/my-claude-devteam)(MIT)— 以 tool-grant 拒絕落實 reviewer 角色純度(`delegation-and-review`),並佐證 hook opt-in 規則。
-  - [`matlab/matlab-agentic-toolkit`](https://github.com/matlab/matlab-agentic-toolkit)(MathWorks field-of-use license — 只採意念、不採文字)— 切斷自身控制通道指令的 one-way-door(`operational-rigor`)與擁擠 catalog 觸發退化的 mitigation ladder(`skill-authoring`)。
-  - [`gsd-build/get-shit-done`](https://github.com/gsd-build/get-shit-done)(MIT;上游已封存 — 後繼為 `open-gsd/gsd-core`)— 它揭出 hidden-directive sweep 漏掉的 Unicode Tag Block,已在 `operational-rigor` §2 與本 repo 自己的 `.github/checks.py` 補上;另有 experiment-integrity 四項(arm 環境盤點、跨 arm attrition 對等、finding placement、組態綁定)採納進 `ground-truth-gates`;checkpoint 批次成本紀律(含 authorization 永不批次 carve-out)與不代填 human 回覆邊界採納進 `delegation-and-review`。
-  - [`github/spec-kit`](https://github.com/github/spec-kit)(MIT)— 其 tasks 模板的任務依賴形狀(task id、phase/story 依賴排序、無共享依賴/檔案的 parallel 標記),採納進 `product-roadmap` §7 的 compact task edges。
-  - [`vercel-labs/agent-skills`](https://github.com/vercel-labs/agent-skills)(MIT 於 README 宣告、無 LICENSE 檔 — 只採意念)— 機械 gate 與模型判斷分離框架的共同來源(`ground-truth-gates`)。
-  - [`oso95/scroll-world`](https://github.com/oso95/scroll-world)、[`vinhhien112/Three.js-Object-Sculptor-Codex-Plugin`](https://github.com/vinhhien112/Three.js-Object-Sculptor-Codex-Plugin)、以及 [`GiMi-Xiaomi/gimi-illustration-skill`](https://github.com/GiMi-Xiaomi/gimi-illustration-skill)(皆 MIT)— never-silently-degrade / labelled-degraded-fallback 規則的共同來源(`operational-rigor`)。
-  - [`Nutlope/hallmark`](https://github.com/Nutlope/hallmark)(MIT)— 其 URL-fetch checklist 揭出 `security-architect` SSRF 條款要補的 metadata endpoint。這四個來源的設計面意念落在 design-pack。
-
-所有被採用的來源皆已通讀檢查;未執行任何內嵌指令,2026-07 稽查判為惡意的來源亦未被採用任何內容。萃取只採意念。每個連結都附作者+平台,連結失效後 attribution 仍可考。
-
-</details>
-
 ## 授權
 
 本 repository 的 skill pack 以 [MIT License](LICENSE) 發佈——Copyright (c) 2026 F-e-u-e-r。
 
 本包納入並改作了採寬鬆式授權(MIT 與 Apache-2.0)的第三方作品;這些授權要求隨附的版權與授權聲明,集中收錄於 [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md)。最具體的一例是 `verify-before-stop` hook——改作自 Curtis Chou(其上游為 Miguok)的 MIT 授權程式碼。整條鏈路不含任何 copyleft(GPL/AGPL/LGPL)。`guideline *.txt` 來源草稿為私人來源素材(擁有者自有,及 firaen22 的私人筆記),不隨發佈散佈(已由 `.gitignore` 排除)。
+
+完整來源歷史與致謝見 [`evidence/provenance.md`](evidence/provenance.md)。
