@@ -85,7 +85,7 @@ Run before OR's completion claim; OR still owns the honesty of that claim (OR §
 
 ## Provenance
 
-Part of the ops-pack (Planning ↔ Ops). Planning Pack Architecture v1: §3 `plan-reconciliation` (11 doctrines) +
+Part of the planning-pack (Planning ↔ Ops). Planning Pack Architecture v1: §3 `plan-reconciliation` (11 doctrines) +
 §6 lifecycle (revise/close, three delivery states) + owner rules AR-A9-C1 / AR-A11-C1. A9-02 (revision-scope
 widening) and A11-04 (Planning disposition for unverifiable items) are **not** doctrine (deferred). Citations to
 the Ops siblings (operational-rigor §2/§4/§5, delegation-and-review §3) resolve against those skills as
@@ -96,4 +96,4 @@ re-approval / Ops-authorization gate, but on weaker executor tiers it does not r
 whole-plan orphan detection itself (prose and forced-record enforcement were both evaluated; neither made it
 reliable; the failure mode is fail-safe — under-detection defaults to "cannot resume / escalate"). Retained as an
 explicit limitation, not clean coverage. Development/review/adoption history: `references/provenance.md`.
-Re-verify: `grep -n '^## ' skills/operational-rigor/SKILL.md`.
+Re-verify: `grep -n '^## ' ops-pack/skills/operational-rigor/SKILL.md`.

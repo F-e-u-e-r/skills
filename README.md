@@ -17,20 +17,21 @@
 
 ---
 
-**Ops Pack is a Claude Code plugin marketplace** — one repo, two plugins you
-install independently, 13 skills in total, for the daily-driver models that
+**Ops Pack is a Claude Code plugin marketplace** — one repo, three plugins you
+install independently, 15 skills in total, for the daily-driver models that
 remain after Fable 5's window closes (Opus 4.8 / Sonnet 5 / Haiku):
 
 | Plugin | Focus | Installs |
 |---|---|---|
-| **`ops-pack`** | Agent discipline — how work gets done: rigor, delegation, verification, evidence | 12 skills |
+| **`ops-pack`** | Agent discipline — how work gets done: rigor, delegation, verification, evidence | 10 skills |
+| **`planning-pack`** | Planning — the executable work contract and its reconciliation (Planning ↔ Ops) | 2 skills |
 | **`design-pack`** | Design-craft — visual/UI judgment in the same style: layout, motion, review | 3 skills |
 
 Plus **four optional hooks** — repo-level, installed by hand; neither plugin
 registers them (see [Enforcement: hooks](#enforcement-setting-up-hooks)). All of
 it encodes one bet: the judgment strong models already have improves less from
 **more prose** than from **gates that fail loudly when the work is wrong.**
-Install either plugin alone or both — `design-pack` shares this marketplace with
+Install any of the three alone or in combination — `design-pack` and `planning-pack` share this marketplace with
 `ops-pack`, not a hard dependency on it (its review skill's cross-references to
 ops-pack simply resolve when ops-pack is present; see
 [`design-pack`](#design-pack-the-design-skills)).
@@ -50,7 +51,7 @@ ops-pack simply resolve when ops-pack is present; see
 
 ## Contents
 
-- [Install](#install) · [`ops-pack`: the discipline skills](#ops-pack-the-discipline-skills) · [`design-pack`: the design skills](#design-pack-the-design-skills)
+- [Install](#install) · [`ops-pack`: the discipline skills](#ops-pack-the-discipline-skills) · [`planning-pack`: the planning skills](#planning-pack-the-planning-skills) · [`design-pack`: the design skills](#design-pack-the-design-skills)
 - [The ten highest-leverage principles](#the-ten-highest-leverage-principles-kept)
 - [Deliberately dropped (and why)](#deliberately-dropped-and-why)
 - [Do skills auto-call agents?](#do-skills-auto-call-agents) · [Enforcement: hooks](#enforcement-setting-up-hooks)
@@ -66,12 +67,14 @@ want. Install targets use `plugin@marketplace`, and the marketplace ID is
 ```
 /plugin marketplace add F-e-u-e-r/skills
 /plugin install ops-pack@opus-pack
+/plugin install planning-pack@opus-pack
 /plugin install design-pack@opus-pack
 ```
 
-`ops-pack@opus-pack` installs the discipline plugin (12 skills);
-`design-pack@opus-pack` installs the design plugin (3 skills). Install either,
-or both. Skills arrive namespaced (`ops-pack:operational-rigor`,
+`ops-pack@opus-pack` installs the discipline plugin (10 skills);
+`planning-pack@opus-pack` installs the planning plugin (2 skills);
+`design-pack@opus-pack` installs the design plugin (3 skills). Install any,
+or all three. Skills arrive namespaced (`ops-pack:operational-rigor`,
 `design-pack:ui-design-craft`, …) and update via `/plugin marketplace update`.
 Neither plugin registers the hooks — they change harness behavior, so
 installing them stays a manual, per-user decision (see
@@ -109,18 +112,21 @@ occupies context until triggered.
 | `domain-evidence-discipline` | Evidence discipline for non-code deliverables (marketing / research / data / ops): per-domain minimum evidence set, authority order, what verification-by-observation means, and the fraud table a reviewer hunts; red-line professional judgment refused and routed to a qualified human | fable-method schema + own worked instances |
 | `skill-vetting` | Vet a third-party skill / plugin / hook / instruction file for trojan patterns before it runs: turns operational-rigor §2's install gate into a runnable procedure, with a trojan-shape checklist and a fail-closed verdict (a clean scan is never "safe"); ships an opt-in advisory session-start tripwire (`hooks/skill-vetting-advisory.py`) | operational-rigor §2 + community-security audit |
 | `cross-model-review` | Adversarial review from a *different model family* before a load-bearing merge: session-time reviewer discovery (no hard-coded lineup), self-contained packet, findings-are-claims, bounded review-and-fix loop (merge only when every reviewer returned a confirmed verdict — each one PROCEED, or a FIX whose every remaining item is a recorded, justified gap; a timeout/empty body is not a verdict), exit-code≠pass. Doctrine only — concrete CLIs stay out of the pack | owner's private CLI notes (doctrine only) |
-| `planning` | Planning Pack: produce an executable work contract BEFORE building — framed intent, testable requirements with acceptance criteria, scoped non-goals, recorded decisions, a dependency-ordered task breakdown with per-item verification, whole-plan validation, hand-off to execution; depth D0–D3 (D0 small tasks stay with `operational-rigor`) | Planning Pack Architecture v1 |
-| `plan-reconciliation` | Planning Pack: reconcile an approved plan with reality once execution has started — revise when it no longer fits (repeated failure, falsified precondition, unmeetable requirement) or close when work is done, reconciling every intended item against the baseline with evidence; preserves the revalidation / re-approval / Ops-authorization gate (documented weak-tier limitation below) | Planning Pack Architecture v1 |
 
 `ground-truth-gates/template/` was verified by execution (Node v23, 2026-07-06):
 correctly FAILs without a snapshot, goes all-green after freezing, and lists
 drifted records precisely (exit 1) when transform behavior changes.
 
-### Planning Pack
+## `planning-pack`: the planning skills
 
-Two of the skills above — `planning` and `plan-reconciliation` — form the **Planning Pack** (Planning ↔ Ops):
+| Skill | Covers | Main source |
+|---|---|---|
+| `planning` | Produce an executable work contract BEFORE building — framed intent, testable requirements with acceptance criteria, scoped non-goals, recorded decisions, a dependency-ordered task breakdown with per-item verification, whole-plan validation, hand-off to execution; depth D0–D3 (D0 small tasks stay with `operational-rigor`) | Planning Pack Architecture v1 |
+| `plan-reconciliation` | Reconcile an approved plan with reality once execution has started — revise when it no longer fits (repeated failure, falsified precondition, unmeetable requirement) or close when work is done, reconciling every intended item against the baseline with evidence; preserves the revalidation / re-approval / Ops-authorization gate (documented weak-tier limitation below) | Planning Pack Architecture v1 |
+
+`planning` and `plan-reconciliation` form the **Planning Pack** (Planning ↔ Ops):
 they own *what to build and how the plan changes*, while the execution-discipline skills (`operational-rigor`,
-`delegation-and-review`, `ground-truth-gates`, …) own *carrying it out*. A Planning artifact is never execution
+`delegation-and-review`, `ground-truth-gates`, …) in `ops-pack` own *carrying it out*. A Planning artifact is never execution
 authorization, and Planning depth never discounts execution rigor.
 
 - **`planning`** fires BEFORE building — when you ask for a plan, spec, requirements breakdown, work decomposition,
@@ -139,6 +145,8 @@ re-approval / Ops-authorization gate, but on weaker executor tiers it does not r
 whole-plan orphan detection itself (it tends to describe or request the revalidation rather than carry it out).
 The failure mode is fail-safe — under-detection defaults to "cannot resume / escalate", never a false "safe to
 resume".
+
+> **Migration — Planning moved to its own plugin (ops-pack 0.3.0).** `planning` and `plan-reconciliation` shipped inside the `ops-pack` plugin through v0.2.0; from `ops-pack` 0.3.0 they ship as the separate **`planning-pack`** plugin (version 0.1.0). This is a **documented namespace migration, not transparent compatibility**: there is no cross-plugin skill-rename bridge, so a user who had `ops-pack@opus-pack` enabled and updates **without** installing `planning-pack` will find those two skills **simply absent**. That absence is **expected and announced here — it is not a silent loss**. To restore the full set, install **both** `ops-pack@opus-pack` **and** `planning-pack@opus-pack`; after installing `planning-pack`, `planning` and `plan-reconciliation` return, exactly once, under the `planning-pack:` namespace. The four-pack-oriented setup needs both installs. See `ARCHITECTURE.md` §3.
 
 
 ## `design-pack`: the design skills
@@ -237,7 +245,7 @@ separate axes.
 its skills complete their primary workflows on their own (`motion-craft` has no
 cross-pack dependency; the two load-bearing cross-pack clauses are carried
 verbatim and bind on their own), while `ops-pack` adds the extra rigor its
-pointers name. See `ARCHITECTURE.md` §4.
+pointers name. `planning-pack` is **`recommended-with ops-pack`**: it produces a usable plan on its own but names the Ops execution safeguards (authorization, evidence, non-reversal) it hands off to. See `ARCHITECTURE.md` §4.
 <!-- END GENERATED PLUGIN DEPENDENCIES -->
 
 **Stability, in one line:** published skills are stable interfaces and evolve

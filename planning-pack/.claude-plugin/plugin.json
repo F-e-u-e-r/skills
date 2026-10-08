@@ -1,0 +1,12 @@
+{
+  "name": "planning-pack",
+  "displayName": "Planning Pack",
+  "description": "Two planning skills for daily-driver Claude models: planning (turn a goal plus the system's real state into an executable work contract before building) and plan-reconciliation (revise or close an executing plan when reality diverges). Planning defines the contract; execution is governed by the Ops Pack (operational-rigor and its siblings), which this pack names. Installable separately; designed to run alongside `ops-pack` (not bundled with it). Few dense rules, executable gates over long prose. Registers no hooks.",
+  "version": "0.1.0",
+  "author": {
+    "name": "F-e-u-e-r"
+  },
+  "homepage": "https://github.com/F-e-u-e-r/skills",
+  "repository": "https://github.com/F-e-u-e-r/skills",
+  "license": "MIT"
+}

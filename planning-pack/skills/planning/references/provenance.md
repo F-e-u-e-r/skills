@@ -27,4 +27,4 @@ a weaker executor tier with a blind judge; results were accepted by the owner.
 ## Re-verify
 
 Citations resolve against the co-shipped Ops skills; re-check their section anchors with
-`grep -n '^## ' skills/{operational-rigor,delegation-and-review}/SKILL.md`.
+`grep -n '^## ' ops-pack/skills/{operational-rigor,delegation-and-review}/SKILL.md`.

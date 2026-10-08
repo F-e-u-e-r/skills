@@ -34,4 +34,4 @@ weak-tier limitation · 0 harmful · D0 preserved.**
 ## Re-verify
 
 Citations resolve against the co-shipped Ops skills; re-check their section anchors with
-`grep -n '^## ' skills/operational-rigor/SKILL.md`.
+`grep -n '^## ' ops-pack/skills/operational-rigor/SKILL.md`.
