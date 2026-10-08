@@ -5,15 +5,18 @@ This module owns everything that touches the filesystem for
 `hooks/skill-vetting-advisory.py`: root enumeration (`scan_root`), the
 whole-tree snapshot, the canonical digest encoding, and the hardened baseline
 load/store. Its LIBRARY core is policy-free (it decides no verdicts); the CLI
-adds a thin verdict-recording convenience (`record`/`status`) so the
-skill-vetting skill's §3 binding is executable - for a candidate whose own name
-passes the display gate. For a hostile-named one it is NOT: `digest` reports
-`badname` for every addressing form the procedure sanctions (one limit, in §3:
-a candidate that is ITSELF a symlink and entered with `cd` cannot be recovered
-by name from inside the process - `.` is already the resolved target - so that
-spelling is refused rather than digested), and `record` would need that name on a
-command line, which §3 forbids. Such a candidate gets a prose BLOCK and no
-digest binding; closing that is design item D1. The hook itself is a thin
+adds a thin verdict-recording convenience (`list`/`record`/`status`) so the
+skill-vetting skill's §3 binding is executable. A candidate is addressed by its
+watched ROOT plus a tool-minted 64-hex selector (`list` prints one per
+candidate; `digest`/`record` take `--root --select`), so an attacker-chosen
+NAME is never placed on a command line: the selector resolves through
+enumeration and the real name is read from the filesystem here via argv-safe
+`os.*` calls (design D1, closing the G3-SHELL directory-name channel). A
+hostile-named candidate is therefore first-class - it gets a real digest and a
+recordable non-SAFE verdict, failing closed on a `badname` anomaly (which blocks
+SAFE-TO-PROPOSE). The by-path `digest <dir>` / `record --name --dir` forms
+remain for an operator-typed path, but the procedure no longer uses them (a name
+an agent types is the footgun D1 removes). The hook itself is a thin
 dispatcher and contains no filesystem-walking logic of its own. Design record:
 `evidence/reviews/2026-07-25-skill-vetting-snapshot-threat-model.md` (threat model,
 goals G1-G6, invariants I1-I11). A deliberate naming deviation: this file uses
@@ -57,11 +60,15 @@ Contract highlights (the tests in hooks/test-skill_snapshot.py hold each):
   hash is computed from the exact bytes read off an opened fd, so races
   degrade to an extra advisory next run, not a silent miss.
 
-CLI (used by the skill-vetting skill's verdict procedure, §3):
-  python3 skill_snapshot.py digest <dir>            # canonical digest + anomalies (exit 3 if anomalous)
-  python3 skill_snapshot.py record --scope <global|proj:PATH> --name <name> \
-      --dir <dir> --verdict <SAFE-TO-PROPOSE|SUSPECT|BLOCK>   # bind a verdict to the exact snapshot
+CLI (used by the skill-vetting skill's verdict procedure, §3 - address a
+candidate by ROOT + tool-minted selector, NEVER by its attacker-chosen name):
+  python3 skill_snapshot.py list   --root <ROOT>    # per candidate: 64-hex selector + gated name + anomalies
+  python3 skill_snapshot.py digest --root <ROOT> --select <64-hex>   # canonical digest + anomalies (exit 3 if anomalous)
+  python3 skill_snapshot.py record --root <ROOT> --select <64-hex> \
+      --scope <global|proj:PATH> --verdict <SAFE-TO-PROPOSE|SUSPECT|BLOCK>   # bind a verdict to the exact snapshot
   python3 skill_snapshot.py status                  # list baseline entries and vetting statuses
+  # The positional `digest <dir>` / `record --scope --name --dir --verdict`
+  # forms remain for an operator-typed path; never feed them a candidate name.
 
 Python 3.8+, stdlib only. POSIX (macOS/Linux); Windows is untested and out of
 scope for the O_NOFOLLOW/ownership checks.
@@ -905,7 +912,213 @@ def _resolve_dot_base(raw):
         return _REFUSE
 
 
+def _mode_is_selector(argv):
+    """True iff BOTH --root and --select appear as FLAGS (not as values).
+
+    Requiring both, and only at flag positions, keeps a by-path invocation out
+    of selector mode in two ways a membership scan got wrong: a VALUE that
+    happens to equal '--root'/'--select' (e.g. `record ... --reviewer --root`)
+    is skipped as the preceding flag's value, and a lone positional operand
+    literally named '--root' or '--select' (`digest --root`, a dir of that name)
+    stays by-path because only one selector flag is present. Every accepted flag
+    on both paths is valued (consumes the next token), so a flag position
+    advances by two and its value is never inspected. The selector procedure
+    always passes both flags together, so this never misses a real selector
+    invocation; a half-typed one (only --root) falls through to a by-path usage
+    error, which is the right nudge."""
+    valued = ("--root", "--select", "--scope", "--name", "--dir", "--verdict",
+              "--expect-digest", "--reviewer")
+    seen = set()
+    i = 0
+    while i < len(argv):
+        tok = argv[i]
+        if tok in valued:
+            if tok in ("--root", "--select"):
+                seen.add(tok)
+            i += 2                       # skip this valued flag's value
+        else:
+            i += 1                       # positional / unknown: step one
+    return "--root" in seen and "--select" in seen
+
+
+def _resolve_selector(root, select):
+    """Resolve a tool-minted selector to a candidate's real name bytes under
+    ROOT, STRICTLY through enumeration — never by building a path from the
+    selector or from a name. This is what closes G3-SHELL for the
+    directory-name channel (design D1).
+
+    ROOT is the operator-typed trust boundary — a watched skills root or a
+    download location the operator named — and carries no ADV-1 byte. The
+    selector is name_key (sha256 of the raw name bytes) rendered as 64
+    lowercase hex, whose alphabet [0-9a-f] is structurally incapable of
+    carrying a shell metacharacter. So neither value a caller places on the
+    command line can be an attacker-chosen name, and the attacker-chosen name
+    itself is read from the filesystem by this process (argv-safe os.* calls),
+    never typed by an agent into a shell.
+
+    Returns (name_bytes, None) on a unique match, else (None, message). Fail
+    closed: a malformed selector, an unknown selector, an ambiguous match, an
+    anomalous or overfull root, or an enumeration that could not complete all
+    REFUSE. The refusal names no selector and no candidate name (the resolution
+    itself never evaluates a hostile name — it only hashes name bytes read from
+    the directory and compares the hash)."""
+    if not isinstance(select, str) or not _HEX64.match(select):
+        return None, ("REFUSED: --select must be 64 lowercase hex characters, a "
+                      "tool-minted selector printed by `list` (the value given "
+                      "is not echoed).")
+    scan = scan_root(os.fsencode(root))
+    # Fail closed BEFORE matching if the root could not be cleanly and fully
+    # enumerated: a selector resolves only against a COMPLETE enumeration, or
+    # "the candidate is under this root" stops being true by construction (an
+    # overfull root enumerates only its first MAX_CANDIDATES entries, yet a
+    # selector for one of them would otherwise still resolve). scan_root reports
+    # only ROOT-level anomalies here (symlink / notdir / unreadable / overfull),
+    # so a clean root holding a hostile-NAMED candidate is unaffected — a bad
+    # candidate name is a per-candidate badname, never a root anomaly.
+    if not scan["complete"] or scan["anomalies"]:
+        reasons = ", ".join(sorted({r for r, _ in scan["anomalies"]})) or "incomplete"
+        return None, ("REFUSED: this root could not be fully and cleanly "
+                      "enumerated (%s); a selector is resolved only against a "
+                      "complete enumeration. Re-run `list --root <ROOT>`." % reasons)
+    matches = [nameb for nameb, _snap in scan["candidates"]
+               if name_key(nameb) == select]
+    if len(matches) == 1:
+        return matches[0], None
+    if len(matches) > 1:
+        # name_key is the full sha256 of the raw name bytes, and a filesystem
+        # cannot return two entries with identical name bytes under one root, so
+        # this branch is unreachable in practice; refuse rather than pick one.
+        return None, ("REFUSED: --select is ambiguous under this root; re-run "
+                      "`list --root <ROOT>`.")
+    return None, ("REFUSED: no candidate under this root matches --select. Run "
+                  "`list --root <ROOT>` and use a selector it prints.")
+
+
+def _cli_list(argv):
+    """Enumerate candidates under a watched ROOT and print, per candidate, a
+    tool-minted selector (name_key), the display-gated name, whether that name
+    passed the display gate, its anomaly reasons, and whether the observation
+    was partial. This is the roster-producing step (digest/record enumerate too,
+    via _resolve_selector, to resolve a selector), and it needs no
+    attacker-chosen byte on the command line: ROOT is operator-typed and every
+    name in the output is display-gated — a hostile name shows as an opaque id,
+    never its raw bytes. The selectors printed here are exactly what `digest`
+    and `record` accept via --select (design D1). Recorded verdicts are read
+    with `status`, not here, so this step needs no scope."""
+    root = None
+    it = iter(argv)
+    for a in it:
+        if a == "--root":
+            root = next(it, None)
+        else:
+            print("REFUSED: unrecognized argument (not echoed). Accepted: "
+                  "--root", file=sys.stderr)
+            return 2
+    if root is None:
+        print("usage: skill_snapshot.py list --root <ROOT>", file=sys.stderr)
+        return 2
+    scan = scan_root(os.fsencode(root))
+    candidates = []
+    for nameb, snap in scan["candidates"]:
+        disp, ok = display_name(nameb)
+        candidates.append({
+            "select": name_key(nameb),
+            "name": disp,
+            "name_ok": ok,
+            "anomalies": sorted({r for r, _ in snap["anomalies"]}),
+            "partial": bool(snap.get("partial")),
+        })
+    candidates.sort(key=lambda c: c["select"])
+    print(json.dumps({
+        "schema": SCHEMA_VERSION,
+        "policy": POLICY_VERSION,
+        "root_anomalies": sorted({r for r, _ in scan["anomalies"]}),
+        "complete": scan["complete"],
+        "candidates": candidates,
+    }, ensure_ascii=True, indent=2))
+    # Exit non-zero when the roster is not a clean, complete enumeration, so a
+    # caller gating on the exit code (not just reading the JSON) does not mistake
+    # an anomalous or truncated root for an empty clean one.
+    return 3 if (not scan["complete"] or scan["anomalies"]) else 0
+
+
+def _cli_digest_by_selector(argv):
+    root = select = None
+    it = iter(argv)
+    for a in it:
+        if a == "--root":
+            root = next(it, None)
+        elif a == "--select":
+            select = next(it, None)
+        else:
+            print("REFUSED: unrecognized argument (not echoed). Accepted: "
+                  "--root --select", file=sys.stderr)
+            return 2
+    if root is None or select is None:
+        print("usage: skill_snapshot.py digest --root <ROOT> --select <64-hex>",
+              file=sys.stderr)
+        return 2
+    nameb, err = _resolve_selector(root, select)
+    if err:
+        print(err, file=sys.stderr)
+        return 2
+    # Delegate to the positional body with a path BUILT FROM THE ENUMERATED
+    # name bytes (never from the selector): the digest is then byte-identical to
+    # the by-path form for the same tree, and the top-level badname gate still
+    # fires on a hostile name. The name bytes travel in-process as a single
+    # os.path.join argument, never through a shell.
+    return _cli_digest([os.path.join(os.fsencode(root), nameb)])
+
+
+def _cli_record_by_selector(argv):
+    args = {"root": None, "select": None, "scope": None, "verdict": None,
+            "expect-digest": None, "reviewer": None}
+    it = iter(argv)
+    for a in it:
+        if a in ("--root", "--select", "--scope", "--verdict", "--expect-digest",
+                 "--reviewer"):
+            args[a[2:]] = next(it, None)
+        else:
+            print("REFUSED: unrecognized argument (not echoed). Accepted: "
+                  "--root --select --scope --verdict --expect-digest --reviewer",
+                  file=sys.stderr)
+            return 2
+    if any(args.get(k) is None for k in ("root", "select", "scope", "verdict")):
+        print("usage: skill_snapshot.py record --root <ROOT> --select <64-hex> "
+              "--scope <global|proj:PATH> --verdict <" + "|".join(_VERDICTS) + "> "
+              "[--expect-digest <hex>] [--reviewer <text>]", file=sys.stderr)
+        return 2
+    nameb, err = _resolve_selector(args["root"], args["select"])
+    if err:
+        print(err, file=sys.stderr)
+        return 2
+    # Delegate to the by-path body with the candidate's real (enumerated) name
+    # as both --name and the basename of --dir, so its name==basename guard
+    # passes by construction and every other fail-closed guard (loose-file,
+    # never-observable, partial, expect-digest match, SAFE-anomaly refusal) runs
+    # unchanged — the mutation matrix protecting them covers this path too. The
+    # forwarded values travel in-process as a Python argv list, never through a
+    # shell; the hostile name bytes are a positional VALUE the parser consumes,
+    # never re-parsed as syntax. --verdict / --expect-digest shape are validated
+    # by the delegate, not duplicated here.
+    dirb = os.path.join(os.fsencode(args["root"]), nameb)
+    forwarded = ["--scope", args["scope"], "--name", nameb, "--dir", dirb,
+                 "--verdict", args["verdict"]]
+    if args["expect-digest"] is not None:
+        forwarded += ["--expect-digest", args["expect-digest"]]
+    if args["reviewer"] is not None:
+        forwarded += ["--reviewer", args["reviewer"]]
+    return _cli_record(forwarded)
+
+
 def _cli_digest(argv):
+    # Design D1 (closes G3-SHELL for the directory-name channel): a candidate
+    # can be addressed by its watched ROOT plus a tool-minted 64-hex selector,
+    # so no attacker-chosen name ever reaches the command line. The positional
+    # `digest <dir>` form below stays for an operator-typed path, but SKILL.md
+    # §3 no longer shows it (a name an agent types is the footgun this removes).
+    if _mode_is_selector(argv):
+        return _cli_digest_by_selector(argv)
     if len(argv) != 1:
         print("usage: skill_snapshot.py digest <dir>", file=sys.stderr)
         return 2
@@ -941,6 +1154,10 @@ def _cli_digest(argv):
     print(json.dumps({
         "schema": SCHEMA_VERSION,
         "policy": POLICY_VERSION,
+        # Echo the display-gated name actually digested (opaque id for a hostile
+        # one), so the operated-on candidate is visible in the output the agent
+        # reads as the verdict signal - never the raw name bytes.
+        "name": display_name(base)[0] if base else "",
         "digest": snap["digest"],
         "entries": snap["entries"],
         "partial": bool(snap.get("partial")),
@@ -951,6 +1168,14 @@ def _cli_digest(argv):
 
 
 def _cli_record(argv):
+    # Design D1 (closes G3-SHELL for the directory-name channel): bind a verdict
+    # to a candidate addressed by ROOT + tool-minted 64-hex selector instead of
+    # by its attacker-chosen --name/--dir, so no candidate name reaches the
+    # command line. Delegates to the by-path body below once the selector has
+    # been resolved to the real name, so every fail-closed guard here (and the
+    # mutation matrix that protects them) covers both forms.
+    if _mode_is_selector(argv):
+        return _cli_record_by_selector(argv)
     args = {"expect-digest": None, "reviewer": None}
     it = iter(argv)
     for a in it:
@@ -1145,6 +1370,10 @@ def _cli_record(argv):
         return 1
     print(json.dumps({"recorded": key, "digest": snap["digest"],
                       "schema": SCHEMA_VERSION, "policy": POLICY_VERSION,
+                      # Echo the display-gated name the verdict was bound to
+                      # (opaque id for a hostile one), so the operated-on
+                      # candidate is visible, never the raw name bytes.
+                      "name": disp,
                       "verdict": args["verdict"],
                       "anomalies": sorted({r for r, _ in snap["anomalies"]})},
                      ensure_ascii=True, indent=2))
@@ -1192,9 +1421,11 @@ def _cli_status(_argv):
 
 
 def main(argv):
-    cmds = {"digest": _cli_digest, "record": _cli_record, "status": _cli_status}
+    cmds = {"list": _cli_list, "digest": _cli_digest, "record": _cli_record,
+            "status": _cli_status}
     if not argv or argv[0] not in cmds:
-        print("usage: skill_snapshot.py {digest|record|status} ...", file=sys.stderr)
+        print("usage: skill_snapshot.py {list|digest|record|status} ...",
+              file=sys.stderr)
         return 2
     return cmds[argv[0]](argv[1:])
 
