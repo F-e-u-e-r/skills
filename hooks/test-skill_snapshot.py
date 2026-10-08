@@ -1696,5 +1696,334 @@ class RootScan(Base):
         self.assertFalse(res["complete"])
 
 
+class G3ShellSelectorAddressing(Base):
+    """G3-SHELL: an attacker-chosen skill DIRECTORY NAME must never become
+    executable shell syntax. Before design D1 the §3 procedure substituted the
+    candidate's name into a shell command (`digest "<dir>"`,
+    `record --name "<dir>" --dir "<dir>"`), and `$(...)`/backticks/`;`/`|` in
+    the name then ran at the agent's privilege BEFORE any vetting — the tool's
+    own badname check fires one step too late, after the shell already ran it.
+    D1 adds root+selector addressing: the operator types only a trusted ROOT and
+    a tool-minted 64-hex selector (alphabet [0-9a-f], no metacharacter possible),
+    and the attacker-chosen name is read from the filesystem by this process,
+    never typed into a shell.
+
+    These are two-sided: the control arm proves a hostile name DOES execute when
+    a shell interpolates it (so the sentinel detector has teeth), and the fixed
+    arm proves selector addressing never executes it. A skill directory name is
+    a single path component, so the hostile fixtures carry no '/'; their payload
+    `touch pwned_*` lands in the run's cwd iff a shell ever interprets the
+    name."""
+
+    # Single-component hostile names. SHELL_EXEC names EXECUTE when interpolated
+    # into a double-quoted shell argument — $(), backticks, and a quote-break all
+    # fire inside "..." (unlike a bare `;` or `|`, which stay literal there); each
+    # payload touches a bare pwned_<label> sentinel in cwd iff a shell ever sees
+    # the name. NON_IDENT is the wider set the display gate must render opaque: it
+    # adds merely-invalid names (a space, a literal `;`/`|`) that do NOT execute
+    # inside quotes and so are DATA-handling cases, not shell-execution ones.
+    SHELL_EXEC = {
+        "dollar":   "$(touch pwned_dollar)",
+        "backtick": "`touch pwned_backtick`",
+        "quote":    'a"; touch pwned_quote; :"',
+    }
+    NON_IDENT = dict(SHELL_EXEC, space="has space", semi="x;semi", pipe="x|pipe")
+
+    def setUp(self):
+        super().setUp()
+        # Same CLI env as CommandLine, without inheriting (and re-running) its
+        # suite: a per-test config dir and an isolated skills root.
+        self.cfg = os.path.join(self.tmp, "cfg")
+        os.makedirs(self.cfg, mode=0o700)
+        self.env = {"PATH": os.environ.get("PATH", "/usr/bin:/bin"),
+                    "HOME": self.tmp, "CLAUDE_CONFIG_DIR": self.cfg}
+        self.root = os.path.join(self.tmp, "skills")
+        os.makedirs(self.root)
+        self.catch = os.path.join(self.tmp, "catch")   # a leaked `touch` lands here
+        os.makedirs(self.catch)
+
+    def _mkskill(self, name):
+        d = os.path.join(self.root, name)
+        os.makedirs(d)
+        with open(os.path.join(d, "SKILL.md"), "w") as fh:
+            fh.write("---\nname: s\ndescription: d\n---\n# s\n")
+        return d
+
+    def _sel(self, name):
+        # The selector IS the tool's own name_key of the raw name bytes.
+        return ss.name_key(name.encode())
+
+    def _run(self, *args):
+        # Run from the catch dir so a leaked shell `touch` is observable; PWD is
+        # irrelevant to selector mode (no dot path), but set it for fidelity.
+        return subprocess.run(
+            [PY, os.path.join(HOOKS, "skill_snapshot.py")] + list(args),
+            capture_output=True, text=True,
+            env=dict(self.env, PWD=self.catch), timeout=60, cwd=self.catch)
+
+    def _pwned(self):
+        return sorted(f for f in os.listdir(self.catch) if f.startswith("pwned_"))
+
+    # ---- KNOWN-BAD ARM (control): the old §3 shape — name in a shell string.
+    def test_control_shell_executing_names_DO_execute_when_interpolated(self):
+        """The hazard, reproduced across metacharacter classes: a name
+        interpolated into the pre-D1 `digest "<dir>"` template executes under a
+        shell — $(), backticks, AND a quote-break all fire inside "...". This
+        also proves the pwned_* detector the fixed-arm tests rely on can
+        actually fire (ground-truth-gates rule 2: a negative test is worthless
+        until shown able to fail)."""
+        if not shutil.which("bash"):
+            self.skipTest("bash required for the shell-execution control")
+        tool = os.path.join(HOOKS, "skill_snapshot.py")
+        for label, name in self.SHELL_EXEC.items():
+            with self.subTest(shape=label):
+                self._mkskill(name)
+                # Exactly what an agent's Bash tool does with the pre-D1 template.
+                shell_cmd = 'python3 %s digest "%s/%s"' % (tool, self.root, name)
+                subprocess.run(["bash", "-c", shell_cmd], capture_output=True,
+                               env=dict(self.env, PWD=self.catch), cwd=self.catch,
+                               timeout=60)
+                self.assertIn("pwned_" + label, self._pwned(),
+                              "control: the shell must EXECUTE this name shape")
+
+    # ---- FIXED ARM (the real proof): the NEW selector command, run THROUGH a
+    # shell, must not execute — only <ROOT> and a hex selector are in the
+    # string, so the attacker-chosen name is never there to fire. This is the
+    # boundary the argv-list tests below cannot reach (they never build a shell
+    # string, so a sentinel miss there only proves the tool does not system()
+    # the name — true even for the exploitable pre-D1 positional API).
+    def test_fixed_selector_command_through_a_shell_never_executes(self):
+        if not shutil.which("bash"):
+            self.skipTest("bash required for the shell-boundary proof")
+        tool = os.path.join(HOOKS, "skill_snapshot.py")
+
+        def sh(cmd):
+            return subprocess.run(["bash", "-c", cmd], capture_output=True,
+                                  text=True, env=dict(self.env, PWD=self.catch),
+                                  cwd=self.catch, timeout=60)
+
+        for label, name in self.SHELL_EXEC.items():
+            with self.subTest(shape=label):
+                self._mkskill(name)
+                # Get the selector the way the agent does — from `list`.
+                listed = {c["select"] for c in
+                          json.loads(self._run("list", "--root", self.root).stdout)["candidates"]}
+                sel = ss.name_key(name.encode())
+                self.assertIn(sel, listed, "list must print this candidate's selector")
+                # Run the NEW selector command AS A SHELL STRING (tool path and
+                # root quoted exactly as a command would). Assert the tool
+                # actually RAN — a non-executing miss (python3 absent, a
+                # space-broken path) must not pass as a hollow "no sentinel".
+                dg = sh('python3 "%s" digest --root "%s" --select %s'
+                        % (tool, self.root, sel))
+                self.assertEqual(3, dg.returncode, dg.stderr)   # hostile => badname
+                self.assertIn("badname",
+                              {a["reason"] for a in json.loads(dg.stdout)["anomalies"]})
+                rc = sh('python3 "%s" record --root "%s" --select %s --scope global '
+                        '--verdict BLOCK' % (tool, self.root, sel))
+                self.assertEqual(0, rc.returncode, rc.stderr)
+                self.assertEqual("global|" + sel, json.loads(rc.stdout)["recorded"])
+        self.assertEqual([], self._pwned(),
+                         "the selector command, run through a shell, must never "
+                         "execute the candidate name — it is not in the string")
+
+    # ---- DATA-HANDLING ARM (argv, no shell): the tool treats every
+    # non-identifier name as DATA — opaque id, badname anomaly, never echoed raw.
+    def test_selector_digest_of_a_non_identifier_name_flags_badname(self):
+        for label, name in self.NON_IDENT.items():
+            with self.subTest(shape=label):
+                self._mkskill(name)
+                r = self._run("digest", "--root", self.root, "--select", self._sel(name))
+                self.assertEqual(3, r.returncode, r.stderr)
+                out = json.loads(r.stdout)
+                self.assertIn("badname", {a["reason"] for a in out["anomalies"]})
+                self.assertTrue(out["name"].startswith("id-"), "name echoed opaque")
+                self.assertNotIn("$(", r.stdout + r.stderr, "raw name must never ride out")
+                self.assertNotIn("`", r.stdout + r.stderr)
+        self.assertEqual([], self._pwned(),
+                         "an argv digest never shells out the name")
+
+    def test_selector_record_refuses_SAFE_on_a_hostile_name_and_never_executes(self):
+        name = self.SHELL_EXEC["dollar"]
+        self._mkskill(name)
+        d = json.loads(self._run("digest", "--root", self.root,
+                                 "--select", self._sel(name)).stdout)
+        r = self._run("record", "--root", self.root, "--select", self._sel(name),
+                      "--scope", "global", "--verdict", "SAFE-TO-PROPOSE",
+                      "--expect-digest", d["digest"])
+        self.assertNotEqual(0, r.returncode)
+        self.assertIn("REFUSED", r.stderr)
+        self.assertNotIn("$(", r.stderr, "the refusal must not echo the hostile name")
+        self.assertEqual([], self._pwned())
+        # Nothing SAFE may have been written.
+        st = json.loads(self._run("status").stdout)
+        self.assertEqual([], st.get("vetted_safe", []))
+
+    def test_selector_record_BLOCK_on_a_hostile_name_keys_like_the_hook(self):
+        """A verdict must still be recordable against a hostile-named trojan, and
+        under the SAME key the advisory hook uses (scope|name_key of the real
+        name bytes), or the hook would never see the BLOCK."""
+        name = self.SHELL_EXEC["backtick"]
+        self._mkskill(name)
+        r = self._run("record", "--root", self.root, "--select", self._sel(name),
+                      "--scope", "global", "--verdict", "BLOCK")
+        self.assertEqual(0, r.returncode, r.stderr)
+        self.assertEqual("global|" + self._sel(name), json.loads(r.stdout)["recorded"])
+        self.assertEqual([], self._pwned())
+
+    # ---- POSITIVE ARM: ordinary skills keep working, identically to by-path.
+    def test_selector_digest_equals_by_path_digest_for_an_ordinary_skill(self):
+        d = self._mkskill("code-review-gate")
+        sel = json.loads(self._run("digest", "--root", self.root,
+                                   "--select", self._sel("code-review-gate")).stdout)
+        self.assertEqual([], sel["anomalies"])
+        bypath = json.loads(self._run("digest", d).stdout)
+        self.assertEqual(bypath["digest"], sel["digest"],
+                         "selector and by-path digests of one tree must match")
+
+    def test_selector_record_roundtrips_identically_to_by_path_record(self):
+        """Delegation check: recording via selector must land the same baseline
+        entry a by-path record of the same candidate would."""
+        d = self._mkskill("code-review-gate")
+        dig = json.loads(self._run("digest", d).stdout)["digest"]
+        r = self._run("record", "--root", self.root,
+                      "--select", self._sel("code-review-gate"),
+                      "--scope", "global", "--verdict", "SAFE-TO-PROPOSE",
+                      "--expect-digest", dig, "--reviewer", "g3-test 2026-10-08")
+        self.assertEqual(0, r.returncode, r.stderr)
+        rec = json.loads(r.stdout)
+        self.assertEqual("global|" + self._sel("code-review-gate"), rec["recorded"])
+        self.assertEqual(dig, rec["digest"])
+        self.assertEqual("SAFE-TO-PROPOSE", rec["verdict"])
+
+    # ---- list ----
+    def test_list_renders_hostile_names_opaque_and_prints_selectors(self):
+        self._mkskill("code-review-gate")
+        for name in self.NON_IDENT.values():
+            self._mkskill(name)
+        r = self._run("list", "--root", self.root)
+        self.assertEqual(0, r.returncode, r.stderr)
+        doc = json.loads(r.stdout)
+        self.assertTrue(doc["complete"])
+        self.assertNotIn("$(", r.stdout, "no raw hostile bytes in a list")
+        self.assertNotIn("`", r.stdout)
+        by_name = {c["name"]: c for c in doc["candidates"]}
+        self.assertIn("code-review-gate", by_name)
+        self.assertTrue(by_name["code-review-gate"]["name_ok"])
+        opaque = [c for c in doc["candidates"] if not c["name_ok"]]
+        self.assertEqual(len(self.NON_IDENT), len(opaque),
+                         "every hostile name shows as an opaque id")
+        for c in opaque:
+            self.assertTrue(c["name"].startswith("id-"))
+            self.assertTrue(ss._HEX64.match(c["select"]), "selector is 64-hex")
+
+    def test_list_requires_root_and_refuses_unknown_args(self):
+        self.assertNotEqual(0, self._run("list").returncode)
+        r = self._run("list", "--wat", "x")
+        self.assertNotEqual(0, r.returncode)
+        self.assertIn("unrecognized argument", r.stderr)
+
+    # ---- FAIL-CLOSED resolution ----
+    def test_selector_fails_closed_on_unknown_selector(self):
+        self._mkskill("code-review-gate")
+        r = self._run("digest", "--root", self.root, "--select", "a" * 64)
+        self.assertNotEqual(0, r.returncode)
+        self.assertIn("no candidate", r.stderr)
+
+    def test_selector_fails_closed_on_a_non_hex_selector(self):
+        self._mkskill("code-review-gate")
+        for bad in ("NOT-HEX", "ABC", "g" * 64, "a" * 63, "a" * 65):
+            with self.subTest(sel=bad):
+                r = self._run("digest", "--root", self.root, "--select", bad)
+                self.assertNotEqual(0, r.returncode)
+                self.assertIn("64 lowercase hex", r.stderr)
+
+    def test_selector_fails_closed_on_a_symlinked_root(self):
+        """An anomalous root cannot be fully enumerated, so no selector resolves
+        against it — fail closed rather than resolve through the link."""
+        real = os.path.join(self.tmp, "real"); os.makedirs(real)
+        link = os.path.join(self.tmp, "linkroot")
+        os.symlink(real, link)
+        r = self._run("digest", "--root", link, "--select", "a" * 64)
+        self.assertNotEqual(0, r.returncode)
+        self.assertIn("REFUSED", r.stderr)
+
+    def test_selector_fails_closed_on_an_overfull_root(self):
+        """An overfull root (> MAX_CANDIDATES) enumerates incompletely, so a
+        selector must NOT resolve even against a candidate that was listed —
+        resolution requires a COMPLETE enumeration (cross-model review finding:
+        the old code accepted a unique match before checking root integrity)."""
+        self._mkskill("target-skill")
+        for i in range(ss.MAX_CANDIDATES + 8):
+            os.makedirs(os.path.join(self.root, "pad%04d" % i))
+        doc = json.loads(self._run("list", "--root", self.root).stdout)
+        self.assertFalse(doc["complete"])
+        self.assertIn("root-overfull", doc["root_anomalies"])
+        # Pick a selector that WAS enumerated (it is in the listed slice), so the
+        # old match-before-integrity code WOULD have resolved it — the refusal
+        # below therefore exercises the completeness gate, not a mere no-match
+        # (which scandir ordering could otherwise produce regardless of the fix).
+        self.assertTrue(doc["candidates"], "an overfull root still lists its first slice")
+        sel = doc["candidates"][0]["select"]
+        r = self._run("digest", "--root", self.root, "--select", sel)
+        self.assertNotEqual(0, r.returncode, "must refuse on an incomplete root")
+        self.assertIn("complete enumeration", r.stderr)
+        rr = self._run("record", "--root", self.root, "--select", sel,
+                       "--scope", "global", "--verdict", "BLOCK")
+        self.assertNotEqual(0, rr.returncode)
+        state, _ = ss.load_baseline(ss.baseline_path(self.cfg))
+        self.assertEqual("absent", state, "nothing recorded from an incomplete root")
+
+    def test_selector_record_requires_scope_and_verdict(self):
+        self._mkskill("code-review-gate")
+        sel = self._sel("code-review-gate")
+        self.assertNotEqual(0, self._run("record", "--root", self.root,
+                                         "--select", sel, "--verdict", "BLOCK").returncode)
+        self.assertNotEqual(0, self._run("record", "--root", self.root,
+                                         "--select", sel, "--scope", "global").returncode)
+
+    def test_bypath_record_with_a_flag_shaped_value_is_not_misrouted(self):
+        """A value that happens to equal '--root'/'--select' must NOT flip a
+        by-path invocation into selector mode (cross-model review nit:
+        membership-scan misrouted such values and refused a legitimate record)."""
+        d = self._mkskill("ordinary-skill")
+        for val in ("--root", "--select"):
+            with self.subTest(reviewer=val):
+                r = self._run("record", "--scope", "global", "--name",
+                              "ordinary-skill", "--dir", d, "--verdict", "BLOCK",
+                              "--reviewer", val)
+                self.assertEqual(0, r.returncode, r.stderr)
+                self.assertEqual("global|" + self._sel("ordinary-skill"),
+                                 json.loads(r.stdout)["recorded"])
+
+    def test_bypath_digest_of_a_dir_named_like_a_flag_is_not_misrouted(self):
+        """A lone operand literally named '--root'/'--select' must digest BY
+        PATH, not flip into selector mode (cross-model review nit). By-path
+        produces a digest JSON (here flagged badname, since the name is not a
+        plain identifier); selector mode would print nothing and a usage error."""
+        for flagname in ("--root", "--select"):
+            with self.subTest(name=flagname):
+                d = os.path.join(self.catch, flagname)
+                os.makedirs(d, exist_ok=True)
+                with open(os.path.join(d, "SKILL.md"), "w") as fh:
+                    fh.write("---\nname: s\ndescription: d\n---\n# s\n")
+                r = self._run("digest", flagname)          # cwd = self.catch
+                self.assertEqual(3, r.returncode, r.stderr)
+                out = json.loads(r.stdout)                 # selector mode prints nothing here
+                self.assertIn("badname", {a["reason"] for a in out["anomalies"]})
+
+    def test_list_exits_nonzero_on_an_anomalous_root(self):
+        """`list` on a root it could not cleanly enumerate must not exit 0, so a
+        caller gating on the exit code does not read it as an empty clean root
+        (cross-model review nit)."""
+        real = os.path.join(self.tmp, "real"); os.makedirs(real)
+        link = os.path.join(self.tmp, "linkroot"); os.symlink(real, link)
+        r = self._run("list", "--root", link)
+        self.assertNotEqual(0, r.returncode, "an anomalous root must not exit 0")
+        doc = json.loads(r.stdout)
+        self.assertFalse(doc["complete"])
+        self.assertIn("root-symlink", doc["root_anomalies"])
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
