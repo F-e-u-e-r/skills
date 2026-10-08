@@ -23,8 +23,7 @@ across planning, execution, design, review, and verification — consolidated in
 reusable skills rather than preserving the full conversations, workflows, or
 source material they came from.
 
-Three packs ship today — **15 skills in total** — tuned for the daily-driver
-models that remain after Fable 5's window closes (Opus 4.8 / Sonnet 5 / Haiku):
+Three packs ship today — **15 skills in total**:
 
 | Pack | Focus | Skills | Version |
 |---|---|---:|---:|
