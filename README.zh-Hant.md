@@ -1,14 +1,14 @@
-<h1 align="center">Ops Pack</h1>
+<h1 align="center">Skills</h1>
 
 <p align="center">
-  <em>為日常 Claude 模型萃取的 skill —<br><strong>少而密的規則,可執行的閘門勝過冗長散文。</strong></em>
+  <em>從真實經驗萃取的角色導向 skill pack —<br><strong>可重用的 skill,而非保存的對話紀錄。</strong></em>
 </p>
 
 <p align="center">
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
-  <img alt="Version v0.3.0" src="https://img.shields.io/badge/version-v0.3.0-orange.svg">
-  <img alt="Status: ACTIVE" src="https://img.shields.io/badge/status-ACTIVE-7aa2ff.svg">
-  <img alt="For Claude Code" src="https://img.shields.io/badge/for-Claude%20Code-8A2BE2.svg">
+  <img alt="3 packs" src="https://img.shields.io/badge/packs-3-7aa2ff.svg">
+  <img alt="15 skills" src="https://img.shields.io/badge/skills-15-7aa2ff.svg">
+  <img alt="Status: alpha" src="https://img.shields.io/badge/status-alpha-orange.svg">
   <a href="https://github.com/F-e-u-e-r/skills/issues"><img alt="PRs welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"></a>
   <a href="https://github.com/F-e-u-e-r/skills/actions/workflows/checks.yml"><img alt="checks" src="https://github.com/F-e-u-e-r/skills/actions/workflows/checks.yml/badge.svg"></a>
 </p>
@@ -17,48 +17,69 @@
 
 ---
 
-**Ops Pack 是一個 Claude Code plugin marketplace** —— 一個 repo、三個可各自
-安裝的 plugin、共 15 個 skill,為 Fable 5 退場後的日常模型
-(Opus 4.8 / Sonnet 5 / Haiku)而做:
+這個 repository 收錄數個聚焦、角色導向的 **skill pack**,全部從真實經驗中萃取。
+它們把在規劃、執行、設計、審查與驗證等工作中反覆證明有用的模式,整併成可重用的
+skill,而非保存當初那些完整的對話、工作流程或來源素材。
 
-| Plugin | 領域 | 安裝內容 |
-|---|---|---|
-| **`ops-pack`** | Agent 紀律——工作如何完成:rigor、委派、驗證、證據 | 10 個 skill |
-| **`planning-pack`** | 規劃——可執行的工作契約與其對齊(Planning ↔ Ops) | 2 個 skill |
-| **`design-pack`** | 設計工藝——同一風格的視覺/UI 判斷:版面、動效、審查 | 3 個 skill |
+目前出貨三個 pack——**共 15 個 skill**——為 Fable 5 退場後仍在的日常模型
+(Opus 4.8 / Sonnet 5 / Haiku)調校:
 
-另有**四個選配 hook**——repo 層級、手動安裝;兩個 plugin 都不註冊它們
-(見[強制層:hooks](#強制層hooks-設定方法))。全部押注一件事:強模型本就具備的
-判斷力,靠**更多散文**得到的提升,遠不如靠**在工作出錯時大聲失敗的閘門**。
-三個 plugin 可擇一或任意組合安裝——`design-pack` 與 `planning-pack` 都與 `ops-pack` 共用這個
-marketplace,而非硬相依(它的審查 skill 對 ops-pack 的 cross-reference 只是在
-ops-pack 在場時解析得到;見 [`design-pack`](#design-pack設計-skill))。
+| Pack | 領域 | Skill 數 | 版本 |
+|---|---|---:|---:|
+| **Ops Pack** | 執行治理——rigor、委派、驗證、證據、審查 | 10 | 0.3.0 |
+| **Planning Pack** | 可執行的規劃契約與對齊(Planning ↔ Ops) | 2 | 0.1.0 |
+| **Design Pack** | UI/UX、動效與設計審查 | 3 | 0.1.0 |
+
+各 pack 版本獨立。這些 pack 目前以 **Claude Code plugin** 形式,透過本 repository
+的 marketplace 散佈(見下方[安裝](#安裝)),另有**四個選配 hook**——repo 層級、
+手動安裝;沒有任何 plugin 會註冊它們(見[強制層:hooks](#強制層hooks-設定方法))。
+每個 pack 可擇一或任意組合安裝。
+
+這些 pack 也會從觀察到的失敗、貢獻者經驗、open-source 意念、研究與針對性評測中
+演進。證據強度始終明示:已測行為、已觀察經驗、研究發現,以及未經探測的指引,絕不
+被當成同一回事呈現。
 
 > [!NOTE]
-> **早期 alpha(`v0.3.0`)。** 規則會隨真實 session 暴露的缺口調整,而且本包
-> 用它自己的教條[檢驗自己](#evals測試這個-pack-本身)——包含一個誠實的 null result。
+> **狀態:早期 alpha。** Ops Pack 處於 **早期 alpha(`v0.3.0`)**;Planning Pack
+> 與 Design Pack 為 `0.1.0`。規則會隨真實 session 暴露的缺口調整,而且這些 pack
+> 用它們自己的教條[檢驗自己](#evals測試這個-pack-本身)——包含誠實的 null result。
 > 歡迎用具體失敗案例開 issue 或 PR。
 
 **一覽**
 
 |  |  |
 |---|---|
-| **10** 個紀律 skill | **3** 個設計 skill |
-| **4** 個選配 hook | **2** 個可各自安裝的 plugin |
-| **狀態** 早期 alpha | **證據** 受控評測,含 null result |
+| **3** 個角色導向 pack | **共 15** 個 skill |
+| **4** 個選配 hook | **CI** 每次 push 跑一致性檢查 |
+| **狀態** 早期 alpha | **證據** 經驗 + 研究 + 受控評測,含 null result |
 
 ## 目錄
 
-- [安裝](#安裝) · [`ops-pack`:紀律 skill](#ops-pack紀律-skill) · [`planning-pack`:規劃 skill](#planning-pack規劃-skill) · [`design-pack`:設計 skill](#design-pack設計-skill)
-- [最高槓桿的十條原則](#萃取時保留的核心原則最高槓桿的十條)
-- [刻意捨棄的部分(與為什麼)](#刻意捨棄的部分與為什麼)
-- [Skill 會自動呼叫 agent 嗎?](#skill-會自動呼叫-agent-嗎) · [強制層:hooks](#強制層hooks-設定方法)
-- [Evals:測試這個 pack 本身](#evals測試這個-pack-本身) · [評測結果](#評測結果) · [本包如何退化](#本包最可能的退化方式與內建對策)
+- [安裝](#安裝) · [如何打造這些 pack](#如何打造這些-pack) · [`ops-pack`:紀律 skill](#ops-pack紀律-skill) · [`planning-pack`:規劃 skill](#planning-pack規劃-skill) · [`design-pack`:設計 skill](#design-pack設計-skill) · [架構與穩定性](#架構與穩定性)
+- **[Ops Pack — 紀律血統與證據](#ops-pack--紀律血統與證據):** [十條原則](#萃取時保留的核心原則最高槓桿的十條) · [刻意捨棄](#刻意捨棄的部分與為什麼) · [Skill 會自動呼叫 agent 嗎?](#skill-會自動呼叫-agent-嗎) · [強制層:hooks](#強制層hooks-設定方法) · [Evals](#evals測試這個-pack-本身) · [評測結果](#評測結果) · [如何退化](#本包最可能的退化方式與內建對策) · [規則衝突](#已解決的規則衝突)
 - [維護者筆記](#維護者筆記) · [Provenance 與致謝](#provenance-與致謝) · [授權](#授權)
+
+## 如何打造這些 pack
+
+這些 pack 是**從經驗萃取**出來的,不是把經驗照抄下來。流程:
+
+1. **從真實工作出發**——操作 session、觀察到的成功與失敗、維護者與貢獻者經驗,
+   再加上有用的 open-source 意念、針對性的 repo 研讀,以及聚焦的研究。
+2. **整併成角色導向的 skill**——反覆出現的模式變成小而可重用的 skill,而不是
+   保存整段對話或整個來源專案。
+3. **核對 provenance 與授權**——意念依價值篩選、不整包照抄;來源與寬鬆式授權的
+   notices 都有追蹤。
+4. **load-bearing 的改動找獨立審查**——作者不是裁判。
+5. **能設閘門的就設閘門**——確定性的一致性檢查,以及在可行處的受控 routing /
+   行為 / 執行 probe。
+6. **證據強度始終明示**——已測行為、已觀察經驗、研究,以及仍未探測的指引,各自
+   標示清楚;限制與 null result 保留而非藏起來。
+
+貫穿其中的是「從經驗萃取」——而不是宣稱每一條規則都有實驗證明。
 
 ## 安裝
 
-這個 repo 是一個 **marketplace**;加一次,再挑要裝的 plugin。安裝目標用
+這些 pack 目前以 **Claude Code plugin** 形式散佈。本 repository 就是那個 **marketplace**;加一次,再挑要裝的 plugin。安裝目標用
 `plugin@marketplace` 格式,而 marketplace ID 是 `opus-pack`:
 
 ```
@@ -71,7 +92,7 @@ ops-pack 在場時解析得到;見 [`design-pack`](#design-pack設計-skill))。
 `ops-pack@opus-pack` 裝紀律 plugin(10 個 skill);`planning-pack@opus-pack` 裝規劃 plugin(2 個 skill);`design-pack@opus-pack`
 裝設計 plugin(3 個 skill)。擇一或全部三者都裝。Skills 會以 namespace 形式載入
 (`ops-pack:operational-rigor`、`design-pack:ui-design-craft`……),用
-`/plugin marketplace update` 更新。兩個 plugin 都不註冊 hooks——它們改變
+`/plugin marketplace update` 更新。沒有任何 plugin 會註冊 hooks——它們改變
 harness 行為,必須由使用者手動逐一決定(見[強制層:hooks 設定方法](#強制層hooks-設定方法))。
 
 **或把 skill 複製到位**——全域,或單一專案。每個區塊各自完整:
@@ -79,6 +100,8 @@ harness 行為,必須由使用者手動逐一決定(見[強制層:hooks 設定�
 ```bash
 # ops-pack(紀律)skills,全域:
 mkdir -p ~/.claude/skills && cp -R ops-pack/skills/* ~/.claude/skills/
+# planning-pack(規劃)skills,全域:
+mkdir -p ~/.claude/skills && cp -R planning-pack/skills/* ~/.claude/skills/
 # design-pack(設計)skills,全域:
 mkdir -p ~/.claude/skills && cp -R design-pack/skills/* ~/.claude/skills/
 # 只裝進單一專案:把 ~/.claude 換成 <repo>/.claude
@@ -123,7 +146,7 @@ mkdir -p ~/.claude/skills && cp -R design-pack/skills/* ~/.claude/skills/
 
 **已記錄的弱層限制(QUALIFIED-ADOPTABLE)。** Planning Pack 以 **QUALIFIED-ADOPTABLE:14 項行為主張中 13 項乾淨、1 項已記錄的弱層限制、0 項有害行為、D0 保留** 發佈。那唯一未結的主張是一項已記錄的弱層限制,在此載明而非略過。限制內容:`plan-reconciliation` 能可靠保留 revalidation / re-approval / Ops 授權閘門,但在較弱的執行層,它不能可靠地*自行*執行對「缺漏」敏感的整體計畫 orphan 偵測(傾向描述或請求 revalidation,而非自己做)。失效模式是 fail-safe——偵測不足時預設「不可 resume / 升級」,絕不會誤判為「safe to resume」。
 
-> **遷移——Planning 已獨立成自己的 plugin(ops-pack 0.3.0)。** `planning` 與 `plan-reconciliation` 在 v0.2.0 前內含於 `ops-pack` plugin;自 `ops-pack` 0.3.0 起,它們以獨立的 **`planning-pack`** plugin(版本 0.1.0)發佈。這是**有記錄的 namespace 遷移,不是透明相容**:沒有跨 plugin 的 skill 改名橋接,所以原本啟用 `ops-pack@opus-pack`、更新時**未**安裝 `planning-pack` 的使用者,會發現那兩個 skill **直接消失**。該消失是**預期且在此載明的——不是 silent loss**。要恢復完整集合,請**同時**安裝 `ops-pack@opus-pack` **與** `planning-pack@opus-pack`;安裝 `planning-pack` 後,`planning` 與 `plan-reconciliation` 會在 `planning-pack:` namespace 下**恰好一次**回歸。四包導向的完整設定需要兩者都裝。見 `ARCHITECTURE.md` §3。
+> **遷移——Planning 已獨立成自己的 plugin(ops-pack 0.3.0)。** `planning` 與 `plan-reconciliation` 在 v0.2.0 前內含於 `ops-pack` plugin;自 `ops-pack` 0.3.0 起,它們以獨立的 **`planning-pack`** plugin(版本 0.1.0)發佈。這是**有記錄的 namespace 遷移,不是透明相容**:沒有跨 plugin 的 skill 改名橋接,所以原本啟用 `ops-pack@opus-pack`、更新時**未**安裝 `planning-pack` 的使用者,會發現那兩個 skill **直接消失**。該消失是**預期且在此載明的——不是 silent loss**。要恢復完整集合,請**同時**安裝 `ops-pack@opus-pack` **與** `planning-pack@opus-pack`;安裝 `planning-pack` 後,`planning` 與 `plan-reconciliation` 會在 `planning-pack:` namespace 下**恰好一次**回歸。完整的規劃 + 執行設定需要兩者都裝。見 `ARCHITECTURE.md` §3。
 
 
 ## `design-pack`:設計 skill
@@ -188,7 +211,7 @@ skill 本地的參考檔**,再由三個 `SKILL.md` 進入點**選擇性**取用�
 變更與 reference grammar 的 canonical source。本節只是摘要投影;**任何不一致以
 `ARCHITECTURE.md`(英文)為準。**
 
-**Skill tiers**(`ops-pack`;canonical map 在
+**Skill tiers**(`ops-pack` 與 `planning-pack` 的 agent 紀律 skill;canonical map 在
 [`metadata/skill-tiers.json`](metadata/skill-tiers.json)):
 
 <!-- BEGIN GENERATED SKILL TIERS -->
@@ -215,12 +238,17 @@ window + 相容涵蓋,且須完成而非僅宣告)只在該 skill 所屬 source 
 之前(各 plugin 版本獨立);該 1.0 之後 published skill 無限期保留、不預先授權任何
 破壞性路徑。細節見 `ARCHITECTURE.md` §§2–3。
 
-## 萃取時保留的核心原則(最高槓桿的十條)
+## Ops Pack — 紀律血統與證據
 
-*以下的 doctrine 區塊——原則、刻意捨棄、強制層、evals、退化——是 `ops-pack`
-的紀律血統與這個 marketplace 共享的 house rules。各 plugin 的 skill 清單在上方
-各自的區塊裡;各 plugin 的 probe 證據則放在該 plugin 回報它的地方——ops-pack
-的在下方 Evals 段,design-pack 的在它自己的區塊。*
+<p><img alt="Ops Pack version v0.3.0" src="https://img.shields.io/badge/version-v0.3.0-orange.svg"></p>
+
+*以下各節專屬於 **Ops Pack**——它的紀律血統與背後的 house rules:十條原則、刻意
+捨棄了什麼、強制層與 hooks、各項評測,以及它如何退化。Planning Pack 與 Design
+Pack 的清單與證據放在上方它們自己的區塊;各 plugin 的 probe 證據則放在該 plugin
+回報它的地方——ops-pack 的在下方 Evals 段,design-pack 的在它自己的區塊。再往下的
+維護者筆記、provenance 與授權則是整個 repository 共通的。*
+
+### 萃取時保留的核心原則(最高槓桿的十條)
 
 1. **散文不會讓可驗證的工作變好,ground truth 才會**——把力氣花在建閘門,不是寫更長的規則。
 2. **作者不能當裁判**——自報完成只是主張;由測試、獨立審查或 fresh-context agent 判定(所有來源唯一的共識點)。
@@ -233,7 +261,7 @@ window + 相容涵蓋,且須完成而非僅宣告)只在該 skill 所屬 source 
 9. **抽象要求等於沒寫**——每條規則要有觸發條件、步驟、完成定義;誤讀代價高的規則再加正反例與失敗下一步。
 10. **外部內容是資料不是指令**——讀到的東西永遠不升格為指令,想法按價值萃取。
 
-## 刻意捨棄的部分(與為什麼)
+### 刻意捨棄的部分(與為什麼)
 
 <details>
 <summary><strong>展開七項捨棄與理由</strong></summary>
@@ -250,7 +278,7 @@ window + 相容涵蓋,且須完成而非僅宣告)只在該 skill 所屬 source 
 
 </details>
 
-## Skill 會自動呼叫 agent 嗎?
+### Skill 會自動呼叫 agent 嗎?
 
 不會「自動」。SKILL.md 是**指令,不是可執行工作流**:description 常駐 context、內容符合時模型載入全文,然後由模型讀了照做。skill 能指示「什麼條件下必須開 subagent」,模型通常會遵守,但這是模型判斷,不是機制保證。本包的指示點:
 
@@ -264,7 +292,7 @@ window + 相容涵蓋,且須完成而非僅宣告)只在該 skill 所屬 source 
 
 散文與閘門之間有一道量測出來的缺口:**可用不等於會用**。本包自己的 eval(`evidence/reviews/2026-07-11-pack-eval-rounds-1-2.md`)量到:24 場帶 skills 的 session 只有 10 場曾自行載入任何 skill——描述是機率性的提示,不是機制。某類工作**必須**觸發某紀律時,請在專案的 `CLAUDE.md` 或 dispatch prompt 裡指名(「動到金流的任務先載入 operational-rigor」):被指名的 skill 近乎必定載入;沒被指名的,即使任務完全符合描述,載入率也不到一半。
 
-## 強制層:hooks 設定方法
+### 強制層:hooks 設定方法
 
 Hook 是 Claude Code harness 本身在特定事件上執行的 shell 指令——與 skill 不同,模型無法跳過它。完整文件:<https://docs.claude.com/en/docs/claude-code/hooks>。
 
@@ -360,7 +388,7 @@ bash hooks/test-skill_snapshot.sh
 
 **兩個注意事項。** Hook 以你的權限執行任意 shell:啟用前先讀過腳本,且建議把 hook commit 進 repo、像程式碼一樣被審查。另外 Claude Code 在啟動時快照 hook 設定:改完後要用 `/hooks` 選單確認或重啟 session 才生效。
 
-## Evals:測試這個 pack 本身
+### Evals:測試這個 pack 本身
 
 本包用它自己的教條檢驗自己(「不能測試的規則只是主張」):一套**不公開**的
 陷阱任務——埋設的無關 bug、自相矛盾的 spec、永遠不會失敗的測試、誘導只出
@@ -398,7 +426,7 @@ slot 後判為 NOT-DISCRIMINATED、或不可計分。請把它讀成
 已公開的 eval 計畫改作其 trap 機制、重新實作成全新私有 fixtures——與套件
 其餘部分一樣由擁有者執行、不公開。
 
-## 評測結果
+### 評測結果
 
 我們用受控的 routing 與行為 probe 來評測 Ops Pack,而不是只靠軼事式的例子。
 
@@ -426,7 +454,7 @@ slot 後判為 NOT-DISCRIMINATED、或不可計分。請把它讀成
 
 本輪的 per-surface 計數、實驗 identity 與 owner 裁定:[evidence/reviews/2026-09-18-activation-eval-reconciliation.md](evidence/reviews/2026-09-18-activation-eval-reconciliation.md)。
 
-## 本包最可能的退化方式(與內建對策)
+### 本包最可能的退化方式(與內建對策)
 
 1. **Skill 越補越肥**——教訓不斷往上疊 → 壓縮(compaction)觸發點(skill-authoring §7)。
 2. **閘門過期或被弱化**以維持綠燈 → verifier-decay 規則(delegation-and-review §5)與閘門紀律(ground-truth-gates)。
@@ -457,6 +485,8 @@ Release(仍在 alpha 期間標為 pre-release),README 的版本 badge 也寫 `vX
 之前的 tag 用舊的 `alpha-X.Y.Z` 形式;中間的版本從未個別打過 tag,`v0.1.16` 是第一個正式的 release of record。
 
 ## 已解決的規則衝突
+
+*蒸餾 **Ops Pack** 時,如何調解彼此衝突的來源教條。*
 
 - rigor 草稿「超過兩步就要先出計畫」 vs 兩 repo「不要停在計畫上」→ 計畫是內部動作,**不准把回合結束在計畫上**;能做的可逆下一步就去做。
 - 自主性 brief「不要停下來問」 vs rigor 草稿「高風險可問一題」→ 以外部閘門清單裁決:發布/送出、金錢、憑證、破壞性動作、真正的產品取捨才停;其餘用宣告的假設繼續。
@@ -511,6 +541,6 @@ Release(仍在 alpha 期間標為 pre-release),README 的版本 badge 也寫 `vX
 
 ## 授權
 
-Ops Pack 以 [MIT License](LICENSE) 發佈——Copyright (c) 2026 F-e-u-e-r。
+本 repository 的 skill pack 以 [MIT License](LICENSE) 發佈——Copyright (c) 2026 F-e-u-e-r。
 
 本包納入並改作了採寬鬆式授權(MIT 與 Apache-2.0)的第三方作品;這些授權要求隨附的版權與授權聲明,集中收錄於 [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md)。最具體的一例是 `verify-before-stop` hook——改作自 Curtis Chou(其上游為 Miguok)的 MIT 授權程式碼。整條鏈路不含任何 copyleft(GPL/AGPL/LGPL)。`guideline *.txt` 來源草稿為私人來源素材(擁有者自有,及 firaen22 的私人筆記),不隨發佈散佈(已由 `.gitignore` 排除)。
