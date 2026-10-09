@@ -1,0 +1,13 @@
+**Verdict: PROCEED.** The added §2b and the evidence record meet all four rubric items.
+
+1. **Pack style.** §2b is titled as layered packets when full-plan review diverges, and both the heading and the closing citation mark it `unprobed` with the external incident date and `evidence/reviews/2026-10-09-external-harness-ship-gate-split.md`. Round counts stay in the evidence record, which labels itself a measurement pointer and says the artifact is not in this repo. [verified: `files/plan-reconciliation-SKILL.md` §2b; `files/evidence-record.md`]
+
+2. **Additive; INV-1 and §5b kept.** §2b is a new section. The existing INV-1 line still says reconciling or revising is not authorization to execute. Step 4 keeps cross-model-review on ship gate (a): same-model bench self-review is a weak lens (§5b), and deterministic selftest validates harness state, not reviewer judgment. Dual-family precommit stays on (a). [verified: skill lines 20–22 and §2b steps 1 and 4]
+
+3. **Canonical skills win.** The evidence record states that on any conflict, and points at `evidence/README.md`. It also classes itself as not pack doctrine. [verified: `files/evidence-record.md` opening]
+
+4. **No grant from §2b.** Non-blocking applies only when (a) was already pre-authorized under a recorded amendment and (b)'s open FIX items are dispositioned. Step 3 says INV-1 still binds: revising or extending scope under (a) needs its own grant, and advisory (b) does not authorize new execution. [verified: §2b steps 2–3]
+
+Author's `python3 .github/checks.py` pass is [relayed: brief]; this packet has no check script to re-run. Routing promotion and any weakening of dual-family on ship gate (a) are absent from both files.
+
+PROCEED

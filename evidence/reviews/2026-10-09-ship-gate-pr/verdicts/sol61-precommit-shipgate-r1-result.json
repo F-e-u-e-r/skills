@@ -1,0 +1,17 @@
+{
+ "name": "sol61-precommit-shipgate-r1",
+ "tool": "codex",
+ "model": "gpt-6.1-sol",
+ "cap": 1200,
+ "pong": false,
+ "status": "PASS",
+ "rc": 0,
+ "elapsed": 45.3,
+ "out_bytes": 510,
+ "err_bytes": 104937,
+ "served_model": "gpt-6.1-sol",
+ "out": "/Users/yauch/.claude/plugins/marketplaces/opus-pack/evidence/reviews/2026-10-09-ship-gate-pr/verdicts/sol61-precommit-shipgate-r1-out.txt",
+ "err": "/Users/yauch/.claude/plugins/marketplaces/opus-pack/evidence/reviews/2026-10-09-ship-gate-pr/verdicts/sol61-precommit-shipgate-r1-err.txt",
+ "cwd": "/Users/yauch/.claude/plugins/marketplaces/opus-pack",
+ "effort_applied": true
+}

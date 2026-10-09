@@ -1,0 +1,7 @@
+Yes—no blocking findings. [verified: scoped diff and canonical rules read]
+
+§2b is additive, marked `unprobed`, preserves INV-1’s separate execution grant, and retains dual-family review for ship gate (a). It agrees with cross-model-review §5b. The evidence record explicitly states canonical skills win. [verified: file comparison]
+
+`python3 -B .github/checks.py` exited 0: all checks passed. [verified: execution] External incident counts remain unverified; this review is single-lens. [unverified]
+
+PROCEED
