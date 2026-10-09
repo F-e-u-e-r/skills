@@ -1,0 +1,17 @@
+{
+ "name": "grok-precommit-shipgate-r1",
+ "tool": "cursor-grok",
+ "model": "grok-4.7-medium-fast",
+ "cap": 14400,
+ "pong": false,
+ "status": "PASS",
+ "rc": 0,
+ "elapsed": 124.3,
+ "out_bytes": 1724,
+ "err_bytes": 0,
+ "served_model": "grok-4.7-medium-fast",
+ "cwd": "/private/tmp/opuspack-shipgate-review.z1AK",
+ "effort_applied": false,
+ "out": "/Users/yauch/.claude/plugins/marketplaces/opus-pack/evidence/reviews/2026-10-09-ship-gate-pr/verdicts/grok-precommit-shipgate-r1-out.txt",
+ "err": "/Users/yauch/.claude/plugins/marketplaces/opus-pack/evidence/reviews/2026-10-09-ship-gate-pr/verdicts/grok-precommit-shipgate-r1-err.txt"
+}
