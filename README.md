@@ -6,8 +6,8 @@
 
 <p align="center">
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
-  <img alt="3 packs" src="https://img.shields.io/badge/packs-3-7aa2ff.svg">
-  <img alt="15 skills" src="https://img.shields.io/badge/skills-15-7aa2ff.svg">
+  <img alt="4 packs" src="https://img.shields.io/badge/packs-4-7aa2ff.svg">
+  <img alt="16 skills" src="https://img.shields.io/badge/skills-16-7aa2ff.svg">
   <img alt="Status: alpha" src="https://img.shields.io/badge/status-alpha-orange.svg">
   <a href="https://github.com/F-e-u-e-r/skills/issues"><img alt="PRs welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"></a>
   <a href="https://github.com/F-e-u-e-r/skills/actions/workflows/checks.yml"><img alt="checks" src="https://github.com/F-e-u-e-r/skills/actions/workflows/checks.yml/badge.svg"></a>
@@ -23,13 +23,14 @@ across planning, execution, design, review, and verification — consolidated in
 reusable skills rather than preserving the full conversations, workflows, or
 source material they came from.
 
-Three packs ship today — **15 skills in total**:
+Four packs ship today — **16 skills in total**:
 
 | Pack | Focus | Skills | Version |
 |---|---|---:|---:|
 | **Ops Pack** | Execution governance — rigor, delegation, verification, evidence, review | 10 | 0.3.0 |
 | **Planning Pack** | Executable planning contracts and reconciliation (Planning ↔ Ops) | 2 | 0.1.0 |
 | **Design Pack** | UI/UX, motion, and design review | 3 | 0.1.0 |
+| **Security Pack** | Security evidence records — invariants, verification obligations, finding states, residual risk | 1 | 0.1.0 |
 
 Each pack versions independently. The packs are currently distributed as **Claude
 Code plugins** through this repository's marketplace ([Install](#install) below),
@@ -43,8 +44,8 @@ behavior, observed experience, research findings, and unprobed guidance are not
 presented as if they were the same thing.
 
 > [!NOTE]
-> **Status: early alpha.** Ops Pack is at **Early alpha (`v0.3.0`)**; Planning Pack
-> and Design Pack are at `0.1.0`. Rules change as real sessions expose misses, and the
+> **Status: early alpha.** Ops Pack is at **Early alpha (`v0.3.0`)**; Planning Pack,
+> Design Pack, and Security Pack are at `0.1.0`. Rules change as real sessions expose misses, and the
 > packs are [measured against their own doctrine](evidence/ops-pack-evaluation.md)
 > — honest null results included. Issues and PRs with concrete failure cases are welcome.
 
@@ -52,13 +53,13 @@ presented as if they were the same thing.
 
 |  |  |
 |---|---|
-| **3** role-oriented packs | **15** skills in total |
+| **4** role-oriented packs | **16** skills in total |
 | **4** optional hooks | **CI** consistency checks on every push |
 | **Status** early alpha | **Evidence** experience + research + controlled evaluation, nulls included |
 
 ## Contents
 
-- [Install](#install) · [How these packs are built](#how-these-packs-are-built) · [`ops-pack`](#ops-pack-the-discipline-skills) · [`planning-pack`](#planning-pack-the-planning-skills) · [`design-pack`](#design-pack-the-design-skills)
+- [Install](#install) · [How these packs are built](#how-these-packs-are-built) · [`ops-pack`](#ops-pack-the-discipline-skills) · [`planning-pack`](#planning-pack-the-planning-skills) · [`design-pack`](#design-pack-the-design-skills) · [`security-pack`](#security-pack-the-security-skill)
 - [Architecture & stability](#architecture--stability) · [Maintainer notes](#maintainer-notes) · [License](#license)
 
 ## How these packs are built
@@ -93,12 +94,14 @@ is the **marketplace**; add it once, then install whichever plugins you want. In
 /plugin install ops-pack@opus-pack
 /plugin install planning-pack@opus-pack
 /plugin install design-pack@opus-pack
+/plugin install security-pack@opus-pack
 ```
 
 `ops-pack@opus-pack` installs the discipline plugin (10 skills);
 `planning-pack@opus-pack` installs the planning plugin (2 skills);
-`design-pack@opus-pack` installs the design plugin (3 skills). Install any,
-or all three. Skills arrive namespaced (`ops-pack:operational-rigor`,
+`design-pack@opus-pack` installs the design plugin (3 skills);
+`security-pack@opus-pack` installs the security plugin (1 skill). Install any,
+or all four. Skills arrive namespaced (`ops-pack:operational-rigor`,
 `design-pack:ui-design-craft`, …) and update via `/plugin marketplace update`.
 No plugin registers the hooks — they change harness behavior, so
 installing them stays a manual, per-user decision (see
@@ -202,6 +205,31 @@ re-verify each model generation. An independent
 (observations only, vendored into nothing) lives under
 [`research/design-pack/2026-09-impeccable-compatibility-study/`](research/design-pack/2026-09-impeccable-compatibility-study/).
 
+## `security-pack`: the security skill
+
+One security-methodology skill that constructs and maintains a durable,
+tiered **security-assessment record** tracked to evidence — explicit
+invariants, a verification obligation per load-bearing claim, adversarial
+verification, evidence-backed finding states, and residual-risk closure,
+re-verified as the system changes. Install it like any plugin
+([Install](#install) above); it versions independently (0.1.0) and is
+**`recommended-with ops-pack`**: it stands on its own but hands enforcement to
+`ground-truth-gates` and names the Ops safeguard (`operational-rigor`) it
+relies on. A bare threat model, an "is this secure?" consult, or a saved
+review stays `security-architect`'s.
+
+| Skill | What it does |
+|---|---|
+| `security-posture-record` | Construct and maintain a durable, tiered security-assessment record whose load-bearing claims are tracked to evidence (invariants, per-claim verification obligations, adversarial verification, finding states, residual-risk closure), re-verified on change |
+
+**Routing support (tested 2026-10-10):** autonomous Security-v1 skill routing
+was verified on `claude-sonnet-5-5` under the tested Claude Code configuration.
+`claude-haiku-5-5` is not supported for autonomous Security-v1 routing in this
+release. Other model/configuration support is unverified unless separately
+recorded. This does not restrict explicit invocation, which was not tested.
+Full record:
+[`evidence/security-pack-routing-support-2026-10.md`](evidence/security-pack-routing-support-2026-10.md).
+
 ## Architecture & stability
 
 Full normative contract: **[`ARCHITECTURE.md`](ARCHITECTURE.md)** — the
@@ -217,7 +245,7 @@ grammar. This section is a summary projection; **on any inconsistency,
 | Tier | Skills |
 |------|--------|
 | Core (7) | `operational-rigor`, `delegation-and-review`, `ground-truth-gates`, `cross-model-review`, `skill-authoring`, `skill-vetting`, `security-architect` |
-| Domain adapter (5) | `product-roadmap`, `personal-goal-planning`, `domain-evidence-discipline`, `planning`, `plan-reconciliation` |
+| Domain adapter (6) | `product-roadmap`, `personal-goal-planning`, `domain-evidence-discipline`, `planning`, `plan-reconciliation`, `security-posture-record` |
 <!-- END GENERATED SKILL TIERS -->
 
 Core skills are the shared agent-execution doctrine; a domain adapter applies
@@ -230,6 +258,7 @@ its skills complete their primary workflows on their own (`motion-craft` has no
 cross-pack dependency; the two load-bearing cross-pack clauses are carried
 verbatim and bind on their own), while `ops-pack` adds the extra rigor its
 pointers name. `planning-pack` is **`recommended-with ops-pack`**: it produces a usable plan on its own but names the Ops execution safeguards (authorization, evidence, non-reversal) it hands off to. See `ARCHITECTURE.md` §4.
+`security-pack` is **`recommended-with ops-pack`**: it constructs and maintains a durable security-assessment record on its own, but names the Ops safeguards (`operational-rigor`, `ground-truth-gates`) it hands off to.
 <!-- END GENERATED PLUGIN DEPENDENCIES -->
 
 **Stability, in one line:** published skills are stable interfaces and evolve

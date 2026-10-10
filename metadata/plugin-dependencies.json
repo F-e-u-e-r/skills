@@ -8,6 +8,10 @@
     "planning-pack": {
       "dependency_class": "recommended_with",
       "companion_plugin": "ops-pack"
+    },
+    "security-pack": {
+      "dependency_class": "recommended_with",
+      "companion_plugin": "ops-pack"
     }
   }
 }

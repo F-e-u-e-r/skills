@@ -37,6 +37,16 @@
       "author": {
         "name": "F-e-u-e-r"
       }
+    },
+    {
+      "name": "security-pack",
+      "displayName": "Security Pack",
+      "source": "./security-pack",
+      "description": "One security-methodology skill: security-posture-record (construct and maintain a durable, tiered security-assessment record tracked to evidence). recommended-with ops-pack. Registers no hooks.",
+      "version": "0.1.0",
+      "author": {
+        "name": "F-e-u-e-r"
+      }
     }
   ]
 }
