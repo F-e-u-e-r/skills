@@ -12,6 +12,7 @@
     "personal-goal-planning": "domain_adapter",
     "domain-evidence-discipline": "domain_adapter",
     "planning": "domain_adapter",
-    "plan-reconciliation": "domain_adapter"
+    "plan-reconciliation": "domain_adapter",
+    "security-posture-record": "domain_adapter"
   }
 }

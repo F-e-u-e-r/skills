@@ -1,0 +1,12 @@
+{
+  "name": "security-pack",
+  "displayName": "Security Pack",
+  "description": "One security-methodology skill: security-posture-record (construct, update, and maintain a durable, tiered security-assessment record whose load-bearing security claims are tracked to evidence - explicit invariants, a per-claim verification obligation, adversarial verification, evidence-backed finding states, and residual-risk closure, re-verified as the system changes). Leans on the Ops Pack - security-architect for consult/review, ground-truth-gates for the executable enforcement gate - which it names but does not bundle. Installable separately; designed to run alongside `ops-pack`. Few dense rules, executable gates over long prose. Registers no hooks.",
+  "version": "0.1.0",
+  "author": {
+    "name": "F-e-u-e-r"
+  },
+  "homepage": "https://github.com/F-e-u-e-r/skills",
+  "repository": "https://github.com/F-e-u-e-r/skills",
+  "license": "MIT"
+}

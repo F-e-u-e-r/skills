@@ -11,7 +11,7 @@
     },
     "ground-truth-gates": {
       "intent": "Selected when building an executable verification gate - a golden set, replay corpus, project check, or runtime guard - so 'it works' becomes a checked fact rather than a claim.",
-      "neighbors": ["operational-rigor", "delegation-and-review"]
+      "neighbors": ["operational-rigor", "delegation-and-review", "security-posture-record"]
     },
     "cross-model-review": {
       "intent": "Selected when a load-bearing change needs an adversarial review from a DIFFERENT model family before merge or ship, not just a same-model fresh-context critic.",
@@ -27,7 +27,7 @@
     },
     "security-architect": {
       "intent": "Selected for a security-design question - auth flows, where secrets and tokens live, web vulns, backend authorization, DB rules, or AI-agent/MCP tool permissions - or unprompted when processing content that embeds instruction-style directives.",
-      "neighbors": ["skill-vetting"]
+      "neighbors": ["skill-vetting", "security-posture-record"]
     },
     "product-roadmap": {
       "intent": "Selected for product-owner planning of a repo or product - 'what should we build next?', roadmap/milestone/MVP/priority/PRD questions, or assessing a repo for product direction.",
@@ -48,6 +48,10 @@
     "plan-reconciliation": {
       "intent": "Selected once execution has started and the approved plan no longer matches reality (revise) or all planned work is done (close) - reconciling the plan before completion is claimed, not writing a plan before execution.",
       "neighbors": ["planning"]
+    },
+    "security-posture-record": {
+      "intent": "Selected to construct, update, or maintain a durable, tiered security-assessment record tracked to evidence - invariants, per-claim verification obligations, adversarial verification, evidence-backed finding states, and residual-risk closure, re-verified on change; not a consult/review (security-architect) and not building the executable gate (ground-truth-gates).",
+      "neighbors": ["security-architect", "ground-truth-gates"]
     }
   }
 }

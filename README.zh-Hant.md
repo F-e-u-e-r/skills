@@ -6,8 +6,8 @@
 
 <p align="center">
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
-  <img alt="3 packs" src="https://img.shields.io/badge/packs-3-7aa2ff.svg">
-  <img alt="15 skills" src="https://img.shields.io/badge/skills-15-7aa2ff.svg">
+  <img alt="4 packs" src="https://img.shields.io/badge/packs-4-7aa2ff.svg">
+  <img alt="16 skills" src="https://img.shields.io/badge/skills-16-7aa2ff.svg">
   <img alt="Status: alpha" src="https://img.shields.io/badge/status-alpha-orange.svg">
   <a href="https://github.com/F-e-u-e-r/skills/issues"><img alt="PRs welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"></a>
   <a href="https://github.com/F-e-u-e-r/skills/actions/workflows/checks.yml"><img alt="checks" src="https://github.com/F-e-u-e-r/skills/actions/workflows/checks.yml/badge.svg"></a>
@@ -21,13 +21,14 @@
 它們把在規劃、執行、設計、審查與驗證等工作中反覆證明有用的模式,整併成可重用的
 skill,而非保存當初那些完整的對話、工作流程或來源素材。
 
-目前出貨三個 pack——**共 15 個 skill**:
+目前出貨四個 pack——**共 16 個 skill**:
 
 | Pack | 領域 | Skill 數 | 版本 |
 |---|---|---:|---:|
 | **Ops Pack** | 執行治理——rigor、委派、驗證、證據、審查 | 10 | 0.3.0 |
 | **Planning Pack** | 可執行的規劃契約與對齊(Planning ↔ Ops) | 2 | 0.1.0 |
 | **Design Pack** | UI/UX、動效與設計審查 | 3 | 0.1.0 |
+| **Security Pack** | 安全——持久、分級、可驗證的 security-assessment record | 1 | 0.1.0 |
 
 各 pack 版本獨立。這些 pack 目前以 **Claude Code plugin** 形式,透過本 repository
 的 marketplace 散佈(見下方[安裝](#安裝)),另有**四個選配 hook**——repo 層級、
@@ -39,8 +40,8 @@ skill,而非保存當初那些完整的對話、工作流程或來源素材。
 被當成同一回事呈現。
 
 > [!NOTE]
-> **狀態:早期 alpha。** Ops Pack 處於 **早期 alpha(`v0.3.0`)**;Planning Pack
-> 與 Design Pack 為 `0.1.0`。規則會隨真實 session 暴露的缺口調整,而且這些 pack
+> **狀態:早期 alpha。** Ops Pack 處於 **早期 alpha(`v0.3.0`)**;Planning Pack、
+> Design Pack 與 Security Pack 為 `0.1.0`。規則會隨真實 session 暴露的缺口調整,而且這些 pack
 > 用它們自己的教條[檢驗自己](evidence/ops-pack-evaluation.md)——包含誠實的 null result。
 > 歡迎用具體失敗案例開 issue 或 PR。
 
@@ -48,13 +49,13 @@ skill,而非保存當初那些完整的對話、工作流程或來源素材。
 
 |  |  |
 |---|---|
-| **3** 個角色導向 pack | **共 15** 個 skill |
+| **4** 個角色導向 pack | **共 16** 個 skill |
 | **4** 個選配 hook | **CI** 每次 push 跑一致性檢查 |
 | **狀態** 早期 alpha | **證據** 經驗 + 研究 + 受控評測,含 null result |
 
 ## 目錄
 
-- [安裝](#安裝) · [如何打造這些 pack](#如何打造這些-pack) · [`ops-pack`](#ops-pack紀律-skill) · [`planning-pack`](#planning-pack規劃-skill) · [`design-pack`](#design-pack設計-skill)
+- [安裝](#安裝) · [如何打造這些 pack](#如何打造這些-pack) · [`ops-pack`](#ops-pack紀律-skill) · [`planning-pack`](#planning-pack規劃-skill) · [`design-pack`](#design-pack設計-skill) · [`security-pack`](#security-pack安全-skill)
 - [架構與穩定性](#架構與穩定性) · [維護者筆記](#維護者筆記) · [授權](#授權)
 
 ## 如何打造這些 pack
@@ -85,10 +86,11 @@ skill,而非保存當初那些完整的對話、工作流程或來源素材。
 /plugin install ops-pack@opus-pack
 /plugin install planning-pack@opus-pack
 /plugin install design-pack@opus-pack
+/plugin install security-pack@opus-pack
 ```
 
 `ops-pack@opus-pack` 裝紀律 plugin(10 個 skill);`planning-pack@opus-pack` 裝規劃 plugin(2 個 skill);`design-pack@opus-pack`
-裝設計 plugin(3 個 skill)。擇一或全部三者都裝。Skills 會以 namespace 形式載入
+裝設計 plugin(3 個 skill);`security-pack@opus-pack` 裝安全 plugin(1 個 skill)。擇一或全部四者都裝。Skills 會以 namespace 形式載入
 (`ops-pack:operational-rigor`、`design-pack:ui-design-craft`……),用
 `/plugin marketplace update` 更新。沒有任何 plugin 會註冊 hooks——它們改變
 harness 行為,必須由使用者手動逐一決定(見[強制層:hooks 設定方法](hooks/README.md))。
@@ -158,6 +160,26 @@ mkdir -p ~/.claude/skills && cp -R design-pack/skills/* ~/.claude/skills/
 
 **證據。** `ui-design-craft` / `motion-craft` 的闘門與 `design-review-gate` §4 已以 smoke 等級 probe 驗證（全新弱層 agent、bare/ruled 兩臂、預期先寫）；審査迴圈 §§1–3 尚未 probe，紀錄保留一輪作廢與一個 NULL（皆在各 skill 自己的 provenance 筆記）。hex 與字體時尚禁令衰變最快——每個模型世代都要重驗。一份獨立的 [Impeccable](https://github.com/pbakaus/impeccable) 相容性研究（只有觀察、未 vendor 任何內容）放在 [`research/design-pack/2026-09-impeccable-compatibility-study/`](research/design-pack/2026-09-impeccable-compatibility-study/)。
 
+## `security-pack`:安全 skill
+
+一個安全方法論 skill,建構並維護持久、分級、可追溯到證據的
+**security-assessment record**——明確的 invariants、每條 load-bearing claim 一
+條驗證義務、對抗式驗證、以證據支撐的 finding state,以及 residual-risk 收斂,並
+隨系統變更重新驗證。像任何 plugin 一樣安裝(見上方[安裝](#安裝));版本獨立
+(0.1.0),且為 **`recommended-with ops-pack`**:它可獨立成立,但把強制交棒給
+`ground-truth-gates`,並指名它所倚賴的 Ops 防護(`operational-rigor`)。bare
+threat model、「這安全嗎?」諮詢,或存檔的 review 仍屬 `security-architect`。
+
+| Skill | 功能 |
+|---|---|
+| `security-posture-record` | 建構並維護持久、分級、可追溯到證據的 security-assessment record(invariants、每條 claim 的驗證義務、對抗式驗證、finding state、residual-risk 收斂),並隨變更重新驗證 |
+
+**路由支援(測試日 2026-10-10):**在測試過的 Claude Code 設定下,`claude-sonnet-5-5`
+已驗證可自主路由 Security-v1 skill。本次發行**不支援** `claude-haiku-5-5` 的
+Security-v1 自主路由。其他模型/設定的支援狀態除另有記錄外皆未驗證。此陳述不限制
+明確(by-name)呼叫,後者未經測試。完整記錄:
+[`evidence/security-pack-routing-support-2026-10.md`](evidence/security-pack-routing-support-2026-10.md)。
+
 ## 架構與穩定性
 
 完整 normative 契約:**[`ARCHITECTURE.md`](ARCHITECTURE.md)**——tiers、穩定性、
@@ -172,7 +194,7 @@ mkdir -p ~/.claude/skills && cp -R design-pack/skills/* ~/.claude/skills/
 | Tier | Skills |
 |------|--------|
 | Core(7) | `operational-rigor`、`delegation-and-review`、`ground-truth-gates`、`cross-model-review`、`skill-authoring`、`skill-vetting`、`security-architect` |
-| Domain adapter(5) | `product-roadmap`、`personal-goal-planning`、`domain-evidence-discipline`、`planning`、`plan-reconciliation` |
+| Domain adapter(6) | `product-roadmap`、`personal-goal-planning`、`domain-evidence-discipline`、`planning`、`plan-reconciliation`、`security-posture-record` |
 <!-- END GENERATED SKILL TIERS -->
 
 Core skill 是共用的 agent 執行 doctrine;domain adapter 把該紀律套到更窄的領域。
@@ -183,6 +205,7 @@ skill tier 與 plugin dependency class 是兩條獨立的軸。
 其 skill 各自能獨立完成主要 workflow(`motion-craft` 完全無跨包依賴;兩條
 load-bearing 的跨包條款以逐字方式內載、能獨立成立),而 `ops-pack` 補上其指標
 所指的額外 rigor。`planning-pack` 是 **`recommended-with ops-pack`**:它能獨立產出可用的 plan,但會指名它交棒給 Ops 的執行防護(授權、證據、不可回退)。見 `ARCHITECTURE.md` §4。
+`security-pack` 是 **`recommended-with ops-pack`**:它能獨立建構並維護持久的 security-assessment record,但會指名交棒給 Ops 的防護(`operational-rigor`、`ground-truth-gates`)。
 <!-- END GENERATED PLUGIN DEPENDENCIES -->
 
 **穩定性一句話:** published skill 是穩定介面、預設**加法演進**(additive by
