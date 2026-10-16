@@ -673,6 +673,32 @@ When rigor conflicts with finishing sooner, rigor wins.
   shape; see Provenance.)
 - Mid-task tripwire: a "small fix" crossing roughly 3 files or 100 changed lines
   stops for disclosure before continuing.
+- **Bounded ship with a live broader-review finding requires
+  delta-independence.** A bounded delta may proceed under its existing §2
+  authorization while a broader review stays live only on positive evidence
+  that the delta neither depends on nor can invalidate any live finding
+  bearing on its load-bearing assumptions, dependencies, invariants, or
+  execution boundary. A finding is live while unresolved at the relevant
+  scope — deferred, pre-existing-but-applicable, or administratively
+  scope-frozen all still count as live; administrative labels (`defer`,
+  `scope-freeze`, "outside this packet") do not establish independence. A
+  finding that is fixed, or evidence-backed `rejected-with-reason` /
+  invalidated by the canonical review process, is no longer live — do not
+  call that closure "independence", and a bare label is insufficient: the
+  disposition must itself be evidence-backed. If a live finding is directly
+  or indirectly load-bearing for the delta, the bounded-independence path is
+  blocked — filename/path disjointness is not independence. Proceeding
+  despite that dependency is not a delta-independence claim at all: it needs
+  a separate explicit owner exception naming the live dependency and the
+  accepted residual risk, and it is never inferred from those administrative
+  labels, ordinary reconciliation, or generic waiver language. Shipping an
+  independent delta leaves the broader finding live at its actual scope.
+  Evaluate cumulative/aggregate dependency across related bounded packets, so
+  salami-slicing cannot implement a disputed plan piecemeal. Freshness and
+  applicability are resolved by the canonical review process; deterministic
+  self-tests establish harness state, not reviewer judgment
+  (`cross-model-review §5b`); Planning may record dispositions and residual
+  state but does not grant shipment (`plan-reconciliation INV-1`).
 - Changing a schema, enum, status value, or interface: sweep every call site
   before editing (grep every touchpoint), leave no site on the old shape,
   and report any sibling defect found per log-don't-fix — a partial sweep

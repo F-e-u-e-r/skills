@@ -14,7 +14,7 @@
       "displayName": "Ops Pack",
       "source": "./ops-pack",
       "description": "Ten agent-discipline skills: operational-rigor, delegation-and-review, ground-truth-gates, cross-model-review, skill-authoring, security-architect, product-roadmap, personal-goal-planning, domain-evidence-discipline, skill-vetting. Hooks stay manual-install by design (per-user consent).",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "author": {
         "name": "F-e-u-e-r"
       }
@@ -24,7 +24,7 @@
       "displayName": "Planning Pack",
       "source": "./planning-pack",
       "description": "Two planning skills: planning (an executable work contract before building) and plan-reconciliation (revise or close an executing plan). Planning defines the contract; execution is governed by the Ops Pack, which this pack names. Installable separately; runs alongside ops-pack when both are installed. Registers no hooks.",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "author": {
         "name": "F-e-u-e-r"
       }
