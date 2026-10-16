@@ -1,0 +1,7 @@
+**ANTISLOP-2008 violation:** Decorative flourishes (WebGL hero, kinetic/variable type, spatial room-to-room scroll, reactive cursor) applied to functional admin UI without explicit creative/experimental brief signal — the doctrine override requires this composition style only on agency or explicitly artistic briefs, never on ordinary product UI.
+
+**ANTISLOP-4005 violation:** Full-viewport WebGL hero element is decorative and does not earn its place on a utilitarian settings page.
+
+**Context friction:** The cinematic spatial language (room-to-room navigation, kinetic type, reactive cursor, 700ms transitions) actively works against the use case — team billing and notification preferences are functional, task-driven settings that demand clarity, scanability, and rapid navigation, not exploratory or playful composition.
+
+CONTEXT-FIT: NOT-OK

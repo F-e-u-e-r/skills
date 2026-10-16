@@ -1,0 +1,18 @@
+根據設計教義分析，Awwwards風格的實驗性藝術展覽微網站即使擁有重motion設計，以下非協商的約束仍然適用：
+
+1. **MOTION-1002** — 只能動畫transform和opacity；width/height/top/left絕不可用，除非效果完全無法用前兩者表達
+2. **MOTION-1005** — easing curve必須按motion type選擇
+3. **MOTION-1006** — 每個animation都必須有明確的purpose
+4. **MOTION-1007** — 狀態變化必須有適當的transitions
+5. **MOTION-1008** — page/screen transitions必須被處理
+6. **MOTION-2001** — 頁面上的任何animation都必須被satisficed
+7. **MOTION-2002** — 不能超過1個horizontal scrolling text marquee
+8. **MOTION-2003** — 聲稱的motion必須實際可工作（override: 如無法在範圍內交付，減降MOTION_INTENSITY至3並交付靜態頁面）
+9. **MOTION-2006** — scroll-position和animation-frame handling必須遵循指定模式
+10. **MOTION-2007** — 動畫的CSS屬性限於transform/opacity
+11. **MOTION-4001** — 不能使用literal `ease`或bounce/overshoot timing functions
+12. **MOTION-4003, 4007** — 每個transition/animation聲明都必須intentional且well-formed
+13. **ANTISLOP-2001** — em-dash被絕對禁止
+14. **ANTISLOP-2008** — 雖然有agency/experimental override，但所有decorative device必須服務real composition，不能只是reflex添加
+
+REDUCED-MOTION-REQUIRED: YES

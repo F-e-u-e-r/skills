@@ -1,0 +1,25 @@
+針對實驗性、Awwwards 風格的藝術展覽活動微網站（有重型滾動驅動動畫）的情況，以下不可協商的約束仍然適用：
+
+## 不可協商的約束
+
+1. **ANTISLOP-2001**: em-dash 絕對被禁止（包括所有產出、標記和可見文本中）
+
+2. **MOTION-1002**: 僅動畫 `transform` 和 `opacity`（除非效果真的無法用這些表達）
+
+3. **MOTION-1009**: 如果使用視差效應，必須尊重 `prefers-reduced-motion` 用戶偏好
+
+4. **MOTION-1024**: 動畫不能導致可測量的佈局移位
+
+5. **MOTION-1026**: 任何圖表動畫必須有 `prefers-reduced-motion` 門控
+
+6. **MOTION-2002**: 單頁最多 1 個水平滾動文本標記
+
+7. **MOTION-2006**: 遵循正確的滾動位置和動畫幀處理模式（避免三種不良模式）
+
+8. **MOTION-2007**: 不動畫 `top`、`left`、`width` 或 `height`
+
+9. **MOTION-4001**: 避免使用字面 `ease` 關鍵字或 bounce/overshoot 曲線用於 UI 狀態變化
+
+**注意**: ANTISLOP-2008（避免裝飾排版花哨）在明確的 Awwwards 簡報下可被 override，當裝置為真實組成服務時（例如 scrollytelling、typography-as-structure）。
+
+REDUCED-MOTION-REQUIRED: YES

@@ -1,6 +1,6 @@
 # Design Pack runtime reference — TYPO (GENERATED; do not hand-edit)
 
-Deterministic projection of the canonical Phase-B corpus (SHA-256 `16ad01fb97f0ad321f254cce93e249e6484110862650dda39e45700be2893e5b`, merge `44f10443c16e926515af86ebdd1d52e003ed98cc`) via `design-pack/tools/project_corpus.py`. Authoritative semantic source; fields rendered verbatim. 28 record(s).
+Deterministic projection of the canonical Phase-B corpus (SHA-256 `86702b2419d75372e345448728fc9d0b92b82bcc8e80b169bf422787280f2b94`, merge `44f10443c16e926515af86ebdd1d52e003ed98cc`) via `design-pack/tools/project_corpus.py`. Authoritative semantic source; fields rendered verbatim. 28 record(s).
 
 ## TYPO-1001
 - **strength:** default
@@ -26,10 +26,10 @@ Deterministic projection of the canonical Phase-B corpus (SHA-256 `16ad01fb97f0a
 
 ## TYPO-1006
 - **strength:** heuristic
-- **scope:** heading/body typeface pairing
+- **scope:** heading/body typeface pairing; expressive or display typography may establish identity and structure while body and interface text stays restrained and highly readable, with intentional role-based contrast rather than a fixed family pairing; expressive display earns its place only when typography materially participates in composition through scale, weight, rhythm, spatial occupation, or motion, not merely by substituting a decorative typeface - readability, hierarchy, density, and the typography budget still govern
 - **enforcement:** contextual
 - **verification:** none
-- **public_expression:** Guidance: heading/body typeface pairing — applied as contextual judgement, not a hard gate.
+- **public_expression:** Guidance: heading/body typeface pairing — applied as contextual judgement, not a hard gate. Heuristic: expressive/display type may carry identity and structure while body/interface text stays restrained and readable, with intentional role-based contrast rather than a fixed family pairing; it earns its place only when typography materially participates in composition (scale, weight, rhythm, spatial occupation, motion), not by swapping in a decorative face; readability, hierarchy, density, and the type budget still govern.
 
 ## TYPO-1007
 - **strength:** default

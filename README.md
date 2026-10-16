@@ -29,7 +29,7 @@ Four packs ship today — **16 skills in total**:
 |---|---|---:|---:|
 | **Ops Pack** | Execution governance — rigor, delegation, verification, evidence, review | 10 | 0.3.0 |
 | **Planning Pack** | Executable planning contracts and reconciliation (Planning ↔ Ops) | 2 | 0.1.0 |
-| **Design Pack** | UI/UX, motion, and design review | 3 | 0.1.0 |
+| **Design Pack** | UI/UX, motion, and design review | 3 | 0.2.0 |
 | **Security Pack** | Security evidence records — invariants, verification obligations, finding states, residual risk | 1 | 0.1.0 |
 
 Each pack versions independently. The packs are currently distributed as **Claude
@@ -44,8 +44,8 @@ behavior, observed experience, research findings, and unprobed guidance are not
 presented as if they were the same thing.
 
 > [!NOTE]
-> **Status: early alpha.** Ops Pack is at **Early alpha (`v0.3.0`)**; Planning Pack,
-> Design Pack, and Security Pack are at `0.1.0`. Rules change as real sessions expose misses, and the
+> **Status: early alpha.** Ops Pack is at **Early alpha (`v0.3.0`)**; Design Pack
+> is at `0.2.0`; Planning Pack and Security Pack are at `0.1.0`. Rules change as real sessions expose misses, and the
 > packs are [measured against their own doctrine](evidence/ops-pack-evaluation.md)
 > — honest null results included. Issues and PRs with concrete failure cases are welcome.
 
@@ -178,7 +178,7 @@ resume".
 Three design-craft skills applying the same doctrine style — numeric budgets,
 prohibited patterns, observable gates — to visual design work. Install it like
 any plugin ([Install](#install) above); it versions independently
-(currently 0.1.0). The skills stand on their own — `design-review-gate` carries
+(currently 0.2.0). The skills stand on their own — `design-review-gate` carries
 two load-bearing ops-pack clauses verbatim — and are sharper with `ops-pack`
 alongside, but don't require it.
 

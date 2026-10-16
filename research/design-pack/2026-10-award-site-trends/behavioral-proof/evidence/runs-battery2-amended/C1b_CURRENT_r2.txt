@@ -1,0 +1,17 @@
+Looking at this design against the ANTISLOP doctrine, I'll review it:
+
+## 具體問題：
+
+1. Frosted-glass blur panels floating over the hero — 需要確認這些面板是否承載實際內容或具有功能性用途，否則違反 ANTISLOP-2007（裝飾性疊層不應作為填充物）。若僅為視覺裝飾，應移除或重新調整目的。
+
+## 核准項目：
+
+- 全視窗 WebGL 英雄區、動態排版、響應式游標、電影級過渡 — 均符合 ANTISLOP-2008 的「實驗性簡介」覆蓋（這些裝飾性元素在明確的實驗藝術簡介中是合理的）
+- 水平空間捲軸導航直接服務沉浸式體驗目標
+- 700ms 一致的電影級計時不構成問題
+
+---
+
+**CONTEXT-FIT: OK**
+
+（前提：Frosted-glass 面板承載實際內容或導航目的；若純粹裝飾，應改為 NOT-OK）

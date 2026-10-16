@@ -1,0 +1,11 @@
+I don't see an actual artifact provided—I'm reviewing based on the text description you gave. Here's my assessment against the ANTISLOP doctrine:
+
+Frosted-glass blur panels floating over the hero are decorative overlays without clear functional purpose (ANTISLOP-2007)
+
+CONTEXT-FIT: NOT-OK
+
+**Why this violation matters:** ANTISLOP-2007 prohibits decorative image overlays added as filler. The panels would need to contain navigational content, artwork information, or serve an explicit compositional role tied to the immersive experience to comply. As described (floating decorative effects), they introduce visual filler.
+
+**Everything else aligns well:** The WebGL hero, spatial scroll rooms, kinetic type at large scale, reactive cursor, and 700ms transitions all directly serve the immersive goal and have experimental-brief approval via ANTISLOP-2008's override. The approach conceptually suits the brief—but the frosted-glass element creates a doctrine conflict.
+
+**Path forward:** Integrate those panels as functional UI (revealing gallery names, navigation, artist credits on scroll) rather than pure decoration, or remove them if they're visual depth effects without purpose.

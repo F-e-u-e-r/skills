@@ -1,0 +1,27 @@
+## Non-Negotiable Constraints for Heavy Scroll-Driven Motion (Awwwards Art Exhibition Microsite)
+
+Even within an explicitly experimental, Awwwards-style brief, these motion and baseline constraints remain binding:
+
+### Animation Technology (Non-Negotiable)
+- **MOTION-1002**: Animate *only* `transform` and `opacity`; never animate `width`, `height`, `top`, `left`
+- **MOTION-1024**: No layout shift from animated properties
+- **MOTION-2006**: Scroll-position and animation-frame handling must follow proper patterns (flagged for three specific anti-patterns)
+- **MOTION-2007**: Reinforces transform/opacity-only rule; flags width/height/top/left animation
+
+### Animation Intent & Execution
+- **MOTION-2003**: If motion is claimed, it must actually ship and work; if scope prevents delivery, reduce `MOTION_INTENSITY` to 3 and deliver static
+- **MOTION-1006**: Every animation must have a clear, purposeful reason
+- **MOTION-4007**: Every transition/animation declaration is intentional and well-formed
+- **MOTION-4001**: Easing functions: no literal `ease` keyword; no bounce/overshoot on UI state changes (reserve overshoot for drag-release only)
+
+### Interactivity & Accessibility
+- **MOTION-1014**: In-progress animations must respond intelligently to new user input
+- **MOTION-1026**: If any chart animations exist, they must respect `prefers-reduced-motion`
+- **MOTION-1009**: If parallax is used, `prefers-reduced-motion` must be honored
+
+### Copy & Brand
+- **ANTISLOP-2001**: The em-dash is absolutely banned from all generated copy, markup, and visible text (strength: *absolute*)
+
+---
+
+**REDUCED-MOTION-REQUIRED: YES**

@@ -1,6 +1,6 @@
 # Design Pack runtime reference — ANTISLOP (GENERATED; do not hand-edit)
 
-Deterministic projection of the canonical Phase-B corpus (SHA-256 `16ad01fb97f0ad321f254cce93e249e6484110862650dda39e45700be2893e5b`, merge `44f10443c16e926515af86ebdd1d52e003ed98cc`) via `design-pack/tools/project_corpus.py`. Authoritative semantic source; fields rendered verbatim. 16 record(s).
+Deterministic projection of the canonical Phase-B corpus (SHA-256 `86702b2419d75372e345448728fc9d0b92b82bcc8e80b169bf422787280f2b94`, merge `44f10443c16e926515af86ebdd1d52e003ed98cc`) via `design-pack/tools/project_corpus.py`. Authoritative semantic source; fields rendered verbatim. 16 record(s).
 
 ## ANTISLOP-2001
 - **strength:** absolute
@@ -63,10 +63,10 @@ Deterministic projection of the canonical Phase-B corpus (SHA-256 `16ad01fb97f0a
 ## ANTISLOP-2008
 - **strength:** default
 - **scope:** avoid decorative typographic and graphic flourishes (forced headline line-breaks, rotated text, hairline grids, hero-bottom text strips)
-- **override:** an explicitly agency, Awwwards, or experimental brief where the device serves a real composition; a strip carrying real links or status; a genuine compositional reason for a split header
+- **override:** an explicitly agency, Awwwards, or experimental brief where the device serves a real composition - e.g. spatial or room/world-based scrolling, scrollytelling, horizontal narrative layout, typography-as-grid or typography-as-structure, reactive-cursor treatment, kinetic or variable type, deliberately organic or asymmetric composition, WebGL/3D used as composition, or grain/noise that serves the composition rather than masking a weak layout; these devices are examples that may qualify only when composition justifies them, never defaults for ordinary product or app UI; a strip carrying real links or status; a genuine compositional reason for a split header
 - **enforcement:** contextual
 - **verification:** L3
-- **public_expression:** Guidance: avoid decorative typographic and graphic flourishes (forced headline line-breaks, rotated text, hairline grids, hero-bottom text strips). Override: an explicitly agency, Awwwards, or experimental brief where the device serves a real composition; a strip carrying real links or status; a genuine compositional reason for a split header.
+- **public_expression:** Guidance: avoid decorative typographic and graphic flourishes (forced headline line-breaks, rotated text, hairline grids, hero-bottom text strips). Override: an explicitly agency, Awwwards, or experimental brief where the device serves a real composition - e.g. spatial or room/world-based scrolling, scrollytelling, horizontal narrative layout, typography-as-grid or typography-as-structure, reactive-cursor treatment, kinetic or variable type, deliberately organic or asymmetric composition, WebGL/3D used as composition, or grain/noise that serves the composition rather than masking a weak layout; these devices are examples that may qualify only when composition justifies them, never defaults for ordinary product or app UI; a strip carrying real links or status; a genuine compositional reason for a split header.
 
 ## ANTISLOP-2009
 - **strength:** default

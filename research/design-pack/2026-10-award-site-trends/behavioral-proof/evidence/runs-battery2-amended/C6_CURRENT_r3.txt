@@ -1,0 +1,27 @@
+# 實驗性 Awwwards 藝術展覽微網站的非協商運動約束
+
+即使對於實驗性和 Awwwards 風格的項目，以下設計教義約束也是不可協商的：
+
+1. **MOTION-1002 / MOTION-2007**：動畫必須使用 CSS `transform` 和 `opacity`，絕不能直接動畫化 `width`、`height`、`top` 或 `left` 屬性。
+
+2. **MOTION-1024**：動畫不能導致可測量的累積佈局轉移（layout shift）。
+
+3. **MOTION-4001**：緩動函數不能使用字面 `ease` 關鍵字或彈簧/超調型立方貝茲曲線（cubic-bezier 中的分量 > 1）。
+
+4. **MOTION-1005 & MOTION-1006**：每個緩動曲線和動畫必須根據動作類型（進入/退出、懸停、狀態變化）精心選擇，並有明確的目的。
+
+5. **MOTION-2006**：滾動位置和 `requestAnimationFrame` 處理必須避免三種反模式：輪詢滾動、每幀更新、同步滾動/動畫混合。
+
+6. **MOTION-1026**：任何圖表動畫必須使用 `prefers-reduced-motion` 媒體查詢進行門控。
+
+7. **MOTION-1009**：視差效果（雖然在 Awwwards 簡報中可被允許）必須尊重 `prefers-reduced-motion` 且不能造成方向混亂。
+
+8. **MOTION-2002**：每頁最多一個水平滾動文本字幕。
+
+9. **MOTION-2004**：若使用 GSAP ScrollTrigger 進行粘性堆疊或水平平移，針脚觸發器的 `start` 值必須針對該模式進行調整。
+
+10. **MOTION-4007**：每個 CSS 過渡和動畫宣告必須是故意的、格式正確且設計明確的。
+
+11. **ANTISLOP-2001**：em 破折號在所有生成副本中被禁止。
+
+REDUCED-MOTION-REQUIRED: YES

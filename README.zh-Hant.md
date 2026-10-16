@@ -27,7 +27,7 @@ skill,而非保存當初那些完整的對話、工作流程或來源素材。
 |---|---|---:|---:|
 | **Ops Pack** | 執行治理——rigor、委派、驗證、證據、審查 | 10 | 0.3.0 |
 | **Planning Pack** | 可執行的規劃契約與對齊(Planning ↔ Ops) | 2 | 0.1.0 |
-| **Design Pack** | UI/UX、動效與設計審查 | 3 | 0.1.0 |
+| **Design Pack** | UI/UX、動效與設計審查 | 3 | 0.2.0 |
 | **Security Pack** | 安全——持久、分級、可驗證的 security-assessment record | 1 | 0.1.0 |
 
 各 pack 版本獨立。這些 pack 目前以 **Claude Code plugin** 形式,透過本 repository
@@ -40,8 +40,8 @@ skill,而非保存當初那些完整的對話、工作流程或來源素材。
 被當成同一回事呈現。
 
 > [!NOTE]
-> **狀態:早期 alpha。** Ops Pack 處於 **早期 alpha(`v0.3.0`)**;Planning Pack、
-> Design Pack 與 Security Pack 為 `0.1.0`。規則會隨真實 session 暴露的缺口調整,而且這些 pack
+> **狀態:早期 alpha。** Ops Pack 處於 **早期 alpha(`v0.3.0`)**;Design Pack 為 `0.2.0`;Planning Pack、
+> Security Pack 為 `0.1.0`。規則會隨真實 session 暴露的缺口調整,而且這些 pack
 > 用它們自己的教條[檢驗自己](evidence/ops-pack-evaluation.md)——包含誠實的 null result。
 > 歡迎用具體失敗案例開 issue 或 PR。
 
@@ -148,7 +148,7 @@ mkdir -p ~/.claude/skills && cp -R design-pack/skills/* ~/.claude/skills/
 
 ## `design-pack`:設計 skill
 
-三個設計工藝 skill，把同一套 doctrine 風格——數值預算、禁用模式、可觀測闘門——應用到視覺設計工作。像任何 plugin 一樣安裝（見上方[安裝](#安裝)）；版本獨立（目前 0.1.0）。這些 skill 可獨立成立——`design-review-gate` 逐字內載 ops-pack 的兩條 load-bearing 條款——與 `ops-pack` 並用更利，但不需要它。
+三個設計工藝 skill，把同一套 doctrine 風格——數值預算、禁用模式、可觀測闘門——應用到視覺設計工作。像任何 plugin 一樣安裝（見上方[安裝](#安裝)）；版本獨立（目前 0.2.0）。這些 skill 可獨立成立——`design-review-gate` 逐字內載 ops-pack 的兩條 load-bearing 條款——與 `ops-pack` 並用更利，但不需要它。
 
 | Skill | 用途 |
 |---|---|
