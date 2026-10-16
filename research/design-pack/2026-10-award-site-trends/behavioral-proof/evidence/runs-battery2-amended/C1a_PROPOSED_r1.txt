@@ -1,0 +1,9 @@
+**ANTISLOP-2008 violation**: Decorative flourishes (WebGL hero, spatial scrolling, kinetic type, reactive cursor, cinematic easing) are not justified for ordinary product/app UI — the override requires an explicitly agency/experimental brief, which is absent here.
+
+**ANTISLOP-4005 violation**: Full-viewport animated WebGL hero is decorative and does not earn its place on a utilitarian B2B settings page.
+
+Horizontal room-to-room scrolling breaks user expectations for settings navigation; B2B users expect vertical section hierarchy and predictable information architecture.
+
+700ms cinematic easing on every transition impedes rapid setting adjustments; B2B billing/preferences users prioritize task efficiency over cinematic experience.
+
+CONTEXT-FIT: NOT-OK

@@ -1,0 +1,29 @@
+針對這個實驗性活動微網站（heavy scroll-driven motion），以下是不可協商的約束：
+
+## 不可協商的約束
+
+1. **em-dash 絕對禁止** — 所有生成副本、標記和可見文本都不得使用（ANTISLOP-2001, strength: absolute）
+
+2. **動畫 CSS 屬性受限** — 不使用 `width`、`height`、`top`、`left`，改用 `transform` 和 `opacity`（MOTION-1002, MOTION-2007）
+
+3. **禁止佈局偏移** — 動畫不得對佈局偏移做出可測量的貢獻（MOTION-1024）
+
+4. **水平滾動跑馬燈上限** — 每頁最多 1 個文字跑馬燈（MOTION-2002）
+
+5. **聲稱的動作必須實現** — 若聲稱 hero 進入、scroll-reveal 或 hover 物理效果，頁面必須實際表現（MOTION-2003）
+
+6. **ScrollTrigger pin 配置** — 若使用 GSAP ScrollTrigger 的 sticky-stack 或 horizontal-pan，pin 觸發器的 start 值必須調整（MOTION-2004）
+
+7. **滾動和幀處理正確性** — 滾動位置和 requestAnimationFrame 處理必須無瑕（MOTION-2006）
+
+8. **動畫決策有理據** — 每個動畫都應有明確意圖，不是反射性添加（MOTION-2001）
+
+9. **視差保護** — 若使用視差效果，必須尊重 `prefers-reduced-motion` 媒體查詢（MOTION-1009）
+
+10. **圖表無障礙** — 若有圖表進入動畫，必須門禁 `prefers-reduced-motion`（MOTION-2026）
+
+11. **過渡時序限制** — 避免使用 literal `ease` 關鍵字或 bounce/overshoot 曲線（cubic-bezier 組件 > 1），除非用於拖放釋放這類物理交互（MOTION-4001, MOTION-4005）
+
+12. **生成副本真實性** — 名稱、頭像、數據、品牌名稱不得虛構，除非明確標籤為示例（ANTISLOP-2002, ANTISLOP-4003）
+
+REDUCED-MOTION-REQUIRED: YES

@@ -1,13 +1,13 @@
 # Design Pack runtime reference — COLOR (GENERATED; do not hand-edit)
 
-Deterministic projection of the canonical Phase-B corpus (SHA-256 `16ad01fb97f0ad321f254cce93e249e6484110862650dda39e45700be2893e5b`, merge `44f10443c16e926515af86ebdd1d52e003ed98cc`) via `design-pack/tools/project_corpus.py`. Authoritative semantic source; fields rendered verbatim. 30 record(s).
+Deterministic projection of the canonical Phase-B corpus (SHA-256 `86702b2419d75372e345448728fc9d0b92b82bcc8e80b169bf422787280f2b94`, merge `44f10443c16e926515af86ebdd1d52e003ed98cc`) via `design-pack/tools/project_corpus.py`. Authoritative semantic source; fields rendered verbatim. 30 record(s).
 
 ## COLOR-1001
 - **strength:** heuristic
-- **scope:** product color palette selection
+- **scope:** product color palette selection; a disciplined high-chroma accent against a neutral, near-black, or otherwise low-chroma field is a strong default when the product identity supports it, with a single accent carrying hierarchy rather than emphasis spread across competing colors - the accent-count budget, contrast/accessibility obligations, and product/context fit still govern, and no dark mode is implied
 - **enforcement:** contextual
 - **verification:** none
-- **public_expression:** Guidance: product color palette selection — applied as contextual judgement, not a hard gate.
+- **public_expression:** Guidance: product color palette selection — applied as contextual judgement, not a hard gate. Heuristic: a disciplined high-chroma accent on a neutral / near-black / low-chroma field is a strong default when product identity supports it, with one accent carrying hierarchy rather than emphasis spread across competing colors; the accent-count budget, contrast/accessibility, and context fit still govern and no dark mode is implied.
 
 ## COLOR-1002
 - **strength:** default

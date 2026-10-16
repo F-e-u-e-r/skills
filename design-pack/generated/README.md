@@ -2,7 +2,7 @@
 
 Deterministic projection of the canonical Phase-B semantic corpus
 (`corpus/design-pack/public_records.json`,
-SHA-256 `16ad01fb97f0ad321f254cce93e249e6484110862650dda39e45700be2893e5b`,
+SHA-256 `86702b2419d75372e345448728fc9d0b92b82bcc8e80b169bf422787280f2b94`,
 merged `44f10443c16e926515af86ebdd1d52e003ed98cc`). These files are
 machine-generated and CI-verifiable — never hand-edit; edit the canonical corpus
 and regenerate.

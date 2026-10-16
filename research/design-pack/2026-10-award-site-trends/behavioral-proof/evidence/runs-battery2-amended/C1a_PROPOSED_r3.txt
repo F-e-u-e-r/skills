@@ -1,0 +1,15 @@
+**Concrete problems:**
+
+1. ANTISLOP-2008: Kinetic/variable type, reactive cursor, horizontal room-to-room scroll, and WebGL hero are decorative flourishes without compositional justification—this is a functional settings page, not an experimental or narrative-driven brief.
+
+2. ANTISLOP-4005: Full-viewport WebGL hero is decorative and does not earn its place; it distracts from task completion (managing billing and notifications).
+
+3. Frosted-glass blur panels over animated content impair readability and accessibility—problematic for critical content like billing information.
+
+4. Horizontal/spatial room-to-room navigation is poor UX for settings; users need quick jumps between billing and notification preferences. Vertical or tabbed navigation is standard for functional settings pages.
+
+5. 700ms cinematic easing on every transition creates friction; settings interactions should be fast and predictable.
+
+**CONTEXT-FIT: NOT-OK**
+
+An internal B2B SaaS settings page is task-driven and pragmatic. Users are there to accomplish specific work, not experience a designed narrative. The proposed approach inverts priorities—decoration over clarity, spatial exploration over quick access, animation over speed. This design pattern belongs on a creative portfolio or editorial experience, not a settings/billing interface.

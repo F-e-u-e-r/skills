@@ -33,7 +33,7 @@
       "name": "design-pack",
       "source": "./design-pack",
       "description": "Three design-craft skills: ui-design-craft, motion-craft, design-review-gate. Domain doctrine in the ops-pack style - numeric budgets, prohibited patterns, observable gates; the design-contract evidence rules live in design-review-gate. Installable separately; designed to run alongside ops-pack. Registers no hooks.",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "author": {
         "name": "F-e-u-e-r"
       }

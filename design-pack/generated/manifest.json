@@ -99,7 +99,7 @@
  "canonical_corpus": {
   "merge_sha": "44f10443c16e926515af86ebdd1d52e003ed98cc",
   "path": "corpus/design-pack/public_records.json",
-  "sha256": "16ad01fb97f0ad321f254cce93e249e6484110862650dda39e45700be2893e5b"
+  "sha256": "86702b2419d75372e345448728fc9d0b92b82bcc8e80b169bf422787280f2b94"
  },
  "generated": true,
  "generated_artifacts": {
@@ -114,7 +114,7 @@
   },
   "generated/runtime.json": {
    "authority": "phase-b-corpus",
-   "sha256": "9bd6fb746d4882e01f8e83db7de53c4617a902d09f7de5eae1a6eba8689f2fca"
+   "sha256": "ff12408ef652ddda08e0acfee0ad9d352090c9021e64421b39b68b927e360a3f"
   },
   "generated/skill-reachability.json": {
    "sha256": "39fca0cba346985e0d128658e0992cf5d2c85dba45b08030eb4aa611f21a68fc"
@@ -156,28 +156,28 @@
  },
  "runtime_schema_version": 2,
  "skill_local_reference_sha256": {
-  "skills/design-review-gate/references/generated/a11y.md": "3577a8a4490e0674433036a588606e1d9f947692e1fccfeddad7ec62da249f1b",
-  "skills/design-review-gate/references/generated/antislop.md": "fb1b5ee3a3db17ee60eeb936ab975f872eeac44b256e4ac205f0bd87f518f72f",
-  "skills/design-review-gate/references/generated/color.md": "ccba30580a7183f33b7e8dc0e778ffe3fe3caf91d2d9a1ee49b8ba70032d5abb",
-  "skills/design-review-gate/references/generated/controls.md": "2b2a8c4b9704469bb21a1d9a5d95f42b71de19095b3f615332860a07f6ede081",
-  "skills/design-review-gate/references/generated/interact.md": "74323a19106a778633114fb59c0564073e68ad6ca2850f01ffdaa3ef1e48b45c",
-  "skills/design-review-gate/references/generated/motion.md": "fe3c3803f28f7666be18d4b78adaceb03bd888be1d62ebdf6efc632bf4c6ca97",
-  "skills/design-review-gate/references/generated/space.md": "d7582256619ff7198712efed8bb9ebdbc18261a11606a0ebd17021cccbeb6e01",
-  "skills/design-review-gate/references/generated/struct.md": "b93a3bde62b5802cde85a94e6922e4bcbd4c5741c119a0c094bc315861e3c261",
-  "skills/design-review-gate/references/generated/typo.md": "67d7fc999f7dc1ad7e45322511d717ee689c6325bf643210e113ad6b5e653c1f",
-  "skills/design-review-gate/references/generated/ux.md": "5d5b14425d02134246ea502d8100e22a78c1be9a500e67b71d468b02c342a605",
-  "skills/motion-craft/references/generated/control-dependencies.md": "857d70841dfc50ff7b6ba64e53d972c9acce9fd6fadb5c085e466ebb40535549",
-  "skills/motion-craft/references/generated/controls.md": "2b2a8c4b9704469bb21a1d9a5d95f42b71de19095b3f615332860a07f6ede081",
-  "skills/motion-craft/references/generated/motion.md": "fe3c3803f28f7666be18d4b78adaceb03bd888be1d62ebdf6efc632bf4c6ca97",
-  "skills/ui-design-craft/references/generated/a11y.md": "3577a8a4490e0674433036a588606e1d9f947692e1fccfeddad7ec62da249f1b",
-  "skills/ui-design-craft/references/generated/antislop.md": "fb1b5ee3a3db17ee60eeb936ab975f872eeac44b256e4ac205f0bd87f518f72f",
-  "skills/ui-design-craft/references/generated/color.md": "ccba30580a7183f33b7e8dc0e778ffe3fe3caf91d2d9a1ee49b8ba70032d5abb",
-  "skills/ui-design-craft/references/generated/control-dependencies.md": "7768fa3302cf449f0fe85028398ec1b8ea4bf333d4f1af2932285dd3767dd62d",
-  "skills/ui-design-craft/references/generated/controls.md": "2b2a8c4b9704469bb21a1d9a5d95f42b71de19095b3f615332860a07f6ede081",
-  "skills/ui-design-craft/references/generated/interact.md": "74323a19106a778633114fb59c0564073e68ad6ca2850f01ffdaa3ef1e48b45c",
-  "skills/ui-design-craft/references/generated/space.md": "d7582256619ff7198712efed8bb9ebdbc18261a11606a0ebd17021cccbeb6e01",
-  "skills/ui-design-craft/references/generated/struct.md": "b93a3bde62b5802cde85a94e6922e4bcbd4c5741c119a0c094bc315861e3c261",
-  "skills/ui-design-craft/references/generated/typo.md": "67d7fc999f7dc1ad7e45322511d717ee689c6325bf643210e113ad6b5e653c1f",
-  "skills/ui-design-craft/references/generated/ux.md": "5d5b14425d02134246ea502d8100e22a78c1be9a500e67b71d468b02c342a605"
+  "skills/design-review-gate/references/generated/a11y.md": "eb1238ab0b2de0ed79b46b99bcc7b5365c9aab9cee39d12ac7c7610cad16ae52",
+  "skills/design-review-gate/references/generated/antislop.md": "f6191b49dc271a6e96e59e6e6c1ae0fff00f13ddd921d8a06024457e86a0c722",
+  "skills/design-review-gate/references/generated/color.md": "173a3e212752b98cf8488a6e4d20e6656179f69aa2a98c56ec713319b7a203eb",
+  "skills/design-review-gate/references/generated/controls.md": "0b569043155f4375fbaf671141b90dd1e4f7e9503b88b5f90be02a12e0edf943",
+  "skills/design-review-gate/references/generated/interact.md": "e9e81bb4633984554cccd047c9e345361f28196e29800af5044b035efc587b63",
+  "skills/design-review-gate/references/generated/motion.md": "089345c8fe964133c58d882969c1441202e9d26a95d957b648896776cedb4cc4",
+  "skills/design-review-gate/references/generated/space.md": "e997813ee5c56f5c3ab3bc181cc94a8d6e4266f806b13574cd0892526d699f84",
+  "skills/design-review-gate/references/generated/struct.md": "c6a4df5d04e8609d11fcff75b79b16c6863659b025b2ccc4014686d2b0b52bbd",
+  "skills/design-review-gate/references/generated/typo.md": "b094c734acb3bc1686ce48373f049af7b4fccb484e8f9a0a190831cb0b32107d",
+  "skills/design-review-gate/references/generated/ux.md": "763654305f9a2a8b990a48add9cf051dd321e3693bf22a5d58387d16c63384d7",
+  "skills/motion-craft/references/generated/control-dependencies.md": "4244f543131391970a1ffc7cae88c075e4f4a007c79928e066e5ef7efdb171b7",
+  "skills/motion-craft/references/generated/controls.md": "0b569043155f4375fbaf671141b90dd1e4f7e9503b88b5f90be02a12e0edf943",
+  "skills/motion-craft/references/generated/motion.md": "089345c8fe964133c58d882969c1441202e9d26a95d957b648896776cedb4cc4",
+  "skills/ui-design-craft/references/generated/a11y.md": "eb1238ab0b2de0ed79b46b99bcc7b5365c9aab9cee39d12ac7c7610cad16ae52",
+  "skills/ui-design-craft/references/generated/antislop.md": "f6191b49dc271a6e96e59e6e6c1ae0fff00f13ddd921d8a06024457e86a0c722",
+  "skills/ui-design-craft/references/generated/color.md": "173a3e212752b98cf8488a6e4d20e6656179f69aa2a98c56ec713319b7a203eb",
+  "skills/ui-design-craft/references/generated/control-dependencies.md": "46626a5f78c4259252bd077b24fbdafd0b9c11481ac9c30b7c1caf818235d2e4",
+  "skills/ui-design-craft/references/generated/controls.md": "0b569043155f4375fbaf671141b90dd1e4f7e9503b88b5f90be02a12e0edf943",
+  "skills/ui-design-craft/references/generated/interact.md": "e9e81bb4633984554cccd047c9e345361f28196e29800af5044b035efc587b63",
+  "skills/ui-design-craft/references/generated/space.md": "e997813ee5c56f5c3ab3bc181cc94a8d6e4266f806b13574cd0892526d699f84",
+  "skills/ui-design-craft/references/generated/struct.md": "c6a4df5d04e8609d11fcff75b79b16c6863659b025b2ccc4014686d2b0b52bbd",
+  "skills/ui-design-craft/references/generated/typo.md": "b094c734acb3bc1686ce48373f049af7b4fccb484e8f9a0a190831cb0b32107d",
+  "skills/ui-design-craft/references/generated/ux.md": "763654305f9a2a8b990a48add9cf051dd321e3693bf22a5d58387d16c63384d7"
  }
 }

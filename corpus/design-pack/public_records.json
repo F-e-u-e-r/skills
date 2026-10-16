@@ -5416,11 +5416,11 @@
   "kind": "rule",
   "effective_semantics": {
    "strength": "heuristic",
-   "scope": "product color palette selection",
+   "scope": "product color palette selection; a disciplined high-chroma accent against a neutral, near-black, or otherwise low-chroma field is a strong default when the product identity supports it, with a single accent carrying hierarchy rather than emphasis spread across competing colors - the accent-count budget, contrast/accessibility obligations, and product/context fit still govern, and no dark mode is implied",
    "enforcement": "contextual",
    "verification": "none"
   },
-  "public_expression": "Guidance: product color palette selection \u2014 applied as contextual judgement, not a hard gate.",
+  "public_expression": "Guidance: product color palette selection \u2014 applied as contextual judgement, not a hard gate. Heuristic: a disciplined high-chroma accent on a neutral / near-black / low-chroma field is a strong default when product identity supports it, with one accent carrying hierarchy rather than emphasis spread across competing colors; the accent-count budget, contrast/accessibility, and context fit still govern and no dark mode is implied.",
   "provenance": {
    "design_phase": "D1",
    "upstream_repo": "nextlevelbuilder/ui-ux-pro-max-skill",
@@ -5624,11 +5624,11 @@
   "kind": "rule",
   "effective_semantics": {
    "strength": "heuristic",
-   "scope": "heading/body typeface pairing",
+   "scope": "heading/body typeface pairing; expressive or display typography may establish identity and structure while body and interface text stays restrained and highly readable, with intentional role-based contrast rather than a fixed family pairing; expressive display earns its place only when typography materially participates in composition through scale, weight, rhythm, spatial occupation, or motion, not merely by substituting a decorative typeface - readability, hierarchy, density, and the typography budget still govern",
    "enforcement": "contextual",
    "verification": "none"
   },
-  "public_expression": "Guidance: heading/body typeface pairing \u2014 applied as contextual judgement, not a hard gate.",
+  "public_expression": "Guidance: heading/body typeface pairing \u2014 applied as contextual judgement, not a hard gate. Heuristic: expressive/display type may carry identity and structure while body/interface text stays restrained and readable, with intentional role-based contrast rather than a fixed family pairing; it earns its place only when typography materially participates in composition (scale, weight, rhythm, spatial occupation, motion), not by swapping in a decorative face; readability, hierarchy, density, and the type budget still govern.",
   "provenance": {
    "design_phase": "D1",
    "upstream_repo": "nextlevelbuilder/ui-ux-pro-max-skill",
@@ -6218,9 +6218,9 @@
    "enforcement": "contextual",
    "verification": "L3",
    "scope": "avoid decorative typographic and graphic flourishes (forced headline line-breaks, rotated text, hairline grids, hero-bottom text strips)",
-   "override": "an explicitly agency, Awwwards, or experimental brief where the device serves a real composition; a strip carrying real links or status; a genuine compositional reason for a split header"
+   "override": "an explicitly agency, Awwwards, or experimental brief where the device serves a real composition - e.g. spatial or room/world-based scrolling, scrollytelling, horizontal narrative layout, typography-as-grid or typography-as-structure, reactive-cursor treatment, kinetic or variable type, deliberately organic or asymmetric composition, WebGL/3D used as composition, or grain/noise that serves the composition rather than masking a weak layout; these devices are examples that may qualify only when composition justifies them, never defaults for ordinary product or app UI; a strip carrying real links or status; a genuine compositional reason for a split header"
   },
-  "public_expression": "Guidance: avoid decorative typographic and graphic flourishes (forced headline line-breaks, rotated text, hairline grids, hero-bottom text strips). Override: an explicitly agency, Awwwards, or experimental brief where the device serves a real composition; a strip carrying real links or status; a genuine compositional reason for a split header.",
+  "public_expression": "Guidance: avoid decorative typographic and graphic flourishes (forced headline line-breaks, rotated text, hairline grids, hero-bottom text strips). Override: an explicitly agency, Awwwards, or experimental brief where the device serves a real composition - e.g. spatial or room/world-based scrolling, scrollytelling, horizontal narrative layout, typography-as-grid or typography-as-structure, reactive-cursor treatment, kinetic or variable type, deliberately organic or asymmetric composition, WebGL/3D used as composition, or grain/noise that serves the composition rather than masking a weak layout; these devices are examples that may qualify only when composition justifies them, never defaults for ordinary product or app UI; a strip carrying real links or status; a genuine compositional reason for a split header.",
   "provenance": {
    "design_phase": "D2",
    "upstream_repo": "Leonxlnx/taste-skill",

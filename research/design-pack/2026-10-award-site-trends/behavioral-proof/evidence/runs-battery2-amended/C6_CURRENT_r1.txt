@@ -1,0 +1,22 @@
+根據設計論述，針對實驗性 Awwwards 風格的藝術展覽活動微型網站，以下為仍然適用的不可協商約束：
+
+**絕對強度（無覆蓋）：**
+- **ANTISLOP-2001**：em-dash 在所有生成文案、標記和可見文本中被禁止
+
+**預設強度（必須表面化，在 Awwwards 簡報中無覆蓋）：**
+- **MOTION-1002**：動畫必須使用 transform/opacity，禁止直接動畫 width/height/top/left
+- **MOTION-2006**：捲軸位置和動畫幀處理必須正確實裝
+- **MOTION-2007**：禁止動畫化 top、left、width、height 等版面影響的屬性
+- **MOTION-4001**：CSS 過渡時序函數禁止使用字面 `ease` 或反彈/超調 cubic-bezier 曲線在 UI 狀態變化上
+- **MOTION-4003**：所有 CSS 過渡聲明必須經過深思熟慮且格式良好
+- **MOTION-4007**：每個過渡/動畫聲明必須是有意且設計完善的
+
+**有條件適用：**
+- **MOTION-2003**：聲稱的動作必須實際運作（英雄區入場、捲軸顯示、CTA 懸停物理）
+- **MOTION-2004**：如使用粘性堆疊或水平平移，GSAP ScrollTrigger pin 配置必須調整而非使用預設值
+
+**情境相關的可訪問性要求：**
+- **MOTION-1009**：若使用視差效果，必須遵守 `prefers-reduced-motion` 且不造成方向混亂
+- **MOTION-2026**：若含圖表動畫，必須具有減少運動門
+
+REDUCED-MOTION-REQUIRED: NO

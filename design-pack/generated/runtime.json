@@ -868,7 +868,7 @@
   {
    "effective_semantics": {
     "enforcement": "contextual",
-    "override": "an explicitly agency, Awwwards, or experimental brief where the device serves a real composition; a strip carrying real links or status; a genuine compositional reason for a split header",
+    "override": "an explicitly agency, Awwwards, or experimental brief where the device serves a real composition - e.g. spatial or room/world-based scrolling, scrollytelling, horizontal narrative layout, typography-as-grid or typography-as-structure, reactive-cursor treatment, kinetic or variable type, deliberately organic or asymmetric composition, WebGL/3D used as composition, or grain/noise that serves the composition rather than masking a weak layout; these devices are examples that may qualify only when composition justifies them, never defaults for ordinary product or app UI; a strip carrying real links or status; a genuine compositional reason for a split header",
     "scope": "avoid decorative typographic and graphic flourishes (forced headline line-breaks, rotated text, hairline grids, hero-bottom text strips)",
     "strength": "default",
     "verification": "L3"
@@ -876,7 +876,7 @@
    "id": "ANTISLOP-2008",
    "kind": "rule",
    "notes": "",
-   "public_expression": "Guidance: avoid decorative typographic and graphic flourishes (forced headline line-breaks, rotated text, hairline grids, hero-bottom text strips). Override: an explicitly agency, Awwwards, or experimental brief where the device serves a real composition; a strip carrying real links or status; a genuine compositional reason for a split header."
+   "public_expression": "Guidance: avoid decorative typographic and graphic flourishes (forced headline line-breaks, rotated text, hairline grids, hero-bottom text strips). Override: an explicitly agency, Awwwards, or experimental brief where the device serves a real composition - e.g. spatial or room/world-based scrolling, scrollytelling, horizontal narrative layout, typography-as-grid or typography-as-structure, reactive-cursor treatment, kinetic or variable type, deliberately organic or asymmetric composition, WebGL/3D used as composition, or grain/noise that serves the composition rather than masking a weak layout; these devices are examples that may qualify only when composition justifies them, never defaults for ordinary product or app UI; a strip carrying real links or status; a genuine compositional reason for a split header."
   },
   {
    "effective_semantics": {
@@ -977,13 +977,13 @@
   {
    "effective_semantics": {
     "enforcement": "contextual",
-    "scope": "product color palette selection",
+    "scope": "product color palette selection; a disciplined high-chroma accent against a neutral, near-black, or otherwise low-chroma field is a strong default when the product identity supports it, with a single accent carrying hierarchy rather than emphasis spread across competing colors - the accent-count budget, contrast/accessibility obligations, and product/context fit still govern, and no dark mode is implied",
     "strength": "heuristic",
     "verification": "none"
    },
    "id": "COLOR-1001",
    "kind": "rule",
-   "public_expression": "Guidance: product color palette selection — applied as contextual judgement, not a hard gate."
+   "public_expression": "Guidance: product color palette selection — applied as contextual judgement, not a hard gate. Heuristic: a disciplined high-chroma accent on a neutral / near-black / low-chroma field is a strong default when product identity supports it, with one accent carrying hierarchy rather than emphasis spread across competing colors; the accent-count budget, contrast/accessibility, and context fit still govern and no dark mode is implied."
   },
   {
    "effective_semantics": {
@@ -4180,13 +4180,13 @@
   {
    "effective_semantics": {
     "enforcement": "contextual",
-    "scope": "heading/body typeface pairing",
+    "scope": "heading/body typeface pairing; expressive or display typography may establish identity and structure while body and interface text stays restrained and highly readable, with intentional role-based contrast rather than a fixed family pairing; expressive display earns its place only when typography materially participates in composition through scale, weight, rhythm, spatial occupation, or motion, not merely by substituting a decorative typeface - readability, hierarchy, density, and the typography budget still govern",
     "strength": "heuristic",
     "verification": "none"
    },
    "id": "TYPO-1006",
    "kind": "rule",
-   "public_expression": "Guidance: heading/body typeface pairing — applied as contextual judgement, not a hard gate."
+   "public_expression": "Guidance: heading/body typeface pairing — applied as contextual judgement, not a hard gate. Heuristic: expressive/display type may carry identity and structure while body/interface text stays restrained and readable, with intentional role-based contrast rather than a fixed family pairing; it earns its place only when typography materially participates in composition (scale, weight, rhythm, spatial occupation, motion), not by swapping in a decorative face; readability, hierarchy, density, and the type budget still govern."
   },
   {
    "effective_semantics": {

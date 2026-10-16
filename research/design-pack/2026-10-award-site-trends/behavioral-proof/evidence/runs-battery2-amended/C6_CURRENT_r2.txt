@@ -1,0 +1,34 @@
+# Awwwards 實驗性藝術展覽微網站——非協商動畫約束
+
+對於這類簡報，以下約束即使在 Awwwards/experimental override 下仍不可協商：
+
+## ANTISLOP（視覺複製）
+- **ANTISLOP-2001**：em-dash 絕對禁止（strength: absolute）
+- **ANTISLOP-4003**：生成的副本中無虛假內容（strength: default, must_surface）
+
+## MOTION（滾動驅動動畫）
+
+**速度與效率**
+- **MOTION-1002**：CSS 動畫目標必須是 `transform`/`opacity`，不得使用 `width`/`height`/`top`/`left`
+- **MOTION-1024**：動畫不得導致 layout shift
+- **MOTION-2007**：同上（must_surface）
+
+**滾動與幀處理**
+- **MOTION-2006**：滾動位置與動畫幀處理必須遵循三個已核准模式之一
+- **MOTION-2003**：頁面必須實際在聲稱動作之處動作；若無法在範圍內交付，降低 MOTION_INTENSITY 至 3 並提供靜態頁面
+
+**內容限制**
+- **MOTION-2002**：整頁最多 1 個水平滾動文字字幕
+
+**過渡與宣告**
+- **MOTION-4001**：UI 狀態變化之過渡不得使用 `ease` 或彈跳/過衝 cubic-bezier
+- **MOTION-4003**：任何 CSS 過渡宣告都必須設意圖明確且格式正確
+- **MOTION-4007**：每一過渡/動畫宣告都必須是有意的且格式良好
+
+**條件性硬約束**
+- **MOTION-1026**：若任何圖表有入場動畫，必須有 `prefers-reduced-motion` 守護
+- **MOTION-2004**：若使用 sticky-stack 或 horizontal-pan 滾動模式，ScrollTrigger pin 起點必須調整至該模式（非預設值）
+
+---
+
+`REDUCED-MOTION-REQUIRED: YES`
