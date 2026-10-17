@@ -528,7 +528,7 @@ not whether the bullet changes what dispatchers write; that half ships
 The unstated-magnitude sentence of the same bullet (2026-10-17) comes from a
 second private pre-registered bench, cited as shape: one implementer model,
 three toy JS integer tasks, specs stating no size, 8 exact-integer probes past
-2^53 per rep × N=5 = 40 per arm, one window. The arms differed only in a
+2^53 per rep × N=5 = 40 per arm per window. The arms differed only in a
 standing prompt-prefix rule pack. The newer revision added this sentence's
 contract (compute in BigInt, exact type past the limit, never converted back),
 a guard raising on spec-excluded input, a guard on the result's range, more
@@ -541,6 +541,11 @@ rose 103 to 110 of 110; size checks and happy-path checks were each 55 of 55
 in both arms; deliberate errors on spec-excluded inputs rose 0 to 25 of 25,
 which the added guard requires, so that one is designed, not independent. The
 bench compared whole pack revisions, so the effect is not isolated to the
-contract, and a second window is pending. As before, it measured the worker
-given the revised pack, not whether the bullet changes what dispatchers write;
-that half ships `unprobed` and joins the standing #115 queue.
+contract. A second pre-registered window on the same design replicated the
+decision at the same threshold: 6 of 40 silent for the earlier pack, 0 of 40
+for the newer, all 6 again the same function; scale 104 to 110 of 110; size
+and happy-path 55 of 55 in both arms; domain 0 to 25 of 25. Both margins are
+thin (lower by 7 and by 6 against a threshold of 5). As before, it measured
+the worker given the revised pack, not whether the bullet changes what
+dispatchers write; that half ships `unprobed` and joins the standing #115
+queue.

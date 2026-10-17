@@ -451,7 +451,7 @@ Every packet names:
   never converted back (a value that prints right can still be wrong); where
   the specification fixes an inexact return type or no exact type exists,
   past the limit a stated tolerance or a declared error instead (one private
-  bench, whole-pack, not yet replicated — see Provenance). Unstated edges
+  bench, whole-pack, two windows — see Provenance). Unstated edges
   are the shared blind spot of every model tier: the worker picks SOMETHING
   plausible and you find out at the gate — in one bench, 9 of 10 models
   infinite-looped on an unstated `size=0`, and even the strongest tier hung on
