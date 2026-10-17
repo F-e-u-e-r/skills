@@ -24,6 +24,8 @@ jobs:
         run: python3 .github/checks.py
       - name: Derived-checks two-sided tests (each contract gate can pass AND fail)
         run: python3 .github/test-derived-checks.py
+      - name: Version-bump policy two-sided unit tests (pure core; push and PR)
+        run: python3 .github/test-version-bump.py
 
   hook-suites:
     runs-on: ubuntu-latest
@@ -69,3 +71,33 @@ jobs:
           node-version: "22"
       - name: ground-truth-gates starter template runs green
         run: bash ops-pack/skills/ground-truth-gates/template/run-all.sh
+
+  version-bump:
+    # Live history-dependent check: a pack's version must advance when its
+    # normative shipped surface changes, evaluated over the PR net delta
+    # merge-base(base, head)..head. PR-only: a push to main has no base to
+    # compare against, and the pure-core unit tests above already run on push.
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          # Check out the real PR head (not the synthetic merge commit) with
+          # full history so the merge-base is computable. fetch-depth: 0 is
+          # scoped to this dedicated job; other jobs keep their shallow checkout.
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Require pack version advance for normative changes
+        env:
+          BASE_REF: ${{ github.base_ref }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          # fetch-depth: 0 above makes origin/<base_ref> available, so the
+          # merge-base needs no extra (credentialed) fetch. This job runs
+          # PR-controlled code, so persist-credentials stays false and no
+          # token is left in .git/config. Inputs arrive via env, never
+          # GitHub-expression-interpolated into the shell (injection-safe).
+          python3 .github/version_bump_check.py --base "origin/${BASE_REF}" --head "${HEAD_SHA}"
