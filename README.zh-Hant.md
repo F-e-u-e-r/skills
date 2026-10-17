@@ -25,7 +25,7 @@ skill,而非保存當初那些完整的對話、工作流程或來源素材。
 
 | Pack | 領域 | Skill 數 | 版本 |
 |---|---|---:|---:|
-| **Ops Pack** | 執行治理——rigor、委派、驗證、證據、審查 | 10 | 0.4.1 |
+| **Ops Pack** | 執行治理——rigor、委派、驗證、證據、審查 | 10 | 0.4.2 |
 | **Planning Pack** | 可執行的規劃契約與對齊(Planning ↔ Ops) | 2 | 0.1.1 |
 | **Design Pack** | UI/UX、動效與設計審查 | 3 | 0.2.0 |
 | **Security Pack** | 安全——持久、分級、可驗證的 security-assessment record | 1 | 0.1.0 |
@@ -40,7 +40,7 @@ skill,而非保存當初那些完整的對話、工作流程或來源素材。
 被當成同一回事呈現。
 
 > [!NOTE]
-> **狀態:早期 alpha。** Ops Pack 處於 **早期 alpha(`v0.4.1`)**;Design Pack 為 `0.2.0`;Planning Pack 為 `0.1.1`;
+> **狀態:早期 alpha。** Ops Pack 處於 **早期 alpha(`v0.4.2`)**;Design Pack 為 `0.2.0`;Planning Pack 為 `0.1.1`;
 > Security Pack 為 `0.1.0`。規則會隨真實 session 暴露的缺口調整,而且這些 pack
 > 用它們自己的教條[檢驗自己](evidence/ops-pack-evaluation.md)——包含誠實的 null result。
 > 歡迎用具體失敗案例開 issue 或 PR。
@@ -128,7 +128,7 @@ mkdir -p ~/.claude/skills && cp -R design-pack/skills/* ~/.claude/skills/
 | `skill-vetting` | 第三方 skill / plugin / hook 執行前先掃 trojan |
 | `cross-model-review` | load-bearing merge 前找**不同模型家族**做對抗審査 |
 
-<p><img alt="Ops Pack version v0.4.1" src="https://img.shields.io/badge/version-v0.4.1-orange.svg"></p>
+<p><img alt="Ops Pack version v0.4.2" src="https://img.shields.io/badge/version-v0.4.2-orange.svg"></p>
 
 **紀律血統**——十條最高槓桿原則、刻意捨棄了什麼、skill 與 agent 實際如何被叫用、本包如何退化——收錄於 [`ops-pack/README.md`](ops-pack/README.md)（英文）。給硬性強制的選配 repo 層級 hooks 見 [`hooks/README.md`](hooks/README.md)；評測證據見 [`evidence/ops-pack-evaluation.md`](evidence/ops-pack-evaluation.md)。
 

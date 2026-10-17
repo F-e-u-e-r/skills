@@ -27,7 +27,7 @@ Four packs ship today — **16 skills in total**:
 
 | Pack | Focus | Skills | Version |
 |---|---|---:|---:|
-| **Ops Pack** | Execution governance — rigor, delegation, verification, evidence, review | 10 | 0.4.1 |
+| **Ops Pack** | Execution governance — rigor, delegation, verification, evidence, review | 10 | 0.4.2 |
 | **Planning Pack** | Executable planning contracts and reconciliation (Planning ↔ Ops) | 2 | 0.1.1 |
 | **Design Pack** | UI/UX, motion, and design review | 3 | 0.2.0 |
 | **Security Pack** | Security evidence records — invariants, verification obligations, finding states, residual risk | 1 | 0.1.0 |
@@ -44,7 +44,7 @@ behavior, observed experience, research findings, and unprobed guidance are not
 presented as if they were the same thing.
 
 > [!NOTE]
-> **Status: early alpha.** Ops Pack is at **Early alpha (`v0.4.1`)**; Design Pack
+> **Status: early alpha.** Ops Pack is at **Early alpha (`v0.4.2`)**; Design Pack
 > is at `0.2.0`; Planning Pack is at `0.1.1`; Security Pack is at `0.1.0`. Rules change as real sessions expose misses, and the
 > packs are [measured against their own doctrine](evidence/ops-pack-evaluation.md)
 > — honest null results included. Issues and PRs with concrete failure cases are welcome.
@@ -142,7 +142,7 @@ occupies context until triggered.
 | `skill-vetting` | Vet a third-party skill / plugin / hook for trojan patterns before it runs |
 | `cross-model-review` | Adversarial review from a *different model family* before a load-bearing merge |
 
-<p><img alt="Ops Pack version v0.4.1" src="https://img.shields.io/badge/version-v0.4.1-orange.svg"></p>
+<p><img alt="Ops Pack version v0.4.2" src="https://img.shields.io/badge/version-v0.4.2-orange.svg"></p>
 
 **The discipline lineage** — the ten highest-leverage principles, what was
 deliberately dropped, how skills and agents actually get invoked, and how the
