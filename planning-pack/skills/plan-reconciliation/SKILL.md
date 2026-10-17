@@ -61,6 +61,8 @@ Run before OR's completion claim; OR still owns the honesty of that claim (OR §
 3. **Both directions:** surface **unrequested work** that was done but not planned (A11-06).
 4. **Nothing vanishes:** every undelivered item gets a **recorded disposition** (A11-02). Dropping or waiving an
    item is an **authorized, recorded decision** (A11-05), not a silent omission.
+   - A recorded disposition is accounting, not authority: it neither proves `delta-independence` nor grants shipment.
+     A bounded delta with live broader-review findings remains subject to `operational-rigor §3`; INV-1/INV-3 still apply.
 5. Emit the **closure record** (`references/closure-record.md`) → CLOSED.
 
 ### The three delivery states (A11; the distinction is load-bearing)
