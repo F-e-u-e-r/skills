@@ -446,12 +446,13 @@ Every packet names:
   exact-integer limit — 2^53 for doubles — in a declared exact type, a stated
   tolerance, or a declared error; `unprobed` — see Provenance). When the
   magnitudes cannot be stated, state the contract anyway for integer results
-  that may pass that limit: compute in a declared exact type, return the type
-  the examples show within that limit, and past it return the exact type,
-  never converted back (a value that prints right can still be wrong); where
-  the specification fixes an inexact return type or no exact type exists,
-  past the limit a stated tolerance or a declared error instead (one private
-  bench, whole-pack, two windows — see Provenance). Unstated edges
+  that may pass that limit: compute in a declared exact type, return the
+  contract's declared in-range result type within that limit, and past it
+  return the exact type, never converted back (a value that prints right can
+  still be wrong); where the specification fixes an inexact return type or no
+  exact type exists, past the limit a stated tolerance or a declared error
+  instead (one private bench, whole-pack, two windows — see Provenance).
+  Unstated edges
   are the shared blind spot of every model tier: the worker picks SOMETHING
   plausible and you find out at the gate — in one bench, 9 of 10 models
   infinite-looped on an unstated `size=0`, and even the strongest tier hung on
