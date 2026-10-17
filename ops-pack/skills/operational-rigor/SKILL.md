@@ -691,8 +691,12 @@ When rigor conflicts with finishing sooner, rigor wins.
   despite that dependency is not a delta-independence claim at all: it needs
   a separate explicit owner exception naming the live dependency and the
   accepted residual risk, and it is never inferred from those administrative
-  labels, ordinary reconciliation, or generic waiver language. Shipping an
-  independent delta leaves the broader finding live at its actual scope.
+  labels, ordinary reconciliation, or generic waiver language. Such an
+  exception remains subordinate to higher-priority and independently
+  mandatory constraints: it accepts residual risk only within authority
+  that can actually be waived, and does not override the `Priority when
+  rules collide` order or any otherwise non-waivable requirement. Shipping
+  an independent delta leaves the broader finding live at its actual scope.
   Evaluate cumulative/aggregate dependency across related bounded packets, so
   salami-slicing cannot implement a disputed plan piecemeal. Freshness and
   applicability are resolved by the canonical review process; deterministic
