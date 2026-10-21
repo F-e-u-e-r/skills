@@ -61,8 +61,17 @@ RESIDUAL (named in the PR body, out of scope for v1): shared metadata/** rows
 cannot be mapped to a single owning pack without new policy machinery, so this
 checker does not classify metadata/** as any pack's normative surface.
 
-Fail direction: a pack present at head whose version cannot be parsed fails
-CLOSED (reported, nonzero exit).
+Fail direction (standalone, independent of any other gate):
+  * A manifest that EXISTS at base or head but cannot be read as a JSON
+    object (malformed JSON, a top-level non-object, or an unexpected
+    blob-read failure) is INVALID and fails CLOSED (reported, nonzero).
+  * A manifest that genuinely does not exist at that revision is MISSING:
+    base-missing/head-valid keeps new-pack semantics; base-valid/head-missing
+    produces no version-bump failure (pack removal is governed elsewhere).
+  * An unresolvable ref or unexpected git failure fails CLOSED (never read
+    as 'missing').
+  * A pack VALID at base or head whose version cannot be parsed still fails
+    CLOSED (a valid base manifest with no parseable version is NOT new-pack).
 """
 import argparse
 import json
@@ -320,25 +329,72 @@ def git_name_status(merge_base, head_ref):
     return changes
 
 
-def git_read_file(rev, path):
-    """Return file contents at a revision, or None if it does not exist there."""
-    r = subprocess.run(
-        ["git", "show", "{rev}:{path}".format(rev=rev, path=path)],
-        capture_output=True, text=True)
+class GitError(RuntimeError):
+    """A git invocation failed in a way that is NOT a clean 'path absent'.
+
+    Raised so an unresolvable rev or an unexpected git/repository failure
+    fails CLOSED instead of being misread as a genuinely missing manifest.
+    """
+
+
+def _git_capture(args):
+    """Run a git command and return the CompletedProcess without raising."""
+    return subprocess.run(["git"] + args, capture_output=True, text=True)
+
+
+def git_path_present(rev, path):
+    """Whether `path` exists in the tree of the resolved commit `rev`.
+
+    Deterministic object/path existence check (no human-readable stderr
+    parsing). Three outcomes:
+
+      * True  - `rev` resolved and its tree contains exactly `path`;
+      * False - `rev` resolved and its tree does NOT contain `path`
+                (a genuine MISSING manifest);
+      * raises GitError - `rev` did not resolve, or git failed
+                unexpectedly (fail closed; never reported as 'missing').
+    """
+    r = _git_capture(["ls-tree", "-z", "--name-only", rev, "--", path])
     if r.returncode != 0:
-        return None
-    return r.stdout
+        raise GitError(
+            "git ls-tree failed for {rev}:{path} (exit {rc})".format(
+                rev=rev, path=path, rc=r.returncode))
+    names = [t for t in r.stdout.split("\0") if t]
+    return path in names
 
 
-def read_plugin(rev, pack):
-    """Parse <pack>/.claude-plugin/plugin.json at rev. None if absent/unparseable."""
-    raw = git_read_file(rev, pack + "/" + PLUGIN_REL)
-    if raw is None:
-        return None
+def read_plugin_state(rev, pack):
+    """Three-state read of <pack>/.claude-plugin/plugin.json at `rev`.
+
+    Separates genuine absence from unreadable content so the checker fails
+    CLOSED on a malformed manifest without relying on any other gate.
+
+    Returns one of:
+      ("missing", None)       - the manifest path does not exist at `rev`;
+      ("valid", parsed_dict)  - exists and parses as a JSON object;
+      ("invalid", None)       - exists but is not a readable JSON object:
+                                malformed JSON, a top-level non-object, or an
+                                unexpected blob-read failure that is not a
+                                genuine absence.
+
+    An unresolvable `rev` or unexpected git failure propagates as GitError
+    (fail closed) and is never reported as 'missing'.
+    """
+    path = pack + "/" + PLUGIN_REL
+    if not git_path_present(rev, path):
+        return ("missing", None)
+    r = _git_capture(["show", "{rev}:{path}".format(rev=rev, path=path)])
+    if r.returncode != 0:
+        # The tree lists the path (checked above) but the blob could not be
+        # read: an unexpected failure, not a genuine absence -> INVALID.
+        return ("invalid", None)
     try:
-        return json.loads(raw)
+        obj = json.loads(r.stdout)
     except (ValueError, TypeError):
-        return None
+        return ("invalid", None)
+    if not isinstance(obj, dict):
+        return ("invalid", None)
+    return ("valid", obj)
 
 
 def main(argv=None):
@@ -356,20 +412,50 @@ def main(argv=None):
 
     changes = git_name_status(merge_base, args.head)
 
-    base_plugins = {p: read_plugin(merge_base, p) for p in PACKS}
-    head_plugins = {p: read_plugin(args.head, p) for p in PACKS}
+    base_states = {p: read_plugin_state(merge_base, p) for p in PACKS}
+    head_states = {p: read_plugin_state(args.head, p) for p in PACKS}
+
+    # A valid parsed manifest feeds the pure core exactly as before; missing
+    # and invalid both yield None there. INVALID on EITHER side additionally
+    # fails closed as an adapter error, independent of any other gate.
+    base_plugins = {p: obj for p, (_st, obj) in base_states.items()}
+    head_plugins = {p: obj for p, (_st, obj) in head_states.items()}
 
     base_versions = {}
     head_versions = {}
     adapter_errors = []
     for p in PACKS:
-        bp, hp = base_plugins[p], head_plugins[p]
-        base_versions[p] = parse_version(bp.get("version")) if isinstance(bp, dict) else None
-        head_versions[p] = parse_version(hp.get("version")) if isinstance(hp, dict) else None
-        # A pack present at head whose version is missing/unparseable fails closed.
-        if hp is not None and head_versions[p] is None:
+        base_state, base_obj = base_states[p]
+        head_state, head_obj = head_states[p]
+
+        # INVALID (exists but not a readable JSON object): fail closed on the
+        # base side and the head side alike. Collect all, not just the first.
+        # No manifest contents, no absolute paths in diagnostics.
+        for side, state in (("base", base_state), ("head", head_state)):
+            if state == "invalid":
+                adapter_errors.append(
+                    "{side}: {pack} plugin manifest exists but is not a readable "
+                    "JSON object ({pack}/{rel})".format(
+                        side=side, pack=p, rel=PLUGIN_REL))
+
+        base_versions[p] = (parse_version(base_obj.get("version"))
+                             if isinstance(base_obj, dict) else None)
+        head_versions[p] = (parse_version(head_obj.get("version"))
+                             if isinstance(head_obj, dict) else None)
+        # A pack VALID at base or head whose version is missing/unparseable
+        # still fails closed (unchanged version-parse policy). A base manifest
+        # that is a valid JSON object but carries no parseable simple version
+        # must NOT collapse into new-pack semantics (which only a genuinely
+        # 'missing' base earns) - that collapse is the fail-open this guards.
+        # 'missing' (genuine absence -> new pack) and 'invalid' (already
+        # reported above) are both excluded by the base_state == "valid" gate.
+        if base_state == "valid" and base_versions[p] is None:
             adapter_errors.append(
-                "{pack}: cannot parse a simple MAJOR.MINOR.PATCH version at head "
+                "base: {pack}: cannot parse a simple MAJOR.MINOR.PATCH version "
+                "({pack}/{rel})".format(pack=p, rel=PLUGIN_REL))
+        if head_state == "valid" and head_versions[p] is None:
+            adapter_errors.append(
+                "head: {pack}: cannot parse a simple MAJOR.MINOR.PATCH version "
                 "({pack}/{rel})".format(pack=p, rel=PLUGIN_REL))
 
     violations, detail = analyze(
