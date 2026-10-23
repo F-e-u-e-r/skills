@@ -549,3 +549,25 @@ thin (lower by 7 and by 6 against a threshold of 5). As before, it measured
 the worker given the revised pack, not whether the bullet changes what
 dispatchers write; that half ships `unprobed` and joins the standing #115
 queue.
+The edge half of the same bullet (2026-10-23) has worker-side evidence from
+three private pre-registered windows, cited as shape: a model given toy JS
+integer tasks whose spec states each function's domain but not what to do
+outside it, versus the same prompt plus a packet contract naming every edge
+per parameter (negative, zero, empty, non-integer, unequal lengths, reversed
+ranges) with its required behavior (throw, or accept and return the value the
+spec defines) and the exact-type result contract above. Per window: three
+tasks, N=5, so 115 excluded-input probes, 145 in-spec probes (including
+negatives, zero and empty input the spec allows) and 105 exact probes past
+2^53 per arm. Two windows used one cheaper-tier model on two task sets; one
+used a higher-tier model on the first set. Without the contract, 0 of 115
+excluded inputs were rejected in every window. With it, 115 of 115 were
+rejected in every window, no in-spec input was rejected (0 of 145),
+happy-path checks were 60 of 60 in both arms, and silently wrong exact
+results fell from 80, 105 and 80 of 105 to 0. Limits: the same author wrote
+the tasks, the graders and the contract, the second task set after seeing
+the first set's results; all three windows test flat integer functions and
+array reductions, so they are not independent confirmations and say nothing
+about nested structures; and at N=5 a clean window still leaves a small
+over-guard rate plausible. As before, this measured the worker given a
+stated contract, not whether the bullet changes what dispatchers write; that
+half stays `unprobed` in the standing #115 queue.
