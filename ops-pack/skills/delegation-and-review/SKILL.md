@@ -1079,6 +1079,15 @@ reviewers that they silently absorb as implementers.
   absent on stock macOS; probe for it before trusting rc=124 readings.)"
   ❌ "EXIT=0 printed after the tail, so the delegate ran clean" — the delegate
   was killed at 240s; EXIT=0 was tail's.
+  The invariant this rung enforces: a headless delegate (a reviewer attempt
+  included) OWNS its stdin — explicit and finite (EOF / `</dev/null` unless its
+  contract is fed a finite payload), never ambient inherited stdin — and runs
+  under a finite parent/orchestrator-owned wall-clock deadline. For a reviewer
+  specifically, a stdin-wait or deadline-exceeded is an execution failure /
+  MISSING lens (cross-model-review §5), never a PROCEED/FIX and never a
+  successful reviewer verdict. Incident history and implementation traceability
+  live in skills-repo Issue #296 (the invariant is canonical here; the issue
+  holds the incident).
 - **At the ceiling, the ladder inverts** (`unprobed` — adapted external
   design; see Provenance). The advice-mode rung above assumes a tier exists
   above the executor. When the ORCHESTRATOR is observably the ceiling

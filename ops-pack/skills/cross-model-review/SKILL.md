@@ -55,6 +55,19 @@ Everything here is a rule about *how to choose*, never *what to choose*.
   §2/§3's — this clause owns only the family propagation). 3+ providers →
   pick a diverse pair (or N);
   refuse a same-family pair. Cannot assemble ≥2 families → §6 fallback.
+  **Attested family diversity is an ADDED credit, not the ordinary merge/diversity
+  requirement.** The ordinary cross-family requirement above — and the §4 merge
+  gate — is satisfied by ≥2 ROUTED families with each chosen reviewer usable and
+  producing a confirmed verdict; a served-unknown reviewer (e.g. Codex, §5) is
+  fully usable and does NOT block it. SEPARATELY, the stronger ATTESTED-diversity
+  credit is earned only from TRUSTED SERVED identities (§5): it counts only when
+  ≥2 present required lenses each carry a trusted served identity in
+  CONFIRMED-distinct families (≥1 outside every author family). A requested
+  family, a client banner, or a dispatcher label earns no attested-family credit,
+  and a missing/unconfirmed served identity fails closed for THAT CREDIT ONLY —
+  record the gap, do not claim a fully-attested cross-family pair; the merge
+  itself still proceeds on the ordinary gate (picking a family is routing intent;
+  crediting it as attested needs the §5 served-identity evidence).
 - **Offer a choice on an axis only when discovery yields >1 working option**
   (never pose a one-answer question), applied uniformly: *flagship* — skip if
   a provider has one, else offer; *effort* — the candidate set is the two
@@ -251,9 +264,12 @@ falsifies yours and the diff is where you learn why.
 
 Packet → reviewers in parallel → reproduce + triage → fix must-fix →
 regenerate packet → re-review. Merge only when **every chosen reviewer
-produced a confirmed verdict** (§5 — non-empty body, identity confirmed; a
-timeout, empty, or error body is not a verdict, so it blocks a clean dual
-gate — record the missing lens per §5 partial-failure, then wait/retry or
+produced a confirmed verdict** (§5 — non-empty body, and the verdict attributed
+to the reviewer you actually dispatched with its execution confirmed by tool
+status; served-identity ATTESTATION is a separate, non-blocking record (§5), NOT
+a merge precondition — a served-unknown reviewer still produces a confirmed
+verdict; a timeout, empty, or error body is not a verdict, so it blocks a clean
+dual gate — record the missing lens per §5 partial-failure, then wait/retry or
 proceed single-lens per §6, never a silent pass) **and**
 each such verdict is either PROCEED or a FIX whose every item you have either
 reproduced and recorded as a justified gap, or adjudicated an irreproducible
@@ -267,10 +283,37 @@ stop and escalate with the trail — never loop "until all PROCEED" unbounded.
 
 - exit 0 with an empty or error body is NOT a pass: open the artifact, confirm
   a non-empty body, quote the verdict line.
-- Identity evidence is the requested invocation + the tool's status, NOT a
-  model naming itself inside the review text (a family label at best). If you
-  cannot confirm the intended flagship ran, record an unconfirmed-identity gap
-  — do not claim a flagship cross-family pair.
+- **Requested identity is not served identity.** `requested_model` is routing
+  intent (your `-m`/config/dispatcher label); `served_model` is what TRUSTED
+  provider/runtime evidence proves actually served the call. With no such
+  evidence, served identity is `unknown` — HONEST, not a failure: `unknown` is
+  not `disabled`, so it never blocks ordinary review (route on the requested
+  model, record `unknown`), but a gate that needs attested identity treats it
+  as unconfirmed and fails closed. Never silently promote a requested family to
+  an attested one.
+- **Only provider/runtime-trusted evidence earns attested identity.** Trusted:
+  provider structured metadata keyed by the served model AND corroborated by an
+  unforgeable anchor (cost/usage accounting or a server request-id the client
+  cannot fabricate) — the served-model key alone, or the anchor alone, is not
+  enough; or an equivalent server-confirmed header. Untrusted — recorded for the audit trail,
+  never credited: the requested slug, a dispatcher label, a client startup
+  banner (an echo of the requested slug), a model naming itself in the review
+  text (a family label at best), catalog membership ("the model exists in the
+  list"), or plain / model-controlled JSON-looking output — JSON serialization
+  alone does not make a field trustworthy. If you cannot confirm the intended
+  flagship ran, record an unconfirmed-identity gap — do not claim a flagship
+  cross-family pair.
+- **Attested identity requires a parent/adapter-owned channel the reviewed model
+  cannot forge.** The channel is the provider's structured-output mode — the
+  parent-built invocation forces it, so the reviewed model controls only its
+  nested text, never the top-level envelope — or an equivalent server-confirmed
+  transport surface (e.g. a response header). Either way the channel fact comes
+  from the parent-owned invocation, never from the model's output or from
+  untrusted content spliced into the command. This execution-provenance channel
+  and the served-model evidence it carries are SEPARATE requirements — the
+  channel alone proves no served model. Provider mechanics, the maturity record,
+  and tracking issues #295/#296 live in `references/served-identity.md`
+  (volatile — re-verify at session time).
 - High-effort runs take minutes → run backgrounded with a wall-clock cap
   (default ~10 minutes; the user can raise it); on timeout, kill and record
   a gap.
