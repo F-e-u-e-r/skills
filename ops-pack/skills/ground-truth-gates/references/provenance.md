@@ -390,3 +390,17 @@ over non-empty input and its misses read as model behavior. Ships `unprobed` per
 covenant; its probe — a bare vs ruled experimenter handed a scorecard
 with grader misses, scored on whether the misses are read before the
 comparison is reported — joins the standing #115 queue.
+The measured-number clause, item 16 (2026-11-03), comes from one private
+incident in one lab's model benches, cited as shape: a two-arm bench's cost
+report averaged token usage over every run, and the timed-out runs, which
+report no usage, entered the mean as 0. The arm with the most timeouts read
+as using fewer input tokens than the other (13.5k vs 19.0k); over finished
+runs it used more (22.6k vs 20.4k), and its output-token lead read as about
+1.2 times instead of the 1.8 times seen over finished runs. The scorer ran correctly over non-empty input,
+so the error read as a property of the arm. The question of whether every
+counted run did the work is adapted at idea level from the `explain-the-number`
+principle and `benchmark-checklist` skill in pstack (cursor/plugins, MIT,
+Lauren Tan); no text is copied. Ships `unprobed` per the covenant; its
+probe — a bare vs ruled experimenter handed a cost table whose mean
+includes zero-filled failed runs, scored on whether the failed runs are
+counted before the comparison is reported — joins the standing #115 queue.

@@ -790,6 +790,26 @@ A generic green test is not proof. A gate is real only if:
    finding no data, emitted the four-character string `"null"` — every
    `if (result.field)` guard downstream read that as truthy and shipped it
    as a real value.
+16. **A measured number states how many runs it covers, and a run with
+   no value is never counted as zero** (`unprobed` — contributor incident
+   as shape; see Provenance). A latency, token count, cost, speedup, or
+   score is an aggregate, and the runs that errored, timed out, were
+   skipped, or hit a cache can differ systematically from the runs that
+   finished; a timed-out call often reports no usage at all. Before you
+   trust or report the number, make its producer print beside it how many
+   runs it covers out of how many were attempted, and how many errored,
+   timed out, or reported no value. Leave a run with no value out of the
+   aggregate and say its value is unknown; claim a bound only where the
+   metric gives one (a timed-out run's latency is at least the timeout).
+   For a metric that cannot go negative, a default `0` pulls the mean
+   down: it flatters the arm with more failures on a lower-is-better
+   metric and penalizes it on a higher-is-better one, so the comparison
+   mixes how often each arm failed into what it measured.
+   ❌ "arm B averaged 13.5k input tokens per run against arm A's 19.0k, so
+   B costs less input" — 6 of B's 15 runs and 1 of A's timed out,
+   reported no usage, and were averaged in as 0.
+   ✅ "input tokens over finished runs: B ~22.6k (9 of 15; 6 timed out,
+   usage unknown), A ~20.4k (14 of 15; 1 timed out, usage unknown)."
 
 **A red result is not automatically a real defect** — but ruling one
 "environmental" is a gate change, not the worker's call (rule 4): quarantine it
