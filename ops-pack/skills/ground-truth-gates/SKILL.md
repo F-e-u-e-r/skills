@@ -801,8 +801,9 @@ A generic green test is not proof. A gate is real only if:
    covers out of how many were planned (the declared or pre-registered
    run list, counted independently of the rows the runs wrote), and how
    many errored, timed out, were served from cache, or reported no
-   value; if you cannot change the producer, derive the counts from its
-   per-run records or call the number coverage-unknown. Decide "no
+   value; if you cannot change the producer, derive the per-run counts
+   from its records (the planned count still comes from the declared
+   run list) or call the number coverage-unknown. Decide "no
    value" from what the run did, not from what its record holds: a 0
    recorded for a run that errored, timed out, or was skipped is no
    value, and so is a 0 the metric cannot take for a run that executed
@@ -818,8 +819,9 @@ A generic green test is not proof. A gate is real only if:
    give. For a metric that cannot go negative, a default `0` pulls the
    mean down: it flatters the arm with more failures on a lower-is-better
    metric and penalizes it on a higher-is-better one, so the comparison
-   mixes how often each arm failed into what it measured. This is
-   operational-rigor §4's missing-input rule at the aggregate, and it
+   mixes how often each arm failed into what it measured. This extends
+   operational-rigor §4's missing-input rule to the aggregate — a
+   declared default does not make a missing value a measurement — and it
    closes a gap in "Exclusions and lost runs" above, whose attrition
    accounting counts a zero-filled run as scored. A single deterministic
    measurement owes none of this.
