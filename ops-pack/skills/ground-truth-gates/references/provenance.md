@@ -404,3 +404,11 @@ Lauren Tan); no text is copied. Ships `unprobed` per the covenant; its
 probe — a bare vs ruled experimenter handed a cost table whose mean
 includes zero-filled failed runs, scored on whether the failed runs are
 counted before the comparison is reported — joins the standing #115 queue.
+In maintainer review before merge (2026-11-04; one fresh-context critic,
+its findings reproduced first) the wording was amended and the evidence
+left as is: the rule binds numbers aggregated over runs, decides "no
+value" from what a run did rather than from its record, counts coverage
+against the planned run list, and keeps in the aggregate an outcome the
+scoring rule defines (a timeout scored as a fail) or a bound the metric
+gives — dropping those runs would flatter the arm that failed more, the
+bias the rule exists to stop.

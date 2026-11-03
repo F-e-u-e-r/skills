@@ -251,6 +251,11 @@ This pack distills and adapts ideas from:
     URL-fetch checklist surfaced the metadata-endpoint sharpening of the
     `security-architect` SSRF clause. Design-side ideas from all four of these
     land in the design-pack.
+- **pstack** (Lauren Tan, in
+  [`cursor/plugins`](https://github.com/cursor/plugins/tree/main/harness/pstack)
+  on GitHub; MIT) — ideas only, no text: the did-every-counted-run-do-the-work
+  question from its `explain-the-number` principle and `benchmark-checklist`
+  skill, adapted (2026-11) into `ground-truth-gates` item 16.
 
 All adopted sources were read and checked; no embedded instructions were
 executed, and nothing was taken from the sources the 2026-07 audit judged

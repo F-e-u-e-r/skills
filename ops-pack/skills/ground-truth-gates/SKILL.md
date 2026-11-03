@@ -790,26 +790,45 @@ A generic green test is not proof. A gate is real only if:
    finding no data, emitted the four-character string `"null"` — every
    `if (result.field)` guard downstream read that as truthy and shipped it
    as a real value.
-16. **A measured number states how many runs it covers, and a run with
-   no value is never counted as zero** (`unprobed` — contributor incident
-   as shape; see Provenance). A latency, token count, cost, speedup, or
-   score is an aggregate, and the runs that errored, timed out, were
-   skipped, or hit a cache can differ systematically from the runs that
-   finished; a timed-out call often reports no usage at all. Before you
-   trust or report the number, make its producer print beside it how many
-   runs it covers out of how many were attempted, and how many errored,
-   timed out, or reported no value. Leave a run with no value out of the
-   aggregate and say its value is unknown; claim a bound only where the
-   metric gives one (a timed-out run's latency is at least the timeout).
-   For a metric that cannot go negative, a default `0` pulls the mean
-   down: it flatters the arm with more failures on a lower-is-better
+16. **A number aggregated over runs states how many runs it covers, and
+   a run with no value is never counted as zero** (`unprobed` —
+   contributor incident as shape; see Provenance). A latency, token
+   count, cost, speedup, or score taken over repeated runs is an
+   aggregate, and the runs that errored, timed out, were skipped, or hit
+   a cache can differ systematically from the runs that finished; a
+   timed-out call often reports no usage at all. Before you trust or
+   report the number, make its producer print beside it how many runs it
+   covers out of how many were planned (the declared or pre-registered
+   run list, counted independently of the rows the runs wrote), and how
+   many errored, timed out, were served from cache, or reported no
+   value; if you cannot change the producer, derive the counts from its
+   per-run records or call the number coverage-unknown. Decide "no
+   value" from what the run did, not from what its record holds: a 0
+   recorded for a run that errored, timed out, or was skipped is no
+   value, and so is a 0 the metric cannot take for a run that executed
+   (a latency); a finished run's real 0 (an empty completion's output
+   tokens) stays in. Leave a run with no value out of the aggregate and
+   say its value is unknown. This applies to a value the run failed to
+   report, not to an outcome the metric defines: where the
+   pre-registered scoring rule gives a failed run its result (a success
+   score that counts a timeout as a fail, as a fail-closed gate does),
+   score it so; where the metric gives a bound (a timed-out run's latency
+   is at least the timeout), carry the bound into the aggregate rather
+   than averaging finished runs alone; claim no bound the metric does not
+   give. For a metric that cannot go negative, a default `0` pulls the
+   mean down: it flatters the arm with more failures on a lower-is-better
    metric and penalizes it on a higher-is-better one, so the comparison
-   mixes how often each arm failed into what it measured.
+   mixes how often each arm failed into what it measured. This is
+   operational-rigor §4's missing-input rule at the aggregate, and it
+   closes a gap in "Exclusions and lost runs" above, whose attrition
+   accounting counts a zero-filled run as scored. A single deterministic
+   measurement owes none of this.
    ❌ "arm B averaged 13.5k input tokens per run against arm A's 19.0k, so
    B costs less input" — 6 of B's 15 runs and 1 of A's timed out,
    reported no usage, and were averaged in as 0.
    ✅ "input tokens over finished runs: B ~22.6k (9 of 15; 6 timed out,
-   usage unknown), A ~20.4k (14 of 15; 1 timed out, usage unknown)."
+   usage unknown), A ~20.4k (14 of 15; 1 timed out, usage unknown) — not
+   like-for-like: B's timeouts are its own failure signature."
 
 **A red result is not automatically a real defect** — but ruling one
 "environmental" is a gate change, not the worker's call (rule 4): quarantine it
