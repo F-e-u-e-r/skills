@@ -214,4 +214,11 @@ PY
 )
 assert_block "block JSON survives cp950 stdout encoding" "$out"
 
+# t18 (2026-11-04): the verification-evidence matrix - V1 executed code, V2
+# verification dispatch, V3 explicit no-exec justification, V4/V5 fail-closed,
+# V6 evidence must follow the LAST edit, plus attacks on the classifier. Same
+# stdin entry surface as above; the matrix file's header has the contract.
+python3 "$root/hooks/test-verify-before-stop-matrix.py" || { echo "FAIL verification-evidence matrix" >&2; exit 1; }
+echo "PASS verification-evidence matrix"
+
 echo "OK: all verify-before-stop tests passed"

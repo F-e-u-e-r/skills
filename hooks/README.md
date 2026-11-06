@@ -46,6 +46,7 @@ bash hooks/test-verify-before-stop.sh
 bash hooks/test-gate-credential-destruction.sh
 bash hooks/test-skill-vetting-advisory.sh
 bash hooks/test-skill_snapshot.sh
+bash hooks/test-bounded_wait.sh
 ```
 
 Then add to `.claude/settings.json`:
@@ -84,10 +85,13 @@ no-gates-in-repo early exit — a Stop hook that can never pass loops the model
 forever.
 
 **Second (optional) hook — no turn ends on unverified code edits.**
-`hooks/verify-before-stop.py` (Python 3 stdlib, tested 2026-07-07)
-is a `Stop` hook that blocks ending the turn when code files were edited but
-no test/verification command ran and no verification-intent subagent was
-dispatched — the mechanical form of operational-rigor §4. Doc/config-only
+`hooks/verify-before-stop.py` (Python 3 stdlib; evidence classifier rebuilt
+and tested 2026-11-04) is a `Stop` hook that blocks ending the turn when code
+files were edited but no verification evidence appeared after the last code
+edit — executed code that exercises the change (a project script, module,
+test runner, or compile check), a verification-intent subagent dispatch, or a
+final-report line `No executable test applies: <reason>; verified by <method>`.
+It is the mechanical form of operational-rigor §4. Doc/config-only
 edits never block; a second Stop always passes (anti-deadlock relief valve,
 logged). Its known limits are documented in the script header — it checks
 that verification *appeared*, not that it passed. Adapted from
@@ -173,6 +177,17 @@ substitute for it. Wire it with:
       "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/skill-vetting-advisory.py" } ] }
 ]
 ```
+
+**Development tool (not a hook) — bounded wait on hosted CI.**
+`hooks/bounded_wait.py` (Python 3 stdlib, tested 2026-11-04) waits for a PR's
+checks or one workflow run under its own deadline, with no `timeout(1)`
+dependency, and exits with the authoritative hosted verdict: `0` success, `1`
+failure, `124` deadline passed while pending, `125` the state could not be
+established. `pr-checks` requires `--sha` (the PR head commit being waited
+for), so a previous head's green checks right after a push are never taken as
+this commit's. Run it as the last command of a background task
+(`python3 hooks/bounded_wait.py pr-checks 294 --sha "$(git rev-parse HEAD)" --repo OWNER/REPO > out 2>&1`);
+a trailing `; tail out` would make the task report tail's status instead.
 
 The three gating hooks append audit events to `~/.claude/hooks/hooks.log` and the
 advisory vetting hook to `<CLAUDE_CONFIG_DIR>/skill-vetting/advisory.log`
