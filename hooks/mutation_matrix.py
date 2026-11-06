@@ -179,6 +179,31 @@ def restore_worktree(wt, sha, run):
     return None
 
 
+def remove_owned_worktree(wt, parent, repo=REPO):
+    """Best-effort teardown of THIS run's worktree - and of nothing else.
+
+    It used to end with a bare `git worktree prune`, which acts on the registry
+    every linked worktree of the repository shares: any OTHER worktree whose
+    directory or `.git` pointer was missing lost its admin entry (index, HEAD,
+    reflog) to a run that never created it. So every command here names only
+    `wt`, the exact path `git worktree add` registered. main() takes its
+    realpath first, because git registers the resolved path and, once the
+    directory is gone, finds an absolute path only by that exact string.
+
+    What prune was there for is kept, scoped: if the first remove fails because
+    this run's own pointer or directory was damaged, the directory is deleted
+    anyway and the same path is removed once more - git drops the entry of a
+    registered worktree whose directory is gone. If that fails too, the entry
+    is left for a human, never widened into a sweep. Pinned by
+    OwnedWorktreeCleanup in test-mutation_matrix.py."""
+    first = subprocess.run(["git", "worktree", "remove", "--force", wt],
+                           cwd=repo, capture_output=True)
+    shutil.rmtree(parent, ignore_errors=True)
+    if first.returncode != 0:
+        subprocess.run(["git", "worktree", "remove", "--force", wt],
+                       cwd=repo, capture_output=True)
+
+
 def write_record(path, payload):
     """Write the run's durable evidence. Exclusive create, so a second run can
     never silently take an earlier one's place.
@@ -558,7 +583,10 @@ def main(argv=None):
     print("definitions commit  %s%s" % (head, "" if defs_ok
                                         else "  (ON-DISK COPY DIFFERS)"))
     print("measuring commit %s in an isolated worktree" % head[:12])
-    parent = tempfile.mkdtemp(prefix="mutation-matrix-")
+    # realpath: the teardown names this worktree by the exact path git
+    # registers, which is the resolved one (macOS keeps $TMPDIR under /var,
+    # a symlink to /private/var).
+    parent = os.path.realpath(tempfile.mkdtemp(prefix="mutation-matrix-"))
     wt = os.path.join(parent, "wt")
     add = subprocess.run(["git", "worktree", "add", "--detach", wt, head],
                          cwd=REPO, capture_output=True, text=True)
@@ -585,9 +613,7 @@ def main(argv=None):
     if why:
         print("TOOL ERROR: could not establish the frozen snapshot before the "
               "control run (%s)" % why, file=sys.stderr)
-        subprocess.run(["git", "worktree", "remove", "--force", wt], cwd=REPO,
-                       capture_output=True)
-        shutil.rmtree(parent, ignore_errors=True)
+        remove_owned_worktree(wt, parent)
         return 2
     control = []
     for suite in wt_suites:
@@ -618,9 +644,7 @@ def main(argv=None):
                   file=sys.stderr)
             for line in c["tail"]:
                 print("     " + line, file=sys.stderr)
-        subprocess.run(["git", "worktree", "remove", "--force", wt], cwd=REPO,
-                       capture_output=True)
-        shutil.rmtree(parent, ignore_errors=True)
+        remove_owned_worktree(wt, parent)
         return 2
     for c in control:
         print("control            %-34s rc=%d ok=%s green=%s"
@@ -676,11 +700,7 @@ def main(argv=None):
     finally:
         # Best effort: if this is skipped by a signal that cannot be handled,
         # what is left behind is a disposable directory, not a modified source.
-        subprocess.run(["git", "worktree", "remove", "--force", wt], cwd=REPO,
-                       capture_output=True)
-        shutil.rmtree(parent, ignore_errors=True)
-        subprocess.run(["git", "worktree", "prune"], cwd=REPO,
-                       capture_output=True)
+        remove_owned_worktree(wt, parent)
 
     # The per-mutant verdicts existed only on stdout, so a pipeline as ordinary
     # as `| tail -20` destroyed them - which is exactly what happened to this
