@@ -27,8 +27,8 @@ Copyright (c) 2026 Curtis Chou
 ```
 
 - **How used:** `hooks/verify-before-stop.py` is a derivative work of
-  that project's `verify_gate.py` (detection logic preserved; messages
-  rewritten). Approximately ten judgment rules were also absorbed into the
+  that project's `verify_gate.py` (window design retained; evidence
+  classifier rebuilt in-repo 2026-11-04; messages rewritten). Approximately ten judgment rules were also absorbed into the
   `operational-rigor`, `delegation-and-review`, and `skill-authoring` skills.
 - This is the strongest obligation in this file: a substantial portion of the
   hook is derived from MIT-licensed code, so this notice must ship with it.
