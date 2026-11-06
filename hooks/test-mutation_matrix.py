@@ -11,9 +11,12 @@ that lies is worse than no matrix, because it launders an untested fix into a
 measured one.
 """
 import ast
+import hashlib
 import os
+import shutil
 import subprocess
 import sys
+import tempfile
 import unittest
 
 REPO = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
@@ -732,6 +735,130 @@ class AuthoritativeMode(unittest.TestCase):
         self.assertIn("--authoritative", r.stdout)
         self.assertIn("ENFORCED", r.stdout,
                       "the help must not describe a convention as a gate")
+
+
+class OwnedWorktreeCleanup(unittest.TestCase):
+    """The harness may clean up only the worktree it created.
+
+    Its teardown ended with a bare `git worktree prune`. The worktree registry
+    is shared by every linked worktree of a repository, so each run also
+    deleted the admin entry - index, HEAD, reflog - of any OTHER worktree whose
+    directory or `.git` pointer was missing; reproduced in a sandbox before the
+    fix. These tests use real disposable repositories and real git: unrelated
+    worktrees are put in exactly the states a prune deletes, git is asked to
+    confirm it WOULD delete them, and then the production teardown runs."""
+
+    def _git(self, *args, check=False):
+        return subprocess.run(["git"] + list(args), cwd=self.repo,
+                              capture_output=True, text=True, check=check)
+
+    def _register(self, path):
+        """`git worktree add` -> the admin entry that backs `path`."""
+        self._git("worktree", "add", "--detach", path, "HEAD", check=True)
+        with open(os.path.join(path, ".git")) as fh:
+            gitdir = fh.read().split(":", 1)[1].strip()
+        return os.path.normpath(os.path.join(path, gitdir))
+
+    @staticmethod
+    def _digest(admin):
+        """Every file of an admin entry -> sha256 of its bytes."""
+        out = {}
+        for root, _dirs, files in os.walk(admin):
+            for name in files:
+                with open(os.path.join(root, name), "rb") as fh:
+                    out[os.path.relpath(os.path.join(root, name), admin)] = \
+                        hashlib.sha256(fh.read()).hexdigest()
+        return out
+
+    def _fixture(self):
+        # realpath, as main() does: git registers resolved paths.
+        base = os.path.realpath(tempfile.mkdtemp(prefix="wt-containment-"))
+        self.addCleanup(shutil.rmtree, base, ignore_errors=True)
+        self.repo = os.path.join(base, "repo")
+        os.mkdir(self.repo)
+        self._git("init", "-q", check=True)
+        with open(os.path.join(self.repo, "f"), "w") as fh:
+            fh.write("x\n")
+        self._git("add", "f", check=True)
+        self._git("-c", "user.email=t@t", "-c", "user.name=t",
+                  "-c", "commit.gpgsign=false", "commit", "-qm", "i",
+                  check=True)
+        # NOT the harness's: two in the states a bare prune deletes, one healthy.
+        self.unrelated = {n: (os.path.join(base, n),
+                              self._register(os.path.join(base, n)))
+                          for n in ("dir-gone", "pointer-gone", "healthy")}
+        shutil.rmtree(self.unrelated["dir-gone"][0])
+        os.remove(os.path.join(self.unrelated["pointer-gone"][0], ".git"))
+        # The harness's own, laid out as main() lays it out.
+        self.parent = os.path.join(base, "mutation-matrix-run")
+        os.mkdir(self.parent)
+        self.wt = os.path.join(self.parent, "wt")
+        self.owned_admin = self._register(self.wt)
+        # PREMISE, or "it survived" proves nothing: git itself rates both
+        # damaged unrelated entries prunable, and the healthy one not.
+        dry = self._git("worktree", "prune", "--dry-run", "--verbose")
+        said = dry.stdout + dry.stderr
+        for name, (_path, admin) in self.unrelated.items():
+            self.assertEqual(name != "healthy",
+                             "worktrees/%s:" % os.path.basename(admin) in said,
+                             "fixture premise (%s): %s" % (name, said))
+        self.before = {n: self._digest(a)
+                       for n, (_p, a) in self.unrelated.items()}
+
+    def _assert_only_the_owned_worktree_went(self):
+        listed = self._git("worktree", "list", "--porcelain").stdout.splitlines()
+        self.assertFalse(os.path.exists(self.parent),
+                         "the run's temp directory must be gone")
+        self.assertFalse(os.path.exists(self.owned_admin),
+                         "the run's own admin entry must be gone")
+        self.assertNotIn("worktree " + self.wt, listed)
+        for name, (path, admin) in self.unrelated.items():
+            self.assertIn("worktree " + path, listed,
+                          "%s must still be registered" % name)
+            self.assertEqual(self.before[name], self._digest(admin),
+                             "%s: its admin entry (index, HEAD, reflog) must "
+                             "be byte-identical" % name)
+
+    def test_an_unrelated_stale_worktree_survives_the_teardown(self):
+        self._fixture()
+        mm.remove_owned_worktree(self.wt, self.parent, repo=self.repo)
+        self._assert_only_the_owned_worktree_went()
+
+    def test_a_damaged_owned_worktree_is_still_removed(self):
+        """What the prune was there for: a run whose own `.git` pointer is
+        damaged cannot be removed normally, and would leak its entry."""
+        self._fixture()
+        os.remove(os.path.join(self.wt, ".git"))
+        first = self._git("worktree", "remove", "--force", self.wt)
+        self.assertNotEqual(0, first.returncode,
+                            "premise: the normal remove must fail here")
+        self.assertTrue(os.path.isdir(self.owned_admin),
+                        "premise: and leave the run's entry behind")
+        mm.remove_owned_worktree(self.wt, self.parent, repo=self.repo)
+        self._assert_only_the_owned_worktree_went()
+
+    def test_no_teardown_path_in_the_module_can_sweep_the_registry(self):
+        """The two tests above drive remove_owned_worktree, so they cannot see
+        a prune put back into main() itself - which is where it sat. Every
+        git-worktree command in the module is therefore read from its syntax
+        tree: `add` in main(), `remove` only in remove_owned_worktree, and
+        nothing else."""
+        with open(os.path.join(HOOKS, "mutation_matrix.py")) as fh:
+            src = fh.read()
+        lines = src.splitlines(True)
+        found = set()
+        for node in ast.walk(ast.parse(src)):
+            if isinstance(node, ast.Constant) and node.value == "prune":
+                found.add(("prune", node.lineno))
+            if isinstance(node, (ast.List, ast.Tuple)):
+                words = [e.value for e in node.elts
+                         if isinstance(e, ast.Constant)]
+                if "worktree" in words:
+                    sub = words[words.index("worktree") + 1:] or [None]
+                    found.add((sub[0], mm.enclosing_def(
+                        src, len("".join(lines[:node.lineno - 1])))))
+        self.assertEqual({("add", "main"),
+                          ("remove", "remove_owned_worktree")}, found)
 
 
 class TheRealMatrix(unittest.TestCase):
