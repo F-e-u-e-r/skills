@@ -154,17 +154,29 @@ def remote_tag_commit(remote, tag, cwd=None):
 
 
 def _cleanup_worktree(path, cwd):
-    """Best-effort teardown of a temporary worktree (on success OR failure)."""
+    """Best-effort teardown of THIS invocation's worktree, and of nothing else.
+
+    Runs on success OR failure. Every command names only `path`, the mkdtemp
+    directory this invocation registered: the registry is shared by all linked
+    worktrees, so a bare `git worktree prune` here deleted unrelated stale
+    entries (HEAD, index, reflog). If the first remove fails (e.g. this
+    worktree's own `.git` pointer was damaged), the directory is deleted and
+    the same path is removed once more; git then drops the entry, and since
+    `path`'s parent still exists the unresolved spelling still matches it. A
+    locked entry is left for manual recovery. Pinned by WorktreeContainment in
+    test-release-integrity.py.
+    """
     try:
-        _git(["worktree", "remove", "--force", path], cwd=cwd)
+        first = _git(["worktree", "remove", "--force", path], cwd=cwd)
     except Exception:
-        pass
+        first = None
     if os.path.isdir(path):
         shutil.rmtree(path, ignore_errors=True)
-    try:
-        _git(["worktree", "prune"], cwd=cwd)
-    except Exception:
-        pass
+    if first is None or first.returncode != 0:
+        try:
+            _git(["worktree", "remove", "--force", path], cwd=cwd)
+        except Exception:
+            pass
 
 
 def check_committed_tree(expected_sha, cwd=None):
