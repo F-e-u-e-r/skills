@@ -28,6 +28,8 @@ jobs:
         run: python3 .github/test-version-bump.py
       - name: Version-bump adapter integration tests
         run: python3 .github/test-version-bump-adapter.py
+      - name: Release-integrity verifier tests (disposable repositories only)
+        run: python3 .github/test-release-integrity.py
 
   hook-suites:
     runs-on: ubuntu-latest

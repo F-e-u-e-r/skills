@@ -8,8 +8,11 @@ suite needs no network. Helpers are local to this file.
 Covers R1-R14 from the implementation authorization plus anti-vacuity controls
 and the CLI contract. Each load-bearing control is exercised two-sided (a
 correct arm that PASSES and a broken arm that FAILS), so a vacuous pass is
-visible.
+visible. WorktreeContainment pins that the verifier's teardown removes only
+the worktree the verifier itself created.
 """
+import ast
+import hashlib
 import os
 import shutil
 import subprocess
@@ -38,6 +41,19 @@ INJECT_SENTINEL = "RELINT_INJECTED"
 # A VALID git tag name (no space) that, if any code path interpolated it into a
 # shell, would create a sentinel file via command substitution + redirection.
 HOSTILE_TAG = "v1.0$(>%s)" % INJECT_SENTINEL
+
+# Fixture checker for WorktreeContainment: exits 0, but when the committed
+# tree carries drop-own-pointer.txt it first deletes the `.git` pointer FILE
+# of the worktree it runs in - the verifier's own. A missing pointer makes
+# os.remove raise (exit 1), and os.remove never deletes a directory.
+CONTAINMENT_CHECKS = (
+    "#!/usr/bin/env python3\n"
+    "import os, sys\n"
+    "root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))\n"
+    "if os.path.exists(os.path.join(root, 'drop-own-pointer.txt')):\n"
+    "    os.remove(os.path.join(root, '.git'))\n"
+    "sys.exit(0)\n"
+)
 
 
 def _write(path, content):
@@ -270,6 +286,149 @@ class ReleaseIntegrityTests(unittest.TestCase):
         self.assertEqual(no_phase.returncode, 2, "phase must be explicit")
         no_commit = self._cli(repo, "pre-tag", "--main-ref", "main")
         self.assertEqual(no_commit.returncode, 2, "expected-commit must be explicit")
+
+
+class WorktreeContainment(unittest.TestCase):
+    """The verifier may clean up only the worktree it created.
+
+    Its teardown ended with a bare `git worktree prune`. The worktree registry
+    is shared by every linked worktree of a repository, so each run also
+    deleted the admin entry - HEAD, index, reflog - of any OTHER worktree whose
+    directory or `.git` pointer was missing. Real disposable repositories and
+    real git: unrelated worktrees are put in exactly the states a prune
+    deletes, git confirms it WOULD delete them, then the real verifier runs."""
+
+    def setUp(self):
+        base = os.path.realpath(tempfile.mkdtemp(prefix="relint-containment-"))
+        self.addCleanup(shutil.rmtree, base, ignore_errors=True)
+        # The verifier's own mkdtemp goes through a symlinked temp root, so the
+        # path it holds is not the string git registers (the macOS
+        # /var -> /private/var shape, reproduced on every OS).
+        self.tmp_real = os.path.join(base, "tmp-real")
+        os.mkdir(self.tmp_real)
+        link = os.path.join(base, "tmp-link")
+        os.symlink(self.tmp_real, link)
+        self.addCleanup(setattr, tempfile, "tempdir", tempfile.tempdir)
+        tempfile.tempdir = link
+        self.base = base
+        self.repo = os.path.join(base, "repo")
+        os.mkdir(self.repo)
+        _git(self.repo, "init", "-q", "-b", "main")
+        os.makedirs(os.path.join(self.repo, ".github"))
+        _write(os.path.join(self.repo, ".github", "checks.py"), CONTAINMENT_CHECKS)
+        _write(os.path.join(self.repo, "a.txt"), "a\n")
+        self.c_ok = self._commit("ok")
+        _write(os.path.join(self.repo, "drop-own-pointer.txt"), "x\n")
+        self.c_drop = self._commit("checker damages its own worktree")
+        # NOT the verifier's: two in the states a bare prune deletes, one healthy.
+        self.unrelated = {n: self._register(os.path.join(base, n))
+                          for n in ("dir-gone", "pointer-gone", "healthy")}
+        shutil.rmtree(os.path.join(base, "dir-gone"))
+        os.remove(os.path.join(base, "pointer-gone", ".git"))
+        # PREMISE, or "it survived" proves nothing: git itself rates both
+        # damaged entries prunable and the healthy one not. Dry run, and only
+        # inside this disposable repository.
+        dry = subprocess.run(["git", "worktree", "prune", "--dry-run", "--verbose"],
+                             cwd=self.repo, stdin=subprocess.DEVNULL,
+                             capture_output=True, text=True)
+        said = dry.stdout + dry.stderr
+        for name, admin in self.unrelated.items():
+            self.assertEqual(name != "healthy",
+                             "worktrees/%s:" % os.path.basename(admin) in said,
+                             "fixture premise (%s): %s" % (name, said))
+        self.before = self._registry()
+
+    def _commit(self, msg):
+        _git(self.repo, "add", "-A")
+        _git(self.repo, "commit", "-q", "-m", msg)
+        return _git(self.repo, "rev-parse", "HEAD")
+
+    def _register(self, path):
+        """`git worktree add` -> the admin entry that backs `path`."""
+        _git(self.repo, "worktree", "add", "-q", "--detach", path, self.c_ok)
+        with open(os.path.join(path, ".git"), encoding="utf-8") as fh:
+            gitdir = fh.read().split(":", 1)[1].strip()
+        return os.path.normpath(os.path.join(path, gitdir))
+
+    def _registry(self):
+        """Every admin entry -> {file: sha256 of its bytes}."""
+        top = os.path.join(self.repo, ".git", "worktrees")
+        out = {}
+        for entry in sorted(os.listdir(top)) if os.path.isdir(top) else ():
+            files = {}
+            for root, _dirs, names in os.walk(os.path.join(top, entry)):
+                for name in names:
+                    with open(os.path.join(root, name), "rb") as fh:
+                        rel = os.path.relpath(os.path.join(root, name), os.path.join(top, entry))
+                        files[rel] = hashlib.sha256(fh.read()).hexdigest()
+            out[entry] = files
+        return out
+
+    def test_a_unrelated_prunable_worktrees_survive_the_verifier(self):
+        _sha, failures = ri.verify_pre_tag(self.c_ok, "main", cwd=self.repo)
+        self.assertEqual([], failures, "the verdict must still be PASS")
+        self.assertEqual(self.before, self._registry(),
+                         "every pre-existing admin entry (index, HEAD, reflog) "
+                         "must survive byte-identical, and none of the "
+                         "verifier's may remain")
+        self.assertEqual([], os.listdir(self.tmp_real),
+                         "the verifier's temp directory must be gone")
+
+    def test_b_damaged_owned_worktree_is_still_removed(self):
+        """What the prune did for the verifier itself: a worktree whose own
+        `.git` pointer is gone cannot be removed by one scoped remove, and
+        would leak its entry. At c_drop the checker deletes that pointer."""
+        probe = os.path.join(self.base, "probe")
+        probe_admin = self._register(probe)
+        os.remove(os.path.join(probe, ".git"))
+        plain = subprocess.run(["git", "worktree", "remove", "--force", probe],
+                               cwd=self.repo, stdin=subprocess.DEVNULL,
+                               capture_output=True, text=True)
+        self.assertNotEqual(0, plain.returncode, "premise: one scoped remove must fail")
+        self.assertTrue(os.path.isdir(probe_admin), "premise: and leave its entry behind")
+        shutil.rmtree(probe)
+        _git(self.repo, "worktree", "remove", "--force", probe)
+        self.assertEqual(self.before, self._registry(), "premise probe must leave no trace")
+
+        _sha, failures = ri.verify_pre_tag(self.c_drop, "main", cwd=self.repo)
+        self.assertEqual([], failures,
+                         "the checker removed its own pointer and passed")
+        self.assertEqual(self.before, self._registry(),
+                         "the verifier's damaged entry must not leak, and every "
+                         "unrelated entry must survive byte-identical")
+        self.assertEqual([], os.listdir(self.tmp_real),
+                         "the verifier's temp directory must be gone")
+
+    def test_c_no_registry_wide_git_command_in_module(self):
+        """Structural tripwire for the current shape (A and B are the
+        behavioural protection): every git-worktree argv in the module, read
+        from its syntax tree, is `worktree add --quiet --detach` in
+        check_committed_tree or `worktree remove --force` (one force) in
+        _cleanup_worktree; no prune, gc or maintenance literal anywhere."""
+        with open(SCRIPT, encoding="utf-8") as fh:
+            tree = ast.parse(fh.read())
+        parent = {}
+        for node in ast.walk(tree):
+            for child in ast.iter_child_nodes(node):
+                parent[child] = node
+
+        def owner(node):
+            while node in parent:
+                node = parent[node]
+                if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                    return node.name
+            return "<module>"
+
+        found = set()
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Constant) and node.value in ("prune", "gc", "maintenance"):
+                found.add((node.value, owner(node)))
+            if isinstance(node, (ast.List, ast.Tuple)):
+                words = tuple(e.value for e in node.elts if isinstance(e, ast.Constant))
+                if "worktree" in words:
+                    found.add((words[words.index("worktree"):], owner(node)))
+        self.assertEqual({(("worktree", "add", "--quiet", "--detach"), "check_committed_tree"),
+                          (("worktree", "remove", "--force"), "_cleanup_worktree")}, found)
 
 
 if __name__ == "__main__":
