@@ -16,6 +16,12 @@ command -v python3 >/dev/null 2>&1 || {
 tmp=$(mktemp -d "${TMPDIR:-/tmp}/ops-pack-hook-test.XXXXXX")
 trap 'rm -rf "$tmp"' EXIT
 
+# gate-before-commit.sh appends BLOCK events to $HOME/.claude/hooks/hooks.log
+# (it reads no other config root). Run it under a HOME inside this suite's temp
+# dir so test events never reach the developer's real Claude hooks log.
+hook_home="$tmp/home"
+mkdir -p "$hook_home/.claude/hooks"
+
 red="$tmp/red"
 green="$tmp/green"
 gateless="$tmp/gateless"
@@ -39,7 +45,7 @@ assert_exit() {
   fallback="${4:-$gateless}"
 
   set +e
-  out=$(json_for "$command_text" | CLAUDE_PROJECT_DIR="$fallback" bash "$root/hooks/gate-before-commit.sh" 2>&1)
+  out=$(json_for "$command_text" | HOME="$hook_home" CLAUDE_PROJECT_DIR="$fallback" bash "$root/hooks/gate-before-commit.sh" 2>&1)
   code=$?
   set -e
 
