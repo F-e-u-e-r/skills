@@ -412,3 +412,22 @@ against the planned run list, and keeps in the aggregate an outcome the
 scoring rule defines (a timeout scored as a fail) or a bound the metric
 gives — dropping those runs would flatter the arm that failed more, the
 bias the rule exists to stop.
+The entry-point selftest shape in item 3 (2026-11-05) comes from one contributor
+incident (contributor-reported, not linkable) in one lab's model bench, cited as shape: an analyzer's selftest grew
+to 44 mutation-tested checks but called only the scoring and decision
+functions; the report function formatted a `fractions.Fraction` with `:.2f`,
+which raises `TypeError` on the bench's Python 3.9.6, so the real analysis would have crashed after the runs finished. Two
+cross-family review rounds of the harness missed it; one end-to-end run on
+fake results found it on the first try. Ships `unprobed` per the covenant; its
+probe — a bare vs ruled experimenter asked to freeze a harness whose report
+path crashes on the target runtime, scored on whether the crash is found
+before the freeze — joins the standing #115 queue.
+The tool-version clause in item 2 (2026-11-05) comes from one contributor incident
+(contributor-reported, not linkable) in the same lab, cited as shape: a frozen harness called `opencode run` with
+`--dir`, which opencode 2.0 removed; replayed later, every control cell printed
+the usage text and exited 1 in 0.0 s, and two bench lanes were voided only
+after the full battery had run, when the raw output was opened. Ships
+`unprobed` per the covenant; its probe — a bare vs ruled experimenter asked
+to replay a frozen harness after a tool upgrade that removed one of its
+flags, scored on whether the uniform instant failure is caught before scores
+are reported — joins the standing #115 queue.
