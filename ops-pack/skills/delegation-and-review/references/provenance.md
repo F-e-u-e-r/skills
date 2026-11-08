@@ -571,3 +571,16 @@ about nested structures; and at N=5 a clean window still leaves a small
 over-guard rate plausible. As before, this measured the worker given a
 stated contract, not whether the bullet changes what dispatchers write; that
 half stays `unprobed` in the standing #115 queue.
+The §2 variant-family field (2026-11-08) comes from one private incident,
+cited as shape: a fix packet for a geometric detector cited a single
+reproduced failing input; two implementers from different vendors (N=1 per
+arm, not benched) each passed that repro, their own 50 unit tests and a
+fuzz. A dispatcher-written sweep over the input's variant family (offset
+against the grid, side, thickness, amplitude, gap from the boundary) found
+one arm silently wrong on 59 of 1056 variants — its fix sat on the
+tolerance boundary at one grid alignment — and the other 0 of 1056 on the
+specced bands but 1360 of 2592 on the gap-from-boundary axis the packet had
+not named. The rule ships `unprobed` per the covenant: no bench has
+measured whether a packet-supplied sweep changes worker outcomes, nor
+whether the field changes what dispatchers write; it joins the standing
+#115 queue.

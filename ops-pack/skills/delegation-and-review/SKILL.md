@@ -463,6 +463,35 @@ Every packet names:
   sizes and the return-type contract. Post-hoc review of edges is too late;
   spec them or lose them.
   ❌ "the function is obvious, it'll handle empty input sensibly."
+- **One repro is not the acceptance — sweep its variant family** (`unprobed`
+  — private incident as shape; see Provenance). When a fix packet cites one
+  reproduced failing input, the packet also names that input's variant axes
+  — the ways a neighbor of it can differ where the outcome could change (for
+  a geometric detector, e.g.: offset against the grid, side, thickness, gap
+  from the boundary, a few amplitudes down to the stated tolerance;
+  magnitudes and edges stay the Edge behavior named field's), gives each
+  axis a small explicit set of values holding the cited input's own value
+  plus at least one other, and lists the family as the full cartesian
+  product of those sets applied to the cited input — so the list holds the
+  repro itself, every one-axis variant, and every cross-axis combination
+  (misses sit where axes interact) — as complete inputs, each with its own
+  expected outcome;
+  an empty or repro-only list fails this field. The Proof gate
+  check then covers that listed family with zero outcomes differing from
+  expected, and the dispatcher runs that same list on every returned arm
+  itself rather than trusting each arm's own tests. This sweeps inputs
+  around one repro, not code sites (§3's one catch, one class, one sweep).
+  Passing the cited input says nothing about its neighbors: in one incident
+  two implementers each passed the single repro, their own unit suite, and a
+  fuzz; a dispatcher-written sweep then found one wrong on 59 of 1056
+  variants (its fix sat on the tolerance boundary at one grid alignment) and
+  the other right on all 1056 specced variants but wrong on 1360 of 2592
+  along an axis the packet never named. Axes the packet does not name stay
+  unobserved under Proof gate.
+  ✅ "packet ships the full product of the named axes' value sets, repro
+  included, as one input list, each with its expected outcome; gate is 0
+  mismatches across that list, run by the dispatcher on each arm."
+  ❌ "the cited input passes now and the worker's tests are green — accept."
 - **Cost asymmetry** — for reviewers/verifiers, name which failure direction is
   expensive (e.g. a missed unverified claim vs. a false alarm) so scrutiny is
   weighted toward it, not split evenly.
