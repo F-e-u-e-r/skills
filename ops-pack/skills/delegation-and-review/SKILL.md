@@ -469,11 +469,14 @@ Every packet names:
   — the ways a neighbor of it can differ where the outcome could change (for
   a geometric detector, e.g.: offset against the grid, side, thickness, gap
   from the boundary, a few amplitudes down to the stated tolerance;
-  magnitudes and edges stay the Edge behavior named field's) — and lists the
-  family as a finite set of complete inputs: the combinations of each axis's
-  named values (or a declared subset that, when two or more axes are named,
-  is never only one-axis slices through the cited input — misses sit where
-  axes interact), each input with its own expected outcome. The Proof gate
+  magnitudes and edges stay the Edge behavior named field's), gives each
+  axis a small explicit set of values holding the cited input's own value
+  plus at least one other, and lists the family as the full cartesian
+  product of those sets applied to the cited input — so the list holds the
+  repro itself, every one-axis variant, and every cross-axis combination
+  (misses sit where axes interact) — as complete inputs, each with its own
+  expected outcome;
+  an empty or repro-only list fails this field. The Proof gate
   check then covers that listed family with zero outcomes differing from
   expected, and the dispatcher runs that same list on every returned arm
   itself rather than trusting each arm's own tests. This sweeps inputs
@@ -485,9 +488,9 @@ Every packet names:
   the other right on all 1056 specced variants but wrong on 1360 of 2592
   along an axis the packet never named. Axes the packet does not name stay
   unobserved under Proof gate.
-  ✅ "packet ships the repro plus the named axes' combinations as one input
-  list, each with its expected outcome; gate is 0 mismatches across that
-  list, run by the dispatcher on each arm."
+  ✅ "packet ships the full product of the named axes' value sets, repro
+  included, as one input list, each with its expected outcome; gate is 0
+  mismatches across that list, run by the dispatcher on each arm."
   ❌ "the cited input passes now and the worker's tests are green — accept."
 - **Cost asymmetry** — for reviewers/verifiers, name which failure direction is
   expensive (e.g. a missed unverified claim vs. a false alarm) so scrutiny is
