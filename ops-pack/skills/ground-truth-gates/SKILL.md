@@ -430,7 +430,8 @@ A generic green test is not proof. A gate is real only if:
    known-bad — diffing each outcome against the record of the prior
    validation (per-CASE outcomes, not an aggregate score — the same 2/6
    with different cases passing is drift; the invocation shape —
-   command, arguments, configuration, with ephemeral values like
+   command, arguments, configuration, and the version of each external
+   tool the harness invokes, with ephemeral values like
    run-scoped paths and timestamps normalized — and the
    reference-corpus identity, so drift in any is visible; a deliberate
    invocation change re-baselines only through a fresh two-sided proof
@@ -451,6 +452,19 @@ A generic green test is not proof. A gate is real only if:
    scored 2/6 against a recorded 0/6, and the 2 passes were exactly the two
    capacity-edge cases whose accepted-throw branch swallowed the harness's
    own error.) (`unprobed` — private incident as shape; see Provenance.)
+   A frozen harness pins its own code, not the tools it calls: replayed
+   against a newer version of a CLI that dropped a flag it passes, every
+   cell exits non-zero with the tool's usage text in well under a second,
+   and the scorecard reads that uniform failure as the arm's result
+   (`unprobed` — contributor incident as shape; see Provenance). A
+   changed tool version is invocation-shape drift like any other, so
+   scores wait for the fresh two-sided proof and new record above. Open
+   one cell's raw output as a preflight before the battery: a cell the
+   tool rejected (its usage text and a non-zero status, no arm result)
+   voids the run, and that outcome is never written into the new record —
+   the two-sided proof runs only once the invocation executes the arm. A
+   clean preflight cell is not that proof — a change can break only some
+   cases.
    **Untrusted-code submission graders** (Python or similar): before any model
    arm runs, `--selftest` must exercise good and bad fixtures; hidden tests run
    in a **child interpreter** with a **minimal environment** (not the parent's
@@ -540,6 +554,23 @@ A generic green test is not proof. A gate is real only if:
    feed it a synthetic 256th failure, an oversized output, a file that
    throws before printing anything. (`unprobed` — contributor incident as
    shape; see Provenance.)
+   A **selftest that covers the decision functions but not the entry
+   point that runs and reports them** (`unprobed` — contributor incident
+   as shape; see Provenance): a harness's `--selftest` that calls its
+   scoring and decision functions directly can be green, even
+   mutation-tested, while the command the real run invokes — load the
+   results, score them, print or write the report — crashes on a code
+   path the selftest never reached (a format call the deployed
+   interpreter rejects, a field the real records carry and the fixtures
+   do not). The crash surfaces only after the expensive runs it was meant
+   to analyze. Before trusting such a selftest, make it invoke that entry
+   point end to end — driver output into analyzer into report, including
+   the code that prints or writes the report — on fake records that carry
+   the fields and the value types the real driver records carry (not
+   stand-ins the report happens to accept), under the interpreter or
+   runtime the real run will use. Either half alone misses the case:
+   faithful records pass on a runtime that accepts the failing call, and
+   the real runtime passes when the same fields hold stand-in types.
 4. **Nobody weakens a gate to turn it green.** A worker satisfies the gate, never
    edits it — gate changes are the orchestrator's call. Three corollaries:
    - For an *immutable policy-checker* (not an ordinary test), run it from a
