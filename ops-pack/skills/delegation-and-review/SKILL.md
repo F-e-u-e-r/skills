@@ -463,6 +463,67 @@ Every packet names:
   sizes and the return-type contract. Post-hoc review of edges is too late;
   spec them or lose them.
   ❌ "the function is obvious, it'll handle empty input sensibly."
+- **One repro is not the acceptance — close its variant family** (`unprobed`
+  — private incident as shape; see Provenance). A single reproduced failing
+  input is evidence the defect exists, not acceptance of the fix — passing it
+  says nothing about its neighbors. So a fix packet that cites one reproduced
+  input also names that input's variant axes (the ways a neighbor can differ
+  where the outcome could change — for a geometric detector e.g. offset
+  against the grid, side, thickness, gap from the boundary, a few amplitudes
+  down to the stated tolerance; magnitudes and edges stay the Edge behavior
+  named field's) and CLOSES the family across those axes — never by an
+  unbounded full cartesian product with no stopping rule — one of three
+  ways, per axis:
+  (A) **verified-finite** — the axis's values come from a verified-finite
+  source (a sealed enum, a finite union, an explicit decision table, a finite
+  parser/runtime-mode list, a named bounded parameter class); enumerate it in
+  full and cite the closing source.
+  (B) **bounded representative** — where the family cannot reasonably be
+  proven finite, a representative sweep that STATES its named axes, the
+  representative / equivalence class each value stands for, why those
+  representatives are load-bearing, the execution budget / stopping boundary,
+  and what stays unobserved; its coverage is reported `NON-EXHAUSTIVE` —
+  bounded sampling is never silently promoted to exhaustive acceptance.
+  (C) **closed by proof** — where a cited invariant or proof already covers
+  an axis or a complete finite family, that axis is `CLOSED BY PROOF` (give
+  its location / basis) and no redundant sweep is required; the proof must
+  cover the production-relevant invocation shape, so a helper-only proof does
+  not qualify when the production entry point differs.
+  Each named value carries its own expected outcome, and for an axis with
+  materially distinct classes the chosen values exercise them (both sides of
+  a decision boundary, edge and interior, accepted and rejected parser shape,
+  supported and unsupported mode, distinct branch-producing enum members),
+  the packet saying why they are distinct; this is not a rule that outcomes
+  must differ — a stability axis may owe the same outcome across every
+  representative — and where an axis has no meaningful alternate class the
+  packet says so and closes it by proof / invariant, never by cosmetic
+  aliases of a single effective case. An empty or repro-only list fails this
+  field unless the family is legitimately closed by proof; a nominal family
+  that is only aliases of one case fails it too.
+  The field fixes the input neighborhood qualification must cover; the Proof
+  gate records the evidence proving those instances / classes — it covers the
+  verified-finite or representative family with zero outcomes differing from
+  expected (a mismatching member is a load-bearing failure; axes left
+  unnamed, or a family reported `NON-EXHAUSTIVE`, stay unobserved under it) —
+  and the dispatcher runs that same list on every returned arm itself rather
+  than trusting each arm's own tests. This sweeps inputs around one repro,
+  not code sites: §3's one catch, one class, one sweep still governs
+  discovered code-site / implementation-class propagation and is not replaced
+  here.
+  In one incident two implementers each passed the single repro, their own
+  unit suite, and a fuzz; a dispatcher-written bounded representative sweep
+  (`NON-EXHAUSTIVE`, over offset, side, thickness, amplitude and
+  gap-from-boundary) then found one wrong on 59 of 1056 sampled variants — its
+  fix sat on the tolerance boundary at one grid alignment — and the other
+  right on all 1056 specced bands but wrong on 1360 of 2592 along the
+  gap-from-boundary axis the packet never named.
+  ✅ "packet closes each named axis — finite ones enumerated and cited, the
+  rest a representative sweep reported `NON-EXHAUSTIVE` with its budget and
+  unobserved remainder, one axis `CLOSED BY PROOF` against the production
+  entry point — each value carrying its expected outcome and its distinct
+  class; gate is 0 mismatches across the list, run by the dispatcher on each
+  arm."
+  ❌ "the cited input passes now and the worker's tests are green — accept."
 - **Cost asymmetry** — for reviewers/verifiers, name which failure direction is
   expensive (e.g. a missed unverified claim vs. a false alarm) so scrutiny is
   weighted toward it, not split evenly.
