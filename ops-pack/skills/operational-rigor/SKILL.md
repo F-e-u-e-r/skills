@@ -258,22 +258,28 @@ When rigor conflicts with finishing sooner, rigor wins.
   resolving, waiving, or exempting a governance blocker or gate; spending
   beyond an explicitly authorized budget. Canonical state is what
   consumers or later gates treat as the record — a protected or default
-  branch, a published release or package, a sealed or frozen artifact —
-  never a working branch or local copy. Unsure whether it crosses → HIGH,
+  branch, a published release or package, a sealed or frozen artifact
+  wherever it lives — never a working branch or a local copy of a record
+  kept elsewhere. Posting to a third party means posting in a venue
+  outside the project or sending directly to someone outside the project
+  and its owner. Unsure whether it crosses → HIGH,
   unless an existing owner policy clearly classifies it otherwise. "It
   uses Git", "it changes a file", and "it is outward" are not the test:
   LOW choices (wording, format, order, a read-only option, a stop or
   defer option) and MODERATE changes — in scope, reversible, and not
   entering canonical state: a working-tree edit, a local commit, a
   fast-forward push to a non-protected working branch, opening or
-  updating a pull request, a comment in the project's own tracker — keep
-  ordinary structured selection wherever the rules above permit it; each
-  outward one still carries its `AUTH:` line. A HIGH grant must be all
-  three:
-  - **Approver-produced** — supplied by the approver (the user, or the
-    owner a project policy names); a pre-filled or default choice the
-    executor offered is never it, even when its label carries the
-    identity;
+  updating a pull request in the project's own repository, a comment in
+  the project's own tracker — keep ordinary structured selection
+  wherever the rules above permit it; each outward one still carries its
+  `AUTH:` line. The effect test still governs each example: a push that
+  triggers a deploy or publish, or that exposes a secret, is HIGH. A
+  HIGH grant must be all three:
+  - **Approver-produced** — supplied by the approver (the user, or an
+    approver named by an owner policy that was in force before the action
+    and was not introduced by the change being authorized); a pre-filled
+    or default choice the executor offered is never it, even when its
+    label carries the identity;
   - **Object-bound** — it identifies the exact object or state: a commit
     SHA, PR head, patch hash, tag, release source, manifest or baseline
     hash, or the exact destructive target set (for an amend or rebase
@@ -285,8 +291,8 @@ When rigor conflicts with finishing sooner, rigor wins.
     deviation from the named actions, and on any failed precondition).
     One anchor covers one coherent packet, never one approval per
     command; an anchor that names a step is that step's per-invocation
-    grant — the steps still run one at a time, and a step outside the
-    packet needs its own grant.
+    grant — its destructive steps still run one at a time, and a step
+    outside the packet needs its own grant.
   Accepted forms, each meeting all three: the approver's own authored
   authorization carrying the identity or a challenge derived from it; the
   approver's own gate naming the identity and the allowed actions (no
@@ -307,14 +313,16 @@ When rigor conflicts with finishing sooner, rigor wins.
     insufficient for this class: write
     `AUTHORIZATION EVIDENCE INSUFFICIENT FOR HIGH-CONSEQUENCE ACTION` in
     the report beside the proposed next step, stop before the mutation,
-    and request the anchor once — show the object's identity and ask the
-    approver to reply in their own words naming it (an approval verb plus
+    and request the anchor once — show the object's identity, the
+    packet's actions, and its stop conditions, and ask the approver to
+    reply in their own words naming that identity (an approval verb plus
     the short SHA, for example). Selectable options may still offer stop,
     defer, revise, or inspect; a pre-filled approval option is never the
     anchor, even when its label carries the identity, and a guard or
     tool prompt that asks only for a yes does not lower this bar. An
     approver-produced anchor that then arrives is the authority the
-    `AUTH:` line quotes.
+    `AUTH:` line quotes; the insufficiency line stays in the report as
+    the record of the weaker grant.
   - For a HIGH action, never infer approval from a default or
     first-option selection, silently reclassify it as MODERATE, reuse an
     earlier similar approval (the per-invocation rule in the
