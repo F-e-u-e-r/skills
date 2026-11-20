@@ -184,7 +184,8 @@ When rigor conflicts with finishing sooner, rigor wins.
   standing authority does NOT extend to the next consequential action, the
   terminal irreversible step, or an interactive session — re-confirm each, unless
   a project policy explicitly scopes a standing authorization.
-  ✅ "the deploy prompt is waiting — I paste it back and wait for the user's go."
+  ✅ "the deploy prompt is waiting — I paste it back and wait for the user's
+  go naming the build."
   ❌ "the prompt is blocking me, so I'll set the ack to 1 for them";
   ❌ "they told me to verify and fix, so I'll merge while I'm here."
 - **A human confirmation gate must remain a meaningful decision, not
@@ -230,7 +231,8 @@ When rigor conflicts with finishing sooner, rigor wins.
   `AUTH: user selected "<exact option>" in reply to "<the question
   asked>"` — and a bare "yes" carries the question it answered. A
   selection or a bare "yes" suffices below the HIGH class; for a
-  HIGH-consequence action (next bullet) neither is sufficient by itself. No
+  HIGH-consequence action (next bullet) neither is enough — the line
+  quotes that bullet's anchor instead. No
   quote and no scoped policy, no action: it goes in the
   report as a proposed next step instead. The line ships verbatim in the
   report so a reviewer can check the grant against the act
@@ -244,61 +246,87 @@ When rigor conflicts with finishing sooner, rigor wins.
   Provenance). Trigger: you are about to take — or to write the `AUTH:`
   line for — an action whose EFFECT is HIGH, judged by what it does, never
   by the command, tool, or host: a destructive or hard-to-reverse
-  mutation with no verified recoverable checkpoint (the one-way-doors
-  bullet above); rewriting or deleting shared history or refs;
-  publishing, releasing, or deploying; merging into protected or
-  canonical state; advancing canonical version or release state; changing
-  security posture, permissions, trust grants, or credentials; approving
-  a baseline identity later gates will trust; mutating a sealed, frozen,
-  or protected canonical artifact; resolving, waiving, or exempting a
-  governance blocker or gate; spending beyond an explicitly authorized
-  budget. Unsure whether it crosses → HIGH, unless an existing project or
-  owner policy clearly classifies it otherwise. "It uses Git" or "it
-  changes a file" is not the test: LOW and MODERATE choices — wording,
-  format, order, a reversible local edit, scratch work — keep ordinary
-  structured selection wherever the rules above permit it. A HIGH grant
-  must be all three:
+  mutation with no verified recoverable checkpoint (a backup, copy, or
+  ref confirmed to restore the prior state; a reviewed dry run restores
+  nothing, so it never takes an action out of HIGH — stricter than the
+  one-way-doors list above); rewriting or deleting shared history or
+  refs; publishing, releasing, or deploying, or posting to a third party;
+  merging into protected or canonical state; advancing canonical version
+  or release state; changing security posture, permissions, trust
+  grants, or credentials; approving a baseline identity later gates will
+  trust; mutating a sealed, frozen, or protected canonical artifact;
+  resolving, waiving, or exempting a governance blocker or gate; spending
+  beyond an explicitly authorized budget. Canonical state is what
+  consumers or later gates treat as the record — a protected or default
+  branch, a published release or package, a sealed or frozen artifact —
+  never a working branch or local copy. Unsure whether it crosses → HIGH,
+  unless an existing owner policy clearly classifies it otherwise. "It
+  uses Git", "it changes a file", and "it is outward" are not the test:
+  LOW choices (wording, format, order, a read-only option, a stop or
+  defer option) and MODERATE changes — in scope, reversible, and not
+  entering canonical state: a working-tree edit, a local commit, a
+  fast-forward push to a non-protected working branch, opening or
+  updating a pull request, a comment in the project's own tracker — keep
+  ordinary structured selection wherever the rules above permit it; each
+  outward one still carries its `AUTH:` line. A HIGH grant must be all
+  three:
   - **Approver-produced** — supplied by the approver (the user, or the
-    owner a project policy names), never only a pre-filled or default
-    choice the executor offered;
+    owner a project policy names); a pre-filled or default choice the
+    executor offered is never it, even when its label carries the
+    identity;
   - **Object-bound** — it identifies the exact object or state: a commit
     SHA, PR head, patch hash, tag, release source, manifest or baseline
     hash, or the exact destructive target set (for an amend or rebase
-    whose result cannot be known in advance: the input identity plus a
-    checkable condition on the change);
+    whose result cannot be known in advance: the input identity, such as
+    the expected old head, bounded by the packet's stop conditions);
   - **Packet-bound** — it covers the complete bounded mutation packet and
-    its stop conditions; one anchor covers one coherent packet, never one
-    approval per command.
-  Equivalent forms: the approver's own authored authorization carrying
-  the identity or a challenge derived from it; the approver's own gate
-  naming the identity and the allowed actions (no second challenge
-  needed); an authenticated durable owner record whose policy explicitly
-  grants the bounded mutation. A challenge pairs an approval verb with
-  something taken from the object shown in the request — a short SHA or
-  digest prefix (about 8–12 hex characters is typical) or the exact
-  target name; the invariant is unambiguous object binding, not a
+    its stop conditions (an otherwise exact gate that names none carries
+    the defaults: stop on an identity mismatch at the re-check, on any
+    deviation from the named actions, and on any failed precondition).
+    One anchor covers one coherent packet, never one approval per
+    command; an anchor that names a step is that step's per-invocation
+    grant — the steps still run one at a time, and a step outside the
+    packet needs its own grant.
+  Accepted forms, each meeting all three: the approver's own authored
+  authorization carrying the identity or a challenge derived from it; the
+  approver's own gate naming the identity and the allowed actions (no
+  second challenge needed); an authenticated durable owner record — its
+  owner authorship checkable, in force before the action, never
+  introduced by the change it would authorize — whose policy explicitly
+  grants the bounded mutation (its `AUTH:` line takes the
+  standing-authorization form above). A challenge pairs an approval verb
+  with something taken from the object shown in the request — a short
+  SHA or digest prefix (about 8–12 hex characters is typical) or the
+  exact target name; the invariant is unambiguous object binding, not a
   character count. This is stronger evidence of deliberate,
   object-specific authorization — not proof that a particular human
   produced it. Then:
-  - `AUTH: user selected "<option>"` alone does not satisfy HIGH. The
-    selection is not invalid, only insufficient for this class: record
-    `AUTHORIZATION EVIDENCE INSUFFICIENT FOR HIGH-CONSEQUENCE ACTION`,
-    stop before the mutation, and request the stronger anchor once.
-    Selectable options may still offer stop, defer, revise, or inspect;
-    a pre-filled clickable approval is never the only proof. An
+  - A grant missing any of the three — `AUTH: user selected "<option>"`
+    alone, a bare "yes", a go-ahead naming no identity, an ambiguous
+    reference — does not satisfy HIGH. It is not invalid, only
+    insufficient for this class: write
+    `AUTHORIZATION EVIDENCE INSUFFICIENT FOR HIGH-CONSEQUENCE ACTION` in
+    the report beside the proposed next step, stop before the mutation,
+    and request the anchor once — show the object's identity and ask the
+    approver to reply in their own words naming it (an approval verb plus
+    the short SHA, for example). Selectable options may still offer stop,
+    defer, revise, or inspect; a pre-filled approval option is never the
+    anchor, even when its label carries the identity, and a guard or
+    tool prompt that asks only for a yes does not lower this bar. An
     approver-produced anchor that then arrives is the authority the
     `AUTH:` line quotes.
-  - Never infer approval from a default or first-option selection,
-    silently reclassify HIGH as MODERATE, reuse an earlier similar
-    approval (the per-invocation rule in the confirmation-gate bullet
-    above), split the operation to slip under the rule, or re-ask until
-    approval arrives (the meaningful-decision bullet above also says when
-    a retry is delivery recovery, not pressure). A blanket go reaches a
-    HIGH item's scope (the "Approval is not a verdict" bullet above) but
-    is its anchor only if it carries that item's identity.
-  - A material change to the authorized identity — head, patch hash,
-    release source, baseline, target set — makes the anchor stale: get a
-    fresh one. Elapsed time alone does not, unless the gate or policy
+  - For a HIGH action, never infer approval from a default or
+    first-option selection, silently reclassify it as MODERATE, reuse an
+    earlier similar approval (the per-invocation rule in the
+    confirmation-gate bullet above), split the operation to slip under
+    the rule, or re-ask until approval arrives (the meaningful-decision
+    bullet above also says when a retry is delivery recovery, not
+    pressure). A blanket go reaches a HIGH item's scope (the "Approval is
+    not a verdict" bullet above) but is its anchor only if it carries
+    that item's identity.
+  - Any change to the authorized identity — a new head, patch hash,
+    release source, baseline, or target set — makes the anchor stale: get
+    a fresh one. Elapsed time alone does not, unless the gate or policy
     says so; mutable preconditions are still re-checked immediately
     before the side effect (refinement (1) of the "Put cheap, reversible
     information gathering" bullet above).
@@ -307,28 +335,32 @@ When rigor conflicts with finishing sooner, rigor wins.
     authorization as appropriate.
   - REVIEWED is not AUTHORIZED: green CI, passing tests, code review, a
     reviewer's approval, or strong evidence grants no mutation authority
-    unless an owner gate or policy explicitly binds that review event to
-    the action (the general form of delegation-and-review §3's "Machinery
-    is not the user" and ground-truth-gates' "A metric clearing a
-    threshold is *evidence*, never *authorization*" in "What makes a gate
-    real" item 5).
+    unless an owner gate or an owner record meeting the accepted forms
+    above explicitly binds that review event to the action (the general
+    form of delegation-and-review §3's "Machinery is not the user" and
+    ground-truth-gates' "A metric clearing a threshold is *evidence*,
+    never *authorization*" in "What makes a gate real" item 5).
   - An earlier LOW or MODERATE mutation is named in a later HIGH packet
-    only when it materially changes the identity, content, or state of
-    the object that packet authorizes — not a work-history recital.
+    when, and only when, it materially changes the identity, content, or
+    state of the object that packet authorizes — not a work-history
+    recital.
   - A HIGH mutation already made on insufficient authorization can be
     ratified only by later approver-produced evidence that identifies the
     resulting state exactly and explicitly accepts it. Ratification
-    restores governance provenance; it never makes the original
-    authorization strong, and it is never a planned route.
-  Done: the `AUTH:` line quotes an anchor with all three properties, the
-  executed packet matches it, and its identity was re-checked just
-  before the mutation; otherwise the action stays a proposed next step.
+    restores governance provenance; the record keeps the original weak
+    `AUTH:` line beside the ratifying evidence — it never makes the
+    original authorization strong, and it is never a planned route.
+  Done: every HIGH action, outward or not, has an `AUTH:` line quoting an
+  anchor with all three properties, the executed packet matches it, and
+  its identity was re-checked just before the mutation; otherwise the
+  action stays a proposed next step with the insufficiency line beside
+  it.
   ✅ "the owner's gate names PR head `<sha>`, the merge, and its stop
   conditions — no extra challenge; the head moved before merge, so I
   stopped and asked for an anchor naming the new head."
-  ❌ "they picked 'Amend + force-push once' from my options, so
+  ❌ "they picked the amend-and-force-push option from my list, so
   `AUTH: user selected …` covers the force-push" — a selection is enough
-  below HIGH, never by itself for a history rewrite.
+  below HIGH, never for a history rewrite.
 - **First move on a live repo: baseline before you mutate.** Capture the
   starting state (`git status` + run the safe checks) and attribute every red to
   pre-existing-vs-your-change — never assume a clean baseline, and confirm intent
@@ -1281,8 +1313,9 @@ When rigor conflicts with finishing sooner, rigor wins.
   Re-derive from the actions this run actually took which forced report
   lines it owes, and check each against the finished report. The owed
   lines, each defined solely by its own rule (this list gains a line
-  whenever a new owed-line rule ships): the `AUTH:` line; the twin-search
-  line; the skipped-prescribed-follow-up naming; the `Decisions note:`
+  whenever a new owed-line rule ships): the `AUTH:` line; the
+  HIGH-consequence insufficiency line (§2); the twin-search line; the
+  skipped-prescribed-follow-up naming; the `Decisions note:`
   line; the compaction word-diff record (skill-authoring §7); the
   dup-check result line (skill-authoring §5); the target-runtime line
   of a skill review record (skill-authoring §6); the held-out-reversal

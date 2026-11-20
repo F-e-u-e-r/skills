@@ -684,8 +684,11 @@ The force-push choice — the one HIGH near-miss — caused no mutation:
 the executor had already recorded it as authorization when the run was
 interrupted, and the actual authority came from the approver's own
 authored authorization naming the expected old head, a lease-guarded
-push, and stop conditions. The baseline approval was superseded by a
-deliberate stop. The rule makes no claim that structured selection is
+push, and stop conditions. The baseline-identity approval, HIGH-class
+under the rule, is not counted as a near-miss: no approval or execution
+record was ever written for it — the executor rejected it as an anchor
+after checking its timing — and a deliberate stop superseded it. The
+rule makes no claim that structured selection is
 generally unsafe — ordinary selection remains sufficient below the HIGH
 class — and no claim that authored text proves human identity; it asks
 only that a HIGH grant carry stronger, object-specific evidence of
@@ -694,7 +697,11 @@ extends the existing per-invocation grant and its AUTH-quote artifact
 rather than adding machinery: no challenge generator, nonce store,
 hook, or host adapter. The repository's own credential-destruction hook
 documents that the model can self-serve its override, so a local hook
-would add friction and an audit trail, not authentication. Tooling is
+would add friction and an audit trail, not authentication. That hook's
+block message still asks the executor to restate the path and get an
+explicit yes — a bare yes, which this rule no longer accepts for a
+credential deletion; aligning that message is a hook change outside this
+doctrine change, left as a follow-up. Tooling is
 reconsidered only on future evidence — a persistent HIGH mutation
 executed on an insufficient anchor after this rule ships, two further
 HIGH near-misses, a host exposing an enforceable authenticated owner
