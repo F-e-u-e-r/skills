@@ -667,3 +667,45 @@ verdicts, the MOD-CONSISTENCY manifest, and the ATR provenance note — is
 recorded in evidence/reviews/2026-08-30-meaningful-approval-review/.
 
 
+The §2 HIGH-consequence authorization-evidence bullet, and the clause in
+the AUTH-quote bullet that routes HIGH actions to it (2026-11-21), are
+incident-shaped. In owner-local sessions, three structured selections
+arrived within a fraction of a second of their question, each on the
+first listed option: one approving a content-addressed baseline
+identity, one choosing a one-character evidence edit that was later
+committed, and one choosing an amend-plus-force-push repair. Local
+evidence could not determine where the selections came from (no hook or
+setting explains them); response timing is diagnostic context here and
+is not part of the rule. A read-only audit found no unratified durable
+consequence. The evidence edit was a local, reversible, pre-commit
+change; before the commit and the merge, the approver's own authored
+gates explicitly accepted it and approved the exact staged-packet hash.
+The force-push choice — the one HIGH near-miss — caused no mutation:
+the executor had already recorded it as authorization when the run was
+interrupted, and the actual authority came from the approver's own
+authored authorization naming the expected old head, a lease-guarded
+push, and stop conditions. The baseline-identity approval, HIGH-class
+under the rule, is not counted as a near-miss: no approval or execution
+record was ever written for it — the executor rejected it as an anchor
+after checking its timing — and a deliberate stop superseded it. The
+rule makes no claim that structured selection is
+generally unsafe — ordinary selection remains sufficient below the HIGH
+class — and no claim that authored text proves human identity; it asks
+only that a HIGH grant carry stronger, object-specific evidence of
+deliberate authorization than a low-friction acknowledgement. It
+extends the existing per-invocation grant and its AUTH-quote artifact
+rather than adding machinery: no challenge generator, nonce store,
+hook, or host adapter. The repository's own credential-destruction hook
+documents that the model can self-serve its override, so a local hook
+would add friction and an audit trail, not authentication. That hook's
+block message still asks the executor to restate the path and get an
+explicit yes — a bare yes, which this rule no longer accepts for a
+credential deletion; aligning that message is a hook change outside this
+doctrine change, left as a follow-up. Tooling is
+reconsidered only on future evidence — a persistent HIGH mutation
+executed on an insufficient anchor after this rule ships, two further
+HIGH near-misses, a host exposing an enforceable authenticated owner
+channel, or an explicit owner request. These incidents are motivation
+and evidence, not benchmark results. The rule ships `unprobed` per the
+covenant — it has not been probed on this pack's fixtures — and its
+probe joins the standing #115 queue.
