@@ -251,8 +251,9 @@ When rigor conflicts with finishing sooner, rigor wins.
   nothing, so it never takes an action out of HIGH — stricter than the
   one-way-doors list above); rewriting or deleting shared history or
   refs; publishing, releasing, or deploying, or posting to a third party;
-  merging into protected or canonical state; advancing canonical version
-  or release state; changing security posture, permissions, trust
+  merging or pushing into protected or canonical state; advancing
+  canonical version or release state; changing security posture,
+  permissions, trust
   grants, or credentials; approving a baseline identity later gates will
   trust; mutating a sealed, frozen, or protected canonical artifact;
   resolving, waiving, or exempting a governance blocker or gate; spending
